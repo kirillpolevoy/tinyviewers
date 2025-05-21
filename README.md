@@ -1,24 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Toddler-Friendly Movies
 
-## Getting Started
+A Next.js application that helps parents find age-appropriate movies for toddlers by providing detailed scene-by-scene analysis and age-specific ratings.
 
-First, run the development server:
+## Features
 
+- Browse movies with age-specific ratings
+- View detailed scene breakdowns
+- Filter content by age group (12m, 24m, 36m)
+- Visual indicators for scene intensity
+
+## Setup
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env.local` file in the root directory with your Supabase credentials:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up your Supabase database:
+   - Create a new project at [supabase.com](https://supabase.com)
+   - Go to the SQL editor
+   - Run the SQL script from `supabase/migrations/create_tables.sql`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Technology Stack
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Supabase (Database & Authentication)
+
+## Project Structure
+
+- `/src/app` - Next.js app router pages
+- `/src/lib` - Utility functions and configurations
+- `/src/types` - TypeScript type definitions
+- `/supabase` - Database migrations and configurations
 
 ## Learn More
 
