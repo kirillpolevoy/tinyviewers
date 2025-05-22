@@ -1,16 +1,14 @@
 import Link from 'next/link';
 import MoviesList from './MoviesList';
 
-interface SearchParams {
-  search?: string;
-  category?: string;
-  age?: string;
-}
-
-export default function MoviesPage({
-  searchParams,
-}: {
-  searchParams: SearchParams;
+export default function MoviesPage({ 
+  searchParams 
+}: { 
+  searchParams: { 
+    search?: string; 
+    category?: string;  
+    age?: string; 
+  };
 }) {
   const search = searchParams?.search ?? null;
   const category = searchParams?.category ?? null;

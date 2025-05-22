@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Toddler Movies — Skip the scares. Keep the joy.",
-  description: "No more guesswork. Watch with confidence. Find gentle films perfect for your little one.",
+  description: "Find gentle films perfect for your little one.",
 };
 
 export default function RootLayout({
@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
+    <html lang="en">
+      <body className={inter.className}>
         {children}
       </body>
     </html>
