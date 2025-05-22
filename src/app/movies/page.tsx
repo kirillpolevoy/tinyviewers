@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import MoviesList from './MoviesList';
+import { Metadata } from 'next';
 
-export default function MoviesPage({ 
-  searchParams 
-}: { 
-  searchParams: { 
-    search?: string; 
-    category?: string;  
-    age?: string; 
-  };
-}) {
-  const search = searchParams?.search ?? null;
-  const category = searchParams?.category ?? null;
-  const age = searchParams?.age ?? null;
+export const metadata: Metadata = {
+  title: 'Movies | Toddler Movies',
+  description: 'Browse kid-friendly movies with detailed scene information',
+};
+
+export default function MoviesPage(props: any) {
+  const searchParams = props.searchParams || {};
+  const search = searchParams.search ?? null;
+  const category = searchParams.category ?? null;
+  const age = searchParams.age ?? null;
 
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
