@@ -213,26 +213,12 @@ const MovieDetailsPage = () => {
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex items-baseline gap-1">
-                            <p className="text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] relative group/rating">
-                              {score}
-                              <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 bg-[#2C2C27] text-white text-sm py-1.5 px-3 rounded-lg whitespace-nowrap opacity-0 invisible group-hover/rating:opacity-100 group-hover/rating:visible transition-all duration-200 z-10 max-w-[250px] text-center leading-snug">
-                                {RATING_MEANINGS[score as keyof typeof RATING_MEANINGS]}
-                                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#2C2C27]" />
-                              </span>
-                            </p>
+                            <p className="text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] ">
+                              {score}</p>
                             <span className="text-lg text-[#6B6B63]">/10</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-xl">{ratingInfo.icon}</span>
-                            <div className="relative group/info">
-                              <div className="w-5 h-5 rounded-full bg-[#2C2C27]/5 flex items-center justify-center text-sm text-[#6B6B63] cursor-help transition-colors duration-300 hover:bg-[#2C2C27]/10">
-                                i
-                              </div>
-                              <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 bg-[#2C2C27] text-white text-sm py-1.5 px-3 rounded-lg whitespace-nowrap opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-10">
-                                {ratingInfo.text}
-                                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#2C2C27]" />
-                              </span>
-                            </div>
                           </div>
                         </div>
                         <div className="h-1 w-full bg-gray-100 rounded-full mt-2 overflow-hidden">
@@ -247,7 +233,7 @@ const MovieDetailsPage = () => {
                 })}
               </div>
               <p className="text-sm text-[#6B6B63] mt-2">
-                Hover over ratings and flags for more information
+                Age ratings and scene analysis information
               </p>
             </div>
             
@@ -288,7 +274,7 @@ const MovieDetailsPage = () => {
                               <span className="text-sm text-[#6B6B63] font-light">
                                 Intensity Level:
                               </span>
-                              <div className="relative group/intensity">
+                              <div className="">
                                 <div className="flex items-center gap-1">
                                   <div 
                                     className="w-2.5 h-2.5 rounded-full"
@@ -309,10 +295,6 @@ const MovieDetailsPage = () => {
                                     {scene.intensity}/10
                                   </span>
                                 </div>
-                                <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 bg-[#2C2C27] text-white text-sm py-1.5 px-3 rounded-lg whitespace-nowrap opacity-0 invisible group-hover/intensity:opacity-100 group-hover/intensity:visible transition-all duration-200 z-10">
-                                  {INTENSITY_SCALE[scene.intensity as keyof typeof INTENSITY_SCALE]}
-                                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#2C2C27]" />
-                                </span>
                               </div>
                             </div>
                           </div>
@@ -394,15 +376,6 @@ const MovieDetailsPage = () => {
                                   </span>
                                   <div className="flex items-center gap-2">
                                     <span className="text-xl">{ratingInfo.icon}</span>
-                                    <div className="relative group/info">
-                                      <div className="w-5 h-5 rounded-full bg-[#2C2C27]/5 flex items-center justify-center text-sm text-[#6B6B63] cursor-help transition-colors duration-300 hover:bg-[#2C2C27]/10">
-                                        i
-                                      </div>
-                                      <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 bg-[#2C2C27] text-white text-sm py-1.5 px-3 rounded-lg whitespace-nowrap opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-10 text-center">
-                                        {ratingInfo.text}
-                                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#2C2C27]" />
-                                      </span>
-                                    </div>
                                   </div>
                                 </div>
                               </div>
