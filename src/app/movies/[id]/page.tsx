@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -359,9 +359,9 @@ const MovieDetailsPage = () => {
                         <h4 className="text-sm font-medium text-[#2C2C27] mb-3">Age Recommendations</h4>
                         <div className="grid grid-cols-3 gap-3">
                           {(['12m', '24m', '36m'] as const).map((age) => {
-                            const score = scene.age_flags[age];
-                            const ratingType = getAgeRatingType(Number(score));
-                            const ratingInfo = AGE_RATING_INFO[ratingType];
+                            const ageFlag = scene.age_flags[age];
+                            // The age_flags in the database store emoji strings directly
+                            // like {"12m": "🚫", "24m": "⚠️", "36m": "✅"}
                             return (
                               <div 
                                 key={age}
@@ -370,13 +370,8 @@ const MovieDetailsPage = () => {
                                 <span className="text-[#6B6B63] text-sm mb-2">
                                   {age.replace('m', '')} months
                                 </span>
-                                <div className="flex items-center gap-2">
-                                  <span className="text-2xl font-light text-[#2C2C27]">
-                                    {score}
-                                  </span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-xl">{ratingInfo.icon}</span>
-                                  </div>
+                                <div className="flex items-center justify-center">
+                                  <span className="text-2xl">{ageFlag}</span>
                                 </div>
                               </div>
                             );

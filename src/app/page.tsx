@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -37,18 +37,18 @@ export default function Home() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Try 'Moana' or 'Frozen'..."
-            className="w-full px-8 py-7 text-xl rounded-2xl border-0 
+            className="w-full px-4 sm:px-8 py-7 text-xl rounded-2xl border-0 
                      bg-white/80 backdrop-blur-sm text-[#2C2C27]
                      focus:ring-2 focus:ring-[#2C2C27] outline-none 
                      transition-all duration-300 shadow-[0_2px_20px_rgba(0,0,0,0.04)]
                      hover:shadow-[0_2px_30px_rgba(0,0,0,0.08)]
-                     placeholder:text-[#6B6B63]/60"
+                     placeholder:text-[#6B6B63]/60 pr-20 sm:pr-32"
             autoFocus
           />
           <button
             type="submit"
-            className="absolute right-4 top-1/2 -translate-y-1/2 px-8 py-3.5
-                     bg-[#2C2C27] text-white text-lg rounded-xl
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 px-4 sm:px-8 py-3.5
+                     bg-[#2C2C27] text-white text-base sm:text-lg rounded-xl
                      hover:bg-[#1A1A16] transition-colors duration-300
                      font-light tracking-wide"
           >
