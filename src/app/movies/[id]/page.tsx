@@ -21,12 +21,7 @@ const INTENSITY_SCALE = {
   2: 'Mild',
   3: 'Moderate',
   4: 'Strong',
-  5: 'Very Strong',
-  6: 'Intense',
-  7: 'Very Intense',
-  8: 'Extremely Intense',
-  9: 'Overwhelming',
-  10: 'Maximum Intensity'
+  5: 'Very Strong'
 } as const;
 
 const AGE_RATING_INFO = {
@@ -301,20 +296,20 @@ const MovieDetailsPage = () => {
                                   <div 
                                     className="w-2.5 h-2.5 rounded-full"
                                     style={{
-                                      backgroundColor: scene.intensity <= 3 ? '#22c55e' : 
-                                                     scene.intensity <= 6 ? '#eab308' : 
+                                      backgroundColor: scene.intensity <= 2 ? '#22c55e' : 
+                                                     scene.intensity <= 4 ? '#eab308' : 
                                                      '#ef4444'
                                     }} 
                                   />
                                   <span 
                                     className="text-sm font-medium"
                                     style={{
-                                      color: scene.intensity <= 3 ? '#22c55e' : 
-                                             scene.intensity <= 6 ? '#eab308' : 
+                                      color: scene.intensity <= 2 ? '#22c55e' : 
+                                             scene.intensity <= 4 ? '#eab308' : 
                                              '#ef4444'
                                     }}
                                   >
-                                    {scene.intensity}/10
+                                    {scene.intensity}/5
                                   </span>
                                 </div>
                               </div>
@@ -328,9 +323,9 @@ const MovieDetailsPage = () => {
                             <div 
                               className="h-full transition-all duration-300"
                               style={{
-                                width: `${(scene.intensity / 10) * 100}%`,
-                                backgroundColor: scene.intensity <= 3 ? '#22c55e' : 
-                                               scene.intensity <= 6 ? '#eab308' : 
+                                width: `${(scene.intensity / 5) * 100}%`,
+                                backgroundColor: scene.intensity <= 2 ? '#22c55e' : 
+                                               scene.intensity <= 4 ? '#eab308' : 
                                                '#ef4444'
                               }} 
                             />
@@ -345,11 +340,11 @@ const MovieDetailsPage = () => {
                           style={{
                             background: `linear-gradient(to bottom, 
                                         transparent,
-                                        ${scene.intensity <= 3 ? '#22c55e' : 
-                                          scene.intensity <= 6 ? '#eab308' : 
+                                        ${scene.intensity <= 2 ? '#22c55e' : 
+                                          scene.intensity <= 4 ? '#eab308' : 
                                           '#ef4444'} 10%,
-                                        ${scene.intensity <= 3 ? '#22c55e' : 
-                                          scene.intensity <= 6 ? '#eab308' : 
+                                        ${scene.intensity <= 2 ? '#22c55e' : 
+                                          scene.intensity <= 4 ? '#eab308' : 
                                           '#ef4444'} 90%,
                                         transparent)`
                           }} 
@@ -387,15 +382,15 @@ const MovieDetailsPage = () => {
                             return (
                               <div 
                                 key={age}
-                                className="flex flex-col items-center p-3 sm:p-4 rounded-xl bg-gradient-to-b from-[#2C2C27]/[0.02] to-[#2C2C27]/[0.04] transition-all duration-300 hover:from-[#2C2C27]/[0.04] hover:to-[#2C2C27]/[0.06]"
+                                className="flex flex-col items-start p-3 sm:p-4 rounded-xl bg-gradient-to-b from-[#2C2C27]/[0.02] to-[#2C2C27]/[0.04] transition-all duration-300 hover:from-[#2C2C27]/[0.04] hover:to-[#2C2C27]/[0.06]"
                               >
                                 <span className="text-[#6B6B63] text-xs sm:text-sm mb-2">
                                   {age.replace('m', '')} months
                                 </span>
-                                <div className="flex items-center justify-center mb-2">
+                                <div className="flex items-center mb-2">
                                   <span className="text-xl sm:text-2xl">{ageFlag}</span>
                                 </div>
-                                <p className="text-xs text-[#6B6B63] italic text-center leading-relaxed">
+                                <p className="text-xs text-[#6B6B63] italic leading-relaxed">
                                   {getFlagDescription(ageFlag)}
                                 </p>
                               </div>

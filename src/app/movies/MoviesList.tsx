@@ -144,12 +144,12 @@ export default function MoviesList({
           <Link 
             key={movie.id}
             href={movieUrl}
-            className="group block max-w-sm mx-auto"
+            className="group block"
           >
-            <div className="relative aspect-[2/3] mb-4 overflow-hidden rounded-xl 
+            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-xl 
                           shadow-[0_2px_20px_rgba(0,0,0,0.04)]
                           hover:shadow-[0_2px_30px_rgba(0,0,0,0.08)]
-                          transition-all duration-500">
+                          transition-all duration-500 max-h-[300px]">
               <Image
                 src={movie.tmdbPoster || movie.poster_url}
                 alt={movie.title}
