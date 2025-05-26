@@ -9,11 +9,11 @@ import { getMoviePoster } from '@/lib/tmdb';
 import { Movie, Scene } from '@/types';
 
 const RATING_MEANINGS = {
-  1: 'Very gentle – no intense content (Bluey, Puffin Rock)',
-  2: 'Slight tension or mild surprise (Totoro, Daniel Tiger)',
-  3: 'Noticeable suspense or emotion (Frozen - parents separate)',
-  4: 'Strong tension, loud action, big emotion (Moana - lava monster)',
-  5: 'Likely too intense for toddlers (Finding Nemo - barracuda)'
+  1: 'Very gentle – no intense content',
+  2: 'Slight tension or mild surprise',
+  3: 'Noticeable suspense or emotion',
+  4: 'Strong tension, loud action, big emotion',
+  5: 'Likely too intense for toddlers'
 } as const;
 
 const INTENSITY_SCALE = {
@@ -126,6 +126,23 @@ const MovieDetailsPage = () => {
     return colors[score as keyof typeof colors] || 'bg-gray-500';
   };
 
+  const getScoreDescription = (score: number): string => {
+    return RATING_MEANINGS[score as keyof typeof RATING_MEANINGS] || '';
+  };
+
+  const getFlagDescription = (flag: string): string => {
+    switch (flag) {
+      case '✅':
+        return 'Safe — should be fine for most children';
+      case '⚠️':
+        return 'Caution — could be scary or emotional';
+      case '🚫':
+        return 'Not recommended — likely distressing';
+      default:
+        return '';
+    }
+  };
+
   if (!mounted) return null;
 
   if (loading) {
@@ -195,31 +212,36 @@ const MovieDetailsPage = () => {
                 Age Based Scary Score
                 <div className="h-px flex-1 bg-gradient-to-r from-[#2C2C27]/10 to-transparent" />
               </h2>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                 {(['12m', '24m', '36m'] as const).map((age) => {
                   const score = movie.age_scores[age];
                   const ratingType = getAgeRatingType(score);
                   const ratingInfo = AGE_RATING_INFO[ratingType];
                   return (
-                    <div key={age} className="group p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] hover:bg-white/60">
+                    <div key={age} className="group p-4 sm:p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] hover:bg-white/60">
                       <div className="flex flex-col">
                         <div className="flex items-baseline gap-1.5 mb-1">
-                          <span className="text-[#2C2C27] font-medium text-lg tracking-wide">
+                          <span className="text-[#2C2C27] font-medium text-base sm:text-lg tracking-wide">
                             {age.replace('m', '')}
                           </span>
-                          <span className="text-[#6B6B63] text-sm tracking-wide">
+                          <span className="text-[#6B6B63] text-xs sm:text-sm tracking-wide">
                             months old
                           </span>
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex items-baseline gap-1">
-                            <p className="text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] ">
+                            <p className="text-2xl sm:text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] ">
                               {score}</p>
-                            <span className="text-lg text-[#6B6B63]">/5</span>
+                            <span className="text-base sm:text-lg text-[#6B6B63]">/5</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xl">{ratingInfo.icon}</span>
+                            <span className="text-lg sm:text-xl">{ratingInfo.icon}</span>
                           </div>
+                        </div>
+                        <div className="mt-2 mb-2">
+                          <p className="text-xs text-[#6B6B63] italic leading-relaxed">
+                            {getScoreDescription(score)}
+                          </p>
                         </div>
                         <div className="h-1 w-full bg-gray-100 rounded-full mt-2 overflow-hidden">
                           <div 
@@ -258,7 +280,7 @@ const MovieDetailsPage = () => {
                   {scenes.map((scene, index) => (
                     <div 
                       key={scene.id}
-                      className="group bg-white/50 backdrop-blur-sm p-7 rounded-xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] transition-all duration-500 ease-out hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:translate-y-[-2px] border border-black/[0.02]"
+                      className="group bg-white/50 backdrop-blur-sm p-4 sm:p-7 rounded-xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] transition-all duration-500 ease-out hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:translate-y-[-2px] border border-black/[0.02]"
                     >
                       {/* Scene Header */}
                       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
@@ -357,7 +379,7 @@ const MovieDetailsPage = () => {
                       {/* Scene Age Recommendations */}
                       <div>
                         <h4 className="text-sm font-medium text-[#2C2C27] mb-3">Age Recommendations</h4>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           {(['12m', '24m', '36m'] as const).map((age) => {
                             const ageFlag = scene.age_flags[age];
                             // The age_flags in the database store emoji strings directly
@@ -365,14 +387,17 @@ const MovieDetailsPage = () => {
                             return (
                               <div 
                                 key={age}
-                                className="flex flex-col items-center p-4 rounded-xl bg-gradient-to-b from-[#2C2C27]/[0.02] to-[#2C2C27]/[0.04] transition-all duration-300 hover:from-[#2C2C27]/[0.04] hover:to-[#2C2C27]/[0.06]"
+                                className="flex flex-col items-center p-3 sm:p-4 rounded-xl bg-gradient-to-b from-[#2C2C27]/[0.02] to-[#2C2C27]/[0.04] transition-all duration-300 hover:from-[#2C2C27]/[0.04] hover:to-[#2C2C27]/[0.06]"
                               >
-                                <span className="text-[#6B6B63] text-sm mb-2">
+                                <span className="text-[#6B6B63] text-xs sm:text-sm mb-2">
                                   {age.replace('m', '')} months
                                 </span>
-                                <div className="flex items-center justify-center">
-                                  <span className="text-2xl">{ageFlag}</span>
+                                <div className="flex items-center justify-center mb-2">
+                                  <span className="text-xl sm:text-2xl">{ageFlag}</span>
                                 </div>
+                                <p className="text-xs text-[#6B6B63] italic text-center leading-relaxed">
+                                  {getFlagDescription(ageFlag)}
+                                </p>
                               </div>
                             );
                           })}
@@ -382,9 +407,6 @@ const MovieDetailsPage = () => {
                   ))}
                 </div>
               )}
-              <p className="text-sm text-[#6B6B63] mt-4">
-                Hover over intensity indicators and age flags for more information
-              </p>
             </div>
           </div>
         </div>
