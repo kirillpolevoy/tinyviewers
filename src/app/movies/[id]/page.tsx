@@ -192,7 +192,7 @@ const MovieDetailsPage = () => {
             
             <div className="space-y-4">
               <h2 className="text-2xl font-light text-[#2C2C27] flex items-center gap-3">
-                Age Ratings
+                Age Based Scary Score
                 <div className="h-px flex-1 bg-gradient-to-r from-[#2C2C27]/10 to-transparent" />
               </h2>
               <div className="grid grid-cols-3 gap-6">
@@ -215,7 +215,7 @@ const MovieDetailsPage = () => {
                           <div className="flex items-baseline gap-1">
                             <p className="text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] ">
                               {score}</p>
-                            <span className="text-lg text-[#6B6B63]">/10</span>
+                            <span className="text-lg text-[#6B6B63]">/5</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-xl">{ratingInfo.icon}</span>
@@ -233,7 +233,7 @@ const MovieDetailsPage = () => {
                 })}
               </div>
               <p className="text-sm text-[#6B6B63] mt-2">
-                Age ratings and scene analysis information
+                Age-based scary scores and scene analysis information
               </p>
             </div>
             
