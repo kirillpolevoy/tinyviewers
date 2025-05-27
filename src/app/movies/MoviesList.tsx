@@ -68,6 +68,11 @@ export default function MoviesList({
           })
         );
         
+        // Sort alphabetically when no search query (for "View All")
+        if (!searchQuery) {
+          moviesWithPosters.sort((a, b) => a.title.localeCompare(b.title));
+        }
+        
         console.log('Final movies with posters:', moviesWithPosters);
         setMovies(moviesWithPosters);
       } catch (e) {
@@ -150,14 +155,23 @@ export default function MoviesList({
                           shadow-[0_2px_20px_rgba(0,0,0,0.04)]
                           hover:shadow-[0_2px_30px_rgba(0,0,0,0.08)]
                           transition-all duration-500 max-h-[300px]">
-              <Image
-                src={movie.tmdbPoster || movie.poster_url}
-                alt={movie.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority
-              />
+              {(movie.tmdbPoster && !movie.tmdbPoster.includes('example.com')) ? (
+                <Image
+                  src={movie.tmdbPoster}
+                  alt={movie.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#F5F5F0] to-[#E5E5E0] flex items-center justify-center">
+                  <div className="text-center p-4">
+                    <div className="text-4xl mb-2">🎬</div>
+                    <p className="text-sm text-[#6B6B63] font-light">{movie.title}</p>
+                  </div>
+                </div>
+              )}
             </div>
             <h2 className="text-xl font-light text-[#2C2C27] mb-2 group-hover:text-[#6B6B63] transition-colors duration-300">
               {movie.title}

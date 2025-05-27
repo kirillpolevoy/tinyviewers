@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
@@ -58,7 +59,13 @@ export default function Home() {
       </form>
 
       <div className="mt-8 text-[#6B6B63]/80 text-sm tracking-wide font-light">
-        Press Enter to search
+        Press Enter to search or{' '}
+        <Link 
+          href="/movies" 
+          className="text-[#2C2C27] hover:text-[#1A1A16] underline underline-offset-2 transition-colors duration-300"
+        >
+          View All
+        </Link>
       </div>
     </div>
   );

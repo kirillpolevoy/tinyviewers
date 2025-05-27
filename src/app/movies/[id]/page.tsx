@@ -181,14 +181,23 @@ const MovieDetailsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-12 mt-10 mb-16">
           <div className="relative w-full max-w-[320px] mx-auto lg:mx-0">
             <div className="relative aspect-[2/3] overflow-hidden rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] lg:sticky lg:top-12 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] before:absolute before:inset-0 before:z-10 before:bg-gradient-to-t before:from-black/20 before:to-transparent/0">
-              <Image
-                src={movie.tmdbPoster || movie.poster_url}
-                alt={movie.title}
-                fill
-                className="object-cover transition-all duration-700 hover:scale-110"
-                sizes="(max-width: 1024px) 320px, 320px"
-                priority
-              />
+              {(movie.tmdbPoster && !movie.tmdbPoster.includes('example.com')) ? (
+                <Image
+                  src={movie.tmdbPoster}
+                  alt={movie.title}
+                  fill
+                  className="object-cover transition-all duration-700 hover:scale-110"
+                  sizes="(max-width: 1024px) 320px, 320px"
+                  priority
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#F5F5F0] to-[#E5E5E0] flex items-center justify-center">
+                  <div className="text-center p-8">
+                    <div className="text-6xl mb-4">🎬</div>
+                    <p className="text-lg text-[#6B6B63] font-light">{movie.title}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           
