@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
-import { getMoviePoster } from '@/lib/tmdb';
+import { getMovieDetails } from '@/lib/tmdb';
 import { Movie, Scene } from '@/types';
 
 const RATING_MEANINGS = {
@@ -39,7 +39,7 @@ const AGE_RATING_INFO = {
   }
 } as const;
 
-type MovieWithPoster = Movie & { tmdbPoster?: string | null };
+type MovieWithPoster = Movie & { tmdbPoster?: string | null; tmdbDescription?: string | null; tmdbRating?: string | null };
 
 const MovieDetailsPage = () => {
   const params = useParams();
@@ -77,8 +77,13 @@ const MovieDetailsPage = () => {
           return;
         }
 
-        const tmdbPoster = await getMoviePoster(movieData.title);
-        setMovie({ ...movieData, tmdbPoster });
+        const tmdbDetails = await getMovieDetails(movieData.title);
+        setMovie({ 
+          ...movieData, 
+          tmdbPoster: tmdbDetails.poster,
+          tmdbDescription: tmdbDetails.description,
+          tmdbRating: tmdbDetails.rating
+        });
 
         const { data: scenesData, error: scenesError } = await supabase
           .from('scenes')
@@ -207,7 +212,7 @@ const MovieDetailsPage = () => {
                 {movie.title}
               </h1>
               <p className="text-lg text-[#6B6B63] font-light tracking-wide leading-relaxed border-l-2 border-[#2C2C27]/10 pl-6">
-                {movie.summary}
+                {movie.tmdbDescription || movie.summary}
               </p>
             </div>
             
@@ -266,7 +271,7 @@ const MovieDetailsPage = () => {
             <div className="flex items-center gap-4 p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white/60 group">
               <div className="w-2 h-2 rounded-full bg-[#2C2C27]/30 transition-transform duration-300 group-hover:scale-110" />
               <p className="text-lg text-[#6B6B63] font-light">
-                Rating: <span className="text-[#2C2C27]">{movie.rating}</span>
+                Rating: <span className="text-[#2C2C27]">{movie.tmdbRating || movie.rating}</span>
               </p>
             </div>
 

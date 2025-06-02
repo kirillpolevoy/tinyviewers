@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { getMoviePoster } from '@/lib/tmdb';
+import { getMovieDetails } from '@/lib/tmdb';
 import { Movie } from '@/types';
 
 export default function MoviesList({
@@ -16,7 +16,7 @@ export default function MoviesList({
   categoryFilter: string | null;
   ageFilter: string | null;
 }) {
-  const [movies, setMovies] = useState<(Movie & { tmdbPoster?: string | null })[]>([]);
+  const [movies, setMovies] = useState<(Movie & { tmdbPoster?: string | null; tmdbRating?: string | null })[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -61,20 +61,24 @@ export default function MoviesList({
 
         console.log('Movies fetched from Supabase:', data);
 
-        const moviesWithPosters = await Promise.all(
+        const moviesWithTMDBData = await Promise.all(
           (data || []).map(async (movie) => {
-            const tmdbPoster = await getMoviePoster(movie.title);
-            return { ...movie, tmdbPoster };
+            const tmdbDetails = await getMovieDetails(movie.title);
+            return { 
+              ...movie, 
+              tmdbPoster: tmdbDetails.poster,
+              tmdbRating: tmdbDetails.rating
+            };
           })
         );
         
         // Sort alphabetically when no search query (for "View All")
         if (!searchQuery) {
-          moviesWithPosters.sort((a, b) => a.title.localeCompare(b.title));
+          moviesWithTMDBData.sort((a, b) => a.title.localeCompare(b.title));
         }
         
-        console.log('Final movies with posters:', moviesWithPosters);
-        setMovies(moviesWithPosters);
+        console.log('Final movies with TMDB data:', moviesWithTMDBData);
+        setMovies(moviesWithTMDBData);
       } catch (e) {
         console.error('Exception:', e);
         setError(e instanceof Error ? e.message : 'Unknown error');
@@ -177,7 +181,7 @@ export default function MoviesList({
               {movie.title}
             </h2>
             <div className="flex items-center space-x-4">
-              <p className="text-sm text-[#6B6B63] font-light">Rating: {movie.rating}</p>
+              <p className="text-sm text-[#6B6B63] font-light">Rating: {movie.tmdbRating || movie.rating}</p>
               <div className="flex items-center space-x-3">
                 {(['12m', '24m', '36m'] as const).map((age) => (
                   <div key={age} className="flex items-center space-x-1">
