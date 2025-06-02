@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { getMovieDetails } from '@/lib/tmdb';
 import { Movie } from '@/types';
 
 export default function MoviesList({
@@ -16,7 +15,7 @@ export default function MoviesList({
   categoryFilter: string | null;
   ageFilter: string | null;
 }) {
-  const [movies, setMovies] = useState<(Movie & { tmdbPoster?: string | null; tmdbRating?: string | null })[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -61,24 +60,13 @@ export default function MoviesList({
 
         console.log('Movies fetched from Supabase:', data);
 
-        const moviesWithTMDBData = await Promise.all(
-          (data || []).map(async (movie) => {
-            const tmdbDetails = await getMovieDetails(movie.title);
-            return { 
-              ...movie, 
-              tmdbPoster: tmdbDetails.poster,
-              tmdbRating: tmdbDetails.rating
-            };
-          })
-        );
-        
         // Sort alphabetically when no search query (for "View All")
         if (!searchQuery) {
-          moviesWithTMDBData.sort((a, b) => a.title.localeCompare(b.title));
+          data?.sort((a, b) => a.title.localeCompare(b.title));
         }
         
-        console.log('Final movies with TMDB data:', moviesWithTMDBData);
-        setMovies(moviesWithTMDBData);
+        console.log('Final movies:', data);
+        setMovies(data || []);
       } catch (e) {
         console.error('Exception:', e);
         setError(e instanceof Error ? e.message : 'Unknown error');
@@ -149,6 +137,11 @@ export default function MoviesList({
       {movies.map((movie) => {
         const movieUrl = `/movies/${movie.id}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}${categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ''}${ageFilter ? `&age=${encodeURIComponent(ageFilter)}` : ''}`;
         
+        // Use TMDB poster if available, fallback to original poster
+        const posterUrl = movie.tmdb_poster_url || movie.poster_url;
+        // Use TMDB rating if available, fallback to original rating
+        const displayRating = movie.tmdb_rating || movie.rating;
+        
         return (
           <Link 
             key={movie.id}
@@ -159,14 +152,23 @@ export default function MoviesList({
                           shadow-[0_2px_20px_rgba(0,0,0,0.04)]
                           hover:shadow-[0_2px_30px_rgba(0,0,0,0.08)]
                           transition-all duration-500 max-h-[300px]">
-              {(movie.tmdbPoster && !movie.tmdbPoster.includes('example.com')) ? (
+              {posterUrl && !posterUrl.includes('example.com') ? (
                 <Image
-                  src={movie.tmdbPoster}
+                  src={posterUrl}
                   alt={movie.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority
+                  onError={(e) => {
+                    console.error(`❌ Image failed to load for "${movie.title}":`, {
+                      src: posterUrl,
+                      error: e
+                    });
+                  }}
+                  onLoad={() => {
+                    console.log(`✅ Image loaded successfully for "${movie.title}":`, posterUrl);
+                  }}
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-[#F5F5F0] to-[#E5E5E0] flex items-center justify-center">
@@ -181,7 +183,9 @@ export default function MoviesList({
               {movie.title}
             </h2>
             <div className="flex items-center space-x-4">
-              <p className="text-sm text-[#6B6B63] font-light">Rating: {movie.tmdbRating || movie.rating}</p>
+              <p className="text-sm text-[#6B6B63] font-light">
+                Rating: {displayRating}
+              </p>
               <div className="flex items-center space-x-3">
                 {(['12m', '24m', '36m'] as const).map((age) => (
                   <div key={age} className="flex items-center space-x-1">

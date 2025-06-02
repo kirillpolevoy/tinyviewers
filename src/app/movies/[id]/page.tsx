@@ -5,7 +5,6 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
-import { getMovieDetails } from '@/lib/tmdb';
 import { Movie, Scene } from '@/types';
 
 const RATING_MEANINGS = {
@@ -39,12 +38,10 @@ const AGE_RATING_INFO = {
   }
 } as const;
 
-type MovieWithPoster = Movie & { tmdbPoster?: string | null; tmdbDescription?: string | null; tmdbRating?: string | null };
-
 const MovieDetailsPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
-  const [movie, setMovie] = useState<MovieWithPoster | null>(null);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -77,13 +74,7 @@ const MovieDetailsPage = () => {
           return;
         }
 
-        const tmdbDetails = await getMovieDetails(movieData.title);
-        setMovie({ 
-          ...movieData, 
-          tmdbPoster: tmdbDetails.poster,
-          tmdbDescription: tmdbDetails.description,
-          tmdbRating: tmdbDetails.rating
-        });
+        setMovie(movieData);
 
         const { data: scenesData, error: scenesError } = await supabase
           .from('scenes')
@@ -172,6 +163,11 @@ const MovieDetailsPage = () => {
     );
   }
 
+  // Use TMDB data if available, fallback to original data
+  const posterUrl = movie.tmdb_poster_url || movie.poster_url;
+  const displayRating = movie.tmdb_rating || movie.rating;
+  const description = movie.tmdb_description || movie.summary;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F5F5F0] via-white to-[#F5F5F0]">
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12">
@@ -186,9 +182,9 @@ const MovieDetailsPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-12 mt-10 mb-16">
           <div className="relative w-full max-w-[320px] mx-auto lg:mx-0">
             <div className="relative aspect-[2/3] overflow-hidden rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] lg:sticky lg:top-12 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] before:absolute before:inset-0 before:z-10 before:bg-gradient-to-t before:from-black/20 before:to-transparent/0">
-              {(movie.tmdbPoster && !movie.tmdbPoster.includes('example.com')) ? (
+              {(posterUrl && !posterUrl.includes('example.com')) ? (
                 <Image
-                  src={movie.tmdbPoster}
+                  src={posterUrl}
                   alt={movie.title}
                   fill
                   className="object-cover transition-all duration-700 hover:scale-110"
@@ -212,7 +208,7 @@ const MovieDetailsPage = () => {
                 {movie.title}
               </h1>
               <p className="text-lg text-[#6B6B63] font-light tracking-wide leading-relaxed border-l-2 border-[#2C2C27]/10 pl-6">
-                {movie.tmdbDescription || movie.summary}
+                {description}
               </p>
             </div>
             
@@ -271,7 +267,7 @@ const MovieDetailsPage = () => {
             <div className="flex items-center gap-4 p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white/60 group">
               <div className="w-2 h-2 rounded-full bg-[#2C2C27]/30 transition-transform duration-300 group-hover:scale-110" />
               <p className="text-lg text-[#6B6B63] font-light">
-                Rating: <span className="text-[#2C2C27]">{movie.tmdbRating || movie.rating}</span>
+                Rating: <span className="text-[#2C2C27]">{displayRating}</span>
               </p>
             </div>
 

@@ -9,6 +9,9 @@ if (!API_KEY) {
 
 export const tmdb = API_KEY ? new MovieDb(API_KEY) : null;
 
+// Simple in-memory cache to avoid duplicate API calls
+const movieDetailsCache = new Map<string, TMDBMovieDetails>();
+
 // Known Disney animated movies with their release years
 const KNOWN_MOVIES: Record<string, number> = {
   'moana': 2016,
@@ -25,14 +28,23 @@ export interface TMDBMovieDetails {
 }
 
 export const getMovieDetails = async (title: string): Promise<TMDBMovieDetails> => {
+  // Check cache first to avoid duplicate API calls
+  const cacheKey = title.toLowerCase().trim();
+  if (movieDetailsCache.has(cacheKey)) {
+    console.log(`📦 Using cached data for "${title}"`);
+    return movieDetailsCache.get(cacheKey)!;
+  }
+
   // Return empty result if no TMDB client
   if (!tmdb) {
     console.warn('TMDB client not available, returning empty movie details');
-    return {
+    const emptyResult = {
       poster: null,
       description: null,
       rating: null
     };
+    movieDetailsCache.set(cacheKey, emptyResult);
+    return emptyResult;
   }
 
   try {
@@ -105,27 +117,35 @@ export const getMovieDetails = async (title: string): Promise<TMDBMovieDetails> 
       console.log(`Using description: ${description}`);
       console.log(`Using rating: ${rating}`);
       
-      return {
+      const result = {
         poster,
         description,
         rating
       };
+
+      // Cache the result to avoid future API calls
+      movieDetailsCache.set(cacheKey, result);
+      return result;
     } else {
       console.log(`No results found for "${title}"`);
     }
     
-    return {
+    const emptyResult = {
       poster: null,
       description: null,
       rating: null
     };
+    movieDetailsCache.set(cacheKey, emptyResult);
+    return emptyResult;
   } catch (error) {
     console.error('Error fetching movie details:', error instanceof Error ? error.message : error);
-    return {
+    const errorResult = {
       poster: null,
       description: null,
       rating: null
     };
+    movieDetailsCache.set(cacheKey, errorResult);
+    return errorResult;
   }
 };
 

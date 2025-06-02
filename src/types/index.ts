@@ -11,6 +11,11 @@ export interface Movie {
     '24m': number;
     '36m': number;
   };
+  // TMDB fields
+  tmdb_poster_url?: string | null;
+  tmdb_rating?: string | null;
+  tmdb_description?: string | null;
+  tmdb_updated_at?: string | null;
 }
 
 export interface Scene {
