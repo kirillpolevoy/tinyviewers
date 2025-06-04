@@ -87,17 +87,15 @@ export default function MoviesList({
 
   if (error) {
     return (
-      <div className="max-w-3xl">
-        <h2 className="text-4xl font-light mb-8 text-red-600">Unable to Load Movies</h2>
-        <p className="text-red-500 font-light text-xl mb-8">{error}</p>
-        <div className="p-8 bg-white/80 backdrop-blur-sm rounded-2xl">
-          <h3 className="text-xl font-light mb-6 text-[#2C2C27]">Debug Information</h3>
-          <div className="space-y-3 text-[#6B6B63] font-light">
+      <div className="text-center py-16">
+        <h2 className="text-3xl font-bold mb-6 text-red-600">Unable to Load Movies</h2>
+        <p className="text-red-500 text-lg mb-8">{error}</p>
+        <div className="max-w-md mx-auto p-6 bg-red-50 backdrop-blur-sm rounded-2xl border border-red-200">
+          <h3 className="text-lg font-semibold mb-4 text-red-800">Debug Information</h3>
+          <div className="space-y-2 text-sm text-red-700">
             <p>Search Query: {searchQuery || 'none'}</p>
             <p>Category: {categoryFilter || 'none'}</p>
             <p>Age: {ageFilter || 'none'}</p>
-            <p>Supabase URL set: {process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Yes' : 'No'}</p>
-            <p>Supabase Key set: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Yes' : 'No'}</p>
           </div>
         </div>
       </div>
@@ -107,24 +105,26 @@ export default function MoviesList({
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <p className="text-2xl text-[#6B6B63] font-light">Loading movies...</p>
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-xl text-gray-600">Loading movies...</p>
+        </div>
       </div>
     );
   }
 
   if (movies.length === 0) {
     return (
-      <div className="max-w-3xl">
-        <h2 className="text-4xl font-light mb-8 text-[#2C2C27]">No Movies Found</h2>
-        <div className="text-xl text-[#6B6B63] font-light space-y-2 mb-12">
-          <p>Search parameters:</p>
-          <p>Query: {searchQuery || 'none'}</p>
-          <p>Category: {categoryFilter || 'none'}</p>
-          <p>Age: {ageFilter || 'none'}</p>
+      <div className="text-center py-16">
+        <div className="text-6xl mb-6">🎬</div>
+        <h2 className="text-3xl font-bold mb-6 text-gray-800">No Movies Found</h2>
+        <div className="text-lg text-gray-600 space-y-1 mb-8">
+          <p>We couldn't find any movies matching your search.</p>
+          {searchQuery && <p className="font-semibold">Query: "{searchQuery}"</p>}
         </div>
         <Link 
           href="/"
-          className="text-2xl text-[#2C2C27] hover:text-[#6B6B63] transition-colors duration-300 font-light"
+          className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition-colors font-semibold"
         >
           Try a different search →
         </Link>
@@ -133,7 +133,7 @@ export default function MoviesList({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
       {movies.map((movie) => {
         const movieUrl = `/movies/${movie.id}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}${categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ''}${ageFilter ? `&age=${encodeURIComponent(ageFilter)}` : ''}`;
         
@@ -142,57 +142,55 @@ export default function MoviesList({
         // Use TMDB rating if available, fallback to original rating
         const displayRating = movie.tmdb_rating || movie.rating;
         
+        const getAgeFlag = (movie: Movie) => {
+          const scores = movie.age_scores;
+          if (scores['12m'] <= 2) return "✅ 12 m+";
+          if (scores['24m'] <= 2) return "⚠️ 12 m | ✅ 24 m+";
+          if (scores['36m'] <= 2) return "⚠️ 24 m | ✅ 36 m+";
+          return "⚠️ Check age ratings";
+        };
+        
         return (
           <Link 
             key={movie.id}
             href={movieUrl}
             className="group block"
           >
-            <div className="relative aspect-[3/4] mb-4 overflow-hidden rounded-xl 
-                          shadow-[0_2px_20px_rgba(0,0,0,0.04)]
-                          hover:shadow-[0_2px_30px_rgba(0,0,0,0.08)]
-                          transition-all duration-500 max-h-[300px]">
-              {posterUrl && !posterUrl.includes('example.com') ? (
-                <Image
-                  src={posterUrl}
-                  alt={movie.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  priority
-                  onError={(e) => {
-                    console.error(`❌ Image failed to load for "${movie.title}":`, {
-                      src: posterUrl,
-                      error: e
-                    });
-                  }}
-                  onLoad={() => {
-                    console.log(`✅ Image loaded successfully for "${movie.title}":`, posterUrl);
-                  }}
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[#F5F5F0] to-[#E5E5E0] flex items-center justify-center">
-                  <div className="text-center p-4">
-                    <div className="text-4xl mb-2">🎬</div>
-                    <p className="text-sm text-[#6B6B63] font-light">{movie.title}</p>
+            <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] w-full">
+              <div className="relative aspect-[3/4] overflow-hidden flex items-center justify-center">
+                {posterUrl && !posterUrl.includes('example.com') ? (
+                  <Image
+                    src={posterUrl}
+                    alt={movie.title}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                    <div className="text-center p-3">
+                      <div className="text-3xl mb-1">🎬</div>
+                      <p className="text-xs text-gray-600 font-medium leading-tight">{movie.title}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                <h2 className="text-sm font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2 leading-tight" title={movie.title}>
+                  {movie.title}
+                </h2>
+                <p className="text-xs text-gray-600 mb-3 line-clamp-1">{getAgeFlag(movie)}</p>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-center">
+                    <span className="text-xs font-medium text-gray-700">Rating: {displayRating}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 text-xs text-gray-600">
+                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">12m: {movie.age_scores['12m']}</span>
+                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">24m: {movie.age_scores['24m']}</span>
+                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">36m: {movie.age_scores['36m']}</span>
                   </div>
                 </div>
-              )}
-            </div>
-            <h2 className="text-xl font-light text-[#2C2C27] mb-2 group-hover:text-[#6B6B63] transition-colors duration-300">
-              {movie.title}
-            </h2>
-            <div className="flex items-center space-x-4">
-              <p className="text-sm text-[#6B6B63] font-light">
-                Rating: {displayRating}
-              </p>
-              <div className="flex items-center space-x-3">
-                {(['12m', '24m', '36m'] as const).map((age) => (
-                  <div key={age} className="flex items-center space-x-1">
-                    <span className="text-xs text-[#6B6B63]/60 font-light">{age}</span>
-                    <span className="text-sm font-light text-[#2C2C27]">{movie.age_scores[age]}</span>
-                  </div>
-                ))}
               </div>
             </div>
           </Link>

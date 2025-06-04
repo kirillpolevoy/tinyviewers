@@ -138,9 +138,23 @@ const MovieDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F5F5F0] px-8 md:px-16 py-16">
-        <div className="max-w-[90rem] mx-auto">
-          <h1 className="text-4xl font-light text-[#6B6B63]">Loading...</h1>
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50">
+        {/* Header */}
+        <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
+          <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
+            <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2">
+              🧸 <span>Tiny Viewers</span>
+            </Link>
+          </div>
+        </header>
+        
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mb-6"></div>
+              <h1 className="text-2xl font-semibold text-gray-800">Loading movie details...</h1>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -148,16 +162,30 @@ const MovieDetailsPage = () => {
 
   if (error || !movie) {
     return (
-      <div className="min-h-screen bg-[#F5F5F0] px-8 md:px-16 py-16">
-        <div className="max-w-[90rem] mx-auto">
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50">
+        {/* Header */}
+        <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
+          <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
+            <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2">
+              🧸 <span>Tiny Viewers</span>
+            </Link>
+          </div>
+        </header>
+        
+        <div className="max-w-7xl mx-auto px-6 py-16">
           <Link 
             href={backUrl}
-            className="text-[#6B6B63] hover:text-[#2C2C27] transition-colors duration-300 text-base tracking-wide font-light"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-300 text-base font-medium mb-8 hover:gap-3 group"
           >
-            ← Back
+            <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+            <span>Back to Movies</span>
           </Link>
-          <h1 className="text-4xl font-light mb-6 text-red-600 mt-12">Unable to Load Movie</h1>
-          <p className="text-xl text-red-500 font-light mb-8">{error || 'Movie not found'}</p>
+          
+          <div className="text-center py-16 bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg border border-white/60">
+            <div className="text-6xl mb-6">❌</div>
+            <h1 className="text-3xl font-bold mb-6 text-red-600">Unable to Load Movie</h1>
+            <p className="text-xl text-red-500 mb-8">{error || 'Movie not found'}</p>
+          </div>
         </div>
       </div>
     );
@@ -169,88 +197,98 @@ const MovieDetailsPage = () => {
   const description = movie.tmdb_description || movie.summary;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F5F0] via-white to-[#F5F5F0]">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50">
+      {/* Header */}
+      <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
+        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
+          <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            🧸 <span>Tiny Viewers</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            <a href="#feedback" className="hover:text-primary transition-colors">Feedback</a>
+          </nav>
+        </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-6 py-12">
         <Link 
           href={backUrl}
-          className="inline-flex items-center gap-2 text-[#6B6B63] hover:text-[#2C2C27] transition-all duration-300 text-base tracking-wide font-light hover:gap-3 group relative px-4 py-2 rounded-full hover:bg-white/40"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-300 text-base font-medium mb-12 hover:gap-3 group"
         >
           <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
           <span>Back to Movies</span>
         </Link>
         
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-12 mt-10 mb-16">
-          <div className="relative w-full max-w-[320px] mx-auto lg:mx-0">
-            <div className="relative aspect-[2/3] overflow-hidden rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] lg:sticky lg:top-12 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(0,0,0,0.08)] before:absolute before:inset-0 before:z-10 before:bg-gradient-to-t before:from-black/20 before:to-transparent/0">
+        <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 mb-16">
+          {/* Movie Poster */}
+          <div className="relative w-full max-w-[400px] mx-auto lg:mx-0">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-3xl shadow-2xl lg:sticky lg:top-24 transition-all duration-500 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border border-white/60">
               {(posterUrl && !posterUrl.includes('example.com')) ? (
                 <Image
                   src={posterUrl}
                   alt={movie.title}
                   fill
-                  className="object-cover transition-all duration-700 hover:scale-110"
-                  sizes="(max-width: 1024px) 320px, 320px"
+                  className="object-cover transition-all duration-700 hover:scale-105"
+                  sizes="(max-width: 1024px) 400px, 400px"
                   priority
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-[#F5F5F0] to-[#E5E5E0] flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
                   <div className="text-center p-8">
-                    <div className="text-6xl mb-4">🎬</div>
-                    <p className="text-lg text-[#6B6B63] font-light">{movie.title}</p>
+                    <div className="text-8xl mb-6">🎬</div>
+                    <p className="text-xl text-gray-700 font-semibold">{movie.title}</p>
                   </div>
                 </div>
               )}
             </div>
           </div>
           
-          <div className="space-y-8">
-            <div>
-              <h1 className="text-5xl md:text-6xl font-light tracking-tight mb-6 bg-gradient-to-br from-[#2C2C27] via-[#4A4A42] to-[#6B6B63] bg-clip-text text-transparent">
+          {/* Movie Details */}
+          <div className="space-y-12">
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg border border-white/60 p-8">
+              <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-600 to-emerald-500 text-transparent bg-clip-text mb-6 drop-shadow-lg">
                 {movie.title}
               </h1>
-              <p className="text-lg text-[#6B6B63] font-light tracking-wide leading-relaxed border-l-2 border-[#2C2C27]/10 pl-6">
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
                 {description}
               </p>
+              <div className="flex items-center gap-4 text-gray-600">
+                <span className="bg-blue-100 px-3 py-1 rounded-full text-sm font-medium">
+                  Rating: {displayRating}
+                </span>
+              </div>
             </div>
             
-            <div className="space-y-4">
-              <h2 className="text-2xl font-light text-[#2C2C27] flex items-center gap-3">
-                Age Based Scary Score
-                <div className="h-px flex-1 bg-gradient-to-r from-[#2C2C27]/10 to-transparent" />
+            {/* Age Ratings */}
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg border border-white/60 p-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                <span>Age-Based Safety Scores</span>
+                <div className="h-px flex-1 bg-gradient-to-r from-gray-300 to-transparent" />
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {(['12m', '24m', '36m'] as const).map((age) => {
                   const score = movie.age_scores[age];
                   const ratingType = getAgeRatingType(score);
                   const ratingInfo = AGE_RATING_INFO[ratingType];
                   return (
-                    <div key={age} className="group p-4 sm:p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:scale-[1.02] hover:bg-white/60">
+                    <div key={age} className="group p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-white/60 shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
                       <div className="flex flex-col">
-                        <div className="flex items-baseline gap-1.5 mb-1">
-                          <span className="text-[#2C2C27] font-medium text-base sm:text-lg tracking-wide">
-                            {age.replace('m', '')}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-gray-800 font-bold text-xl">
+                            {age.replace('m', '')} months
                           </span>
-                          <span className="text-[#6B6B63] text-xs sm:text-sm tracking-wide">
-                            months old
-                          </span>
+                          <span className="text-2xl">{ratingInfo.icon}</span>
                         </div>
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className="flex items-baseline gap-1">
-                            <p className="text-2xl sm:text-3xl font-light text-[#2C2C27] transition-all duration-300 group-hover:text-[#2C2C27] ">
-                              {score}</p>
-                            <span className="text-base sm:text-lg text-[#6B6B63]">/5</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg sm:text-xl">{ratingInfo.icon}</span>
-                          </div>
+                        <div className="flex items-baseline gap-2 mb-3">
+                          <span className="text-3xl font-bold text-gray-800">{score}</span>
+                          <span className="text-lg text-gray-600">/5</span>
                         </div>
-                        <div className="mt-2 mb-2">
-                          <p className="text-xs text-[#6B6B63] italic leading-relaxed">
-                            {getScoreDescription(score)}
-                          </p>
-                        </div>
-                        <div className="h-1 w-full bg-gray-100 rounded-full mt-2 overflow-hidden">
+                        <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+                          {getScoreDescription(score)}
+                        </p>
+                        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                           <div 
-                            className={`h-full ${getRatingColor(score)} transition-all duration-300`}
+                            className={`h-full transition-all duration-500 ${getRatingColor(score)}`}
                             style={{ width: `${(score / 5) * 100}%` }} 
                           />
                         </div>
@@ -259,79 +297,67 @@ const MovieDetailsPage = () => {
                   );
                 })}
               </div>
-              <p className="text-sm text-[#6B6B63] mt-2">
-                Age-based scary scores and scene analysis information
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-4 p-5 rounded-xl bg-white/50 backdrop-blur-sm border border-black/[0.02] shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white/60 group">
-              <div className="w-2 h-2 rounded-full bg-[#2C2C27]/30 transition-transform duration-300 group-hover:scale-110" />
-              <p className="text-lg text-[#6B6B63] font-light">
-                Rating: <span className="text-[#2C2C27]">{displayRating}</span>
-              </p>
             </div>
 
-            <div className="pt-8">
-              <h2 className="text-3xl font-light text-[#2C2C27] mb-8 flex items-center gap-3">
-                Scene Analysis
-                <span className="px-3 py-1 text-sm text-[#6B6B63] font-light bg-[#2C2C27]/5 rounded-full tracking-wider">
+            {/* Scene Analysis */}
+            <div className="bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg border border-white/60 p-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                <span>Scene Analysis</span>
+                <span className="px-3 py-1 text-sm text-gray-600 bg-gray-100 rounded-full">
                   {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
                 </span>
               </h2>
               {!scenes || scenes.length === 0 ? (
-                <p className="text-lg text-[#6B6B63] font-light">No scenes analyzed yet.</p>
+                <div className="text-center py-12">
+                  <div className="text-4xl mb-4">🎬</div>
+                  <p className="text-lg text-gray-600">No scenes analyzed yet.</p>
+                </div>
               ) : (
                 <div className="space-y-6">
                   {scenes.map((scene, index) => (
                     <div 
                       key={scene.id}
-                      className="group bg-white/50 backdrop-blur-sm p-4 sm:p-7 rounded-xl shadow-[0_2px_20px_rgba(0,0,0,0.03)] transition-all duration-500 ease-out hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:translate-y-[-2px] border border-black/[0.02]"
+                      className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md transition-all duration-300 hover:shadow-xl border border-white/60"
                     >
-                      {/* Scene Header */}
                       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#2C2C27]/5 text-[#2C2C27] font-medium">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-800 font-bold">
                             {index + 1}
                           </div>
-                          <div className="space-y-1">
-                            <h3 className="text-base font-medium text-[#2C2C27] tracking-wide">
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-800">
                               {scene.timestamp_start} - {scene.timestamp_end}
                             </h3>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-[#6B6B63] font-light">
-                                Intensity Level:
-                              </span>
-                              <div className="">
-                                <div className="flex items-center gap-1">
-                                  <div 
-                                    className="w-2.5 h-2.5 rounded-full"
-                                    style={{
-                                      backgroundColor: scene.intensity <= 2 ? '#22c55e' : 
-                                                     scene.intensity <= 4 ? '#eab308' : 
-                                                     '#ef4444'
-                                    }} 
-                                  />
-                                  <span 
-                                    className="text-sm font-medium"
-                                    style={{
-                                      color: scene.intensity <= 2 ? '#22c55e' : 
-                                             scene.intensity <= 4 ? '#eab308' : 
-                                             '#ef4444'
-                                    }}
-                                  >
-                                    {scene.intensity}/5
-                                  </span>
-                                </div>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-sm text-gray-600">Intensity:</span>
+                              <div className="flex items-center gap-2">
+                                <div 
+                                  className="w-3 h-3 rounded-full"
+                                  style={{
+                                    backgroundColor: scene.intensity <= 2 ? '#22c55e' : 
+                                                   scene.intensity <= 4 ? '#eab308' : 
+                                                   '#ef4444'
+                                  }} 
+                                />
+                                <span 
+                                  className="text-sm font-semibold"
+                                  style={{
+                                    color: scene.intensity <= 2 ? '#22c55e' : 
+                                           scene.intensity <= 4 ? '#eab308' : 
+                                           '#ef4444'
+                                  }}
+                                >
+                                  {scene.intensity}/5
+                                </span>
                               </div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Progress Bar */}
-                        <div className="sm:w-48 space-y-2">
-                          <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <div className="sm:w-48">
+                          <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
                             <div 
-                              className="h-full transition-all duration-300"
+                              className="h-full transition-all duration-500"
                               style={{
                                 width: `${(scene.intensity / 5) * 100}%`,
                                 backgroundColor: scene.intensity <= 2 ? '#22c55e' : 
