@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import { Movie } from '@/types';
+import { motion } from 'framer-motion';
+import { supabase } from '../../lib/supabase';
+import { Movie } from '../../types';
 
 export default function MoviesList({
   searchQuery,
@@ -87,10 +88,18 @@ export default function MoviesList({
 
   if (error) {
     return (
-      <div className="text-center py-16">
-        <h2 className="text-3xl font-bold mb-6 text-red-600">Unable to Load Movies</h2>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center py-16"
+      >
+        <div className="text-5xl mb-6">😞</div>
+        <h2 className="text-3xl font-light text-red-600 mb-6 tracking-tight" style={{
+          fontFamily: 'system-ui, -apple-system, serif',
+        }}>Unable to Load Movies</h2>
         <p className="text-red-500 text-lg mb-8">{error}</p>
-        <div className="max-w-md mx-auto p-6 bg-red-50 backdrop-blur-sm rounded-2xl border border-red-200">
+        <div className="max-w-md mx-auto p-6 bg-red-50/80 backdrop-blur-sm rounded-2xl border border-red-200">
           <h3 className="text-lg font-semibold mb-4 text-red-800">Debug Information</h3>
           <div className="space-y-2 text-sm text-red-700">
             <p>Search Query: {searchQuery || 'none'}</p>
@@ -98,43 +107,55 @@ export default function MoviesList({
             <p>Age: {ageFilter || 'none'}</p>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex justify-center items-center min-h-[400px]"
+      >
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-xl text-gray-600">Loading movies...</p>
+          <div className="text-4xl mb-6 animate-bounce">🎬</div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-200 border-t-purple-600 mb-4"></div>
+          <p className="text-xl text-slate-600 font-medium">Loading movies...</p>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   if (movies.length === 0) {
     return (
-      <div className="text-center py-16">
-        <div className="text-6xl mb-6">🎬</div>
-        <h2 className="text-3xl font-bold mb-6 text-gray-800">No Movies Found</h2>
-        <div className="text-lg text-gray-600 space-y-1 mb-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center py-16"
+      >
+        <div className="text-6xl mb-6">🎭</div>
+        <h2 className="text-3xl font-light text-slate-800 mb-6 tracking-tight" style={{
+          fontFamily: 'system-ui, -apple-system, serif',
+        }}>No Movies Found</h2>
+        <div className="text-lg text-slate-600 space-y-1 mb-8">
           <p>We couldn't find any movies matching your search.</p>
           {searchQuery && <p className="font-semibold">Query: "{searchQuery}"</p>}
         </div>
         <Link 
           href="/"
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition-colors font-semibold"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 font-medium"
         >
           Try a different search →
         </Link>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-      {movies.map((movie) => {
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
+      {movies.map((movie, index) => {
         const movieUrl = `/movies/${movie.id}${searchQuery ? `?search=${encodeURIComponent(searchQuery)}` : ''}${categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ''}${ageFilter ? `&age=${encodeURIComponent(ageFilter)}` : ''}`;
         
         // Use TMDB poster if available, fallback to original poster
@@ -151,49 +172,67 @@ export default function MoviesList({
         };
         
         return (
-          <Link 
+          <motion.div
             key={movie.id}
-            href={movieUrl}
-            className="group block"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
           >
-            <div className="bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl border border-white/60 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] w-full">
-              <div className="relative aspect-[3/4] overflow-hidden flex items-center justify-center">
-                {posterUrl && !posterUrl.includes('example.com') ? (
-                  <Image
-                    src={posterUrl}
-                    alt={movie.title}
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                    <div className="text-center p-3">
-                      <div className="text-3xl mb-1">🎬</div>
-                      <p className="text-xs text-gray-600 font-medium leading-tight">{movie.title}</p>
+            <Link 
+              href={movieUrl}
+              className="group block"
+            >
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-pink-100 hover:shadow-2xl hover:border-purple-200 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-1 w-full max-w-sm mx-auto sm:max-w-none">
+                <div className="relative aspect-[3/4] overflow-hidden flex items-center justify-center">
+                  {posterUrl && !posterUrl.includes('example.com') ? (
+                    <Image
+                      src={posterUrl}
+                      alt={movie.title}
+                      fill
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 90vw, (max-width: 768px) 45vw, (max-width: 1024px) 30vw, (max-width: 1280px) 22vw, 18vw"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
+                      <div className="text-center p-3 sm:p-4">
+                        <div className="text-3xl sm:text-4xl mb-2">🎬</div>
+                        <p className="text-xs sm:text-sm text-slate-600 font-medium leading-tight px-2">{movie.title}</p>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-              <div className="p-4">
-                <h2 className="text-sm font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2 leading-tight" title={movie.title}>
-                  {movie.title}
-                </h2>
-                <p className="text-xs text-gray-600 mb-3 line-clamp-1">{getAgeFlag(movie)}</p>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-center">
-                    <span className="text-xs font-medium text-gray-700">Rating: {displayRating}</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-1 text-xs text-gray-600">
-                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">12m: {movie.age_scores['12m']}</span>
-                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">24m: {movie.age_scores['24m']}</span>
-                    <span className="bg-gray-100 px-1 py-1 rounded text-center text-xs">36m: {movie.age_scores['36m']}</span>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div className="p-4 sm:p-6">
+                  <h2 className="text-sm sm:text-base font-semibold text-slate-800 mb-2 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight min-h-[2rem] sm:min-h-[2.5rem]" title={movie.title}>
+                    {movie.title}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 mb-3 bg-gradient-to-r from-emerald-100 to-blue-100 px-3 py-1 rounded-full inline-block">{getAgeFlag(movie)}</p>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-center">
+                      <span className="text-xs font-medium text-slate-700 bg-purple-100 px-3 py-1.5 rounded-full border border-purple-200">
+                        Rating: {displayRating}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 text-xs">
+                      <div className="bg-pink-50 border border-pink-200 px-2 py-2 rounded-lg text-center hover:bg-pink-100 transition-colors duration-300">
+                        <div className="font-medium text-pink-800 text-xs">12m</div>
+                        <div className="text-pink-600 font-bold text-sm">{movie.age_scores['12m']}</div>
+                      </div>
+                      <div className="bg-purple-50 border border-purple-200 px-2 py-2 rounded-lg text-center hover:bg-purple-100 transition-colors duration-300">
+                        <div className="font-medium text-purple-800 text-xs">24m</div>
+                        <div className="text-purple-600 font-bold text-sm">{movie.age_scores['24m']}</div>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 px-2 py-2 rounded-lg text-center hover:bg-blue-100 transition-colors duration-300">
+                        <div className="font-medium text-blue-800 text-xs">36m</div>
+                        <div className="text-blue-600 font-bold text-sm">{movie.age_scores['36m']}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </motion.div>
         );
       })}
     </div>

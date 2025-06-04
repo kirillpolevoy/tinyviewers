@@ -9,11 +9,13 @@ import { supabase } from '../lib/supabase';
 import { Movie } from '../types';
 import Image from 'next/image';
 import Link from 'next/link';
+import FeedbackModal from './components/FeedbackModal';
 
 export default function HomePage() {
   const [featuredMovies, setFeaturedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   const cards = [
     {
@@ -95,92 +97,185 @@ export default function HomePage() {
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
             🧸 <span>Tiny Viewers</span>
           </h1>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#feedback" className="hover:text-primary transition-colors">Feedback</a>
+          <nav className="flex items-center gap-6 text-sm font-medium">
+            <button 
+              onClick={() => setIsFeedbackModalOpen(true)}
+              className="hover:text-blue-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-blue-50"
+            >
+              Feedback
+            </button>
           </nav>
         </div>
       </header>
 
       {/* HERO */}
-      <section className="flex flex-col items-center text-center pt-24 pb-20 px-6">
-        <motion.h2
+      <section className="relative flex flex-col items-center text-center pt-16 pb-12 px-6 overflow-hidden">
+        {/* Gentle Background Elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-16 left-1/4 w-96 h-96 bg-gradient-to-r from-pink-200/50 to-purple-200/50 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-8 right-1/4 w-80 h-80 bg-gradient-to-r from-yellow-200/40 to-orange-200/40 rounded-full blur-3xl"></div>
+          
+          {/* A few floating shapes */}
+          <div className="absolute top-1/4 left-8 w-4 h-4 bg-pink-400 rounded-full animate-bounce delay-300"></div>
+          <div className="absolute bottom-1/3 right-16 w-3 h-3 bg-purple-400 rounded-full animate-bounce delay-700"></div>
+          <div className="absolute top-2/3 left-20 w-5 h-5 bg-yellow-400 rounded-full animate-bounce delay-500"></div>
+        </div>
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl sm:text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-emerald-500 text-transparent bg-clip-text mb-6 drop-shadow-lg"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-4"
         >
-          Toddler‑Safe Movie Guide
-        </motion.h2>
+          <span className="text-3xl">🎬</span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+          className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 mb-6 relative leading-[0.9] cursor-default tracking-tight"
+          style={{
+            fontFamily: 'system-ui, -apple-system, serif',
+            textShadow: '0 2px 8px rgba(168, 85, 247, 0.15)',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          <span className="relative inline-block transition-all duration-500 ease-out hover:text-pink-600 font-extralight">
+            Toddler‑Safe
+          </span>
+          <br />
+          <span className="relative inline-block transition-all duration-500 ease-out hover:text-emerald-600 font-normal">
+            Movie Guide
+          </span>
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="text-center mb-6"
+        >
+          <p className="text-lg sm:text-xl font-medium text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
+            Skip the scares. Keep the joy. ✨
+          </p>
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl max-w-2xl text-gray-700 mb-10 text-center"
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          className="text-base max-w-lg text-slate-600 mb-8 text-center leading-relaxed"
         >
-          Scene‑by‑scene scary scores & age‑specific warnings.
-          <br />
-          Built for parents of 1–3 year olds.
+          Scene‑by‑scene scary scores & age‑specific warnings for parents of 1–3 year olds. 👶
         </motion.p>
 
-        {/* Search */}
+        {/* Balanced Search */}
         <motion.form
           onSubmit={handleSearch}
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="relative w-full max-w-xl flex"
+          initial={{ scale: 0.95, opacity: 0, y: 20 }}
+          animate={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="relative w-full max-w-md"
         >
-          <div className="relative w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <div className="relative flex bg-white rounded-full shadow-lg border-2 border-pink-200 hover:border-purple-300 hover:shadow-xl transition-all duration-300">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400 hover:text-pink-500 transition-colors duration-300" size={18} />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search: 'Moana', 'Curious George', 'Paddington'…"
-              className="w-full pl-12 pr-14 py-4 rounded-full border border-gray-300 shadow placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Search movies... 🔍"
+              className="w-full pl-12 pr-16 py-3 bg-transparent rounded-full text-sm placeholder:text-purple-400 focus:ring-0 focus:outline-none"
             />
             <button 
               type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-600 hover:text-blue-800"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-pink-500 to-purple-500 text-white p-2 rounded-full hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110"
             >
-              <Send size={18} />
+              <Send size={14} />
             </button>
           </div>
         </motion.form>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="mt-6 text-xs text-slate-500 font-medium flex items-center gap-2"
+        >
+          <span>🌟</span>
+          <span>Safe movie magic for little ones</span>
+          <span>🌟</span>
+        </motion.div>
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how" className="py-24 px-6 bg-white">
-        <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-3">
-          {cards.map((c, i) => (
-            <motion.div
-              key={c.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-white to-slate-50 p-6 rounded-3xl shadow-lg border border-slate-100 hover:shadow-2xl transition-shadow"
-            >
-              <div className="text-4xl mb-4">{c.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{c.title}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{c.text}</p>
-            </motion.div>
-          ))}
+      <section id="how" className="py-20 px-6 bg-gradient-to-b from-white to-pink-50/30">
+        <div className="max-w-6xl mx-auto">
+          <motion.h3
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-4xl font-light text-slate-800 text-center mb-16 tracking-tight"
+            style={{
+              fontFamily: 'system-ui, -apple-system, serif',
+              textShadow: '0 2px 8px rgba(168, 85, 247, 0.1)',
+            }}
+          >
+            How It Works
+          </motion.h3>
+          
+          <div className="grid gap-8 md:grid-cols-3">
+            {cards.map((c, i) => (
+              <motion.div
+                key={c.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl hover:border-purple-200 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">{c.icon}</div>
+                <h4 className="text-xl font-semibold mb-4 text-slate-800 group-hover:text-purple-700 transition-colors duration-300">{c.title}</h4>
+                <p className="text-slate-600 leading-relaxed">{c.text}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* TODDLER FAVORITES */}
-      <section id="safe" className="py-24 px-6 bg-gradient-to-t from-white via-amber-50/60 to-white/30">
+      <section id="safe" className="py-20 px-6 bg-gradient-to-b from-pink-50/30 via-purple-50/20 to-white">
         <div className="max-w-6xl mx-auto">
-          <h4 className="text-3xl font-bold mb-10 flex items-center gap-3">
-            <span>Toddler Favorites</span>
-            <ArrowRight size={22} className="text-blue-600" />
-          </h4>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h4 className="text-3xl sm:text-4xl font-light text-slate-800 mb-4 tracking-tight" style={{
+              fontFamily: 'system-ui, -apple-system, serif',
+              textShadow: '0 2px 8px rgba(168, 85, 247, 0.1)',
+            }}>
+              <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
+                Toddler Favorites
+              </span>
+            </h4>
+            <p className="text-slate-600 text-lg">Hand-picked movies perfect for little ones</p>
+          </motion.div>
           
           {loading ? (
-            <div className="flex justify-center items-center min-h-[300px]">
-              <p className="text-xl text-gray-500">Loading featured movies...</p>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex justify-center items-center min-h-[300px]"
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-4 animate-bounce">🎬</div>
+                <p className="text-xl text-slate-500">Loading featured movies...</p>
+              </div>
+            </motion.div>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {featuredMovies.map((movie, i) => {
@@ -190,11 +285,11 @@ export default function HomePage() {
                 return (
                   <motion.div
                     key={movie.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="group relative rounded-3xl overflow-hidden shadow-xl border border-white/60 hover:shadow-2xl transition-shadow"
+                    className="group relative rounded-2xl overflow-hidden shadow-lg border border-pink-100 hover:shadow-2xl hover:border-purple-200 transition-all duration-500 hover:-translate-y-2 bg-white/90 backdrop-blur-sm"
                   >
                     <Link href={`/movies/${movie.id}`}>
                       <div className="relative aspect-[4/5] overflow-hidden max-h-[200px]">
@@ -207,25 +302,28 @@ export default function HomePage() {
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                          <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
                             <div className="text-center p-4">
                               <div className="text-3xl mb-2">🎬</div>
-                              <p className="text-xs text-gray-600 font-medium">{movie.title}</p>
+                              <p className="text-xs text-slate-600 font-medium">{movie.title}</p>
                             </div>
                           </div>
                         )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
-                      <div className="p-5 bg-white/90 backdrop-blur-sm">
-                        <h5 className="font-semibold truncate mb-1" title={movie.title}>
+                      <div className="p-6">
+                        <h5 className="font-semibold truncate mb-2 text-slate-800 group-hover:text-purple-700 transition-colors duration-300" title={movie.title}>
                           {movie.title}
                         </h5>
-                        <p className="text-sm text-gray-600 mb-2">{getAgeFlag(movie)}</p>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <span>Rating: {displayRating}</span>
-                          <div className="flex gap-2">
-                            <span>12m: {movie.age_scores['12m']}</span>
-                            <span>24m: {movie.age_scores['24m']}</span>
-                            <span>36m: {movie.age_scores['36m']}</span>
+                        <p className="text-sm text-slate-600 mb-3 bg-gradient-to-r from-emerald-100 to-blue-100 px-3 py-1 rounded-full inline-block">
+                          {getAgeFlag(movie)}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-slate-500">
+                          <span className="bg-purple-100 px-2 py-1 rounded-full">Rating: {displayRating}</span>
+                          <div className="flex gap-1">
+                            <span className="bg-pink-100 px-2 py-1 rounded-full">12m: {movie.age_scores['12m']}</span>
+                            <span className="bg-purple-100 px-2 py-1 rounded-full">24m: {movie.age_scores['24m']}</span>
+                            <span className="bg-blue-100 px-2 py-1 rounded-full">36m: {movie.age_scores['36m']}</span>
                           </div>
                         </div>
                       </div>
@@ -237,27 +335,59 @@ export default function HomePage() {
           )}
           
           {!loading && featuredMovies.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-600 mb-4">No featured movies available yet.</p>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center py-16 bg-white/60 backdrop-blur-sm rounded-2xl border border-pink-100"
+            >
+              <div className="text-5xl mb-6">🎭</div>
+              <p className="text-xl text-slate-600 mb-6">No featured movies available yet.</p>
               <Link 
                 href="/movies"
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Browse all movies →
               </Link>
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
 
       {/* FOOTER CTA */}
-      <footer className="py-12 text-center bg-white">
-        <Link href="/movies">
-          <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition-colors">
-            <PlayCircle size={20} /> Browse Full Library
-          </button>
-        </Link>
+      <footer className="py-16 text-center bg-gradient-to-b from-white to-pink-50/50">
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="max-w-md mx-auto"
+        >
+          <div className="text-4xl mb-6">🎪</div>
+          <h5 className="text-2xl font-light text-slate-800 mb-6 tracking-tight" style={{
+            fontFamily: 'system-ui, -apple-system, serif',
+            textShadow: '0 2px 8px rgba(168, 85, 247, 0.1)',
+          }}>
+            Ready to explore?
+          </h5>
+          <Link href="/movies">
+            <button className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-500 via-purple-500 to-emerald-500 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-110 hover:-translate-y-1 text-lg font-medium">
+              <PlayCircle size={24} className="animate-pulse" /> 
+              <span>Browse Full Library</span>
+            </button>
+          </Link>
+          <p className="text-sm text-slate-500 mt-6">
+            Discover safe, joyful movies for your little one ✨
+          </p>
+        </motion.div>
       </footer>
+
+      {/* Feedback Modal */}
+      <FeedbackModal 
+        isOpen={isFeedbackModalOpen} 
+        onClose={() => setIsFeedbackModalOpen(false)} 
+      />
     </div>
   );
 }
