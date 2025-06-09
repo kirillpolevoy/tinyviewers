@@ -28,6 +28,16 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formData.name.trim()) {
+      setError('Please provide your name');
+      return;
+    }
+    
+    if (!formData.email.trim()) {
+      setError('Please provide your email');
+      return;
+    }
+    
     if (!formData.comments.trim()) {
       setError('Please provide your feedback comments');
       return;
@@ -113,7 +123,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   {/* Name Field */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                      Your Name <span className="text-slate-400">(optional)</span>
+                      Your Name <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -121,6 +131,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 bg-white/80 border border-pink-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-300 transition-all duration-300 text-slate-800"
                       placeholder="Your name"
                     />
@@ -129,7 +140,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   {/* Email Field */}
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                      Email <span className="text-slate-400">(optional)</span>
+                      Email <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="email"
@@ -137,6 +148,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      required
                       className="w-full px-4 py-3 bg-white/80 border border-pink-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-300 transition-all duration-300 text-slate-800"
                       placeholder="your@email.com"
                     />
@@ -181,7 +193,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                     </button>
                     <button
                       type="submit"
-                      disabled={isSubmitting || !formData.comments.trim()}
+                      disabled={isSubmitting || !formData.name.trim() || !formData.email.trim() || !formData.comments.trim()}
                       className="flex-1 px-6 py-3 bg-gradient-to-r from-pink-500 via-purple-500 to-emerald-500 text-white rounded-2xl hover:shadow-lg transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? (
