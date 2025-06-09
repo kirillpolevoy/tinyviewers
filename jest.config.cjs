@@ -6,16 +6,10 @@ const config = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
-  moduleNameMapping: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
   ],
-  testEnvironmentOptions: {
-    customExportConditions: [''],
-  },
 }
 
 module.exports = config 
