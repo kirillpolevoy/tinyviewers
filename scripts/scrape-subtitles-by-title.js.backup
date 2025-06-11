@@ -1,0 +1,497 @@
+import { createClient } from '@supabase/supabase-js';
+import https from 'https';
+import http from 'http';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config({ path: '.env.local' });
+
+// Initialize Supabase
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+// Configuration
+const DELAY_MS = 2000; // 2 seconds between requests
+const REQUEST_TIMEOUT = 30000; // 30 second timeout (increased for slow sites)
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Enhanced HTTP client
+function fetchData(url, options = {}) {
+  return new Promise((resolve, reject) => {
+    const client = url.startsWith('https') ? https : http;
+    const urlObj = new URL(url);
+    
+    const requestOptions = {
+      hostname: urlObj.hostname,
+      port: urlObj.port,
+      path: urlObj.pathname + urlObj.search,
+      method: options.method || 'GET',
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'identity', // Avoid compression issues
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        ...options.headers
+      },
+      timeout: REQUEST_TIMEOUT
+    };
+
+    const req = client.request(requestOptions, (res) => {
+      let data = '';
+      
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(data);
+        } else if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          // Handle redirects
+          const redirectUrl = res.headers.location.startsWith('http') 
+            ? res.headers.location 
+            : `${urlObj.protocol}//${urlObj.hostname}${res.headers.location}`;
+          fetchData(redirectUrl, options).then(resolve).catch(reject);
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`));
+        }
+      });
+    });
+
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error('Request timeout'));
+    });
+
+    if (options.body) {
+      req.write(options.body);
+    }
+    
+    req.end();
+  });
+}
+
+// Clean movie title for searching
+function cleanMovieTitle(title) {
+  return title
+    .replace(/\([^)]*\)/g, '') // Remove anything in parentheses like (1995)
+    .replace(/^The\s+/i, '')   // Remove leading "The " 
+    .replace(/[^\w\s]/g, ' ')   // Replace special chars with spaces
+    .replace(/\s+/g, ' ')       // Normalize spaces
+    .trim()
+    .toLowerCase();
+}
+
+// Extract year from title if present
+function extractYear(title) {
+  const yearMatch = title.match(/\((\d{4})\)/);
+  return yearMatch ? yearMatch[1] : null;
+}
+
+// Method 1: Try OpenSubtitles.com with correct search format
+async function searchOpenSubtitlesCom(title, year = null) {
+  try {
+    const cleanTitle = cleanMovieTitle(title);
+    const searchQuery = cleanTitle.replace(/\s+/g, '+');
+    const searchUrl = `https://www.opensubtitles.com/en/en/search-all/q-${searchQuery}/hearing_impaired-include/machine_translated-/trusted_sources-`;
+    
+    console.log(`    🔍 Searching OpenSubtitles.com for "${cleanTitle}"...`);
+    
+    // Enhanced headers to avoid 403 blocks
+    const html = await fetchData(searchUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'identity',
+        'Referer': 'https://www.opensubtitles.com/',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin'
+      }
+    });
+    
+    // Look for subtitle results with download counts
+    // Pattern: Look for highest download count first
+    const downloadRegex = /<tr[^>]*>.*?<td[^>]*>.*?(\d+).*?download.*?<\/td>.*?<a[^>]*href="([^"]*\/subtitles\/[^"]*)"[^>]*>/gis;
+    const downloadMatches = [...html.matchAll(downloadRegex)];
+    
+    if (downloadMatches.length > 0) {
+      // Sort by download count (descending)
+      const sortedMatches = downloadMatches
+        .map(match => ({
+          downloads: parseInt(match[1]) || 0,
+          url: match[2]
+        }))
+        .sort((a, b) => b.downloads - a.downloads);
+      
+      if (sortedMatches.length > 0) {
+        const bestMatch = sortedMatches[0];
+        const subtitleUrl = bestMatch.url.startsWith('http') 
+          ? bestMatch.url 
+          : `https://www.opensubtitles.com${bestMatch.url}`;
+        console.log(`    📄 Found OpenSubtitles.com subtitle (${bestMatch.downloads} downloads)`);
+        return { url: subtitleUrl, source: 'opensubtitles-com' };
+      }
+    }
+    
+    // Fallback: Look for any English subtitle links
+    const englishRegex = /<a[^>]*href="([^"]*\/subtitles\/[^"]*)"[^>]*>.*?English/gi;
+    const englishMatches = [...html.matchAll(englishRegex)];
+    
+    if (englishMatches.length > 0) {
+      const subtitleUrl = englishMatches[0][1].startsWith('http') 
+        ? englishMatches[0][1] 
+        : `https://www.opensubtitles.com${englishMatches[0][1]}`;
+      console.log(`    📄 Found OpenSubtitles.com English subtitle`);
+      return { url: subtitleUrl, source: 'opensubtitles-com' };
+    }
+    
+    // Another fallback: Look for download links directly
+    const directDownloadRegex = /<a[^>]*href="([^"]*\/en\/subtitleserve\/[^"]*)"[^>]*>/gi;
+    const directMatches = [...html.matchAll(directDownloadRegex)];
+    
+    if (directMatches.length > 0) {
+      const subtitleUrl = directMatches[0][1].startsWith('http') 
+        ? directMatches[0][1] 
+        : `https://www.opensubtitles.com${directMatches[0][1]}`;
+      console.log(`    📄 Found OpenSubtitles.com direct download`);
+      return { url: subtitleUrl, source: 'opensubtitles-com' };
+    }
+    
+    return null;
+  } catch (error) {
+    console.log(`    ⚠️  OpenSubtitles.com search failed: ${error.message}`);
+    return null;
+  }
+}
+
+// Method 2: Try Addic7ed.com
+async function searchAddic7ed(title, year = null) {
+  try {
+    const cleanTitle = cleanMovieTitle(title);
+    // Addic7ed uses a different approach - try searching through their movie browse page
+    const searchUrl = `https://www.addic7ed.com/srch.php`;
+    
+    console.log(`    🔍 Searching Addic7ed.com for "${cleanTitle}"...`);
+    
+    // Search by posting to their search form
+    const searchData = `search=${encodeURIComponent(cleanTitle)}&Submit=Search`;
+    const html = await fetchData(searchUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': searchData.length
+      },
+      body: searchData
+    });
+    
+    // Look for movie links in search results
+    const movieRegex = /<a[^>]*href="([^"]*movie\/[^"]*)"[^>]*>([^<]*)<\/a>/gi;
+    const matches = [...html.matchAll(movieRegex)];
+    
+    if (matches.length > 0) {
+      // Get the first matching movie page
+      const movieUrl = matches[0][1].startsWith('http') 
+        ? matches[0][1] 
+        : `https://www.addic7ed.com/${matches[0][1]}`;
+      
+      console.log(`    📄 Found movie page on Addic7ed: ${matches[0][2]}`);
+      
+      // Now get the movie page and look for subtitle download links
+      const movieHtml = await fetchData(movieUrl);
+      
+      // Look for English subtitle download links
+      const subtitleRegex = /<a[^>]*href="([^"]*updated\/[^"]*\.srt)"[^>]*>/gi;
+      const downloadMatches = [...movieHtml.matchAll(subtitleRegex)];
+      
+      if (downloadMatches.length > 0) {
+        const subtitleUrl = downloadMatches[0][1].startsWith('http') 
+          ? downloadMatches[0][1] 
+          : `https://www.addic7ed.com/${downloadMatches[0][1]}`;
+        console.log(`    📄 Found Addic7ed subtitle download`);
+        return { url: subtitleUrl, source: 'addic7ed' };
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.log(`    ⚠️  Addic7ed.com search failed: ${error.message}`);
+    return null;
+  }
+}
+
+// Method 3: Try YTS-Subs.com  
+async function searchYTSSubs(title, year = null) {
+  try {
+    const cleanTitle = cleanMovieTitle(title);
+    const searchQuery = encodeURIComponent(cleanTitle);
+    const searchUrl = `https://yts-subs.com/search/${searchQuery}`;
+    
+    console.log(`    🔍 Searching YTS-Subs.com for "${cleanTitle}"...`);
+    const html = await fetchData(searchUrl);
+    
+    // Look for movie links in search results - they have specific class/structure
+    const movieRegex = /<a[^>]*href="([^"]*movie-imdb\/[^"]*)"[^>]*>.*?<h3[^>]*>([^<]*)<\/h3>/gi;
+    let matches = [...html.matchAll(movieRegex)];
+    
+    // Alternative pattern for movie links
+    if (matches.length === 0) {
+      const altMovieRegex = /<a[^>]*href="(\/movie-imdb\/[^"]*)"[^>]*>/gi;
+      matches = [...html.matchAll(altMovieRegex)];
+    }
+    
+    if (matches.length > 0) {
+      // Get the first matching movie page
+      const movieUrl = matches[0][1].startsWith('http') 
+        ? matches[0][1] 
+        : `https://yts-subs.com${matches[0][1]}`;
+      
+      const movieTitle = matches[0][2] || 'Found movie';
+      console.log(`    📄 Found movie page on YTS-Subs: ${movieTitle}`);
+      
+      // Now get the movie page and look for English subtitle download links
+      const movieHtml = await fetchData(movieUrl);
+      
+             // Look for English subtitles in the table - more flexible pattern
+       // The table has: | Rating | Language | Release | Uploader | Download |
+       const englishSubRegex = /<td[^>]*>English<\/td>.*?<a[^>]*href="([^"]*\/subtitles\/[^"]*)"[^>]*>/gis;
+       const englishMatches = [...movieHtml.matchAll(englishSubRegex)];
+       
+       if (englishMatches.length > 0) {
+         const subtitleUrl = englishMatches[0][1].startsWith('http') 
+           ? englishMatches[0][1] 
+           : `https://yts-subs.com${englishMatches[0][1]}`;
+         console.log(`    📄 Found YTS-Subs English subtitle`);
+         return { url: subtitleUrl, source: 'yts-subs' };
+       }
+       
+       // Alternative: Look for any subtitle link containing 'english'
+       const englishUrlRegex = /href="([^"]*\/subtitles\/[^"]*english[^"]*)"[^>]*>/gi;
+       const englishUrlMatches = [...movieHtml.matchAll(englishUrlRegex)];
+       
+       if (englishUrlMatches.length > 0) {
+         const subtitleUrl = englishUrlMatches[0][1].startsWith('http') 
+           ? englishUrlMatches[0][1] 
+           : `https://yts-subs.com${englishUrlMatches[0][1]}`;
+         console.log(`    📄 Found YTS-Subs English URL`);
+         return { url: subtitleUrl, source: 'yts-subs' };
+       }
+       
+       // Fallback: Look for any subtitle download link 
+       const anySubRegex = /href="([^"]*\/subtitles\/[^"]*)"[^>]*>.*?download/gi;
+       const anySubMatches = [...movieHtml.matchAll(anySubRegex)];
+       
+       if (anySubMatches.length > 0) {
+         const subtitleUrl = anySubMatches[0][1].startsWith('http') 
+           ? anySubMatches[0][1] 
+           : `https://yts-subs.com${anySubMatches[0][1]}`;
+         console.log(`    📄 Found YTS-Subs subtitle (any language)`);
+         return { url: subtitleUrl, source: 'yts-subs' };
+       }
+    }
+    
+    return null;
+  } catch (error) {
+    console.log(`    ⚠️  YTS-Subs.com search failed: ${error.message}`);
+    return null;
+  }
+}
+
+// Download subtitle content
+async function downloadSubtitle(subtitleInfo) {
+  try {
+    console.log(`    📥 Downloading from ${subtitleInfo.source}...`);
+    
+    let content = await fetchData(subtitleInfo.url);
+    
+    // Check if it's actual subtitle content
+    if (content.includes('-->') || content.includes('WEBVTT') || /^\d+\s*\n/.test(content)) {
+      // It's a subtitle file
+      return content;
+    } else if (content.includes('<html')) {
+      // It's an HTML page, try to extract download link
+      console.log(`    🔄 Got HTML, extracting download link...`);
+      
+      // Try to find direct download links
+      const directLinkPatterns = [
+        /href="([^"]*\.srt[^"]*)"[^>]*>.*?(?:download|here|click)/gi,
+        /href="([^"]*download[^"]*\.(?:srt|vtt)[^"]*)"[^>]*>/gi,
+        /"(https?:\/\/[^"]*\.srt[^"]*)"/gi
+      ];
+      
+      for (const pattern of directLinkPatterns) {
+        const match = pattern.exec(content);
+        if (match) {
+          const directUrl = match[1].startsWith('http') 
+            ? match[1] 
+            : `https://${new URL(subtitleInfo.url).hostname}${match[1]}`;
+          console.log(`    🎯 Found direct link: ${directUrl}`);
+          
+          try {
+            content = await fetchData(directUrl);
+            if (content.includes('-->') || content.includes('WEBVTT')) {
+              return content;
+            }
+          } catch (e) {
+            console.log(`    ⚠️  Direct link failed: ${e.message}`);
+          }
+        }
+      }
+    }
+    
+    // Check if content looks like subtitles (even without perfect formatting)
+    if (content.length > 200 && (content.includes('-->') || /\d+:\d+/.test(content))) {
+      return content;
+    }
+    
+    console.log(`    ⚠️  Downloaded content doesn't look like subtitles (${content.length} chars)`);
+    return null;
+    
+  } catch (error) {
+    console.log(`    ❌ Download failed: ${error.message}`);
+    return null;
+  }
+}
+
+// Main subtitle search with multiple reliable sources
+async function findSubtitles(movie) {
+  const year = extractYear(movie.title);
+  
+  const methods = [
+    () => searchOpenSubtitlesCom(movie.title, year) // Enhanced with anti-detection measures, // Put YTS-Subs first since it's working well
+    // () => searchAddic7ed(movie.title, year), // Temporarily disabled due to timeouts
+    () => searchOpenSubtitlesCom(movie.title, year) // Enhanced with anti-detection measures
+  ];
+  
+  for (const method of methods) {
+    try {
+      const result = await method();
+      if (result) {
+        const content = await downloadSubtitle(result);
+        if (content && content.length > 300) { // Must be substantial content
+          return { content, source: result.source };
+        }
+      }
+      await delay(800); // Small delay between methods
+    } catch (error) {
+      console.log(`    ⚠️  Method failed: ${error.message}`);
+    }
+  }
+  
+  return null;
+}
+
+async function saveSubtitleToSupabase(movieId, subtitleContent, source) {
+  try {
+    const { error } = await supabase
+      .from('subtitles')
+      .insert({
+        movie_id: movieId,
+        subtitle_text: subtitleContent,
+        language: 'en',
+        source: source,
+        file_format: 'srt',
+        download_url: null
+      });
+    
+    if (error) {
+      throw error;
+    }
+    
+    return true;
+  } catch (error) {
+    console.error(`Error saving subtitle for movie ${movieId}:`, error.message);
+    return false;
+  }
+}
+
+async function scrapeSubtitlesByTitle() {
+  console.log('🎬 Starting title-based subtitle scraping...\n');
+  console.log('📋 Using OpenSubtitles.com and YTS-Subs.com with movie title searches\n');
+  
+  try {
+    // Get movies without subtitles
+    const { data: movies, error } = await supabase
+      .from('movies')
+      .select(`
+        id, 
+        title, 
+        imdb_id,
+        subtitles(id)
+      `)
+      .not('imdb_id', 'is', null);
+    
+    if (error) throw error;
+    
+    const moviesWithoutSubtitles = movies.filter(movie => 
+      !movie.subtitles || movie.subtitles.length === 0
+    );
+    
+    console.log(`📊 Found ${moviesWithoutSubtitles.length} movies needing subtitles\n`);
+    
+    let processed = 0;
+    let successful = 0;
+    let failed = 0;
+    let skipped = 0;
+    
+    for (const movie of moviesWithoutSubtitles) {
+      processed++;
+      console.log(`[${processed}/${moviesWithoutSubtitles.length}] Processing: "${movie.title}"`);
+      
+      try {
+        const result = await findSubtitles(movie);
+        
+        if (!result) {
+          console.log(`  ⚠️  No subtitles found from any source`);
+          skipped++;
+          continue;
+        }
+        
+        console.log(`  💾 Downloaded ${result.content.length} characters from ${result.source}`);
+        
+        const saveSuccess = await saveSubtitleToSupabase(movie.id, result.content, result.source);
+        
+        if (saveSuccess) {
+          console.log(`  ✅ Saved to database`);
+          successful++;
+        } else {
+          console.log(`  ❌ Failed to save to database`);
+          failed++;
+        }
+        
+      } catch (error) {
+        console.log(`  ❌ Error: ${error.message}`);
+        failed++;
+      }
+      
+      // Progress update and delay
+      if (processed % 5 === 0) {
+        console.log(`\n📈 Progress: ${processed}/${moviesWithoutSubtitles.length} (${successful} success, ${failed} failed, ${skipped} skipped)\n`);
+      }
+      
+      await delay(DELAY_MS);
+    }
+    
+    console.log('\n🎉 Title-based subtitle scraping complete!');
+    console.log(`📊 Total processed: ${processed}`);
+    console.log(`✅ Successful: ${successful}`);
+    console.log(`❌ Failed: ${failed}`);
+    console.log(`⏭️  Skipped: ${skipped}`);
+    console.log(`📈 Success rate: ${processed > 0 ? ((successful / processed) * 100).toFixed(1) : 0}%`);
+    
+  } catch (error) {
+    console.error('❌ Fatal error:', error.message);
+    process.exit(1);
+  }
+}
+
+// Run the script
+scrapeSubtitlesByTitle(); 

@@ -391,10 +391,8 @@ const MovieDetailsPage = () => {
                 </span>
               </h2>
                               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {(movie.age_scores['48m'] !== undefined && movie.age_scores['60m'] !== undefined ? 
-                  ['24m', '36m', '48m', '60m'] : 
-                  ['12m', '24m', '36m']).map((age, index) => {
-                  const score = movie.age_scores[age];
+                {(['24m', '36m', '48m', '60m'] as const).map((age, index) => {
+                  const score = (movie.age_scores as any)[age] as number;
                   const ratingType = getAgeRatingType(score);
                   const ratingInfo = AGE_RATING_INFO[ratingType];
                   return (
@@ -408,7 +406,7 @@ const MovieDetailsPage = () => {
                       <div className="flex flex-col">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="text-slate-800 font-semibold text-lg">
-                            {age === '12m' ? '12 months' : age === '24m' ? '2 years' : age === '36m' ? '3 years' : age === '48m' ? '4 years' : '5 years'}
+                            {age === '24m' ? '2 years' : age === '36m' ? '3 years' : age === '48m' ? '4 years' : '5 years'}
                           </span>
                           <span className="text-xl">{ratingInfo.icon}</span>
                         </div>

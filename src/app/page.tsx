@@ -136,9 +136,9 @@ export default function HomePage() {
       if (scores['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
     } else {
       // Old structure: 12m/24m/36m - map to new labels
-      if (scores['12m'] <= 2) return "✅ 1y+";
-      if (scores['24m'] <= 2) return "⚠️ 1y | ✅ 2y+";
-      if (scores['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
+      if ((scores as any)['12m'] <= 2) return "✅ 1y+";
+      if ((scores as any)['24m'] <= 2) return "⚠️ 1y | ✅ 2y+";
+      if ((scores as any)['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
     }
     
     return "⚠️ Check age ratings";

@@ -203,12 +203,12 @@ export default function MoviesList({
           const scores = movie.age_scores;
           
           // Handle both old and new age structures
-          if (scores['48m'] !== undefined && scores['60m'] !== undefined) {
+          if ((scores as any)['48m'] !== undefined && (scores as any)['60m'] !== undefined) {
             // New structure: 24m/36m/48m/60m
             if (scores['24m'] <= 2) return "✅ 2y+";
             if (scores['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
-            if (scores['48m'] <= 2) return "⚠️ 3y | ✅ 4y+";
-            if (scores['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
+            if ((scores as any)['48m'] <= 2) return "⚠️ 3y | ✅ 4y+";
+            if ((scores as any)['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
           } else {
             // Old structure: 12m/24m/36m - map to new labels
             if ((scores as any)['12m'] <= 2) return "✅ 1y+";
@@ -268,7 +268,7 @@ export default function MoviesList({
                         </span>
                       )}
                     </div>
-                    {movie.age_scores['48m'] !== undefined && movie.age_scores['60m'] !== undefined ? (
+                    {(movie.age_scores as any)['48m'] !== undefined && (movie.age_scores as any)['60m'] !== undefined ? (
                       // New structure: 4 columns
                       <div className="grid grid-cols-4 gap-2 text-xs">
                         <div className="bg-pink-50 border border-pink-200 px-2 py-2 rounded-lg text-center hover:bg-pink-100 transition-colors duration-300">
@@ -281,11 +281,11 @@ export default function MoviesList({
                         </div>
                         <div className="bg-blue-50 border border-blue-200 px-2 py-2 rounded-lg text-center hover:bg-blue-100 transition-colors duration-300">
                           <div className="font-medium text-blue-800 text-xs">4y</div>
-                          <div className="text-blue-600 font-bold text-sm">{movie.age_scores['48m']}</div>
+                          <div className="text-blue-600 font-bold text-sm">{(movie.age_scores as any)['48m']}</div>
                         </div>
                         <div className="bg-green-50 border border-green-200 px-2 py-2 rounded-lg text-center hover:bg-green-100 transition-colors duration-300">
                           <div className="font-medium text-green-800 text-xs">5y</div>
-                          <div className="text-green-600 font-bold text-sm">{movie.age_scores['60m']}</div>
+                          <div className="text-green-600 font-bold text-sm">{(movie.age_scores as any)['60m']}</div>
                         </div>
                       </div>
                     ) : (
