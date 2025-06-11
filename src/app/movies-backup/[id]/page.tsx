@@ -5,8 +5,8 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
-import { Movie, Scene, AgeFlag } from '@/types';
+import { supabase } from '../../../lib/supabase';
+import { Movie, Scene } from '../../../types';
 import FeedbackModal from '../../components/FeedbackModal';
 
 const RATING_MEANINGS = {
@@ -14,7 +14,7 @@ const RATING_MEANINGS = {
   2: 'Slight tension or mild surprise',
   3: 'Noticeable suspense or emotion',
   4: 'Strong tension, loud action, big emotion',
-  5: 'Likely too intense for young children'
+  5: 'Likely too intense for toddlers'
 } as const;
 
 const INTENSITY_SCALE = {
@@ -39,38 +39,6 @@ const AGE_RATING_INFO = {
     text: 'Not recommended — likely distressing'
   }
 } as const;
-
-// Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
-function extractYearFromTitle(title: string): number | null {
-  const yearMatch = title.match(/\((\d{4})\)/);
-  return yearMatch ? parseInt(yearMatch[1]) : null;
-}
-
-// Function to display title with year (removes year from title if it's already there)
-function formatTitleWithYear(title: string, year?: number | null): { displayTitle: string; displayYear: string | null } {
-  const extractedYear = extractYearFromTitle(title);
-  
-  if (extractedYear) {
-    // Year is already in the title, remove it and use it
-    const cleanTitle = title.replace(/\s*\(\d{4}\)\s*$/, '').trim();
-    return {
-      displayTitle: cleanTitle,
-      displayYear: `(${extractedYear})`
-    };
-  } else if (year) {
-    // Use provided year
-    return {
-      displayTitle: title,
-      displayYear: `(${year})`
-    };
-  } else {
-    // No year available
-    return {
-      displayTitle: title,
-      displayYear: null
-    };
-  }
-}
 
 const MovieDetailsPage = () => {
   const params = useParams();
@@ -167,18 +135,6 @@ const MovieDetailsPage = () => {
       default:
         return '';
     }
-  };
-
-  // Generate age flags from intensity if not available in data
-  const generateAgeFlags = (intensity: number): { '24m': AgeFlag; '36m': AgeFlag; '48m': AgeFlag; '60m': AgeFlag } => {
-    // Younger children are more sensitive to intensity
-    const flags = intensity <= 1 ? { '24m': '✅' as AgeFlag, '36m': '✅' as AgeFlag, '48m': '✅' as AgeFlag, '60m': '✅' as AgeFlag } :
-                  intensity === 2 ? { '24m': '⚠️' as AgeFlag, '36m': '✅' as AgeFlag, '48m': '✅' as AgeFlag, '60m': '✅' as AgeFlag } :
-                  intensity === 3 ? { '24m': '🚫' as AgeFlag, '36m': '⚠️' as AgeFlag, '48m': '✅' as AgeFlag, '60m': '✅' as AgeFlag } :
-                  intensity === 4 ? { '24m': '🚫' as AgeFlag, '36m': '🚫' as AgeFlag, '48m': '⚠️' as AgeFlag, '60m': '✅' as AgeFlag } :
-                  { '24m': '🚫' as AgeFlag, '36m': '🚫' as AgeFlag, '48m': '🚫' as AgeFlag, '60m': '⚠️' as AgeFlag };
-    
-    return flags;
   };
 
   if (!mounted) return null;
@@ -278,9 +234,6 @@ const MovieDetailsPage = () => {
   const posterUrl = movie.tmdb_poster_url || movie.poster_url;
   const displayRating = movie.tmdb_rating || movie.rating;
   const description = movie.tmdb_description || movie.summary;
-  
-  // Format title with year
-  const { displayTitle, displayYear } = formatTitleWithYear(movie.title, movie.release_year);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
@@ -301,7 +254,7 @@ const MovieDetailsPage = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -309,36 +262,36 @@ const MovieDetailsPage = () => {
         >
           <Link 
             href={backUrl}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 text-sm font-medium mb-8 hover:gap-3 group bg-white/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-pink-100"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 text-base font-medium mb-12 hover:gap-3 group bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-100"
           >
             <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
             <span>Back to Movies</span>
           </Link>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-12 mb-16">
           {/* Movie Poster */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-[350px] mx-auto lg:mx-0"
+            className="relative w-full max-w-[400px] mx-auto lg:mx-0"
           >
-            <div className="relative aspect-[2/3] overflow-hidden rounded-xl shadow-xl lg:sticky lg:top-20 transition-all duration-500 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border border-pink-100">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-2xl shadow-2xl lg:sticky lg:top-24 transition-all duration-500 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border border-pink-100">
               {(posterUrl && !posterUrl.includes('example.com')) ? (
                 <Image
                   src={posterUrl}
                   alt={movie.title}
                   fill
                   className="object-cover transition-all duration-700 hover:scale-105"
-                  sizes="(max-width: 1024px) 350px, 350px"
+                  sizes="(max-width: 1024px) 400px, 400px"
                   priority
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <div className="text-6xl mb-4">🎬</div>
-                    <p className="text-lg text-slate-700 font-semibold">{movie.title}</p>
+                  <div className="text-center p-8">
+                    <div className="text-8xl mb-6">🎬</div>
+                    <p className="text-xl text-slate-700 font-semibold">{movie.title}</p>
                   </div>
                 </div>
               )}
@@ -346,33 +299,28 @@ const MovieDetailsPage = () => {
           </motion.div>
           
           {/* Movie Details */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100 p-8"
             >
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-800 mb-4 tracking-tight leading-tight" style={{
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light text-slate-800 mb-6 tracking-tight leading-tight" style={{
                 fontFamily: 'system-ui, -apple-system, serif',
                 textShadow: '0 2px 8px rgba(168, 85, 247, 0.15)',
               }}>
                 <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                  {displayTitle}
+                  {movie.title}
                 </span>
               </h1>
-              <p className="text-base text-slate-600 leading-relaxed mb-4">
+              <p className="text-lg text-slate-600 leading-relaxed mb-6">
                 {description}
               </p>
               <div className="flex items-center gap-4 text-slate-600">
-                <span className="bg-purple-100 px-3 py-1.5 rounded-full text-sm font-medium border border-purple-200">
+                <span className="bg-purple-100 px-4 py-2 rounded-full text-sm font-medium border border-purple-200">
                   Rating: {displayRating}
                 </span>
-                {displayYear && (
-                  <span className="bg-blue-100 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-800">
-                    {displayYear}
-                  </span>
-                )}
               </div>
             </motion.div>
             
@@ -381,19 +329,17 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100 p-8"
             >
-              <h2 className="text-xl font-light text-slate-800 mb-4 tracking-tight" style={{
+              <h2 className="text-2xl font-light text-slate-800 mb-6 tracking-tight" style={{
                 fontFamily: 'system-ui, -apple-system, serif',
               }}>
                 <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
                   Age-Based Safety Scores
                 </span>
               </h2>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {(movie.age_scores['48m'] !== undefined && movie.age_scores['60m'] !== undefined ? 
-                  ['24m', '36m', '48m', '60m'] : 
-                  ['12m', '24m', '36m']).map((age, index) => {
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {(['12m', '24m', '36m'] as const).map((age, index) => {
                   const score = movie.age_scores[age];
                   const ratingType = getAgeRatingType(score);
                   const ratingInfo = AGE_RATING_INFO[ratingType];
@@ -403,23 +349,23 @@ const MovieDetailsPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                      className="group p-4 rounded-xl bg-white/80 backdrop-blur-sm border border-pink-100 shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-purple-200"
+                      className="group p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-pink-100 shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-purple-200"
                     >
                       <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-slate-800 font-semibold text-lg">
-                            {age === '12m' ? '12 months' : age === '24m' ? '2 years' : age === '36m' ? '3 years' : age === '48m' ? '4 years' : '5 years'}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-slate-800 font-semibold text-xl">
+                            {age.replace('m', '')} months
                           </span>
-                          <span className="text-xl">{ratingInfo.icon}</span>
+                          <span className="text-2xl">{ratingInfo.icon}</span>
                         </div>
-                        <div className="flex items-baseline gap-2 mb-2">
-                          <span className="text-2xl font-bold text-slate-800">{score}</span>
-                          <span className="text-base text-slate-600">/5</span>
+                        <div className="flex items-baseline gap-2 mb-3">
+                          <span className="text-3xl font-bold text-slate-800">{score}</span>
+                          <span className="text-lg text-slate-600">/5</span>
                         </div>
-                        <p className="text-xs text-slate-600 mb-3 leading-relaxed">
+                        <p className="text-sm text-slate-600 mb-4 leading-relaxed">
                           {getScoreDescription(score)}
                         </p>
-                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                           <div 
                             className={`h-full transition-all duration-500 ${getRatingColor(score)}`}
                             style={{ width: `${(score / 5) * 100}%` }} 
@@ -437,10 +383,10 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100 p-8"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
-                <h2 className="text-xl font-light text-slate-800 tracking-tight" style={{
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-3 mb-6">
+                <h2 className="text-2xl font-light text-slate-800 tracking-tight" style={{
                   fontFamily: 'system-ui, -apple-system, serif',
                 }}>
                   <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
@@ -448,43 +394,40 @@ const MovieDetailsPage = () => {
                   </span>
                 </h2>
                 <div className="flex items-center justify-between sm:justify-start sm:flex-1">
-                  <span className="px-3 py-1 text-xs text-slate-600 bg-purple-100 rounded-full font-medium border border-purple-200">
+                  <span className="px-4 py-2 text-sm text-slate-600 bg-purple-100 rounded-full font-medium border border-purple-200">
                     {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
-                  </span>
-                  <span className="px-2 py-1 text-xs text-emerald-700 bg-emerald-100 rounded-full font-medium border border-emerald-200 ml-2">
-                    ✨ Age Recommendations Included
                   </span>
                 </div>
               </div>
               {!scenes || scenes.length === 0 ? (
-                <div className="text-center py-8">
-                  <div className="text-3xl mb-3">🎭</div>
-                  <p className="text-base text-slate-600">No scenes analyzed yet.</p>
+                <div className="text-center py-12">
+                  <div className="text-4xl mb-4">🎭</div>
+                  <p className="text-lg text-slate-600">No scenes analyzed yet.</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {scenes.map((scene, index) => (
                     <motion.div 
                       key={scene.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                      className="group bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl border border-pink-100 hover:border-purple-200"
+                      className="group bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-md transition-all duration-300 hover:shadow-xl border border-pink-100 hover:border-purple-200"
                     >
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-sm">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold">
                             {index + 1}
                           </div>
                           <div>
-                            <h3 className="text-base font-semibold text-slate-800">
+                            <h3 className="text-lg font-semibold text-slate-800">
                               {scene.timestamp_start} - {scene.timestamp_end}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="text-xs text-slate-600">Intensity:</span>
+                              <span className="text-sm text-slate-600">Intensity:</span>
                               <div className="flex items-center gap-2">
                                 <div 
-                                  className="w-2.5 h-2.5 rounded-full"
+                                  className="w-3 h-3 rounded-full"
                                   style={{
                                     backgroundColor: scene.intensity <= 2 ? '#10b981' : 
                                                    scene.intensity <= 4 ? '#f59e0b' : 
@@ -492,7 +435,7 @@ const MovieDetailsPage = () => {
                                   }} 
                                 />
                                 <span 
-                                  className="text-xs font-semibold"
+                                  className="text-sm font-semibold"
                                   style={{
                                     color: scene.intensity <= 2 ? '#10b981' : 
                                            scene.intensity <= 4 ? '#f59e0b' : 
@@ -506,8 +449,8 @@ const MovieDetailsPage = () => {
                           </div>
                         </div>
 
-                        <div className="sm:w-32">
-                          <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                        <div className="sm:w-48">
+                          <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
                             <div 
                               className="h-full transition-all duration-500 rounded-full"
                               style={{
@@ -522,9 +465,9 @@ const MovieDetailsPage = () => {
                       </div>
                       
                       {/* Scene Description */}
-                      <div className="relative mb-4">
+                      <div className="relative mb-6">
                         <div 
-                          className="absolute left-0 top-0 w-[2px] h-full rounded-full"
+                          className="absolute left-0 top-0 w-[3px] h-full rounded-full"
                           style={{
                             background: `linear-gradient(to bottom, 
                                         transparent,
@@ -537,72 +480,10 @@ const MovieDetailsPage = () => {
                                         transparent)`
                           }}
                         />
-                        <div className="pl-4">
-                          <p className="text-sm text-slate-700 leading-relaxed mb-3">
+                        <div className="pl-6">
+                          <p className="text-slate-700 leading-relaxed mb-4">
                             {scene.description}
                           </p>
-                          
-                          {/* Scene Tags */}
-                          {scene.tags && scene.tags.length > 0 && (
-                            <div className="mb-3">
-                              <div className="flex flex-wrap gap-1.5">
-                                {scene.tags.map((tag, tagIndex) => (
-                                  <span 
-                                    key={tagIndex}
-                                    className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full border border-blue-200 font-medium"
-                                  >
-                                    {tag}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* Age-specific Recommendations */}
-                          {(scene.age_flags || scene.intensity) && (
-                            <div className="mt-3">
-                              <h4 className="text-xs font-medium text-slate-600 mb-2">Age Recommendations:</h4>
-                              <div className="flex flex-wrap gap-2">
-                                {Object.entries(scene.age_flags || generateAgeFlags(scene.intensity)).map(([age, flag]) => (
-                                  <div 
-                                    key={age}
-                                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs border transition-all duration-200"
-                                    style={{
-                                      backgroundColor: flag === '✅' ? '#dcfce7' : 
-                                                     flag === '⚠️' ? '#fef3c7' : 
-                                                     '#fee2e2',
-                                      borderColor: flag === '✅' ? '#86efac' : 
-                                                  flag === '⚠️' ? '#fbbf24' : 
-                                                  '#fca5a5',
-                                      color: flag === '✅' ? '#166534' : 
-                                            flag === '⚠️' ? '#92400e' : 
-                                            '#b91c1c'
-                                    }}
-                                  >
-                                    <span className="text-sm leading-none flex items-center">{flag}</span>
-                                    <span className="font-medium leading-none">{age === '12m' ? '12m' : age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
-                                  </div>
-                                ))}
-                              </div>
-                              <div className="mt-2 p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                                <h5 className="text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wide">Legend:</h5>
-                                <div className="flex flex-wrap gap-3 text-xs">
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">✅</span>
-                                    <span className="text-slate-700 font-medium">Safe</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">⚠️</span>
-                                    <span className="text-slate-700 font-medium">Caution</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">🚫</span>
-                                    <span className="text-slate-700 font-medium">Skip</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                       </div>
                     </motion.div>

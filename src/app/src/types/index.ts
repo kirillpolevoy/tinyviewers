@@ -7,9 +7,10 @@ export interface Movie {
   poster_url: string;
   rating: string;
   age_scores: {
-    '12m': number;
     '24m': number;
     '36m': number;
+    '48m': number;
+    '60m': number;
   };
   // TMDB fields
   tmdb_poster_url?: string | null;
@@ -31,9 +32,10 @@ export interface Scene {
   tags: string[];
   intensity: number;
   age_flags: {
-    '12m': AgeFlag;
     '24m': AgeFlag;
     '36m': AgeFlag;
+    '48m': AgeFlag;
+    '60m': AgeFlag;
   };
 }
 

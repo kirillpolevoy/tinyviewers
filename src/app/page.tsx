@@ -5,11 +5,43 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, ArrowRight, PlayCircle, Send } from "lucide-react";
-import { supabase } from '../lib/supabase';
-import { Movie } from '../types';
+import { supabase } from '../../lib/supabase';
+import { Movie } from '../../types';
 import Image from 'next/image';
 import Link from 'next/link';
 import FeedbackModal from './components/FeedbackModal';
+
+// Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
+function extractYearFromTitle(title: string): number | null {
+  const yearMatch = title.match(/\((\d{4})\)/);
+  return yearMatch ? parseInt(yearMatch[1]) : null;
+}
+
+// Function to display title with year (removes year from title if it's already there)
+function formatTitleWithYear(title: string, year?: number | null): { displayTitle: string; displayYear: string | null } {
+  const extractedYear = extractYearFromTitle(title);
+  
+  if (extractedYear) {
+    // Year is already in the title, remove it and use it
+    const cleanTitle = title.replace(/\s*\(\d{4}\)\s*$/, '').trim();
+    return {
+      displayTitle: cleanTitle,
+      displayYear: `(${extractedYear})`
+    };
+  } else if (year) {
+    // Use provided year
+    return {
+      displayTitle: title,
+      displayYear: `(${year})`
+    };
+  } else {
+    // No year available
+    return {
+      displayTitle: title,
+      displayYear: null
+    };
+  }
+}
 
 export default function HomePage() {
   const [featuredMovies, setFeaturedMovies] = useState<Movie[]>([]);
@@ -21,7 +53,7 @@ export default function HomePage() {
     {
       icon: "👶",
       title: "Age‑Based Ratings",
-      text: "Scores for 12 m, 24 m, 36 m help you skip what's too intense."
+      text: "Scores for 2y, 3y, 4y, 5y help you skip what's too intense."
     },
     {
       icon: "🎬",
@@ -58,7 +90,18 @@ export default function HomePage() {
         // Filter for movies that are good for younger children (lower age scores are better)
         // and ensure they have scenes data
         const toddlerFriendlyWithScenes = data?.filter(movie => {
-          const avgScore = (movie.age_scores['12m'] + movie.age_scores['24m'] + movie.age_scores['36m']) / 3;
+          // Handle both old (12m/24m/36m) and new (24m/36m/48m/60m) age structures
+          const scores = movie.age_scores;
+          let avgScore;
+          
+          if (scores['48m'] !== undefined && scores['60m'] !== undefined) {
+            // New structure: 24m/36m/48m/60m
+            avgScore = (scores['24m'] + scores['36m'] + scores['48m'] + scores['60m']) / 4;
+          } else {
+            // Old structure: 12m/24m/36m - use these until database is migrated
+            avgScore = (scores['12m'] + scores['24m'] + scores['36m']) / 3;
+          }
+          
           return avgScore <= 3; // Only movies with low intensity scores
         }).slice(0, 3) || [];
 
@@ -83,9 +126,21 @@ export default function HomePage() {
   const getAgeFlag = (movie: Movie) => {
     // Simple logic to determine age recommendation
     const scores = movie.age_scores;
-    if (scores['12m'] <= 2) return "✅ 12 m+";
-    if (scores['24m'] <= 2) return "⚠️ 12 m | ✅ 24 m+";
-    if (scores['36m'] <= 2) return "⚠️ 24 m | ✅ 36 m+";
+    
+    // Handle both old and new age structures
+    if (scores['48m'] !== undefined && scores['60m'] !== undefined) {
+      // New structure: 24m/36m/48m/60m
+      if (scores['24m'] <= 2) return "✅ 2y+";
+      if (scores['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
+      if (scores['48m'] <= 2) return "⚠️ 3y | ✅ 4y+";
+      if (scores['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
+    } else {
+      // Old structure: 12m/24m/36m - map to new labels
+      if (scores['12m'] <= 2) return "✅ 1y+";
+      if (scores['24m'] <= 2) return "⚠️ 1y | ✅ 2y+";
+      if (scores['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
+    }
+    
     return "⚠️ Check age ratings";
   };
 
@@ -142,7 +197,7 @@ export default function HomePage() {
           }}
         >
           <span className="relative inline-block transition-all duration-500 ease-out hover:text-pink-600 font-extralight">
-            Toddler‑Safe
+Kid‑Safe (2-5y)
           </span>
           <br />
           <span className="relative inline-block transition-all duration-500 ease-out hover:text-emerald-600 font-normal">
@@ -167,7 +222,7 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           className="text-base max-w-lg text-slate-600 mb-8 text-center leading-relaxed"
         >
-          Scene‑by‑scene scary scores & age‑specific warnings for parents of 1–3 year olds. 👶
+          Scene‑by‑scene scary scores & age‑specific warnings for parents of 2–5 year olds. 👶
         </motion.p>
 
         {/* Balanced Search */}
@@ -259,7 +314,7 @@ export default function HomePage() {
               textShadow: '0 2px 8px rgba(168, 85, 247, 0.1)',
             }}>
               <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                Toddler Favorites
+Kid Favorites (Ages 2-5)
               </span>
             </h4>
             <p className="text-slate-600 text-lg">Hand-picked movies perfect for little ones</p>
@@ -282,6 +337,9 @@ export default function HomePage() {
                 const posterUrl = movie.tmdb_poster_url || movie.poster_url;
                 const displayRating = movie.tmdb_rating || movie.rating;
                 
+                // Format title with year
+                const { displayTitle, displayYear } = formatTitleWithYear(movie.title, movie.release_year);
+
                 return (
                   <motion.div
                     key={movie.id}
@@ -305,25 +363,44 @@ export default function HomePage() {
                           <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
                             <div className="text-center p-4">
                               <div className="text-3xl mb-2">🎬</div>
-                              <p className="text-xs text-slate-600 font-medium">{movie.title}</p>
+                              <p className="text-xs text-slate-600 font-medium">{displayTitle}</p>
+                              {displayYear && <p className="text-xs text-slate-500 mt-1">{displayYear}</p>}
                             </div>
                           </div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
                       <div className="p-6">
-                        <h5 className="font-semibold truncate mb-2 text-slate-800 group-hover:text-purple-700 transition-colors duration-300" title={movie.title}>
-                          {movie.title}
+                        <h5 className="font-semibold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight mb-2" title={movie.title}>
+                          {displayTitle}
                         </h5>
                         <p className="text-sm text-slate-600 mb-3 bg-gradient-to-r from-emerald-100 to-blue-100 px-3 py-1 rounded-full inline-block">
                           {getAgeFlag(movie)}
                         </p>
                         <div className="flex items-center justify-between text-xs text-slate-500">
-                          <span className="bg-purple-100 px-2 py-1 rounded-full">Rating: {displayRating}</span>
+                          <div className="flex gap-2 flex-wrap">
+                            <span className="bg-purple-100 px-2 py-1 rounded-full">Rating: {displayRating}</span>
+                            {displayYear && (
+                              <span className="bg-blue-100 px-2 py-1 rounded-full text-blue-800">{displayYear}</span>
+                            )}
+                          </div>
                           <div className="flex gap-1">
-                            <span className="bg-pink-100 px-2 py-1 rounded-full">12m: {movie.age_scores['12m']}</span>
-                            <span className="bg-purple-100 px-2 py-1 rounded-full">24m: {movie.age_scores['24m']}</span>
-                            <span className="bg-blue-100 px-2 py-1 rounded-full">36m: {movie.age_scores['36m']}</span>
+                            {movie.age_scores['48m'] !== undefined && movie.age_scores['60m'] !== undefined ? (
+                              // New structure
+                              <>
+                                <span className="bg-pink-100 px-2 py-1 rounded-full">2y: {movie.age_scores['24m']}</span>
+                                <span className="bg-purple-100 px-2 py-1 rounded-full">3y: {movie.age_scores['36m']}</span>
+                                <span className="bg-blue-100 px-2 py-1 rounded-full">4y: {movie.age_scores['48m']}</span>
+                                <span className="bg-green-100 px-2 py-1 rounded-full">5y: {movie.age_scores['60m']}</span>
+                              </>
+                            ) : (
+                              // Old structure - keep original labels for now
+                              <>
+                                <span className="bg-pink-100 px-2 py-1 rounded-full">12m: {(movie.age_scores as any)['12m']}</span>
+                                <span className="bg-purple-100 px-2 py-1 rounded-full">24m: {movie.age_scores['24m']}</span>
+                                <span className="bg-blue-100 px-2 py-1 rounded-full">36m: {movie.age_scores['36m']}</span>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>

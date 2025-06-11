@@ -78,8 +78,8 @@ export default function MoviesPage({
           </h1>
           <p className="text-lg text-slate-600 mb-8 leading-relaxed">
             {search 
-              ? `Showing kid-safe movies (Ages 2-5) matching your search ✨`
-              : 'Our complete collection of curated, kid-friendly films (Ages 2-5) 🎬'
+              ? `Showing toddler-safe movies matching your search ✨`
+              : 'Our complete collection of curated, toddler-friendly films 🎬'
             }
           </p>
           

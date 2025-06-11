@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Toddler Movies — Skip the scares. Keep the joy.",
-  description: "No more guesswork. Watch with confidence. Find gentle films perfect for your little one.",
+  title: "Kids Movies (Ages 2-5) — Skip the scares. Keep the joy.",
+  description: "No more guesswork. Watch with confidence. Find gentle films perfect for children ages 2-5.",
 };
 
 export default function RootLayout({
