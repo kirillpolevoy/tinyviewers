@@ -94,7 +94,8 @@ const { data: movies, error } = await supabase
     scenes(id)
   `)
   .ilike('title', '%frozen%')
-  .not('subtitles', 'is', null);
+  .not('subtitles', 'is', null)
+  .or('is_active.is.null,is_active.eq.true');
 
 if (error) {
   console.error('❌ Database error:', error);

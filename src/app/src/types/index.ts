@@ -21,6 +21,8 @@ export interface Movie {
   imdb_id?: string | null;
   // Release year
   release_year?: number | null;
+  // Active status flag
+  is_active?: boolean | null;
 }
 
 export interface Scene {

@@ -6,7 +6,9 @@ import { fileURLToPath } from 'url';
 // Load environment variables from root .env.local
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '..', '.env.local') });
+const envPath = path.join(__dirname, '..', '..', '..', '.env.local');
+console.log('🔍 Loading environment from:', envPath);
+dotenv.config({ path: envPath });
 
 // Environment variables (read after dotenv config)
 let supabaseUrl, supabaseServiceKey, claudeApiKey;
@@ -16,7 +18,7 @@ let supabase;
 
 // Claude API configuration
 const CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages';
-const CLAUDE_MODEL = 'claude-3-sonnet-20240229';
+const CLAUDE_MODEL = 'claude-3-5-sonnet-20241022';
 const MAX_TOKENS = 4000;
 
 // Delay between API calls to respect rate limits
@@ -32,6 +34,19 @@ async function callClaudeAPI(prompt, subtitleText) {
     }
   ];
 
+  const requestBody = {
+    model: CLAUDE_MODEL,
+    max_tokens: MAX_TOKENS,
+    messages: messages
+  };
+
+  console.log(`  🔍 API Request Details:`);
+  console.log(`     URL: ${CLAUDE_API_URL}`);
+  console.log(`     Model: ${CLAUDE_MODEL}`);
+  console.log(`     Max Tokens: ${MAX_TOKENS}`);
+  console.log(`     API Key: ${claudeApiKey ? 'Present' : 'Missing'}`);
+  console.log(`     Content Length: ${subtitleText.length} characters`);
+
   try {
     const response = await fetch(CLAUDE_API_URL, {
       method: 'POST',
@@ -40,14 +55,14 @@ async function callClaudeAPI(prompt, subtitleText) {
         'x-api-key': claudeApiKey,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: CLAUDE_MODEL,
-        max_tokens: MAX_TOKENS,
-        messages: messages
-      })
+      body: JSON.stringify(requestBody)
     });
 
+    console.log(`  📡 Response Status: ${response.status} ${response.statusText}`);
+
     if (!response.ok) {
+      const errorText = await response.text();
+      console.log(`  ❌ Error Response Body: ${errorText}`);
       throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
     }
 
@@ -108,6 +123,25 @@ async function parseClaudeResponse(claudeResponse) {
 }
 
 async function saveScenesToDatabase(movieId, scenes) {
+  // Helper to normalize age_flags keys
+  function normalizeAgeFlags(flags) {
+    if (!flags || typeof flags !== 'object') return {
+      '24m': '⚠️', '36m': '⚠️', '48m': '⚠️', '60m': '⚠️'
+    };
+    const mapping = {
+      '2': '24m', '2y': '24m', '24m': '24m', '24my': '24m',
+      '3': '36m', '3y': '36m', '36m': '36m', '36my': '36m',
+      '4': '48m', '4y': '48m', '48m': '48m', '48my': '48m',
+      '5': '60m', '5y': '60m', '60m': '60m', '60my': '60m',
+    };
+    const normalized = { '24m': '⚠️', '36m': '⚠️', '48m': '⚠️', '60m': '⚠️' };
+    for (const [k, v] of Object.entries(flags)) {
+      const mapped = mapping[k.trim().toLowerCase()];
+      if (mapped) normalized[mapped] = v;
+    }
+    return normalized;
+  }
+
   const scenesToInsert = scenes.map(scene => ({
     movie_id: movieId,
     timestamp_start: scene.timestamp_start,
@@ -115,12 +149,7 @@ async function saveScenesToDatabase(movieId, scenes) {
     description: scene.description,
     tags: scene.tags || [],
     intensity: scene.intensity,
-    age_flags: scene.age_flags || {
-      '24m': '⚠️',
-      '36m': '⚠️', 
-      '48m': '⚠️',
-      '60m': '⚠️'
-    }
+    age_flags: normalizeAgeFlags(scene.age_flags)
   }));
 
   const { error } = await supabase
@@ -152,6 +181,23 @@ async function updateMovieWithAnalysis(movieId, overallScaryScore) {
 async function analyzeMovieWithClaude(movie, claudePrompt) {
   console.log(`🎬 Analyzing: "${movie.title}"`);
   
+  // Helper to normalize age_scores keys
+  function normalizeAgeScores(scores) {
+    if (!scores || typeof scores !== 'object') return {};
+    const mapping = {
+      '2': '24m', '2y': '24m', '24m': '24m', '24my': '24m',
+      '3': '36m', '3y': '36m', '36m': '36m', '36my': '36m',
+      '4': '48m', '4y': '48m', '48m': '48m', '48my': '48m',
+      '5': '60m', '5y': '60m', '60m': '60m', '60my': '60m',
+    };
+    const normalized = { '24m': null, '36m': null, '48m': null, '60m': null };
+    for (const [k, v] of Object.entries(scores)) {
+      const mapped = mapping[k.trim().toLowerCase()];
+      if (mapped) normalized[mapped] = v;
+    }
+    return normalized;
+  }
+
   try {
     // If movie already has scenes, delete them first (for re-analysis)
     if (movie.scenes && movie.scenes.length > 0) {
@@ -184,6 +230,27 @@ async function analyzeMovieWithClaude(movie, claudePrompt) {
     // Parse the response
     const analysis = await parseClaudeResponse(claudeResponse);
     
+    // --- Post-processing: enforce at least one 🚫 for 24m/36m on intense scenes ---
+    const intenseTags = [
+      'death', 'injury', 'unconscious', 'peril', 'sacrifice', 'danger', 'trauma', 'attack', 'violence', 'scary', 'distress', 'panic', 'monster', 'freeze', 'betrayal', 'abandonment', 'loss', 'fear', 'crying', 'grief', 'chase', 'wolves', 'darkness', 'apparent death', 'emotional intensity', 'major peril'
+    ];
+    let foundIntense = false;
+    if (Array.isArray(analysis.scenes)) {
+      analysis.scenes.forEach(scene => {
+        const isIntense = (scene.intensity >= 4) ||
+          (scene.tags && scene.tags.some(tag => intenseTags.some(intense => tag.toLowerCase().includes(intense))));
+        if (isIntense) {
+          if (scene.age_flags) {
+            if (scene.age_flags['24m'] !== '🚫') scene.age_flags['24m'] = '🚫';
+            if (scene.age_flags['36m'] !== '🚫') scene.age_flags['36m'] = '🚫';
+            foundIntense = true;
+          }
+        }
+      });
+    }
+    // If no intense scene found, leave as is (Claude may have been correct)
+    // --- End post-processing ---
+    
     // Validate the analysis structure
     if (!analysis.scenes || !Array.isArray(analysis.scenes)) {
       throw new Error('Invalid analysis format: missing scenes array');
@@ -195,9 +262,10 @@ async function analyzeMovieWithClaude(movie, claudePrompt) {
     await saveScenesToDatabase(movie.id, analysis.scenes);
     console.log(`  💾 Saved scenes to database`);
     
-    // Update movie with overall scary score
+    // Update movie with overall scary score (normalize keys)
     if (analysis.overall_scary_score) {
-      await updateMovieWithAnalysis(movie.id, analysis.overall_scary_score);
+      const normalizedScores = normalizeAgeScores(analysis.overall_scary_score);
+      await updateMovieWithAnalysis(movie.id, normalizedScores);
       console.log(`  📊 Updated movie with overall scary scores`);
     }
     
@@ -217,7 +285,7 @@ async function analyzeMovieWithClaude(movie, claudePrompt) {
 
 async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
   console.log('🎬 Starting Claude Analysis of Movie Subtitles...\n');
-  console.log('🤖 Using Claude-3-Sonnet for intelligent scene analysis\n');
+  console.log('🤖 Using Claude-3-5-Sonnet for intelligent scene analysis\n');
   
   if (specificMovieTitle) {
     console.log(`🎯 Analyzing specific movie: "${specificMovieTitle}"\n`);
@@ -258,7 +326,8 @@ async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
         subtitles(subtitle_text),
         scenes(id)
       `)
-      .not('subtitles', 'is', null);
+      .not('subtitles', 'is', null)
+      .or('is_active.is.null,is_active.eq.true'); // Filter out inactive movies
     
     // Add specific movie filter if provided
     if (specificMovieTitle) {
@@ -352,10 +421,10 @@ You are an expert in child development and media literacy, helping parents asses
 A JSON object that estimates how emotionally intense or scary this movie is for toddlers:
 
 {
-  "2": 3,
-  "3": 2,
-  "4": 1,
-  "5": 1
+  "24m": 3,
+  "36m": 2,
+  "48m": 1,
+  "60m": 1
 }
 
 	•	Use a scale of 1 (gentle, calm) to 5 (intense, potentially frightening).
@@ -364,7 +433,9 @@ A JSON object that estimates how emotionally intense or scary this movie is for 
 
 2. Scene-by-Scene Analysis
 
-For each emotionally intense or potentially distressing scene (not just the top 5 — include all that are relevant), provide:
+IMPORTANT: You MUST provide a MINIMUM of 5 scenes. If the movie has fewer than 5 concerning scenes, include additional scenes that show character development, emotional moments, or any content that parents should be aware of.
+
+For each scene (both concerning and important developmental moments), provide:
 
 {
   "timestamp_start": "00:23:45",
@@ -373,10 +444,10 @@ For each emotionally intense or potentially distressing scene (not just the top 
   "tags": ["chase", "darkness", "loud sound", "threatening music"],
   "intensity": 4,
   "age_flags": {
-    "2": "🚫",
-    "3": "⚠️",
-    "4": "✅",
-    "5": "✅"
+    "24m": "🚫",
+    "36m": "⚠️",
+    "48m": "✅",
+    "60m": "✅"
   }
 }
 
@@ -394,15 +465,29 @@ For each emotionally intense or potentially distressing scene (not just the top 
 	•	⚠️ = Use caution
 	•	🚫 = Not recommended
 
+CRITICAL REQUIREMENTS:
+- You MUST return AT LEAST 5 scenes
+- Include ALL emotionally intense or concerning scenes
+- If there are fewer than 5 concerning scenes, add scenes showing character development, emotional moments, or important plot points
+- Cover the entire movie timeline from beginning to end
+- Be thorough and comprehensive in your analysis
+- **IMPORTANT:** Use the following keys for all age-based scores and flags: "24m" (2 years), "36m" (3 years), "48m" (4 years), "60m" (5 years). Do NOT use year-based keys.
+- **You MUST use 🚫 for the most intense or emotionally overwhelming scenes (e.g., injury, death, unconsciousness, major peril) for ages 24m and 36m.**
+- **Not all scenes should be ⚠️ for all ages. Use 🚫, ⚠️, and ✅ appropriately and differentiate by age.**
+- **Checklist before returning your answer:**
+  - [ ] At least one scene is marked 🚫 for 24m and 36m if the movie contains any intense peril, injury, death, or unconsciousness.
+  - [ ] Age flags are differentiated by age and not all the same.
+  - [ ] All four age keys ("24m", "36m", "48m", "60m") are present in every scene's age_flags.
+
 You will be given the subtitle file as input. Use its dialogue and timing to infer what's happening, including tone, emotion, and pacing. When in doubt, err on the side of protecting very young children (age 2–3).
 
 Please return ONLY a valid JSON object in this exact format:
 {
   "overall_scary_score": {
-    "2": 3,
-    "3": 2,
-    "4": 1,
-    "5": 1
+    "24m": 3,
+    "36m": 2,
+    "48m": 1,
+    "60m": 1
   },
   "scenes": [
     {
@@ -412,10 +497,10 @@ Please return ONLY a valid JSON object in this exact format:
       "tags": ["tag1", "tag2"],
       "intensity": 4,
       "age_flags": {
-        "2": "🚫",
-        "3": "⚠️",
-        "4": "✅",
-        "5": "✅"
+        "24m": "🚫",
+        "36m": "⚠️",
+        "48m": "✅",
+        "60m": "✅"
       }
     }
   ]

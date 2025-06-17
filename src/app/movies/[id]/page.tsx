@@ -97,6 +97,7 @@ const MovieDetailsPage = () => {
           .from('movies')
           .select('*')
           .eq('id', params.id)
+          .or('is_active.is.null,is_active.eq.true')
           .single();
 
         if (movieError) {

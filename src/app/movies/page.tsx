@@ -21,6 +21,7 @@ export default function MoviesPage({
   const category = searchParams?.category ?? null;
   const age = searchParams?.age ?? null;
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [totalMovies, setTotalMovies] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
@@ -81,6 +82,14 @@ export default function MoviesPage({
               ? `Showing kid-safe movies (Ages 2-5) matching your search ✨`
               : 'Our complete collection of curated, kid-friendly films (Ages 2-5) 🎬'
             }
+            {totalMovies !== null && (
+              <span className="block mt-2 text-sm font-medium text-purple-600">
+                {search 
+                  ? `Found ${totalMovies} movie${totalMovies !== 1 ? 's' : ''}`
+                  : `${totalMovies} movies in our collection`
+                }
+              </span>
+            )}
           </p>
           
           {search && (
@@ -107,6 +116,7 @@ export default function MoviesPage({
             searchQuery={search} 
             categoryFilter={category} 
             ageFilter={age}
+            onMoviesLoaded={setTotalMovies}
           />
         </motion.div>
       </div>

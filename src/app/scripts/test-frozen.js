@@ -33,7 +33,8 @@ let query = supabase
     subtitles(subtitle_text),
     scenes(id)
   `)
-  .not('subtitles', 'is', null);
+  .not('subtitles', 'is', null)
+  .or('is_active.is.null,is_active.eq.true');
 
 // Add specific movie filter if provided
 query = query.ilike('title', `%${specificMovieTitle}%`);

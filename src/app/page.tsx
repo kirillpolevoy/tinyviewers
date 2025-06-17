@@ -79,6 +79,7 @@ export default function HomePage() {
             *,
             scenes!inner(id)
           `)
+          .or('is_active.is.null,is_active.eq.true') // Filter out inactive movies
           .order('tmdb_rating', { ascending: false, nullsFirst: false })
           .limit(12);
 

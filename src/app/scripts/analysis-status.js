@@ -32,7 +32,8 @@ async function checkAnalysisStatus() {
         title,
         subtitles(subtitle_text),
         scenes(id)
-      `);
+      `)
+      .or('is_active.is.null,is_active.eq.true'); // Filter out inactive movies
     
     if (error) {
       throw error;

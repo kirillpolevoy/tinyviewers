@@ -44,10 +44,12 @@ export default function MoviesList({
   searchQuery,
   categoryFilter,
   ageFilter,
+  onMoviesLoaded,
 }: {
   searchQuery: string | null;
   categoryFilter: string | null;
   ageFilter: string | null;
+  onMoviesLoaded?: (count: number) => void;
 }) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -67,6 +69,9 @@ export default function MoviesList({
         console.log('Supabase Key set:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
         
         let query = supabase.from('movies').select('*');
+
+        // Filter out inactive movies (is_active = false)
+        query = query.or('is_active.is.null,is_active.eq.true');
 
         if (searchQuery) {
           console.log('Applying search filter for:', searchQuery);
@@ -101,6 +106,11 @@ export default function MoviesList({
         
         console.log('Final movies:', data);
         setMovies(data || []);
+        
+        // Notify parent of the total count
+        if (onMoviesLoaded) {
+          onMoviesLoaded(data?.length || 0);
+        }
       } catch (e) {
         console.error('Exception:', e);
         setError(e instanceof Error ? e.message : 'Unknown error');

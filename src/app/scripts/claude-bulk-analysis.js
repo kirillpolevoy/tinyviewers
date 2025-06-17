@@ -309,14 +309,17 @@ async function runBulkClaudeAnalysis(options = {}) {
   const {
     specificMovieTitle = null,
     forceReanalysis = false,
-    limit = null
+    limit = null,
+    movieUuids = null
   } = options;
 
   console.log('🎬 Starting Bulk Claude Analysis of Movie Subtitles...\n');
   console.log('🤖 Using Claude-3.5-Sonnet with enhanced detailed analysis');
   console.log('🎯 Target age range: 2-5 years (24m/36m/48m/60m)\n');
   
-  if (specificMovieTitle) {
+  if (movieUuids) {
+    console.log(`🎯 Analyzing specific UUIDs: ${movieUuids.length} movies`);
+  } else if (specificMovieTitle) {
     console.log(`🎯 Analyzing specific movie: "${specificMovieTitle}"`);
   } else if (forceReanalysis) {
     console.log(`🔄 Force re-analysis enabled - will replace existing data`);
@@ -359,11 +362,14 @@ async function runBulkClaudeAnalysis(options = {}) {
         scenes(id)
       `)
       .not('subtitles', 'is', null)
+      .or('is_active.is.null,is_active.eq.true') // Filter out inactive movies
       .order('title'); // Add consistent ordering
     
     // Add specific movie filter if provided
     if (specificMovieTitle) {
       query = query.ilike('title', `%${specificMovieTitle}%`);
+    } else if (movieUuids) {
+      query = query.in('id', movieUuids);
     }
     
     const { data: movies, error } = await query;
@@ -379,7 +385,10 @@ async function runBulkClaudeAnalysis(options = {}) {
       const hasSubtitles = movie.subtitles && movie.subtitles.length > 0;
       const hasScenes = movie.scenes && movie.scenes.length > 0;
       
-      if (specificMovieTitle) {
+      if (movieUuids) {
+        // For UUID list requests, only require subtitles (already filtered by query)
+        return hasSubtitles;
+      } else if (specificMovieTitle) {
         // For specific movie requests, only require subtitles
         return hasSubtitles;
       } else if (forceReanalysis) {
@@ -427,7 +436,10 @@ async function runBulkClaudeAnalysis(options = {}) {
     console.log(`📊 ${totalMovies} movies ready for analysis\n`);
     
     if (totalMovies === 0) {
-      if (specificMovieTitle) {
+      if (movieUuids) {
+        console.log(`❌ No movies found with the provided UUIDs that have subtitles!`);
+        console.log(`💡 Check that the UUIDs are correct and the movies have subtitle data.`);
+      } else if (specificMovieTitle) {
         console.log(`❌ Movie "${specificMovieTitle}" not found with subtitles!`);
       } else if (!forceReanalysis) {
         console.log('✅ All movies with subtitles have already been analyzed!');
@@ -625,10 +637,23 @@ Please analyze the following subtitle text:
 
 // Parse command line arguments
 const args = process.argv.slice(2);
-const specificMovieTitle = args.find(arg => !arg.startsWith('--'));
+const specificMovieTitle = args.find(arg => !arg.startsWith('--') && !arg.startsWith('['));
 const forceReanalysis = args.includes('--force') || args.includes('-f');
 const limitArg = args.find(arg => arg.startsWith('--limit='));
 const limit = limitArg ? parseInt(limitArg.split('=')[1]) : null;
+
+// Parse UUID list if provided
+let movieUuids = null;
+const uuidListArg = args.find(arg => arg.startsWith('[') && arg.endsWith(']'));
+if (uuidListArg) {
+  try {
+    movieUuids = JSON.parse(uuidListArg);
+    console.log(`🎯 Processing specific UUIDs: ${movieUuids.length} movies`);
+  } catch (error) {
+    console.error('❌ Invalid UUID list format. Use: ["uuid1","uuid2","uuid3"]');
+    process.exit(1);
+  }
+}
 
 // Display usage if help requested
 if (args.includes('--help') || args.includes('-h')) {
@@ -636,7 +661,7 @@ if (args.includes('--help') || args.includes('-h')) {
 🎬 Bulk Claude Analysis Tool
 
 Usage:
-  node scripts/claude-bulk-analysis.js [options] [movie-title]
+  node scripts/claude-bulk-analysis.js [options] [movie-title|uuid-list]
 
 Options:
   --force, -f           Force re-analysis of movies that already have scenes
@@ -644,11 +669,13 @@ Options:
   --help, -h            Show this help message
 
 Examples:
-  node scripts/claude-bulk-analysis.js                    # Analyze all movies without scenes
-  node scripts/claude-bulk-analysis.js --force            # Re-analyze all movies 
-  node scripts/claude-bulk-analysis.js --limit=10         # Analyze only 10 movies
-  node scripts/claude-bulk-analysis.js "Frozen"           # Analyze specific movie
-  node scripts/claude-bulk-analysis.js "Frozen" --force   # Re-analyze specific movie
+  node scripts/claude-bulk-analysis.js                                    # Analyze all movies without scenes
+  node scripts/claude-bulk-analysis.js --force                            # Re-analyze all movies 
+  node scripts/claude-bulk-analysis.js --limit=10                         # Analyze only 10 movies
+  node scripts/claude-bulk-analysis.js "Frozen"                           # Analyze specific movie
+  node scripts/claude-bulk-analysis.js "Frozen" --force                   # Re-analyze specific movie
+  node scripts/claude-bulk-analysis.js '["uuid1","uuid2","uuid3"]'        # Analyze specific UUIDs
+  node scripts/claude-bulk-analysis.js '["uuid1","uuid2"]' --force        # Re-analyze specific UUIDs
 `);
   process.exit(0);
 }
@@ -657,5 +684,6 @@ Examples:
 runBulkClaudeAnalysis({
   specificMovieTitle,
   forceReanalysis,
-  limit
+  limit,
+  movieUuids
 }); 
