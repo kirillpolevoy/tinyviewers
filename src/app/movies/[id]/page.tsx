@@ -365,14 +365,55 @@ const MovieDetailsPage = () => {
               <p className="text-base text-slate-600 leading-relaxed mb-4">
                 {description}
               </p>
-              <div className="flex items-center gap-4 text-slate-600">
-                <span className="bg-purple-100 px-3 py-1.5 rounded-full text-sm font-medium border border-purple-200">
-                  Rating: {displayRating}
-                </span>
+              <div className="flex items-center gap-3 text-slate-600 flex-wrap">
+                {/* Redesigned Rating Display - More Compact & Elegant */}
+                {(movie as any).imdb_rating ? (
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-50 to-orange-50 px-3 py-1.5 rounded-lg border border-amber-200/60 shadow-sm">
+                    <span className="text-amber-600 text-sm">📽️</span>
+                    <span className="font-bold text-slate-800">{parseFloat((movie as any).imdb_rating).toFixed(1)}</span>
+                    <span className="text-slate-500 text-sm">/10</span>
+                    <span className="text-xs text-amber-700 font-medium ml-1">IMDB</span>
+                  </div>
+                ) : movie.tmdb_rating ? (
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-50 to-amber-50 px-3 py-1.5 rounded-lg border border-yellow-200/60 shadow-sm">
+                    <span className="text-yellow-600 text-sm">🎬</span>
+                    <span className="font-bold text-slate-800">{parseFloat(movie.tmdb_rating).toFixed(1)}</span>
+                    <span className="text-slate-500 text-sm">/10</span>
+                    <span className="text-xs text-yellow-700 font-medium ml-1">TMDB</span>
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-50 to-pink-50 px-3 py-1.5 rounded-lg border border-purple-200/60 shadow-sm">
+                    <span className="text-purple-600 text-sm">⭐</span>
+                    <span className="font-bold text-slate-800">{displayRating}</span>
+                    <span className="text-xs text-purple-700 font-medium ml-1">Rating</span>
+                  </div>
+                )}
+                
                 {displayYear && (
-                  <span className="bg-blue-100 px-3 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-800">
-                    {displayYear}
-                  </span>
+                  <div className="inline-flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200/60 shadow-sm">
+                    <span className="text-slate-700 font-medium">{displayYear}</span>
+                  </div>
+                )}
+                
+                {/* Enhanced Interactive IMDB Link */}
+                {movie.imdb_id && (
+                  <a 
+                    href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 cursor-pointer border-2 border-transparent hover:border-amber-300/50 active:scale-95"
+                  >
+                    <span className="text-xs group-hover:animate-pulse">🎬</span>
+                    <span className="group-hover:underline">View on IMDB</span>
+                    <svg 
+                      className="w-3 h-3 ml-0.5 group-hover:translate-x-0.5 transition-transform duration-200" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
                 )}
               </div>
             </motion.div>
@@ -431,26 +472,26 @@ const MovieDetailsPage = () => {
               </div>
             </motion.div>
 
-            {/* Scene Analysis */}
+            {/* Scene Analysis - Mobile Optimized */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-4 sm:p-6"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
-                <h2 className="text-xl font-light text-slate-800 tracking-tight" style={{
+              <div className="flex flex-col gap-3 mb-4">
+                <h2 className="text-lg sm:text-xl font-light text-slate-800 tracking-tight" style={{
                   fontFamily: 'system-ui, -apple-system, serif',
                 }}>
                   <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
                     Scene Analysis
                   </span>
                 </h2>
-                <div className="flex items-center justify-between sm:justify-start sm:flex-1">
-                  <span className="px-3 py-1 text-xs text-slate-600 bg-purple-100 rounded-full font-medium border border-purple-200">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <span className="inline-flex items-center justify-center px-3 py-1.5 text-xs text-slate-600 bg-purple-100 rounded-lg font-medium border border-purple-200 w-fit">
                     {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
                   </span>
-                  <span className="px-2 py-1 text-xs text-emerald-700 bg-emerald-100 rounded-full font-medium border border-emerald-200 ml-2">
+                  <span className="inline-flex items-center justify-center px-3 py-1.5 text-xs text-emerald-700 bg-emerald-100 rounded-lg font-medium border border-emerald-200 w-fit">
                     ✨ Age Recommendations Included
                   </span>
                 </div>
@@ -468,14 +509,14 @@ const MovieDetailsPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                      className="group bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl border border-pink-100 hover:border-purple-200"
+                      className="group bg-white/80 backdrop-blur-sm p-3 sm:p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl border border-pink-100 hover:border-purple-200"
                     >
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-sm">
+                      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
+                        <div className="flex items-center gap-3 flex-1">
+                          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-sm flex-shrink-0">
                             {index + 1}
                           </div>
-                          <div>
+                          <div className="flex-1 min-w-0">
                             <h3 className="text-base font-semibold text-slate-800">
                               {scene.timestamp_start} - {scene.timestamp_end}
                             </h3>
@@ -483,7 +524,7 @@ const MovieDetailsPage = () => {
                               <span className="text-xs text-slate-600">Intensity:</span>
                               <div className="flex items-center gap-2">
                                 <div 
-                                  className="w-2.5 h-2.5 rounded-full"
+                                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                                   style={{
                                     backgroundColor: scene.intensity <= 2 ? '#10b981' : 
                                                    scene.intensity <= 4 ? '#f59e0b' : 
@@ -505,7 +546,7 @@ const MovieDetailsPage = () => {
                           </div>
                         </div>
 
-                        <div className="sm:w-32">
+                        <div className="w-full sm:w-40">
                           <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
                             <div 
                               className="h-full transition-all duration-500 rounded-full"
@@ -557,7 +598,7 @@ const MovieDetailsPage = () => {
                             </div>
                           )}
                           
-                          {/* Age-specific Recommendations */}
+                          {/* Age-specific Recommendations - Mobile Optimized */}
                           {(scene.age_flags || scene.intensity) && (
                             <div className="mt-3">
                               <h4 className="text-xs font-medium text-slate-600 mb-2">Age Recommendations:</h4>
@@ -565,7 +606,7 @@ const MovieDetailsPage = () => {
                                 {Object.entries(scene.age_flags || generateAgeFlags(scene.intensity)).map(([age, flag]) => (
                                   <div 
                                     key={age}
-                                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs border transition-all duration-200"
+                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border transition-all duration-200 hover:shadow-sm"
                                     style={{
                                       backgroundColor: flag === '✅' ? '#dcfce7' : 
                                                      flag === '⚠️' ? '#fef3c7' : 
@@ -578,24 +619,24 @@ const MovieDetailsPage = () => {
                                             '#b91c1c'
                                     }}
                                   >
-                                    <span className="text-sm leading-none flex items-center">{flag}</span>
-                                    <span className="font-medium leading-none">{age === '12m' ? '12m' : age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
+                                    <span className="text-sm leading-none flex items-center flex-shrink-0">{flag}</span>
+                                    <span className="font-medium leading-none whitespace-nowrap">{age === '12m' ? '12m' : age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
                                   </div>
                                 ))}
                               </div>
-                              <div className="mt-2 p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                                <h5 className="text-xs font-semibold text-slate-700 mb-1 uppercase tracking-wide">Legend:</h5>
-                                <div className="flex flex-wrap gap-3 text-xs">
+                              <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                                <h5 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Legend:</h5>
+                                <div className="flex flex-wrap gap-4 text-xs">
                                   <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">✅</span>
+                                    <span className="text-sm flex-shrink-0">✅</span>
                                     <span className="text-slate-700 font-medium">Safe</span>
                                   </div>
                                   <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">⚠️</span>
+                                    <span className="text-sm flex-shrink-0">⚠️</span>
                                     <span className="text-slate-700 font-medium">Caution</span>
                                   </div>
                                   <div className="flex items-center gap-1.5">
-                                    <span className="text-sm">🚫</span>
+                                    <span className="text-sm flex-shrink-0">🚫</span>
                                     <span className="text-slate-700 font-medium">Skip</span>
                                   </div>
                                 </div>
