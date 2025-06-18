@@ -1,0 +1,2296 @@
+🎬 Starting Claude Analysis of Movie Subtitles...
+
+🤖 Using Claude-3-5-Sonnet for intelligent scene analysis
+
+🎯 Analyzing all movies without scenes
+
+🔍 Found 131 movies from database query
+📊 Found 131 active movies ready for analysis
+
+[1/131] Processing: "Sing"
+🎬 Analyzing: "Sing"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 129124 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 129124 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2108 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[2/131] Processing: "Puss in Boots"
+🎬 Analyzing: "Puss in Boots"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 58960 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 58960 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2115 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[3/131] Processing: "SpongeBob Movie: Sponge on the Run"
+🎬 Analyzing: "SpongeBob Movie: Sponge on the Run"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 36584 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 36584 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1968 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[4/131] Processing: "Scooby-Doo! Camp Scare"
+🎬 Analyzing: "Scooby-Doo! Camp Scare"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 60293 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 60293 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2221 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[5/131] Processing: "Smallfoot"
+🎬 Analyzing: "Smallfoot"
+  📄 Subtitle length: 106929 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 106929 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2063 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 5/131 (5 success, 0 failed)
+
+[6/131] Processing: "Shrek Forever After"
+🎬 Analyzing: "Shrek Forever After"
+  📄 Subtitle length: 73346 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 73346 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2109 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[7/131] Processing: "Rugrats Go Wild"
+🎬 Analyzing: "Rugrats Go Wild"
+  📄 Subtitle length: 75581 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 75581 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2004 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[8/131] Processing: "Spirit: Stallion of the Cimarron"
+🎬 Analyzing: "Spirit: Stallion of the Cimarron"
+  📄 Subtitle length: 39036 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 39036 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2099 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[9/131] Processing: "The Angry Birds Movie 2"
+🎬 Analyzing: "The Angry Birds Movie 2"
+  📄 Subtitle length: 118617 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 118617 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2172 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[10/131] Processing: "Ratatouille"
+🎬 Analyzing: "Ratatouille"
+  📄 Subtitle length: 112099 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 112099 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2048 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 10/131 (10 success, 0 failed)
+
+[11/131] Processing: "Turning Red"
+🎬 Analyzing: "Turning Red"
+  📄 Subtitle length: 106308 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 106308 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2352 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[12/131] Processing: "Tinker Bell"
+🎬 Analyzing: "Tinker Bell"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 56812 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 56812 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2031 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[13/131] Processing: "The Rescuers"
+🎬 Analyzing: "The Rescuers"
+  📄 Subtitle length: 53746 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 53746 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2141 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[14/131] Processing: "The Road to El Dorado"
+🎬 Analyzing: "The Road to El Dorado"
+  📄 Subtitle length: 89439 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89439 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2213 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[15/131] Processing: "Turbo"
+🎬 Analyzing: "Turbo"
+  📄 Subtitle length: 72770 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 72770 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1962 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 15/131 (15 success, 0 failed)
+
+[16/131] Processing: "Stuart Little 2"
+🎬 Analyzing: "Stuart Little 2"
+  📄 Subtitle length: 63428 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 63428 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2052 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[17/131] Processing: "The Wind Rises"
+🎬 Analyzing: "The Wind Rises"
+  📄 Subtitle length: 91050 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 91050 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1968 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[18/131] Processing: "Tinker Bell and the Secret of the Wings"
+🎬 Analyzing: "Tinker Bell and the Secret of the Wings"
+  📄 Subtitle length: 63162 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 63162 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2214 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[19/131] Processing: "Robots"
+🎬 Analyzing: "Robots"
+  📄 Subtitle length: 108278 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 108278 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2031 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[20/131] Processing: "Toy Story 3"
+🎬 Analyzing: "Toy Story 3"
+  📄 Subtitle length: 89492 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89492 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2006 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 20/131 (20 success, 0 failed)
+
+[21/131] Processing: "The Iron Giant"
+🎬 Analyzing: "The Iron Giant"
+  📄 Subtitle length: 64907 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 64907 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2058 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[22/131] Processing: "The Lorax"
+🎬 Analyzing: "The Lorax"
+  📄 Subtitle length: 26650 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 26650 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2103 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[23/131] Processing: "The Boss Baby"
+🎬 Analyzing: "The Boss Baby"
+  📄 Subtitle length: 64274 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 64274 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2086 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[24/131] Processing: "The Emperor's New Groove"
+🎬 Analyzing: "The Emperor's New Groove"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 91571 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 91571 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2106 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[25/131] Processing: "The Wild"
+🎬 Analyzing: "The Wild"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 83886 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 83886 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2194 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 25/131 (25 success, 0 failed)
+
+[26/131] Processing: "The Lego Movie 2: The Second Part"
+🎬 Analyzing: "The Lego Movie 2: The Second Part"
+  📄 Subtitle length: 132630 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 132630 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2025 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[27/131] Processing: "Inside Out"
+🎬 Analyzing: "Inside Out"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 76787 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 76787 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2038 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[28/131] Processing: "Coco"
+🎬 Analyzing: "Coco"
+  📄 Subtitle length: 118549 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 118549 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2314 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[29/131] Processing: "Encanto"
+🎬 Analyzing: "Encanto"
+  📄 Subtitle length: 123374 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 123374 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2386 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[30/131] Processing: "Luca"
+🎬 Analyzing: "Luca"
+  📄 Subtitle length: 96771 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 96771 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2212 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 30/131 (30 success, 0 failed)
+
+[31/131] Processing: "Maya the Bee Movie"
+🎬 Analyzing: "Maya the Bee Movie"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 89881 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89881 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2124 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[32/131] Processing: "Onward"
+🎬 Analyzing: "Onward"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 103875 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 103875 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2310 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[33/131] Processing: "Paddington"
+🎬 Analyzing: "Paddington"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 89608 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89608 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2318 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[34/131] Processing: "Paw Patrol: The Movie"
+🎬 Analyzing: "Paw Patrol: The Movie"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 85537 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 85537 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2026 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[35/131] Processing: "Raya and the Last Dragon"
+🎬 Analyzing: "Raya and the Last Dragon"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 79451 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 79451 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2102 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 35/131 (35 success, 0 failed)
+
+[36/131] Processing: "The Good Dinosaur"
+🎬 Analyzing: "The Good Dinosaur"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 33508 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 33508 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2062 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[37/131] Processing: "The Princess and the Frog"
+🎬 Analyzing: "The Princess and the Frog"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 93923 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 93923 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2045 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[38/131] Processing: "Wish"
+🎬 Analyzing: "Wish"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 121833 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 121833 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2141 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[39/131] Processing: "Zootopia"
+🎬 Analyzing: "Zootopia"
+  🗑️  Deleting 4 existing scenes for re-analysis...
+  📄 Subtitle length: 130657 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 130657 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2358 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[40/131] Processing: "A Goofy Movie"
+🎬 Analyzing: "A Goofy Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 74167 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 74167 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2153 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 40/131 (40 success, 0 failed)
+
+[41/131] Processing: "A Shaun the Sheep Movie"
+🎬 Analyzing: "A Shaun the Sheep Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 10736 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 10736 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2160 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[42/131] Processing: "Alvin and the Chipmunks"
+🎬 Analyzing: "Alvin and the Chipmunks"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 81312 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 81312 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2208 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[43/131] Processing: "Bambi"
+🎬 Analyzing: "Bambi"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 27365 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 27365 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2032 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[44/131] Processing: "Cars 2"
+🎬 Analyzing: "Cars 2"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 116196 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 116196 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2367 characters)
+  🎭 Found 6 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 6 scenes
+[45/131] Processing: "Despicable Me"
+🎬 Analyzing: "Despicable Me"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 187694 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 187694 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2207 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 45/131 (45 success, 0 failed)
+
+[46/131] Processing: "Lady and the Tramp"
+🎬 Analyzing: "Lady and the Tramp"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 73793 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 73793 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2189 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[47/131] Processing: "Mary Poppins"
+🎬 Analyzing: "Mary Poppins"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 130782 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 130782 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2192 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[48/131] Processing: "Megamind"
+🎬 Analyzing: "Megamind"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 119454 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 119454 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1971 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[49/131] Processing: "Minions"
+🎬 Analyzing: "Minions"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 80365 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 80365 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2029 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[50/131] Processing: "Frankenweenie"
+🎬 Analyzing: "Frankenweenie"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 60331 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 60331 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1888 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 50/131 (50 success, 0 failed)
+
+[51/131] Processing: "Hercules"
+🎬 Analyzing: "Hercules"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 44145 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 44145 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2118 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[52/131] Processing: "Hotel Transylvania 2"
+🎬 Analyzing: "Hotel Transylvania 2"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 98040 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 98040 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2069 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[53/131] Processing: "Pinocchio (1940)"
+🎬 Analyzing: "Pinocchio (1940)"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 72850 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 72850 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2448 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[54/131] Processing: "Ice Age"
+🎬 Analyzing: "Ice Age"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 48226 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 48226 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2139 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[55/131] Processing: "Ice Age: The Meltdown"
+🎬 Analyzing: "Ice Age: The Meltdown"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 51068 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 51068 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2332 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 55/131 (55 success, 0 failed)
+
+[56/131] Processing: "Joseph: King of Dreams"
+🎬 Analyzing: "Joseph: King of Dreams"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 75233 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 75233 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2368 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[57/131] Processing: "Kung Fu Panda 2"
+🎬 Analyzing: "Kung Fu Panda 2"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 59425 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 59425 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2131 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[58/131] Processing: "Madagascar 3: Europe's Most Wanted"
+🎬 Analyzing: "Madagascar 3: Europe's Most Wanted"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 80274 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 80274 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2355 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[59/131] Processing: "Mr. Peabody & Sherman"
+🎬 Analyzing: "Mr. Peabody & Sherman"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 111852 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 111852 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2167 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[60/131] Processing: "Pocahontas"
+🎬 Analyzing: "Pocahontas"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 68003 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 68003 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2059 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 60/131 (60 success, 0 failed)
+
+[61/131] Processing: "A Shaun the Sheep Movie: Farmageddon"
+🎬 Analyzing: "A Shaun the Sheep Movie: Farmageddon"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 10736 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 10736 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2146 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[62/131] Processing: "Finding Nemo"
+🎬 Analyzing: "Finding Nemo"
+  🗑️  Deleting 10 existing scenes for re-analysis...
+  📄 Subtitle length: 124479 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 124479 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2305 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[63/131] Processing: "Elmo in Grouchland"
+🎬 Analyzing: "Elmo in Grouchland"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 75540 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 75540 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2356 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[64/131] Processing: "Rango"
+🎬 Analyzing: "Rango"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 95304 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 95304 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1945 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[65/131] Processing: "Rio"
+🎬 Analyzing: "Rio"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 85589 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 85589 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2049 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 65/131 (65 success, 0 failed)
+
+[66/131] Processing: "Zookeeper's Wife"
+🎬 Analyzing: "Zookeeper's Wife"
+  🗑️  Deleting 4 existing scenes for re-analysis...
+  📄 Subtitle length: 73798 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 73798 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2046 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[67/131] Processing: "Moana"
+🎬 Analyzing: "Moana"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 70026 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 70026 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1966 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[68/131] Processing: "Zootopia+"
+🎬 Analyzing: "Zootopia+"
+  🗑️  Deleting 4 existing scenes for re-analysis...
+  📄 Subtitle length: 130657 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 130657 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2245 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[69/131] Processing: "Frozen"
+🎬 Analyzing: "Frozen"
+  🗑️  Deleting 5 existing scenes for re-analysis...
+  📄 Subtitle length: 118919 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 118919 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2267 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[70/131] Processing: "Beauty and the Beast (1991)"
+🎬 Analyzing: "Beauty and the Beast (1991)"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 81822 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 81822 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2249 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 70/131 (70 success, 0 failed)
+
+[71/131] Processing: "Rugrats in Paris: The Movie"
+🎬 Analyzing: "Rugrats in Paris: The Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 90188 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 90188 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2157 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[72/131] Processing: "Scooby-Doo! Pirates Ahoy!"
+🎬 Analyzing: "Scooby-Doo! Pirates Ahoy!"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 51546 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 51546 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2450 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[73/131] Processing: "Scooby-Doo! and the Goblin King"
+🎬 Analyzing: "Scooby-Doo! and the Goblin King"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 54565 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 54565 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2152 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[74/131] Processing: "Shrek"
+🎬 Analyzing: "Shrek"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 88744 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 88744 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2030 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[75/131] Processing: "Shrek 2"
+🎬 Analyzing: "Shrek 2"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 77587 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 77587 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2209 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 75/131 (75 success, 0 failed)
+
+[76/131] Processing: "Shrek the Third"
+🎬 Analyzing: "Shrek the Third"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 75246 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 75246 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2247 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[77/131] Processing: "Sing 2"
+🎬 Analyzing: "Sing 2"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 136188 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 136188 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2074 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[78/131] Processing: "Sleeping Beauty"
+🎬 Analyzing: "Sleeping Beauty"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 47087 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 47087 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2125 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[79/131] Processing: "Snow White and the Seven Dwarfs"
+🎬 Analyzing: "Snow White and the Seven Dwarfs"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 47026 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 47026 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2288 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[80/131] Processing: "Space Jam"
+🎬 Analyzing: "Space Jam"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 77383 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 77383 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2265 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 80/131 (80 success, 0 failed)
+
+[81/131] Processing: "SpongeBob Movie: Sponge Out of Water"
+🎬 Analyzing: "SpongeBob Movie: Sponge Out of Water"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 110936 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 110936 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2040 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[82/131] Processing: "SpongeBob SquarePants Movie"
+🎬 Analyzing: "SpongeBob SquarePants Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 78406 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 78406 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2011 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[83/131] Processing: "The Angry Birds Movie"
+🎬 Analyzing: "The Angry Birds Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 99205 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 99205 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1999 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[84/131] Processing: "Barney's Great Adventure"
+🎬 Analyzing: "Barney's Great Adventure"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 96365 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 96365 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2022 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[85/131] Processing: "Big Hero 6"
+🎬 Analyzing: "Big Hero 6"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 106060 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 106060 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2350 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 85/131 (85 success, 0 failed)
+
+[86/131] Processing: "Chicken Little"
+🎬 Analyzing: "Chicken Little"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 69634 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 69634 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2093 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[87/131] Processing: "The Book of Life"
+🎬 Analyzing: "The Book of Life"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 86898 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 86898 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2148 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[88/131] Processing: "The Croods"
+🎬 Analyzing: "The Croods"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 62669 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 62669 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2151 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[89/131] Processing: "The Croods: A New Age"
+🎬 Analyzing: "The Croods: A New Age"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 113411 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 113411 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2101 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[90/131] Processing: "The Great Mouse Detective"
+🎬 Analyzing: "The Great Mouse Detective"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 52402 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 52402 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2357 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 90/131 (90 success, 0 failed)
+
+[91/131] Processing: "The Incredibles"
+🎬 Analyzing: "The Incredibles"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 89076 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89076 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2205 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[92/131] Processing: "The Lego Movie"
+🎬 Analyzing: "The Lego Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 132927 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 132927 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2147 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[93/131] Processing: "Frozen II"
+🎬 Analyzing: "Frozen II"
+  🗑️  Deleting 7 existing scenes for re-analysis...
+  📄 Subtitle length: 100550 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 100550 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2325 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[94/131] Processing: "Zookeeper"
+🎬 Analyzing: "Zookeeper"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 122029 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 122029 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2170 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[95/131] Processing: "Curious George"
+🎬 Analyzing: "Curious George"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 90526 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 90526 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1876 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 95/131 (95 success, 0 failed)
+
+[96/131] Processing: "The BFG"
+🎬 Analyzing: "The BFG"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 46375 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 46375 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2070 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[97/131] Processing: "The Little Mermaid"
+🎬 Analyzing: "The Little Mermaid"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 65449 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 65449 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2278 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[98/131] Processing: "Winnie the Pooh"
+🎬 Analyzing: "Winnie the Pooh"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 70539 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 70539 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2008 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[99/131] Processing: "The Smurfs"
+🎬 Analyzing: "The Smurfs"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 109997 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 109997 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2159 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[100/131] Processing: "Octonauts and the Ring of Fire"
+🎬 Analyzing: "Octonauts and the Ring of Fire"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 70223 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 70223 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1998 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 100/131 (100 success, 0 failed)
+
+[101/131] Processing: "Barbie as Rapunzel"
+🎬 Analyzing: "Barbie as Rapunzel"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 69855 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 69855 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2120 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[102/131] Processing: "Lyle, Lyle, Crocodile"
+🎬 Analyzing: "Lyle, Lyle, Crocodile"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 80607 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 80607 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2288 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[103/131] Processing: "Wreck-It Ralph"
+🎬 Analyzing: "Wreck-It Ralph"
+  🗑️  Deleting 4 existing scenes for re-analysis...
+  📄 Subtitle length: 105426 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 105426 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2252 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[104/131] Processing: "A Bug's Life"
+🎬 Analyzing: "A Bug's Life"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 93427 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 93427 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2078 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[105/131] Processing: "Gnomeo & Juliet"
+🎬 Analyzing: "Gnomeo & Juliet"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 56274 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 56274 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2067 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 105/131 (105 success, 0 failed)
+
+[106/131] Processing: "Hotel Transylvania 3: Summer Vacation"
+🎬 Analyzing: "Hotel Transylvania 3: Summer Vacation"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 120989 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 120989 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2170 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[107/131] Processing: "How to Train Your Dragon: The Hidden World"
+🎬 Analyzing: "How to Train Your Dragon: The Hidden World"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 113026 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 113026 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2100 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[108/131] Processing: "Ice Age: Collision Course"
+🎬 Analyzing: "Ice Age: Collision Course"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 96847 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 96847 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2154 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[109/131] Processing: "Ice Age: Continental Drift"
+🎬 Analyzing: "Ice Age: Continental Drift"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 74554 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 74554 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2044 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[110/131] Processing: "Ice Age: Dawn of the Dinosaurs"
+🎬 Analyzing: "Ice Age: Dawn of the Dinosaurs"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 55416 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 55416 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2118 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 110/131 (110 success, 0 failed)
+
+[111/131] Processing: "It's the Great Pumpkin, Charlie Brown"
+🎬 Analyzing: "It's the Great Pumpkin, Charlie Brown"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 18146 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 18146 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2079 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[112/131] Processing: "Jimmy Neutron: Boy Genius"
+🎬 Analyzing: "Jimmy Neutron: Boy Genius"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 70140 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 70140 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2216 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[113/131] Processing: "Kiki's Delivery Service"
+🎬 Analyzing: "Kiki's Delivery Service"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 79612 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 79612 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2165 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[114/131] Processing: "Lilo & Stitch"
+🎬 Analyzing: "Lilo & Stitch"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 91376 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 91376 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2031 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[115/131] Processing: "Mickey's Once Upon a Christmas"
+🎬 Analyzing: "Mickey's Once Upon a Christmas"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 65842 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 65842 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2045 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 115/131 (115 success, 0 failed)
+
+[116/131] Processing: "Mickey's Twice Upon a Christmas"
+🎬 Analyzing: "Mickey's Twice Upon a Christmas"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 60800 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 60800 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1960 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[117/131] Processing: "Monsters, Inc."
+🎬 Analyzing: "Monsters, Inc."
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 135825 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 135825 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2121 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[118/131] Processing: "My Little Pony: The Movie"
+🎬 Analyzing: "My Little Pony: The Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 93552 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 93552 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2132 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[119/131] Processing: "Oliver & Company"
+🎬 Analyzing: "Oliver & Company"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 68085 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 68085 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2148 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[120/131] Processing: "Planes: Fire & Rescue"
+🎬 Analyzing: "Planes: Fire & Rescue"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 91616 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 91616 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (1953 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 120/131 (120 success, 0 failed)
+
+[121/131] Processing: "Zombillenium"
+🎬 Analyzing: "Zombillenium"
+  📄 Subtitle length: 77130 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 77130 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2386 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[122/131] Processing: "Zoom: Academy for Superheroes"
+🎬 Analyzing: "Zoom: Academy for Superheroes"
+  📄 Subtitle length: 81405 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 81405 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2174 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[123/131] Processing: "Zathura: A Space Adventure"
+🎬 Analyzing: "Zathura: A Space Adventure"
+  🗑️  Deleting 7 existing scenes for re-analysis...
+  📄 Subtitle length: 63657 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 63657 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2067 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[124/131] Processing: "Wallace & Gromit: The Curse of the Were-Rabbit"
+🎬 Analyzing: "Wallace & Gromit: The Curse of the Were-Rabbit"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 48609 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 48609 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2127 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[125/131] Processing: "Zombieland: Double Tap"
+🎬 Analyzing: "Zombieland: Double Tap"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 130520 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 130520 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2271 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 125/131 (125 success, 0 failed)
+
+[126/131] Processing: "Home"
+🎬 Analyzing: "Home"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 64109 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 64109 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2110 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[127/131] Processing: "How the Grinch Stole Christmas"
+🎬 Analyzing: "How the Grinch Stole Christmas"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 19947 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 19947 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2225 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[128/131] Processing: "Clifford's Really Big Movie"
+🎬 Analyzing: "Clifford's Really Big Movie"
+  🗑️  Deleting 3 existing scenes for re-analysis...
+  📄 Subtitle length: 89293 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 89293 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2241 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[129/131] Processing: "Rudolph the Red-Nosed Reindeer"
+🎬 Analyzing: "Rudolph the Red-Nosed Reindeer"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 53715 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 53715 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2219 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+[130/131] Processing: "Madagascar: Escape 2 Africa"
+🎬 Analyzing: "Madagascar: Escape 2 Africa"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 87582 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 87582 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2161 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+📈 Progress: 130/131 (130 success, 0 failed)
+
+[131/131] Processing: "Piglet's Big Movie"
+🎬 Analyzing: "Piglet's Big Movie"
+  🗑️  Deleting 2 existing scenes for re-analysis...
+  📄 Subtitle length: 66059 characters
+  🤖 Calling Claude API...
+  🔍 API Request Details (attempt 1/4):
+     URL: https://api.anthropic.com/v1/messages
+     Model: claude-3-5-sonnet-20241022
+     Max Tokens: 4000
+     API Key: Present
+     Content Length: 66059 characters
+  📡 Response Status: 200 OK
+  📝 Received Claude response (2116 characters)
+  🎭 Found 5 scenes
+  💾 Saved scenes to database
+  📊 Updated movie with overall scary scores
+  ✅ Success! Generated 5 scenes
+
+🎉 Claude analysis complete!
+📊 Total processed: 131
+✅ Successful: 131
+❌ Failed: 0
+📈 Success rate: 100.0%

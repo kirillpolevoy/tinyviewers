@@ -6,15 +6,23 @@ import { fileURLToPath } from 'url';
 // Load environment variables from root .env.local
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.join(__dirname, '..', '..', '..', '.env.local');
-console.log('🔍 Loading environment from:', envPath);
-dotenv.config({ path: envPath });
+dotenv.config({ path: path.join(__dirname, '..', '.env.local') });
 
-// Environment variables (read after dotenv config)
-let supabaseUrl, supabaseServiceKey, claudeApiKey;
+// Environment variables
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const claudeApiKey = process.env.CLAUDE_API_KEY;
 
-// Initialize Supabase (after environment variables are loaded)
-let supabase;
+if (!supabaseUrl || !supabaseServiceKey || !claudeApiKey) {
+  console.error('❌ Missing required environment variables:');
+  console.error('- NEXT_PUBLIC_SUPABASE_URL:', !!supabaseUrl);
+  console.error('- SUPABASE_SERVICE_ROLE_KEY:', !!supabaseServiceKey);
+  console.error('- CLAUDE_API_KEY:', !!claudeApiKey);
+  process.exit(1);
+}
+
+// Initialize Supabase client
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // Claude API configuration
 const CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages';
@@ -22,11 +30,12 @@ const CLAUDE_MODEL = 'claude-3-5-sonnet-20241022';
 const MAX_TOKENS = 4000;
 
 // Delay between API calls to respect rate limits
-const DELAY_MS = 2000;
+const DELAY_MS = 180000; // 180 seconds (3 minutes) to avoid rate limiting - Claude has 40k tokens/min limit
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-async function callClaudeAPI(prompt, subtitleText) {
+async function callClaudeAPI(prompt, subtitleText, retryCount = 0) {
+  const maxRetries = 3;
   const messages = [
     {
       role: 'user',
@@ -40,7 +49,7 @@ async function callClaudeAPI(prompt, subtitleText) {
     messages: messages
   };
 
-  console.log(`  🔍 API Request Details:`);
+  console.log(`  🔍 API Request Details (attempt ${retryCount + 1}/${maxRetries + 1}):`);
   console.log(`     URL: ${CLAUDE_API_URL}`);
   console.log(`     Model: ${CLAUDE_MODEL}`);
   console.log(`     Max Tokens: ${MAX_TOKENS}`);
@@ -63,12 +72,28 @@ async function callClaudeAPI(prompt, subtitleText) {
     if (!response.ok) {
       const errorText = await response.text();
       console.log(`  ❌ Error Response Body: ${errorText}`);
+      
+      // If rate limited and we have retries left, wait longer and retry
+      if (response.status === 429 && retryCount < maxRetries) {
+        const waitTime = (retryCount + 1) * 120000; // 2, 4, 6 minutes
+        console.log(`  ⏳ Rate limited. Waiting ${waitTime/1000} seconds before retry...`);
+        await delay(waitTime);
+        return callClaudeAPI(prompt, subtitleText, retryCount + 1);
+      }
+      
       throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
     return data.content[0].text;
   } catch (error) {
+    // If it's a network error and we have retries left, retry
+    if (retryCount < maxRetries && !error.message.includes('Claude API error')) {
+      console.log(`  🔄 Network error, retrying in 30 seconds... (attempt ${retryCount + 1}/${maxRetries})`);
+      await delay(30000);
+      return callClaudeAPI(prompt, subtitleText, retryCount + 1);
+    }
+    
     console.error('Claude API call failed:', error);
     throw error;
   }
@@ -283,7 +308,7 @@ async function analyzeMovieWithClaude(movie, claudePrompt) {
   }
 }
 
-async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
+async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null, dryRun = false) {
   console.log('🎬 Starting Claude Analysis of Movie Subtitles...\n');
   console.log('🤖 Using Claude-3-5-Sonnet for intelligent scene analysis\n');
   
@@ -293,31 +318,10 @@ async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
     console.log(`🎯 Analyzing all movies without scenes\n`);
   }
   
-  // Read environment variables
-  supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  claudeApiKey = process.env.CLAUDE_API_KEY;
-  
-  // Debug environment variables
-  console.log('Environment check:');
-  console.log('- SUPABASE_URL:', !!supabaseUrl);
-  console.log('- SUPABASE_SERVICE_KEY:', !!supabaseServiceKey);
-  console.log('- CLAUDE_API_KEY:', !!claudeApiKey);
-  
-  // Check environment variables
-  if (!supabaseUrl || !supabaseServiceKey || !claudeApiKey) {
-    console.error('❌ Missing required environment variables:');
-    console.error('- NEXT_PUBLIC_SUPABASE_URL:', !!supabaseUrl);
-    console.error('- SUPABASE_SERVICE_ROLE_KEY:', !!supabaseServiceKey);
-    console.error('- CLAUDE_API_KEY:', !!claudeApiKey);
-    process.exit(1);
-  }
-  
-  // Initialize Supabase client
-  supabase = createClient(supabaseUrl, supabaseServiceKey);
+
   
   try {
-    // Get movies with subtitles that don't have scenes yet
+    // Get all active movies with subtitles (including those where is_active is null)
     let query = supabase
       .from('movies')
       .select(`
@@ -326,8 +330,8 @@ async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
         subtitles(subtitle_text),
         scenes(id)
       `)
-      .not('subtitles', 'is', null)
-      .or('is_active.is.null,is_active.eq.true'); // Filter out inactive movies
+      .or('is_active.is.null,is_active.eq.true') // Include null and true values
+      .not('subtitles', 'is', null); // Only movies with subtitles
     
     // Add specific movie filter if provided
     if (specificMovieTitle) {
@@ -345,29 +349,60 @@ async function runClaudeAnalysis(claudePrompt, specificMovieTitle = null) {
       console.log(`🔍 Movies matching "${specificMovieTitle}":`, movies?.map(m => m.title));
     }
     
-    // Filter for movies that have subtitles
-    // If specific movie is requested, allow re-analysis even if scenes exist
+    // All active movies are ready for analysis
     const moviesForAnalysis = movies.filter(movie => {
       const hasSubtitles = movie.subtitles && movie.subtitles.length > 0;
-      const hasScenes = movie.scenes && movie.scenes.length > 0;
       
-      if (specificMovieTitle) {
-        // For specific movie requests, only require subtitles
-        return hasSubtitles;
-      } else {
-        // For bulk analysis, only process movies without scenes
-        return hasSubtitles && !hasScenes;
+      if (!hasSubtitles) {
+        console.log(`⚠️  Skipping "${movie.title}" - no subtitles found`);
+        return false;
       }
+      
+      return true;
     });
     
-    console.log(`📊 Found ${moviesForAnalysis.length} movies with subtitles ready for analysis\n`);
+    console.log(`📊 Found ${moviesForAnalysis.length} active movies ready for analysis\n`);
     
     if (moviesForAnalysis.length === 0) {
       if (specificMovieTitle) {
-        console.log(`❌ Movie "${specificMovieTitle}" not found or already analyzed!`);
+        console.log(`❌ Movie "${specificMovieTitle}" not found or has no subtitles!`);
       } else {
-        console.log('✅ All movies with subtitles have already been analyzed!');
+        console.log('✅ No active movies with subtitles found for analysis!');
       }
+      return;
+    }
+
+    // If dry run, just show the count and exit
+    if (dryRun) {
+      console.log('🔍 DRY RUN MODE - Just showing what would be processed:\n');
+      
+      const moviesWithExistingScenes = moviesForAnalysis.filter(movie => {
+        const hasScenes = movie.scenes && movie.scenes.length > 0;
+        return hasScenes;
+      });
+      
+      const moviesWithoutScenes = moviesForAnalysis.filter(movie => {
+        const hasScenes = movie.scenes && movie.scenes.length > 0;
+        return !hasScenes;
+      });
+
+      console.log('📊 BREAKDOWN:');
+      console.log('  - Movies with existing scenes (will be RE-ANALYZED):', moviesWithExistingScenes.length);
+      console.log('  - Movies without scenes (new analysis):', moviesWithoutScenes.length);
+      console.log('');
+      console.log('🎯 TOTAL MOVIES TO PROCESS:', moviesForAnalysis.length);
+      console.log('⏱️  Estimated time (at 3 minutes per movie):', Math.ceil(moviesForAnalysis.length * 3), 'minutes (', Math.ceil(moviesForAnalysis.length * 3 / 60), 'hours)');
+      console.log('');
+      console.log('📋 Sample movies to be processed:');
+      moviesForAnalysis.slice(0, 10).forEach((movie, index) => {
+        const hasScenes = movie.scenes && movie.scenes.length > 0;
+        console.log(`  ${index + 1}. ${movie.title} ${hasScenes ? '(re-analysis)' : '(new)'}`);
+      });
+      if (moviesForAnalysis.length > 10) {
+        console.log(`  ... and ${moviesForAnalysis.length - 10} more movies`);
+      }
+      console.log('');
+      console.log('💡 To run the actual analysis, remove --dry-run flag');
       return;
     }
     
@@ -509,7 +544,11 @@ Please return ONLY a valid JSON object in this exact format:
 Please analyze the following subtitle text:
 `;
 
-// Get specific movie title from command line argument
-const specificMovieTitle = process.argv[2];
+// Parse command line arguments
+const args = process.argv.slice(2);
+const dryRun = args.includes('--dry-run') || args.includes('--preview');
+const specificMovieTitle = args.find(arg => !arg.startsWith('--'));
 
-runClaudeAnalysis(claudePrompt, specificMovieTitle); 
+
+
+runClaudeAnalysis(claudePrompt, specificMovieTitle, dryRun); 
