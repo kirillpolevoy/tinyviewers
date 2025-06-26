@@ -10,6 +10,7 @@ import { Movie } from '../types';
 import Image from 'next/image';
 import Link from 'next/link';
 import FeedbackModal from './components/FeedbackModal';
+import PasscodeModal from './components/PasscodeModal';
 
 // Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
 function extractYearFromTitle(title: string): number | null {
@@ -48,6 +49,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [isPasscodeModalOpen, setIsPasscodeModalOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   const cards = [
@@ -168,6 +170,12 @@ export default function HomePage() {
             🧸 <span>Tiny Viewers</span>
           </h1>
           <nav className="flex items-center gap-6 text-sm font-medium">
+            <button
+              onClick={() => setIsPasscodeModalOpen(true)}
+              className="hover:text-blue-600 transition-colors duration-200 px-3 py-2 rounded-full hover:bg-blue-50"
+            >
+              Add Movie
+            </button>
             <button 
               onClick={() => setIsFeedbackModalOpen(true)}
               className="hover:text-blue-600 transition-colors duration-200 px-3 py-2 rounded-full hover:bg-blue-50"
@@ -500,6 +508,13 @@ export default function HomePage() {
       <FeedbackModal 
         isOpen={isFeedbackModalOpen} 
         onClose={() => setIsFeedbackModalOpen(false)} 
+      />
+
+      {/* Passcode Modal */}
+      <PasscodeModal 
+        isOpen={isPasscodeModalOpen} 
+        onClose={() => setIsPasscodeModalOpen(false)}
+        onSuccess={() => window.location.href = '/add-movie'}
       />
     </div>
   );

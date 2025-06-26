@@ -1,0 +1,43 @@
+import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+export async function POST(request: NextRequest) {
+  try {
+    const { imdbId } = await request.json();
+
+    if (!imdbId) {
+      return NextResponse.json({ error: 'IMDB ID is required' }, { status: 400 });
+    }
+
+    // Check if movie with this IMDB ID already exists
+    const { data: existingMovie, error } = await supabase
+      .from('movies')
+      .select('id, title')
+      .eq('imdb_id', imdbId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') { // PGRST116 is "not found" error
+      console.error('Database error:', error);
+      return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    }
+
+    if (existingMovie) {
+      return NextResponse.json({ 
+        exists: true, 
+        title: existingMovie.title,
+        movieId: existingMovie.id
+      });
+    }
+
+    return NextResponse.json({ exists: false });
+
+  } catch (error) {
+    console.error('Error checking movie existence:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+} 
