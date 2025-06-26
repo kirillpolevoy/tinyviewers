@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
     console.log(`💾 Downloaded ${subtitleContent.length} characters`);
 
     // Save to database
-    const saveSuccess = await saveSubtitleToDatabase(supabase, movieId, subtitleContent, 'opensubtitles');
+    const saveSuccess = await saveSubtitleToDatabase(movieId, subtitleContent, 'opensubtitles');
 
     if (saveSuccess) {
       console.log('✅ Saved to database');

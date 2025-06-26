@@ -309,7 +309,7 @@ export async function POST(request: NextRequest) {
     
     // Update movie with overall scary score
     if (analysis.overall_scary_score) {
-      await updateMovieWithAnalysis(supabase, movieId, analysis.overall_scary_score);
+      await updateMovieWithAnalysis(movieId, analysis.overall_scary_score);
       console.log('📊 Updated movie with overall scary scores');
     }
     
