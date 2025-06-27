@@ -31,30 +31,29 @@ export async function POST(request: NextRequest) {
     // Generate UUID for the movie
     const movieId = uuidv4();
 
-    // Default age scores (will be updated after Claude analysis)
+    // Use the original age scores structure from the database schema
     const defaultAgeScores = {
-      '24m': null,
-      '36m': null,
-      '48m': null,
-      '60m': null
+      '12m': 0,
+      '24m': 0,
+      '36m': 0
     };
 
-    // Create movie record
+    // Create movie record with only the columns that exist in the database
     const movieData = {
       id: movieId,
       title: metadata.title,
       summary: metadata.summary,
       poster_url: metadata.poster_url,
       rating: metadata.rating,
-      release_year: metadata.release_year,
-      tmdb_poster_url: metadata.tmdb_poster_url,
-      tmdb_rating: metadata.tmdb_rating,
-      tmdb_description: metadata.tmdb_description,
-      tmdb_updated_at: metadata.tmdb_updated_at,
-      imdb_id: imdbId,
-      imdb_rating: metadata.imdb_rating, // Include IMDB rating from metadata
-      is_active: true,
-      age_scores: defaultAgeScores
+      age_scores: defaultAgeScores,
+      // Add TMDB columns if they exist
+      ...(metadata.release_year && { release_year: metadata.release_year }),
+      ...(metadata.tmdb_poster_url && { tmdb_poster_url: metadata.tmdb_poster_url }),
+      ...(metadata.tmdb_rating && { tmdb_rating: metadata.tmdb_rating }),
+      ...(metadata.tmdb_description && { tmdb_description: metadata.tmdb_description }),
+      ...(metadata.tmdb_updated_at && { tmdb_updated_at: metadata.tmdb_updated_at }),
+      // Add IMDB ID if the column exists
+      ...(imdbId && { imdb_id: imdbId })
     };
 
     console.log('Attempting to create movie:', {
