@@ -1,0 +1,119 @@
+import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
+
+
+function validateSubtitleContent(content: string): { valid: boolean; reason?: string } {
+  if (!content || content.trim().length === 0) {
+    return { valid: false, reason: 'Subtitle content is empty' };
+  }
+
+  if (content.length < 100) {
+    return { valid: false, reason: 'Subtitle content is too short (minimum 100 characters)' };
+  }
+
+  // Check if it's corrupted HTML
+  if (content.includes('<!DOCTYPE html>') || content.includes('<html')) {
+    return { valid: false, reason: 'Content appears to be HTML, not subtitle text' };
+  }
+
+  // Check for basic SRT format patterns
+  const hasTimestamps = /\d{2}:\d{2}:\d{2},\d{3}\s*-->\s*\d{2}:\d{2}:\d{2},\d{3}/.test(content);
+  const hasSequenceNumbers = /^\d+$/m.test(content);
+  
+  if (!hasTimestamps && !hasSequenceNumbers) {
+    return { valid: false, reason: 'Content does not appear to be in SRT format' };
+  }
+
+  return { valid: true };
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    // Initialize Supabase client inside the handler
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { movieId, subtitleText, source } = await request.json();
+
+    if (!movieId || !subtitleText || !source) {
+      return NextResponse.json({ 
+        error: 'Movie ID, subtitle text, and source are required' 
+      }, { status: 400 });
+    }
+
+    // Validate subtitle content
+    const validation = validateSubtitleContent(subtitleText);
+    if (!validation.valid) {
+      return NextResponse.json({ 
+        error: `Invalid subtitle content: ${validation.reason}` 
+      }, { status: 400 });
+    }
+
+    // Check if movie exists
+    const { data: movie, error: movieError } = await supabase
+      .from('movies')
+      .select('id, title')
+      .eq('id', movieId)
+      .single();
+
+    if (movieError || !movie) {
+      return NextResponse.json({ error: 'Movie not found' }, { status: 404 });
+    }
+
+    // Check if subtitles already exist for this movie
+    const { data: existingSubtitle, error: checkError } = await supabase
+      .from('subtitles')
+      .select('id')
+      .eq('movie_id', movieId)
+      .single();
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      console.error('Error checking existing subtitles:', checkError);
+      return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    }
+
+    if (existingSubtitle) {
+      // Update existing subtitle
+      const { error: updateError } = await supabase
+        .from('subtitles')
+        .update({
+          subtitle_text: subtitleText,
+          source: source
+        })
+        .eq('movie_id', movieId);
+
+      if (updateError) {
+        console.error('Error updating subtitle:', updateError);
+        return NextResponse.json({ error: 'Failed to update subtitle' }, { status: 500 });
+      }
+    } else {
+      // Create new subtitle record
+      const { error: insertError } = await supabase
+        .from('subtitles')
+        .insert({
+          movie_id: movieId,
+          subtitle_text: subtitleText,
+          language: 'en',
+          source: source,
+          file_format: 'srt'
+        });
+
+      if (insertError) {
+        console.error('Error creating subtitle:', insertError);
+        return NextResponse.json({ error: 'Failed to create subtitle' }, { status: 500 });
+      }
+    }
+
+    return NextResponse.json({ 
+      success: true,
+      message: 'Subtitle uploaded successfully',
+      subtitleLength: subtitleText.length
+    });
+
+  } catch (error) {
+    console.error('Error uploading subtitle:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+} 
