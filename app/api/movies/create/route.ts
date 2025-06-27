@@ -5,6 +5,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(request: NextRequest) {
   try {
+    // Log environment variables for debugging
+    console.log('Environment check:', {
+      hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      hasServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+      hasAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      supabaseUrlLength: process.env.NEXT_PUBLIC_SUPABASE_URL?.length || 0,
+      serviceKeyLength: process.env.SUPABASE_SERVICE_ROLE_KEY?.length || 0,
+      anonKeyLength: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length || 0,
+      usingServiceKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY
+    });
+
     // Initialize Supabase client inside the handler
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -46,6 +57,13 @@ export async function POST(request: NextRequest) {
       age_scores: defaultAgeScores
     };
 
+    console.log('Attempting to create movie:', {
+      movieId,
+      title: metadata.title,
+      imdbId,
+      dataKeys: Object.keys(movieData)
+    });
+
     const { data: movie, error } = await supabase
       .from('movies')
       .insert([movieData])
@@ -53,9 +71,21 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Database error creating movie:', error);
-      return NextResponse.json({ error: 'Failed to create movie record' }, { status: 500 });
+      console.error('Database error creating movie:', {
+        error: error,
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint
+      });
+      return NextResponse.json({ 
+        error: 'Failed to create movie record',
+        details: error.message,
+        code: error.code
+      }, { status: 500 });
     }
+
+    console.log('Successfully created movie:', movie.id);
 
     return NextResponse.json({ 
       success: true, 
