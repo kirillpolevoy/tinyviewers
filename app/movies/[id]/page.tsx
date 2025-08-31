@@ -5,9 +5,11 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
-import { Movie, Scene, AgeFlag } from '@/types';
-import FeedbackModal from '../../components/FeedbackModal';
+import { supabase } from '../../../lib/supabase';
+import { Movie, Scene, AgeFlag } from '../../../types';
+
+import AuthButtonSimple from '../../components/AuthButtonSimple';
+import SaveButton from '../../components/SaveButton';
 
 const RATING_MEANINGS = {
   1: 'Very gentle – no intense content',
@@ -80,7 +82,8 @@ const MovieDetailsPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
-  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+
+
 
   const backUrl = searchParams?.get('search') 
     ? `/movies?search=${searchParams.get('search')}${searchParams.get('category') ? `&category=${searchParams.get('category')}` : ''}${searchParams.get('age') ? `&age=${searchParams.get('age')}` : ''}`
@@ -93,38 +96,18 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     const fetchMovieAndScenes = async () => {
       try {
-        const { data: movieData, error: movieError } = await supabase
-          .from('movies')
-          .select('*')
-          .eq('id', params.id)
-          .or('is_active.is.null,is_active.eq.true')
-          .single();
+        const response = await fetch(`/api/movies/${params.id}`);
+        const result = await response.json();
 
-        if (movieError) {
-          setError(`Error fetching movie: ${movieError.message}`);
+        if (!result.success) {
+          setError(result.error || 'Failed to fetch movie');
           return;
         }
 
-        if (!movieData) {
-          setError('Movie not found');
-          return;
-        }
-
-        setMovie(movieData);
-
-        const { data: scenesData, error: scenesError } = await supabase
-          .from('scenes')
-          .select('*')
-          .eq('movie_id', params.id)
-          .order('timestamp_start');
-
-        if (scenesError) {
-          setError(`Error fetching scenes: ${scenesError.message}`);
-          return;
-        }
-
-        setScenes(scenesData || []);
+        setMovie(result.movie);
+        setScenes(result.scenes || []);
       } catch (e) {
+
         setError(e instanceof Error ? e.message : 'Unknown error');
       } finally {
         setLoading(false);
@@ -135,6 +118,8 @@ const MovieDetailsPage = () => {
       fetchMovieAndScenes();
     }
   }, [params.id, mounted]);
+
+
 
   const getAgeRatingType = (score: number): keyof typeof AGE_RATING_INFO => {
     if (score <= 2) return 'safe';
@@ -195,7 +180,7 @@ const MovieDetailsPage = () => {
             </Link>
             <nav className="flex items-center gap-6 text-sm font-medium">
               <button 
-                onClick={() => setIsFeedbackModalOpen(true)}
+onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
                 className="hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
               >
                 Feedback
@@ -234,7 +219,7 @@ const MovieDetailsPage = () => {
             </Link>
             <nav className="flex items-center gap-6 text-sm font-medium">
               <button 
-                onClick={() => setIsFeedbackModalOpen(true)}
+onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
                 className="hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
               >
                 Feedback
@@ -292,12 +277,7 @@ const MovieDetailsPage = () => {
             🧸 <span>Tiny Viewers</span>
           </Link>
           <nav className="flex items-center gap-6 text-sm font-medium">
-            <button 
-              onClick={() => setIsFeedbackModalOpen(true)}
-              className="hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
-            >
-              Feedback
-            </button>
+            <AuthButtonSimple />
           </nav>
         </div>
       </header>
@@ -358,9 +338,12 @@ const MovieDetailsPage = () => {
                 fontFamily: 'system-ui, -apple-system, serif',
                 textShadow: '0 2px 8px rgba(168, 85, 247, 0.15)',
               }}>
-                <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                  {displayTitle}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
+                    {displayTitle}
+                  </span>
+                  <SaveButton movieId={movie.id} movieTitle={displayTitle} size="md" />
+                </div>
               </h1>
               <p className="text-base text-slate-600 leading-relaxed mb-4">
                 {description}
@@ -654,11 +637,7 @@ const MovieDetailsPage = () => {
         </div>
       </div>
 
-      {/* Feedback Modal */}
-      <FeedbackModal 
-        isOpen={isFeedbackModalOpen} 
-        onClose={() => setIsFeedbackModalOpen(false)} 
-      />
+
     </div>
   );
 };

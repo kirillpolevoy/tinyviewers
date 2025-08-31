@@ -4,8 +4,8 @@ import React, { useState, useCallback } from 'react';
 import Link from 'next/link';
 import MoviesList from './MoviesList';
 import { motion, AnimatePresence } from 'framer-motion';
-import FeedbackModal from '../components/FeedbackModal';
-import PasscodeModal from '../components/PasscodeModal';
+
+import AuthButtonSimple from '../components/AuthButtonSimple';
 
 interface SearchParams {
   search?: string;
@@ -46,8 +46,7 @@ export default function MoviesPage({
   const sort = searchParams?.sort ?? 'title';
   const view = searchParams?.view ?? 'grid';
   
-  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const [isPasscodeModalOpen, setIsPasscodeModalOpen] = useState(false);
+
   const [totalMovies, setTotalMovies] = useState<number | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState({
@@ -94,18 +93,7 @@ export default function MoviesPage({
             🧸 <span className="text-slate-800">Tiny Viewers</span>
           </Link>
           <nav className="flex items-center gap-4 text-sm font-medium">
-            <button
-              onClick={() => setIsPasscodeModalOpen(true)}
-              className="text-slate-600 hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
-            >
-              Add Movie
-            </button>
-            <button 
-              onClick={() => setIsFeedbackModalOpen(true)}
-              className="text-slate-600 hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
-            >
-              Feedback
-            </button>
+            <AuthButtonSimple />
           </nav>
         </div>
       </header>
@@ -333,18 +321,7 @@ export default function MoviesPage({
         </motion.div>
       </div>
 
-      {/* Feedback Modal */}
-      <FeedbackModal 
-        isOpen={isFeedbackModalOpen} 
-        onClose={() => setIsFeedbackModalOpen(false)} 
-      />
 
-      {/* Passcode Modal */}
-      <PasscodeModal 
-        isOpen={isPasscodeModalOpen} 
-        onClose={() => setIsPasscodeModalOpen(false)}
-        onSuccess={() => window.location.href = '/add-movie'}
-      />
     </div>
   );
 } 

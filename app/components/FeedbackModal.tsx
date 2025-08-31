@@ -18,6 +18,8 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
@@ -79,15 +81,32 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     onClose();
   };
 
+  if (!isOpen) return null;
+
   return (
     <AnimatePresence>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div 
+        className="fixed inset-0 z-[9999]"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          padding: '40px 16px',
+          zIndex: 9999,
+          overflowY: 'auto'
+        }}
+      >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ type: "tween" }}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={handleClose}
           />
@@ -97,8 +116,9 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: "easeOut", type: "tween" }}
             className="relative w-full max-w-md bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border border-pink-200 overflow-hidden"
+            style={{ marginTop: '20px' }}
           >
             {!isSubmitted ? (
               <div className="p-8">
@@ -217,7 +237,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                  transition={{ delay: 0.2, type: "tween", duration: 0.3 }}
                   className="text-6xl mb-6"
                 >
                   🎉
@@ -251,7 +271,6 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             </button>
           </motion.div>
         </div>
-      )}
     </AnimatePresence>
   );
 } 

@@ -9,8 +9,7 @@ import { supabase } from '../lib/supabase';
 import { Movie } from '../types';
 import Image from 'next/image';
 import Link from 'next/link';
-import FeedbackModal from './components/FeedbackModal';
-import PasscodeModal from './components/PasscodeModal';
+import AuthButtonSimple from './components/AuthButtonSimple';
 
 // Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
 function extractYearFromTitle(title: string): number | null {
@@ -48,8 +47,7 @@ export default function HomePage() {
   const [featuredMovies, setFeaturedMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
-  const [isPasscodeModalOpen, setIsPasscodeModalOpen] = useState(false);
+
   const shouldReduceMotion = useReducedMotion();
 
   const cards = [
@@ -70,17 +68,17 @@ export default function HomePage() {
     }
   ];
 
-  // Optimized animation variants
+  // Simplified animation variants
   const fadeInUp = shouldReduceMotion ? {} : {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5, type: "tween", ease: "easeOut" }
   };
 
   const staggerContainer = shouldReduceMotion ? {} : {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.1, type: "tween" }
   };
 
   // Fetch featured movies from database
@@ -169,19 +167,8 @@ export default function HomePage() {
           <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
             🧸 <span>Tiny Viewers</span>
           </h1>
-          <nav className="flex items-center gap-6 text-sm font-medium">
-            <button
-              onClick={() => setIsPasscodeModalOpen(true)}
-              className="hover:text-blue-600 transition-colors duration-200 px-3 py-2 rounded-full hover:bg-blue-50"
-            >
-              Add Movie
-            </button>
-            <button 
-              onClick={() => setIsFeedbackModalOpen(true)}
-              className="hover:text-blue-600 transition-colors duration-200 px-3 py-2 rounded-full hover:bg-blue-50"
-            >
-              Feedback
-            </button>
+          <nav className="flex items-center gap-4 text-sm font-medium">
+            <AuthButtonSimple />
           </nav>
         </div>
       </header>
@@ -202,7 +189,7 @@ export default function HomePage() {
           {...(shouldReduceMotion ? {} : {
             initial: { opacity: 0, y: 30 },
             animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.8, ease: "easeOut" }
+            transition: { duration: 0.8, type: "tween", ease: "easeOut" }
           })}
           className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 mb-6 relative leading-[0.9] cursor-default tracking-tight"
           style={{
@@ -320,7 +307,7 @@ export default function HomePage() {
                 {...(shouldReduceMotion ? {} : {
                   initial: { opacity: 0, y: 20 },
                   animate: { opacity: 1, y: 0 },
-                  transition: { duration: 0.5, delay: i * 0.1 }
+                  transition: { duration: 0.5, delay: i * 0.1, type: "tween" }
                 })}
                 className="group bg-white/80 p-8 rounded-2xl shadow-lg border border-pink-100 hover:shadow-xl hover:border-purple-200 transition-all duration-200"
                 style={{ willChange: 'transform' }}
@@ -368,7 +355,7 @@ export default function HomePage() {
                     {...(shouldReduceMotion ? {} : {
                       initial: { opacity: 0, y: 20 },
                       animate: { opacity: 1, y: 0 },
-                      transition: { duration: 0.5, delay: i * 0.1 }
+                      transition: { duration: 0.5, delay: i * 0.1, type: "tween" }
                     })}
                     className="group relative rounded-3xl overflow-hidden shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-200 bg-white w-full sm:w-[300px] flex-shrink-0"
                     style={{ willChange: 'transform' }}
@@ -504,18 +491,6 @@ export default function HomePage() {
         </motion.div>
       </footer>
 
-      {/* Feedback Modal */}
-      <FeedbackModal 
-        isOpen={isFeedbackModalOpen} 
-        onClose={() => setIsFeedbackModalOpen(false)} 
-      />
-
-      {/* Passcode Modal */}
-      <PasscodeModal 
-        isOpen={isPasscodeModalOpen} 
-        onClose={() => setIsPasscodeModalOpen(false)}
-        onSuccess={() => window.location.href = '/add-movie'}
-      />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { Movie } from '../../types';
+import SaveButton from '../components/SaveButton';
 
 // Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
 function extractYearFromTitle(title: string): number | null {
@@ -121,41 +122,23 @@ export default function MoviesList({
     const fetchMovies = async () => {
       try {
         setLoading(true);
-        console.log('MoviesList - Received search params:', { searchQuery, categoryFilter, ageFilter, sortBy });
+        // Use API route instead of direct Supabase client
+        const params = new URLSearchParams();
+        if (searchQuery) params.set('search', searchQuery);
+        if (ageFilter && ageFilter !== 'all') params.set('age', ageFilter);
+        if (sortBy) params.set('sort', sortBy);
         
-        let query = supabase.from('movies').select('*');
-
-        // Filter out inactive movies (is_active = false)
-        query = query.or('is_active.is.null,is_active.eq.true');
-
-        if (searchQuery) {
-          console.log('Applying search filter for:', searchQuery);
-          query = query.ilike('title', `%${searchQuery}%`);
-        }
-
-        if (categoryFilter) {
-          query = query.eq('category', categoryFilter);
-        }
-
-        if (ageFilter && ageFilter !== 'all') {
-          const ageNumber = parseInt(ageFilter);
-          if (!isNaN(ageNumber)) {
-            // Map age filter to database age keys
-            const ageKey = `${ageNumber * 12}m`; // Convert years to months (2 -> 24m, 3 -> 36m, etc.)
-            query = query.lte(`age_scores->${ageKey}`, 2); // Changed from 3 to 2 for stricter filtering
-          }
-        }
-
-        const { data, error: dbError } = await query;
+        const response = await fetch(`/api/movies?${params.toString()}`);
+        const result = await response.json();
         
-        if (dbError) {
-          console.error('Supabase error:', dbError);
-          setError(`Database error: ${dbError.message}`);
-          return;
+        if (!result.success) {
+          throw new Error(result.error || 'API request failed');
         }
+        
+        const data = result.movies || [];
 
         console.log('Movies fetched from Supabase:', data);
-        console.log('Sample movie ratings:', data?.slice(0, 3).map(m => ({ 
+        console.log('Sample movie ratings:', data?.slice(0, 3).map((m: any) => ({ 
           title: m.title, 
           rating: m.rating, 
           tmdb_rating: m.tmdb_rating,
@@ -165,7 +148,7 @@ export default function MoviesList({
 
         // Apply sorting
         if (data) {
-          data.sort((a, b) => {
+          data.sort((a: any, b: any) => {
             switch (sortBy) {
               case 'rating':
                 const getImdbRating = (movie: any) => movie.imdb_rating ? parseFloat(movie.imdb_rating) : null;
@@ -475,9 +458,14 @@ export default function MoviesList({
                 {/* Content Section */}
                 <div className="p-4 sm:p-5 flex-1 flex flex-col">
                   <div className="flex-1 flex flex-col">
-                    <h2 className="text-base sm:text-lg font-bold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight mb-2 min-h-[3rem] flex items-start" title={movie.title}>
-                      {displayTitle}
-                    </h2>
+                    <div className="flex items-start gap-2 mb-2 min-h-[3rem]">
+                      <h2 className="text-base sm:text-lg font-bold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight flex-1" title={movie.title}>
+                        {displayTitle}
+                      </h2>
+                      <div className="flex-shrink-0 mt-1">
+                        <SaveButton movieId={movie.id} movieTitle={displayTitle} size="sm" />
+                      </div>
+                    </div>
                     
                     <div className="flex items-center justify-between mb-4 mt-auto">
                       {displayYear && (
