@@ -9,7 +9,7 @@ import { supabase } from '../../../lib/supabase';
 import { Movie, Scene, AgeFlag } from '../../../types';
 
 import AuthButtonSimple from '../../components/AuthButtonSimple';
-import SaveButton from '../../components/SaveButton';
+import MyListButton from '../../components/MyListButton';
 
 const RATING_MEANINGS = {
   1: 'Very gentle – no intense content',
@@ -342,7 +342,15 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
                   <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
                     {displayTitle}
                   </span>
-                  <SaveButton movieId={movie.id} movieTitle={displayTitle} size="md" />
+                </div>
+                <div className="flex items-center gap-3 mt-6">
+                  <MyListButton 
+                    movieId={movie.id} 
+                    movieTitle={displayTitle} 
+                    variant="secondary" 
+                    size="md" 
+                    showText={true}
+                  />
                 </div>
               </h1>
               <p className="text-base text-slate-600 leading-relaxed mb-4">

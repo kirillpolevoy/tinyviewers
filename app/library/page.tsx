@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '../../lib/supabase';
 import AuthButtonSimple from '../components/AuthButtonSimple';
-import SaveButton from '../components/SaveButton';
+import MyListButton from '../components/MyListButton';
 import { motion } from 'framer-motion';
 import { useToast } from '../components/Toast';
 // Icons currently unused but kept for future features
@@ -287,9 +287,14 @@ export default function LibraryPage() {
                               </div>
                             )}
                             
-                            {/* Save Button Overlay */}
+                            {/* My List Button Overlay */}
                             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                              <SaveButton movieId={movie.id} size="sm" />
+                              <MyListButton 
+                                movieId={movie.id} 
+                                variant="secondary" 
+                                size="sm" 
+                                showText={false}
+                              />
                             </div>
                           </div>
                         </Link>

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { Movie } from '../../types';
-import SaveButton from '../components/SaveButton';
+import MyListButton from '../components/MyListButton';
 
 // Function to extract year from title (e.g., "Beauty and the Beast (1991)" -> 1991)
 function extractYearFromTitle(title: string): number | null {
@@ -462,8 +462,14 @@ export default function MoviesList({
                       <h2 className="text-base sm:text-lg font-bold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight flex-1" title={movie.title}>
                         {displayTitle}
                       </h2>
-                      <div className="flex-shrink-0 mt-1">
-                        <SaveButton movieId={movie.id} movieTitle={displayTitle} size="sm" />
+                      <div className="flex-shrink-0 mt-1 opacity-70 hover:opacity-100 transition-opacity duration-200">
+                        <MyListButton 
+                          movieId={movie.id} 
+                          movieTitle={displayTitle} 
+                          variant="minimal" 
+                          size="sm" 
+                          showText={false}
+                        />
                       </div>
                     </div>
                     
