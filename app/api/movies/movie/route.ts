@@ -4,19 +4,16 @@ import { NextRequest, NextResponse } from 'next/server';
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> | { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    // Handle both sync and async params for compatibility
-    const resolvedParams = await params;
-    const movieId = resolvedParams.id;
+    // Get movie ID from search params
+    const { searchParams } = new URL(request.url);
+    const movieId = searchParams.get('id');
 
     if (!movieId) {
       return NextResponse.json({ 

@@ -96,7 +96,7 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     const fetchMovieAndScenes = async () => {
       try {
-        const response = await fetch(`/api/movies/${params.id}`);
+        const response = await fetch(`/api/movies/movie?id=${params.id}`);
         const result = await response.json();
 
         if (!result.success) {

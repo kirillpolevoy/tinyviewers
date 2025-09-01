@@ -384,9 +384,12 @@ export default function LibraryPage() {
                             setMovies(prev => prev.filter(movie => movie.id !== m.id));
                             showToast('Removed from library', 'success');
                             
-                            // Trigger refresh of saved count in auth button
-                            if (typeof window !== 'undefined') {
-                              window.dispatchEvent(new Event('refreshSavedCount'));
+                            // Immediately update counter (decrement by 1) - NEW DIRECT METHOD
+                            if (typeof window !== 'undefined' && (window as any).updateSavedCount) {
+                              console.log('Library: Direct counter update - removing movie');
+                              (window as any).updateSavedCount(-1);
+                            } else {
+                              console.error('Library: updateSavedCount function not available!');
                             }
                           } catch (error) {
                             console.error('Error removing movie:', error);

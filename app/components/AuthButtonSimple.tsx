@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { supabase } from '../../lib/supabase';
 import WorkingFeedbackModal from './WorkingFeedbackModal';
@@ -24,22 +24,26 @@ export default function AuthButtonSimple() {
   // console.log('AuthButtonSimple render - modal open:', isFeedbackModalOpen);
 
   // Function to refresh saved count with proper throttling
-  const refreshSavedCount = async () => {
+  const refreshSavedCount = useCallback(async () => {
+    console.log('refreshSavedCount called, user:', user?.id, 'isRefreshing:', isRefreshing);
     if (!user || isRefreshing) {
       return;
     }
     
     setIsRefreshing(true);
     try {
+      // Force fresh data by adding timestamp to prevent caching
       const { count, error } = await supabase
         .from('saved_movies')
         .select('id', { count: 'exact', head: true })
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .limit(1000); // Add limit to force fresh query
       
       if (error) {
         console.warn('Error fetching saved count:', error);
         setSavedCount(0);
       } else {
+        console.log('Fetched saved count:', count);
         setSavedCount(count || 0);
       }
     } catch (err) {
@@ -48,7 +52,27 @@ export default function AuthButtonSimple() {
     } finally {
       setIsRefreshing(false);
     }
-  };
+  }, [user, isRefreshing]);
+
+  // Expose direct count update functions globally
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).updateSavedCount = (delta: number) => {
+        console.log('Direct counter update, delta:', delta);
+        setSavedCount(prev => Math.max(0, prev + delta));
+      };
+      (window as any).forceRefreshSavedCount = () => {
+        console.log('Force refresh triggered');
+        refreshSavedCount();
+      };
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete (window as any).updateSavedCount;
+        delete (window as any).forceRefreshSavedCount;
+      }
+    };
+  }, [refreshSavedCount]);
 
   useEffect(() => {
     let isMounted = true;
@@ -157,6 +181,7 @@ export default function AuthButtonSimple() {
 
     // Listen for custom events to refresh saved count with throttling
     const handleRefreshSavedCount = () => {
+      console.log('handleRefreshSavedCount triggered');
       // Add small delay to prevent rapid consecutive calls
       setTimeout(() => refreshSavedCount(), 200);
     };

@@ -1,29 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
-
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> | { id: string } }
-) {
+export async function GET(request: NextRequest) {
+  console.log('Static API Route called');
+  console.log('Request URL:', request.url);
+  
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    // Handle both sync and async params for compatibility
-    const resolvedParams = await params;
-    const movieId = resolvedParams.id;
-
-    if (!movieId) {
-      return NextResponse.json({ 
-        success: false,
-        error: 'Movie ID is required' 
-      }, { status: 400 });
-    }
+    // Hard-code the movie ID for testing
+    const movieId = 'b2c3d4e5-f6a7-4890-b2c3-d4e5f6a78901';
+    console.log('Movie ID:', movieId);
 
     // Fetch movie details
     const { data: movie, error: movieError } = await supabase
@@ -65,3 +55,5 @@ export async function GET(
     }, { status: 500 });
   }
 }
+
+
