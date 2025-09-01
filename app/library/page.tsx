@@ -8,7 +8,8 @@ import AuthButtonSimple from '../components/AuthButtonSimple';
 import SaveButton from '../components/SaveButton';
 import { motion } from 'framer-motion';
 import { useToast } from '../components/Toast';
-import { Plus, Grid, List, Folder, Heart } from 'lucide-react';
+// Icons currently unused but kept for future features
+// import { Plus, Grid, List, Folder, Heart } from 'lucide-react';
 
 interface MovieRow {
   id: string;
@@ -21,61 +22,29 @@ interface MovieRow {
 }
 
 interface SuggestedMovie extends MovieRow {
-  age_scores: any;
+  age_scores: Record<string, unknown>;
 }
 
-interface SavedMovieWithMovie {
-  id: string;
-  movie_id: string;
-  created_at: string;
-  movies: MovieRow;
-}
+// Collection interface - currently unused but kept for future features
+// interface Collection {
+//   id: string;
+//   name: string;
+//   description: string | null;
+//   color: string;
+//   icon: string;
+//   movie_count?: number;
+// }
 
-interface Collection {
-  id: string;
-  name: string;
-  description: string | null;
-  color: string;
-  icon: string;
-  movie_count?: number;
-}
-
-const CollectionCard = ({ collection, onSelect, isSelected }: {
-  collection: Collection;
-  onSelect: (collectionId: string) => void;
-  isSelected: boolean;
-}) => (
-  <motion.div
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-    onClick={() => onSelect(collection.id)}
-    className={`
-      p-4 rounded-xl border cursor-pointer transition-all duration-200
-      ${isSelected 
-        ? `bg-${collection.color}-50 border-${collection.color}-300 ring-2 ring-${collection.color}-200`
-        : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
-      }
-    `}
-  >
-    <div className="flex items-center gap-3">
-      <div className={`
-        w-12 h-12 rounded-lg flex items-center justify-center text-xl
-        ${isSelected ? `bg-${collection.color}-100` : 'bg-slate-100'}
-      `}>
-        {collection.icon}
-      </div>
-      <div className="flex-1">
-        <h3 className="font-semibold text-slate-800">{collection.name}</h3>
-        <p className="text-sm text-slate-600">
-          {collection.movie_count || 0} movies
-        </p>
-      </div>
-    </div>
-    {collection.description && (
-      <p className="text-sm text-slate-500 mt-2">{collection.description}</p>
-    )}
-  </motion.div>
-);
+// CollectionCard component - currently unused but kept for future features
+// const CollectionCard = ({ collection, onSelect, isSelected }: {
+//   collection: Collection;
+//   onSelect: (collectionId: string) => void;
+//   isSelected: boolean;
+// }) => (
+//   <motion.div>
+//     {/* Implementation commented out for now */}
+//   </motion.div>
+// );
 
 export default function LibraryPage() {
   const [loading, setLoading] = useState(true);
@@ -83,9 +52,10 @@ export default function LibraryPage() {
   const [isAuthed, setIsAuthed] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<'recent' | 'title'>('recent');
   const [suggestedMovies, setSuggestedMovies] = useState<SuggestedMovie[]>([]);
-  const [collections, setCollections] = useState<Collection[]>([]);
-  const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  // Future features - currently unused
+  // const [collections, setCollections] = useState<Collection[]>([]);
+  // const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
+  // const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -134,7 +104,7 @@ export default function LibraryPage() {
           setMovies([]);
         } else {
           // Map saved movies to the expected format
-          const mappedMovies = savedMovies?.map((sm: SavedMovieWithMovie) => ({
+          const mappedMovies = savedMovies?.map((sm: any) => ({
             id: sm.movies.id,
             title: sm.movies.title,
             poster_url: sm.movies.poster_url,

@@ -404,7 +404,7 @@ export default function AddMoviePage() {
                       Subtitles Required
                     </h3>
                     <p className="text-sm sm:text-base text-amber-700 px-2">
-                      We couldn't find subtitles for <strong>"{movieTitle}"</strong>. 
+                      We couldn&apos;t find subtitles for <strong>&quot;{movieTitle}&quot;</strong>. 
                       <br />No worries! You can easily provide them manually:
                     </p>
                   </div>
@@ -672,7 +672,7 @@ export default function AddMoviePage() {
                 Movie Added Successfully!
               </h2>
               <p className="text-green-700 mb-6 text-base sm:text-lg">
-                "{movieTitle}" has been processed and is now available in your library
+                &quot;{movieTitle}&quot; has been processed and is now available in your library
               </p>
               
               {/* Key Stats */}
