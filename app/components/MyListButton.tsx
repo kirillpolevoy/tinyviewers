@@ -184,7 +184,7 @@ export default function MyListButton({
 
   const currentVariantClasses = isSaved ? savedVariantClasses[variant] : variantClasses[variant];
   const currentIcon = isSaved ? Check : Plus;
-  const currentText = isSaved ? 'In My List' : 'My List';
+  const currentText = isSaved ? 'In My Library' : 'My Library';
 
   return (
     <div className="relative">
@@ -207,7 +207,7 @@ export default function MyListButton({
           disabled:opacity-50 disabled:cursor-not-allowed relative
           ${sizeClasses[size]} ${currentVariantClasses}
         `}
-        aria-label={user ? currentText : 'Sign in to add to My List'}
+        aria-label={user ? currentText : 'Sign in to add to My Library'}
       >
         {isLoading ? (
           <div className="animate-spin rounded-full border-2 border-current border-t-transparent" 
@@ -218,7 +218,7 @@ export default function MyListButton({
         
         {showText && (
           <span className="font-medium">
-            {!user ? 'My List' : currentText}
+            {!user ? 'My Library' : currentText}
           </span>
         )}
       </motion.button>
