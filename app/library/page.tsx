@@ -24,6 +24,13 @@ interface SuggestedMovie extends MovieRow {
   age_scores: any;
 }
 
+interface SavedMovieWithMovie {
+  id: string;
+  movie_id: string;
+  created_at: string;
+  movies: MovieRow;
+}
+
 interface Collection {
   id: string;
   name: string;
@@ -84,7 +91,7 @@ export default function LibraryPage() {
   useEffect(() => {
     let isMounted = true;
     
-    const loadUserData = async (user: any) => {
+    const loadUserData = async (user: { id: string }) => {
       if (!user || !isMounted) return;
       
       setIsAuthed(true);
@@ -127,14 +134,14 @@ export default function LibraryPage() {
           setMovies([]);
         } else {
           // Map saved movies to the expected format
-          const mappedMovies = savedMovies?.map(sm => ({
-            id: (sm.movies as any).id,
-            title: (sm.movies as any).title,
-            poster_url: (sm.movies as any).poster_url,
-            tmdb_poster_url: (sm.movies as any).tmdb_poster_url,
-            rating: (sm.movies as any).rating,
-            tmdb_rating: (sm.movies as any).tmdb_rating,
-            release_year: (sm.movies as any).release_year,
+          const mappedMovies = savedMovies?.map((sm: SavedMovieWithMovie) => ({
+            id: sm.movies.id,
+            title: sm.movies.title,
+            poster_url: sm.movies.poster_url,
+            tmdb_poster_url: sm.movies.tmdb_poster_url,
+            rating: sm.movies.rating,
+            tmdb_rating: sm.movies.tmdb_rating,
+            release_year: sm.movies.release_year,
           })) || [];
           
           setMovies(mappedMovies);
