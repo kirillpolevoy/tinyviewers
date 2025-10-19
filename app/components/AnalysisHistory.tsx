@@ -16,7 +16,8 @@ interface AnalysisRecord {
   created_at: string;
   age_scores: Record<string, number>;
   scenes_count: number;
-  model?: string;
+  model_used?: string;
+  analysis_duration_ms?: number;
 }
 
 export default function AnalysisHistory({ movieId, movieTitle, currentScores }: AnalysisHistoryProps) {
@@ -45,33 +46,17 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
   const fetchAnalysisHistory = async () => {
     setIsLoading(true);
     try {
-      // Enhanced mock data with more realistic progression
-      const mockHistory: AnalysisRecord[] = [
-        {
-          id: '1',
-          created_at: new Date().toISOString(),
-          age_scores: currentScores,
-          scenes_count: 12,
-          model: 'Claude 3.5 Haiku'
-        },
-        {
-          id: '2',
-          created_at: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-          age_scores: { '24m': 4, '36m': 3, '48m': 2, '60m': 1 },
-          scenes_count: 10,
-          model: 'Claude 3.5 Sonnet'
-        },
-        {
-          id: '3',
-          created_at: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-          age_scores: { '24m': 5, '36m': 4, '48m': 3, '60m': 2 },
-          scenes_count: 8,
-          model: 'Claude 3.5 Sonnet'
-        }
-      ];
-      setHistory(mockHistory);
+      const response = await fetch(`/api/movies/analysis-history?movieId=${movieId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch analysis history');
+      }
+      
+      const data = await response.json();
+      setHistory(data.history || []);
     } catch (error) {
       console.error('Failed to fetch analysis history:', error);
+      // Fallback to empty array if API fails
+      setHistory([]);
     } finally {
       setIsLoading(false);
     }
@@ -227,9 +212,9 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
                           {formatTime(record.created_at)}
                         </span>
                       </div>
-                      {record.model && (
-                        <div className={`px-2 py-1 rounded-lg text-xs font-medium ${getModelColor(record.model)}`}>
-                          {record.model}
+                      {record.model_used && (
+                        <div className={`px-2 py-1 rounded-lg text-xs font-medium ${getModelColor(record.model_used)}`}>
+                          {record.model_used}
                         </div>
                       )}
                     </div>
@@ -263,7 +248,12 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
 
                     {/* Footer */}
                     <div className="flex items-center justify-between text-xs text-slate-500">
-                      <span>{record.scenes_count} scenes analyzed</span>
+                      <div className="flex items-center gap-3">
+                        <span>{record.scenes_count} scenes analyzed</span>
+                        {record.analysis_duration_ms && (
+                          <span>⏱️ {(record.analysis_duration_ms / 1000).toFixed(1)}s</span>
+                        )}
+                      </div>
                       {isLatest && (
                         <motion.div
                           animate={{ scale: [1, 1.1, 1] }}

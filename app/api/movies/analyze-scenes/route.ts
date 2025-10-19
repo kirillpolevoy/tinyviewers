@@ -247,6 +247,25 @@ async function updateMovieWithAnalysis(supabase: any, movieId: string, overallSc
   }
 }
 
+async function saveAnalysisHistory(supabase: any, movieId: string, overallScaryScore: any, scenesCount: number, analysisDurationMs: number) {
+  const historyRecord = {
+    movie_id: movieId,
+    age_scores: overallScaryScore,
+    scenes_count: scenesCount,
+    model_used: CLAUDE_MODEL,
+    analysis_duration_ms: analysisDurationMs
+  };
+
+  const { error } = await supabase
+    .from('analysis_history')
+    .insert(historyRecord);
+
+  if (error) {
+    console.error('Failed to save analysis history:', error);
+    // Don't throw error - history is not critical for the main functionality
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Initialize Supabase client inside the handler
@@ -309,9 +328,12 @@ export async function POST(request: NextRequest) {
 
     // Call Claude API
     console.log('🤖 Calling Claude API...');
+    const analysisStartTime = Date.now();
     const claudeResponse = await callClaudeAPI(subtitleText);
+    const analysisDurationMs = Date.now() - analysisStartTime;
     
     console.log(`📝 Received Claude response (${claudeResponse.length} characters)`);
+    console.log(`⏱️  Analysis took ${analysisDurationMs}ms`);
     
     // Parse the response
     const analysis = await parseClaudeResponse(claudeResponse);
@@ -331,12 +353,17 @@ export async function POST(request: NextRequest) {
     if (analysis.overall_scary_score) {
       await updateMovieWithAnalysis(supabase, movieId, analysis.overall_scary_score);
       console.log('📊 Updated movie with overall scary scores');
+      
+      // Save analysis history
+      await saveAnalysisHistory(supabase, movieId, analysis.overall_scary_score, analysis.scenes.length, analysisDurationMs);
+      console.log('📚 Saved analysis history');
     }
     
     return NextResponse.json({
       success: true,
       scenesCount: analysis.scenes.length,
-      overallScores: analysis.overall_scary_score
+      overallScores: analysis.overall_scary_score,
+      analysisDurationMs
     });
     
   } catch (error) {
