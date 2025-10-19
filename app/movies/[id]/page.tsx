@@ -10,6 +10,8 @@ import { Movie, Scene, AgeFlag } from '../../../types';
 
 import AuthButtonSimple from '../../components/AuthButtonSimple';
 import MyListButton from '../../components/MyListButton';
+import UnifiedAnalysisManager from '../../components/UnifiedAnalysisManager';
+import KeyboardShortcuts from '../../components/KeyboardShortcuts';
 
 const RATING_MEANINGS = {
   1: 'Very gentle – no intense content',
@@ -173,18 +175,16 @@ const MovieDetailsPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
         {/* Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
-          <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-            <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2 hover:scale-105 transition-transform duration-300">
-              🧸 <span>Tiny Viewers</span>
+        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+          <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
+            <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <span className="text-white text-lg">🧸</span>
+              </div>
+              <span className="text-slate-800">Tiny Viewers</span>
             </Link>
-            <nav className="flex items-center gap-6 text-sm font-medium">
-              <button 
-onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
-                className="hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
-              >
-                Feedback
-              </button>
+            <nav className="flex items-center gap-4 text-sm font-medium">
+              <AuthButtonSimple />
             </nav>
           </div>
         </header>
@@ -212,18 +212,16 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
         {/* Header */}
-        <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
-          <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-            <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2 hover:scale-105 transition-transform duration-300">
-              🧸 <span>Tiny Viewers</span>
+        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+          <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
+            <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <span className="text-white text-lg">🧸</span>
+              </div>
+              <span className="text-slate-800">Tiny Viewers</span>
             </Link>
-            <nav className="flex items-center gap-6 text-sm font-medium">
-              <button 
-onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
-                className="hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50"
-              >
-                Feedback
-              </button>
+            <nav className="flex items-center gap-4 text-sm font-medium">
+              <AuthButtonSimple />
             </nav>
           </div>
         </header>
@@ -269,191 +267,522 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
   const { displayTitle, displayYear } = formatTitleWithYear(movie.title, movie.release_year);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
-      {/* Header */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-white/60 shadow-sm">
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-          <Link href="/" className="text-2xl font-bold tracking-tight flex items-center gap-2 hover:scale-105 transition-transform duration-300">
-            🧸 <span>Tiny Viewers</span>
-          </Link>
-          <nav className="flex items-center gap-6 text-sm font-medium">
-            <AuthButtonSimple />
-          </nav>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative">
+      {/* Whimsical Floating Elements */}
+      <div className="absolute inset-0 pointer-events-none">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          animate={{ 
+            y: [0, -20, 0],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ 
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-20 left-10 text-2xl opacity-20"
+        >
+          ✨
+        </motion.div>
+        <motion.div
+          animate={{ 
+            y: [0, 15, 0],
+            rotate: [0, -3, 0]
+          }}
+          transition={{ 
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+          className="absolute top-40 right-16 text-xl opacity-15"
+        >
+          🎬
+        </motion.div>
+        <motion.div
+          animate={{ 
+            y: [0, -10, 0],
+            x: [0, 5, 0]
+          }}
+          transition={{ 
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+          className="absolute top-60 left-1/4 text-lg opacity-10"
+        >
+          🎭
+        </motion.div>
+        <motion.div
+          animate={{ 
+            y: [0, 12, 0],
+            rotate: [0, 4, 0]
+          }}
+          transition={{ 
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3
+          }}
+          className="absolute top-80 right-1/3 text-xl opacity-12"
+        >
+          🎪
+        </motion.div>
+      </div>
+
+      {/* Keyboard Shortcuts */}
+      <KeyboardShortcuts 
+        onRerunAnalysis={() => {
+          const rerunButton = document.querySelector('[data-rerun-analysis]') as HTMLButtonElement;
+          if (rerunButton) rerunButton.click();
+        }}
+        onToggleHistory={() => {
+          const historyButton = document.querySelector('[data-analysis-history]') as HTMLButtonElement;
+          if (historyButton) historyButton.click();
+        }}
+        onToggleSuggestions={() => {}}
+      />
+      
+      {/* Whimsical Apple-style Navigation */}
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/60 shadow-sm">
+        <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
+          <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white text-lg">🧸</span>
+            </div>
+            <span className="text-slate-800">Tiny Viewers</span>
+          </Link>
+          <div className="flex items-center gap-4">
+            <AuthButtonSimple />
+          </div>
+        </div>
+      </nav>
+
+      {/* Apple-style Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        {/* Mobile-optimized Back Navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4 }}
+          className="mb-4 sm:mb-8"
         >
           <Link 
             href={backUrl}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 text-sm font-medium mb-8 hover:gap-3 group bg-white/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-pink-100"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-all duration-300 text-sm font-medium group"
           >
-            <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
-            <span>Back to Movies</span>
+            <motion.span 
+              className="text-lg group-hover:-translate-x-1 transition-transform duration-200"
+              whileHover={{ scale: 1.2 }}
+            >
+              ←
+            </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.05 }}
+            >
+              Back to Movies
+            </motion.span>
+            <motion.span
+              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+            >
+              🎬
+            </motion.span>
           </Link>
         </motion.div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-8 mb-12">
-          {/* Movie Poster */}
+        {/* Apple-style Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-4 sm:gap-8">
+          {/* Whimsical Floating Movie Poster */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-[350px] mx-auto lg:mx-0"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="lg:sticky lg:top-32 lg:self-start"
           >
-            <div className="relative aspect-[2/3] overflow-hidden rounded-xl shadow-xl lg:sticky lg:top-20 transition-all duration-500 hover:scale-[1.02] bg-white/90 backdrop-blur-sm border border-pink-100">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl bg-white border border-gray-200/60 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-500 group max-w-[200px] sm:max-w-none mx-auto lg:mx-0">
+              {/* Magical Border Glow */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Floating Sparkles */}
+              <div className="absolute inset-0 pointer-events-none">
+                <motion.div
+                  animate={{ 
+                    y: [0, -10, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0
+                  }}
+                  className="absolute top-4 right-4 text-lg"
+                >
+                  ✨
+                </motion.div>
+                <motion.div
+                  animate={{ 
+                    y: [0, -8, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                  className="absolute bottom-6 left-4 text-sm"
+                >
+                  🌟
+                </motion.div>
+              </div>
               {(posterUrl && !posterUrl.includes('example.com')) ? (
                 <Image
                   src={posterUrl}
                   alt={movie.title}
                   fill
-                  className="object-cover transition-all duration-700 hover:scale-105"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                   sizes="(max-width: 1024px) 350px, 350px"
                   priority
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
                   <div className="text-center p-6">
                     <div className="text-6xl mb-4">🎬</div>
-                    <p className="text-lg text-slate-700 font-semibold">{movie.title}</p>
+                    <p className="text-lg text-slate-600 font-medium">{movie.title}</p>
                   </div>
                 </div>
               )}
             </div>
           </motion.div>
           
-          {/* Movie Details */}
-          <div className="space-y-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+          {/* Apple-style Movie Details */}
+          <div className="space-y-8">
+            {/* Mobile-optimized Movie Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 p-4 sm:p-8 relative overflow-hidden"
             >
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-800 mb-4 tracking-tight leading-tight" style={{
-                fontFamily: 'system-ui, -apple-system, serif',
-                textShadow: '0 2px 8px rgba(168, 85, 247, 0.15)',
-              }}>
-                <div className="flex items-center gap-3">
-                  <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                    {displayTitle}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 mt-6">
-                  <MyListButton 
-                    movieId={movie.id} 
-                    movieTitle={displayTitle} 
-                    variant="secondary" 
-                    size="md" 
-                    showText={true}
-                  />
-                </div>
-              </h1>
-              <p className="text-base text-slate-600 leading-relaxed mb-4">
-                {description}
-              </p>
-              <div className="flex items-center gap-3 text-slate-600 flex-wrap">
-                {/* Redesigned Rating Display - More Compact & Elegant */}
-                {(movie as any).imdb_rating ? (
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-50 to-orange-50 px-3 py-1.5 rounded-lg border border-amber-200/60 shadow-sm">
-                    <span className="text-amber-600 text-sm">📽️</span>
-                    <span className="font-bold text-slate-800">{parseFloat((movie as any).imdb_rating).toFixed(1)}</span>
-                    <span className="text-slate-500 text-sm">/10</span>
-                    <span className="text-xs text-amber-700 font-medium ml-1">IMDB</span>
-                  </div>
-                ) : movie.tmdb_rating ? (
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-50 to-amber-50 px-3 py-1.5 rounded-lg border border-yellow-200/60 shadow-sm">
-                    <span className="text-yellow-600 text-sm">🎬</span>
-                    <span className="font-bold text-slate-800">{parseFloat(movie.tmdb_rating).toFixed(1)}</span>
-                    <span className="text-slate-500 text-sm">/10</span>
-                    <span className="text-xs text-yellow-700 font-medium ml-1">TMDB</span>
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-50 to-pink-50 px-3 py-1.5 rounded-lg border border-purple-200/60 shadow-sm">
-                    <span className="text-purple-600 text-sm">⭐</span>
-                    <span className="font-bold text-slate-800">{displayRating}</span>
-                    <span className="text-xs text-purple-700 font-medium ml-1">Rating</span>
-                  </div>
-                )}
-                
-                {displayYear && (
-                  <div className="inline-flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200/60 shadow-sm">
-                    <span className="text-slate-700 font-medium">{displayYear}</span>
-                  </div>
-                )}
-                
-                {/* Enhanced Interactive IMDB Link */}
-                {movie.imdb_id && (
-                  <a 
-                    href={`https://www.imdb.com/title/${movie.imdb_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 cursor-pointer border-2 border-transparent hover:border-amber-300/50 active:scale-95"
+              {/* Playful Background Pattern */}
+              <div className="absolute inset-0 opacity-5">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute top-4 right-4 text-4xl"
+                >
+                  🎭
+                </motion.div>
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute bottom-4 left-4 text-2xl"
+                >
+                  🎪
+                </motion.div>
+              </div>
+              
+              <div className="text-center mb-8 relative z-10">
+                <motion.h1 
+                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 tracking-tight"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  {displayTitle}
+                </motion.h1>
+                <motion.div 
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full border border-blue-200/60"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <motion.span 
+                    className="text-gray-600"
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <span className="text-xs group-hover:animate-pulse">🎬</span>
-                    <span className="group-hover:underline">View on IMDB</span>
-                    <svg 
-                      className="w-3 h-3 ml-0.5 group-hover:translate-x-0.5 transition-transform duration-200" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                    📅
+                  </motion.span>
+                  <span className="text-sm text-gray-700 font-medium">{movie.release_year}</span>
+                </motion.div>
+              </div>
+
+              {/* Mobile-optimized Analysis Management */}
+              <div className="flex justify-center mb-4 sm:mb-8 relative z-10">
+                <MyListButton 
+                  movieId={movie.id} 
+                  movieTitle={displayTitle} 
+                  variant="minimal" 
+                  size="sm" 
+                  showText={true}
+                />
+              </div>
+              
+              {/* Floating Analysis Manager */}
+              <UnifiedAnalysisManager
+                movieId={movie.id}
+                movieTitle={displayTitle}
+                currentScores={movie.age_scores}
+                onAnalysisComplete={() => {
+                  window.location.reload();
+                }}
+              />
+              <div className="text-center">
+                <motion.div 
+                  className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 border border-gray-200/60 relative overflow-hidden"
+                  whileHover={{ scale: 1.01 }}
+                >
+                  {/* Subtle floating elements */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    <motion.div
+                      animate={{ 
+                        y: [0, -5, 0],
+                        opacity: [0.3, 0.6, 0.3]
+                      }}
+                      transition={{ 
+                        duration: 5,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="absolute top-2 right-2 text-sm"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
-                )}
+                      📖
+                    </motion.div>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed text-base relative z-10">
+                    {description}
+                  </p>
+                </motion.div>
+                
+                <div className="flex items-center justify-center gap-4 flex-wrap">
+                  {(movie as any).imdb_rating ? (
+                    <motion.div 
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-50 to-orange-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-amber-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      whileHover={{ scale: 1.05, rotate: 1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.span 
+                        className="text-xl"
+                        animate={{ rotate: [0, 5, -5, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        📽️
+                      </motion.span>
+                      <div>
+                        <div className="font-bold text-gray-900 text-lg">{parseFloat((movie as any).imdb_rating).toFixed(1)}</div>
+                        <div className="text-amber-700 text-xs font-medium">IMDB</div>
+                      </div>
+                    </motion.div>
+                  ) : movie.tmdb_rating ? (
+                    <motion.div 
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-blue-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      whileHover={{ scale: 1.05, rotate: 1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.span 
+                        className="text-xl"
+                        animate={{ rotate: [0, -5, 5, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        🎬
+                      </motion.span>
+                      <div>
+                        <div className="font-bold text-gray-900 text-lg">{parseFloat(movie.tmdb_rating).toFixed(1)}</div>
+                        <div className="text-blue-700 text-xs font-medium">TMDB</div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div 
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-50 to-pink-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      whileHover={{ scale: 1.05, rotate: 1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.span 
+                        className="text-xl"
+                        animate={{ scale: [1, 1.1, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        ⭐
+                      </motion.span>
+                      <div>
+                        <div className="font-bold text-gray-900 text-lg">{displayRating}</div>
+                        <div className="text-purple-700 text-xs font-medium">Rating</div>
+                      </div>
+                    </motion.div>
+                  )}
+                  
+                  <motion.div 
+                    className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-gray-50 to-slate-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-gray-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                    whileHover={{ scale: 1.05, rotate: 1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <motion.span 
+                      className="text-xl"
+                      animate={{ rotate: [0, 10, -10, 0] }}
+                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      📅
+                    </motion.span>
+                    <div>
+                      <div className="font-bold text-gray-900 text-lg">{movie.release_year}</div>
+                      <div className="text-gray-600 text-xs font-medium">Year</div>
+                    </div>
+                  </motion.div>
+                  
+                  {movie.imdb_id && (
+                    <motion.a 
+                      href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 font-medium shadow-sm hover:shadow-lg h-12 sm:h-16"
+                      whileHover={{ scale: 1.05, rotate: 1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.span 
+                        className="text-xl"
+                        animate={{ rotate: [0, 15, -15, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        🎬
+                      </motion.span>
+                      <span className="text-sm">View on IMDB</span>
+                      <motion.span 
+                        className="text-sm"
+                        animate={{ x: [0, 3, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      >
+                        ↗
+                      </motion.span>
+                    </motion.a>
+                  )}
+                </div>
               </div>
             </motion.div>
             
-            {/* Age Ratings */}
+            {/* Mobile-optimized Age Safety Guide */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-6"
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 p-4 sm:p-8 relative overflow-hidden"
             >
-              <h2 className="text-xl font-light text-slate-800 mb-4 tracking-tight" style={{
-                fontFamily: 'system-ui, -apple-system, serif',
-              }}>
-                <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                  Age-Based Safety Scores
-                </span>
-              </h2>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Magical Background Elements */}
+              <div className="absolute inset-0 opacity-5">
+                <motion.div
+                  animate={{ 
+                    y: [0, -15, 0],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{ 
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute top-6 right-6 text-3xl"
+                >
+                  🛡️
+                </motion.div>
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.3, 0.7, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute bottom-6 left-6 text-2xl"
+                >
+                  👶
+                </motion.div>
+              </div>
+              
+              <div className="text-center mb-8 relative z-10">
+                <motion.h2 
+                  className="text-2xl font-bold text-gray-900 mb-3"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  🛡️ Age Safety Guide
+                </motion.h2>
+                <motion.p 
+                  className="text-gray-600 text-base"
+                  whileHover={{ scale: 1.01 }}
+                >
+                  How appropriate is this movie for different ages?
+                </motion.p>
+              </div>
+              
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 {(['24m', '36m', '48m', '60m'] as const).map((age, index) => {
                   const score = (movie.age_scores as any)[age] as number;
                   const ratingType = getAgeRatingType(score);
                   const ratingInfo = AGE_RATING_INFO[ratingType];
+                  const ageLabel = age === '24m' ? '2 years' : age === '36m' ? '3 years' : age === '48m' ? '4 years' : '5 years';
+                  
                   return (
                     <motion.div 
                       key={age}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                      className="group p-4 rounded-xl bg-white/80 backdrop-blur-sm border border-pink-100 shadow-md transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:border-purple-200"
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                      className="flex flex-col text-center p-3 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/60 hover:shadow-xl transition-all duration-500 group relative overflow-hidden"
+                      whileHover={{ scale: 1.05, rotate: 1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <div className="flex flex-col">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-slate-800 font-semibold text-lg">
-                            {age === '24m' ? '2 years' : age === '36m' ? '3 years' : age === '48m' ? '4 years' : '5 years'}
-                          </span>
-                          <span className="text-xl">{ratingInfo.icon}</span>
-                        </div>
-                        <div className="flex items-baseline gap-2 mb-2">
-                          <span className="text-2xl font-bold text-slate-800">{score}</span>
-                          <span className="text-base text-slate-600">/5</span>
-                        </div>
-                        <p className="text-xs text-slate-600 mb-3 leading-relaxed">
-                          {getScoreDescription(score)}
-                        </p>
-                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full transition-all duration-500 ${getRatingColor(score)}`}
-                            style={{ width: `${(score / 5) * 100}%` }} 
+                      {/* Floating sparkles */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        <motion.div
+                          animate={{ 
+                            y: [0, -8, 0],
+                            opacity: [0, 1, 0]
+                          }}
+                          transition={{ 
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.5
+                          }}
+                          className="absolute top-2 right-2 text-sm"
+                        >
+                          ✨
+                        </motion.div>
+                      </div>
+                      
+                      {/* Top section with icon and age */}
+                      <div className="mb-4">
+                        <motion.div 
+                          className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300"
+                          animate={{ 
+                            rotate: [0, 5, -5, 0],
+                            scale: [1, 1.05, 1]
+                          }}
+                          transition={{ 
+                            duration: 4 + index,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                        >
+                          {ratingInfo.icon}
+                        </motion.div>
+                        <div className="text-base font-semibold text-gray-900">{ageLabel}</div>
+                      </div>
+                      
+                      {/* Middle section with score */}
+                      <div className="mb-3">
+                        <div className="text-2xl font-bold text-gray-900">{score}/5</div>
+                        <div className="text-sm text-gray-600 mt-1">{getScoreDescription(score)}</div>
+                      </div>
+                      
+                      {/* Bottom section with progress bar - aligned */}
+                      <div className="mt-auto">
+                        <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            animate={{ width: `${(score / 5) * 100}%` }}
+                            transition={{ duration: 0.8, delay: 0.9 + index * 0.1 }}
+                            className={`h-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-full`}
                           />
                         </div>
                       </div>
@@ -463,28 +792,65 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
               </div>
             </motion.div>
 
-            {/* Scene Analysis - Mobile Optimized */}
+            {/* Whimsical Scene Analysis */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-pink-100 p-4 sm:p-6"
+              transition={{ duration: 0.4, delay: 0.4 }}
+              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/60 p-8 relative overflow-hidden"
             >
-              <div className="flex flex-col gap-3 mb-4">
-                <h2 className="text-lg sm:text-xl font-light text-slate-800 tracking-tight" style={{
-                  fontFamily: 'system-ui, -apple-system, serif',
-                }}>
-                  <span className="text-transparent bg-gradient-to-r from-pink-600 via-purple-500 to-emerald-500 bg-clip-text">
-                    Scene Analysis
-                  </span>
-                </h2>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <span className="inline-flex items-center justify-center px-3 py-1.5 text-xs text-slate-600 bg-purple-100 rounded-lg font-medium border border-purple-200 w-fit">
+              {/* Playful Background Elements */}
+              <div className="absolute inset-0 opacity-5">
+                <motion.div
+                  animate={{ 
+                    y: [0, -12, 0],
+                    rotate: [0, 90, 180, 270, 360]
+                  }}
+                  transition={{ 
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute top-4 right-4 text-2xl"
+                >
+                  🎭
+                </motion.div>
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.2, 0.6, 0.2]
+                  }}
+                  transition={{ 
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute bottom-4 left-4 text-xl"
+                >
+                  🎬
+                </motion.div>
+              </div>
+              
+              <div className="flex flex-col gap-3 mb-6 relative z-10">
+                <motion.h2 
+                  className="text-2xl font-bold text-gray-900"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  Scene Analysis
+                </motion.h2>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <motion.span 
+                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg font-medium w-fit"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
-                  </span>
-                  <span className="inline-flex items-center justify-center px-3 py-1.5 text-xs text-emerald-700 bg-emerald-100 rounded-lg font-medium border border-emerald-200 w-fit">
+                  </motion.span>
+                  <motion.span 
+                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-emerald-700 bg-emerald-100 rounded-lg font-medium w-fit"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     ✨ Age Recommendations Included
-                  </span>
+                  </motion.span>
                 </div>
               </div>
               {!scenes || scenes.length === 0 ? (
@@ -499,9 +865,29 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
                       key={scene.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                      className="group bg-white/80 backdrop-blur-sm p-3 sm:p-4 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl border border-pink-100 hover:border-purple-200"
+                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                      className="group bg-gradient-to-r from-gray-50 to-blue-50 p-5 rounded-xl shadow-sm transition-all duration-500 hover:shadow-lg border border-gray-200/60 relative overflow-hidden"
+                      whileHover={{ scale: 1.02, rotate: 0.5 }}
+                      whileTap={{ scale: 0.98 }}
                     >
+                      {/* Subtle floating elements */}
+                      <div className="absolute inset-0 pointer-events-none">
+                        <motion.div
+                          animate={{ 
+                            y: [0, -6, 0],
+                            opacity: [0, 0.3, 0]
+                          }}
+                          transition={{ 
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.3
+                          }}
+                          className="absolute top-2 right-2 text-sm"
+                        >
+                          🎬
+                        </motion.div>
+                      </div>
                       <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
                         <div className="flex items-center gap-3 flex-1">
                           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-sm flex-shrink-0">

@@ -47,7 +47,7 @@ For each scene, provide:
   }
 }
 
-	•	Use subtitle timestamps as anchors.
+	•	Use subtitle timestamps as anchors. Extract ONLY the start and end times in HH:MM:SS format (e.g., "00:23:45", "00:25:30").
 	•	Write brief, clear descriptions in parent-friendly language.
 	•	Include emotional or sensory tags like "separation," "darkness," "yelling," "creepy sound," etc.
 	•	Use an intensity scale of 1 to 5:
@@ -168,16 +168,28 @@ async function parseClaudeResponse(claudeResponse: string) {
         throw new Error('Invalid response format: missing overall_scary_score or scenes');
       }
       
-      // Normalize age flags in scenes
-      const normalizedScenes = parsed.scenes.map((scene: any) => ({
-        ...scene,
-        age_flags: scene.age_flags || {
-          '24m': '⚠️',
-          '36m': '⚠️', 
-          '48m': '⚠️',
-          '60m': '⚠️'
-        }
-      }));
+      // Normalize age flags and clean timestamps in scenes
+      const normalizedScenes = parsed.scenes.map((scene: any) => {
+        // Clean timestamp format - extract just the time part
+        const cleanTimestamp = (timestamp: string) => {
+          if (!timestamp) return timestamp;
+          // Extract HH:MM:SS format from various subtitle formats
+          const match = timestamp.match(/(\d{2}:\d{2}:\d{2})/);
+          return match ? match[1] : timestamp;
+        };
+        
+        return {
+          ...scene,
+          timestamp_start: cleanTimestamp(scene.timestamp_start),
+          timestamp_end: cleanTimestamp(scene.timestamp_end),
+          age_flags: scene.age_flags || {
+            '24m': '⚠️',
+            '36m': '⚠️', 
+            '48m': '⚠️',
+            '60m': '⚠️'
+          }
+        };
+      });
       
       return {
         overall_scary_score: parsed.overall_scary_score,

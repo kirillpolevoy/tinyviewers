@@ -41,17 +41,17 @@ export default function MyListButton({
     lg: 20
   };
 
-  // Redesigned to match existing page aesthetics - subtle and elegant
+  // Clean, professional styling
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-purple-50 to-pink-50 text-purple-700 border border-purple-200 hover:from-purple-100 hover:to-pink-100 hover:border-purple-300 shadow-sm',
-    secondary: 'bg-slate-50/90 text-slate-700 border border-slate-200 hover:bg-slate-100/90 hover:border-slate-300 backdrop-blur-sm',
-    minimal: 'bg-gray-50/80 text-gray-600 border border-gray-200/60 hover:bg-gray-100/80 hover:text-purple-600 hover:border-purple-200'
+    primary: 'bg-purple-600 text-white border border-purple-600 hover:bg-purple-700 hover:border-purple-700 shadow-sm',
+    secondary: 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 hover:border-slate-400 shadow-sm',
+    minimal: 'bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-700'
   };
 
   const savedVariantClasses = {
-    primary: 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border border-green-200 hover:from-green-100 hover:to-emerald-100',
-    secondary: 'bg-green-50/90 text-green-700 border border-green-200 hover:bg-green-100/90 backdrop-blur-sm',
-    minimal: 'bg-green-50/80 text-green-600 border border-green-200/60 hover:bg-green-100/80'
+    primary: 'bg-green-600 text-white border border-green-600 hover:bg-green-700 hover:border-green-700 shadow-sm',
+    secondary: 'bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 shadow-sm',
+    minimal: 'bg-green-50 text-green-600 border border-green-200 hover:bg-green-100'
   };
 
   useEffect(() => {
@@ -203,7 +203,7 @@ export default function MyListButton({
           scale: { type: "spring", stiffness: 400, damping: 17 }
         }}
         className={`
-          inline-flex items-center gap-2 rounded-full font-medium transition-all duration-300 
+          inline-flex items-center gap-2 rounded-lg font-medium transition-all duration-200 
           disabled:opacity-50 disabled:cursor-not-allowed relative
           ${sizeClasses[size]} ${currentVariantClasses}
         `}

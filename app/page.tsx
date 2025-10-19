@@ -143,11 +143,14 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50 text-gray-900" style={{ scrollBehavior: 'smooth' }}>
       {/* NAV - Simplified for better performance */}
-      <header className="sticky top-0 z-30 bg-white/90 shadow-sm border-b border-purple-100/50" style={{ willChange: 'transform' }}>
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
-          <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
-            🧸 <span>Tiny Viewers</span>
-          </h1>
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+        <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
+          <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white text-lg">🧸</span>
+            </div>
+            <span className="text-slate-800">Tiny Viewers</span>
+          </Link>
           <nav className="flex items-center gap-4 text-sm font-medium">
             <AuthButtonSimple />
           </nav>
