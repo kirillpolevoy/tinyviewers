@@ -29,9 +29,9 @@ A JSON object that estimates how emotionally intense or scary this movie is for 
 
 2. Scene-by-Scene Analysis
 
-IMPORTANT: You MUST provide a MINIMUM of 5 scenes. If the movie has fewer than 5 concerning scenes, include additional scenes that show character development, emotional moments, or any content that parents should be aware of.
+IMPORTANT: You MUST provide a MINIMUM of 5 scenes. Focus on scenes that are emotionally intense, concerning, or important for parents to know about.
 
-For each scene (both concerning and important developmental moments), provide:
+For each scene, provide:
 
 {
   "timestamp_start": "00:23:45",
@@ -51,31 +51,39 @@ For each scene (both concerning and important developmental moments), provide:
 	•	Write brief, clear descriptions in parent-friendly language.
 	•	Include emotional or sensory tags like "separation," "darkness," "yelling," "creepy sound," etc.
 	•	Use an intensity scale of 1 to 5:
-	•	1 = Calm
-	•	2 = Mild emotional content
-	•	3 = Noticeable tension or sadness
-	•	4 = Intense peril or distress
+	•	1 = Calm, gentle
+	•	2 = Mild emotional content, slight tension
+	•	3 = Noticeable tension, sadness, or mild peril
+	•	4 = Intense peril, distress, or scary moments
 	•	5 = Very intense, scary, or emotionally overwhelming
-	•	Age flags reflect content sensitivity:
-	•	✅ = Appropriate
-	•	⚠️ = Use caution
-	•	🚫 = Not recommended
+
+AGE FLAG GUIDELINES (be realistic and age-appropriate):
+	•	✅ = Appropriate for this age
+	•	⚠️ = Use caution, may need parental guidance
+	•	🚫 = Not recommended, too intense/scary
+
+AGE-SPECIFIC CONSIDERATIONS:
+- **24m (2 years)**: Very sensitive to loud noises, separation, scary visuals, intense emotions
+- **36m (3 years)**: Still sensitive but can handle mild tension with guidance
+- **48m (4 years)**: Can handle moderate intensity, understands fantasy vs reality better
+- **60m (5 years)**: Can handle most content in age-appropriate movies
+
+REALISTIC SCORING EXAMPLES:
+- Intensity 1-2 scenes: Usually ✅ for 4y+, ⚠️ for 3y+, 🚫 for 2y+
+- Intensity 3 scenes: Usually ✅ for 5y+, ⚠️ for 4y+, 🚫 for 2-3y+
+- Intensity 4 scenes: Usually ⚠️ for 5y+, 🚫 for 2-4y+
+- Intensity 5 scenes: Usually 🚫 for all ages
 
 CRITICAL REQUIREMENTS:
 - You MUST return AT LEAST 5 scenes
 - Include ALL emotionally intense or concerning scenes
-- If there are fewer than 5 concerning scenes, add scenes showing character development, emotional moments, or important plot points
 - Cover the entire movie timeline from beginning to end
-- Be thorough and comprehensive in your analysis
 - **IMPORTANT:** Use the following keys for all age-based scores and flags: "24m" (2 years), "36m" (3 years), "48m" (4 years), "60m" (5 years). Do NOT use year-based keys.
-- **You MUST use 🚫 for the most intense or emotionally overwhelming scenes (e.g., injury, death, unconsciousness, major peril) for ages 24m and 36m.**
-- **Not all scenes should be ⚠️ for all ages. Use 🚫, ⚠️, and ✅ appropriately and differentiate by age.**
-- **Checklist before returning your answer:**
-  - [ ] At least one scene is marked 🚫 for 24m and 36m if the movie contains any intense peril, injury, death, or unconsciousness.
-  - [ ] Age flags are differentiated by age and not all the same.
-  - [ ] All four age keys ("24m", "36m", "48m", "60m") are present in every scene's age_flags.
+- **Age flags MUST be differentiated by age - don't mark all ages the same unless truly appropriate**
+- **Be realistic: G/PG-rated Disney movies should have some ✅ flags for older kids**
+- **Only use 🚫 for ALL ages for truly inappropriate content (violence, death, extreme fear)**
 
-You will be given the subtitle file as input. Use its dialogue and timing to infer what's happening, including tone, emotion, and pacing. When in doubt, err on the side of protecting very young children (age 2–3).
+You will be given the subtitle file as input. Use its dialogue and timing to infer what's happening, including tone, emotion, and pacing. Consider the movie's rating and target audience when making age recommendations.
 
 Please return ONLY a valid JSON object in this exact format:
 {
