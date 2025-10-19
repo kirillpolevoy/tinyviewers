@@ -87,13 +87,13 @@ export default function MoviesPage({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/30">
       {/* Clean Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-800/95 shadow-sm border-b border-slate-200 dark:border-gray-600/60">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
           <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <span className="text-white text-lg">🧸</span>
             </div>
-            <span className="text-slate-800">Tiny Viewers</span>
+            <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
           </Link>
           <nav className="flex items-center gap-4 text-sm font-medium">
             <AuthButtonSimple />
@@ -111,7 +111,7 @@ export default function MoviesPage({
         >
           <Link 
             href="/"
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 
+            className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-purple-600 transition-all duration-300 
                      text-sm font-medium mb-6 hover:gap-3 group"
             prefetch={false}
           >
@@ -126,7 +126,7 @@ export default function MoviesPage({
                   Movie Library
                 </span>
               </h1>
-              <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+              <p className="text-lg text-gray-800 dark:text-gray-200 max-w-2xl leading-relaxed">
                 {search 
                   ? `Showing curated, kid-safe movies`
                   : 'Our complete collection of curated, kid-friendly films for ages 2-5'
@@ -135,11 +135,11 @@ export default function MoviesPage({
             </div>
             
             {totalMovies !== null && (
-              <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-2xl border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-3 bg-white dark:bg-gray-800/80 backdrop-blur-sm px-6 py-3 rounded-2xl border border-slate-200 dark:border-gray-600 shadow-sm">
                 <span className="text-2xl">🎬</span>
                 <div>
                   <div className="text-2xl font-bold text-slate-900">{totalMovies}</div>
-                  <div className="text-sm text-slate-600 -mt-1">movies</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-300 -mt-1">movies</div>
                 </div>
               </div>
             )}
@@ -167,16 +167,16 @@ export default function MoviesPage({
               placeholder="Search movies..."
               value={activeFilters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
-              className={`w-full pl-12 pr-12 py-4 text-lg bg-white rounded-2xl transition-all duration-300 shadow-sm hover:shadow-md focus:shadow-lg ${
+              className={`w-full pl-12 pr-12 py-4 text-lg bg-white dark:bg-gray-800 rounded-2xl transition-all duration-300 shadow-sm hover:shadow-md focus:shadow-lg ${
                 activeFilters.search 
                   ? 'border-2 border-purple-300 ring-4 ring-purple-100 focus:border-purple-400 focus:ring-purple-200' 
-                  : 'border border-slate-200 focus:border-purple-300 focus:ring-4 focus:ring-purple-100'
+                  : 'border border-slate-200 dark:border-gray-600 focus:border-purple-300 focus:ring-4 focus:ring-purple-100'
               }`}
             />
             {activeFilters.search && (
               <button
                 onClick={() => handleFilterChange('search', '')}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors z-10"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 dark:text-slate-300 transition-colors z-10"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -191,7 +191,7 @@ export default function MoviesPage({
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl 
+                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-600 rounded-xl 
                          hover:border-purple-300 hover:bg-purple-50 transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -221,8 +221,8 @@ export default function MoviesPage({
                 onClick={() => handleFilterChange('view', 'grid')}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   activeFilters.view === 'grid'
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-gray-800 text-slate-900 shadow-sm'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                 }`}
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -234,8 +234,8 @@ export default function MoviesPage({
                 onClick={() => handleFilterChange('view', 'list')}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   activeFilters.view === 'list'
-                    ? 'bg-white text-slate-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-gray-800 text-slate-900 shadow-sm'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900'
                 }`}
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -256,7 +256,7 @@ export default function MoviesPage({
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div className="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-600 rounded-2xl p-6 shadow-sm">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Age Filter */}
                     <div>

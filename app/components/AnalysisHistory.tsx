@@ -121,7 +121,7 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
       <motion.button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm text-slate-700 px-4 py-2 rounded-xl hover:bg-white hover:border-slate-300 border border-slate-200/60 shadow-lg hover:shadow-xl transition-all duration-300 text-sm font-medium"
+        className="inline-flex items-center gap-2 bg-white dark:bg-gray-800/90 backdrop-blur-sm text-slate-700 px-4 py-2 rounded-xl hover:bg-white dark:bg-gray-800 hover:border-slate-300 border border-slate-200/60 shadow-lg hover:shadow-xl transition-all duration-300 text-sm font-medium"
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -145,7 +145,7 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.95 }}
           transition={{ duration: 0.2 }}
-          className="fixed bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-6 z-[9999] max-w-md"
+          className="fixed bg-white dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-6 z-[9999] max-w-md"
           style={{
             top: dropdownPosition.top,
             left: dropdownPosition.left,
@@ -169,7 +169,7 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <span className="text-slate-600 text-sm">×</span>
+              <span className="text-slate-600 dark:text-slate-300 text-sm">×</span>
             </motion.button>
           </div>
 
@@ -226,7 +226,7 @@ export default function AnalysisHistory({ movieId, movieTitle, currentScores }: 
                         
                         return (
                           <div key={age} className="flex items-center justify-between">
-                            <span className="text-xs text-slate-600">{getAgeLabel(age)}</span>
+                            <span className="text-xs text-slate-600 dark:text-slate-300">{getAgeLabel(age)}</span>
                             <div className="flex items-center gap-1">
                               <span className={`px-2 py-1 rounded-md text-xs font-semibold border ${getScoreColor(score)}`}>
                                 {score}

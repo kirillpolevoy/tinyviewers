@@ -2,26 +2,15 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { supabase } from '../../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
 import WorkingFeedbackModal from './WorkingFeedbackModal';
 
-interface AuthUserInfo {
-  id: string;
-  email: string | null;
-  avatar_url?: string | null;
-  name?: string | null;
-}
-
 export default function AuthButtonSimple() {
-  const [user, setUser] = useState<AuthUserInfo | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, error, signIn, signOut, clearError } = useAuth();
   const [savedCount, setSavedCount] = useState(0);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  
-  // Remove the console.log that's causing noise
-  // console.log('AuthButtonSimple render - modal open:', isFeedbackModalOpen);
 
   // Function to refresh saved count with proper throttling
   const refreshSavedCount = useCallback(async () => {
@@ -32,6 +21,9 @@ export default function AuthButtonSimple() {
     
     setIsRefreshing(true);
     try {
+      // Import supabase here to avoid circular dependency
+      const { supabase } = await import('../../lib/supabase');
+      
       // Force fresh data by adding timestamp to prevent caching
       const { count, error } = await supabase
         .from('saved_movies')
@@ -74,131 +66,33 @@ export default function AuthButtonSimple() {
     };
   }, [refreshSavedCount]);
 
+  // Fetch saved count when user changes
   useEffect(() => {
-    let isMounted = true;
-    
-    // Simple timeout to prevent hanging
-    const timeout = setTimeout(() => {
-      if (isMounted) setLoading(false);
-    }, 2000);
+    if (user) {
+      refreshSavedCount();
+    } else {
+      setSavedCount(0);
+    }
+  }, [user, refreshSavedCount]);
 
-    // Get user
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!isMounted) return;
-      
-      if (user) {
-        setUser({
-          id: user.id,
-          email: user.email ?? null,
-          avatar_url: user.user_metadata?.avatar_url ?? null,
-          name: user.user_metadata?.full_name ?? null,
-        });
-        
-        // Fetch saved count with throttling
-        const fetchSavedCount = async () => {
-          if (!isMounted) return;
-          
-          try {
-            const { count, error } = await supabase
-              .from('saved_movies')
-              .select('id', { count: 'exact', head: true })
-              .eq('user_id', user.id);
-            
-            if (error) {
-              console.warn('Error fetching saved count:', error);
-              if (isMounted) setSavedCount(0);
-            } else {
-              if (isMounted) setSavedCount(count || 0);
-            }
-          } catch (err) {
-            console.warn('Failed to fetch saved count:', err);
-            if (isMounted) setSavedCount(0);
-          }
-        };
-        
-        // Add 500ms delay to prevent rapid calls
-        setTimeout(fetchSavedCount, 500);
-      } else {
-        setUser(null);
-        setSavedCount(0);
-      }
-      setLoading(false);
-      clearTimeout(timeout);
-    }).catch(() => {
-      if (isMounted) setLoading(false);
-      clearTimeout(timeout);
-    });
-
-    // Auth listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!isMounted) return;
-      
-      if (session?.user) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email ?? null,
-          avatar_url: session.user.user_metadata?.avatar_url ?? null,
-          name: session.user.user_metadata?.full_name ?? null,
-        });
-        
-        // Temporarily disable all API calls to stop flood
-        // if ((event === 'SIGNED_IN') && !isRefreshing) {
-        //   const fetchSavedCount = async () => {
-        //     if (!isMounted || isRefreshing) return;
-        //     setIsRefreshing(true);
-        //     try {
-        //       const { count, error } = await supabase
-        //         .from('saved_movies')
-        //         .select('id', { count: 'exact', head: true })
-        //         .eq('user_id', session.user.id);
-        //       
-        //       if (error) {
-        //         console.warn('Error fetching saved count:', error);
-        //         if (isMounted) setSavedCount(0);
-        //       } else {
-        //         if (isMounted) setSavedCount(count || 0);
-        //       }
-        //     } catch (err) {
-        //       console.warn('Failed to fetch saved count:', err);
-        //       if (isMounted) setSavedCount(0);
-        //     } finally {
-        //       if (isMounted) setIsRefreshing(false);
-        //     }
-        //   };
-        // Only fetch on SIGNED_IN to prevent excessive calls
-        if (event === 'SIGNED_IN' && !isRefreshing && isMounted) {
-          // Add delay to prevent concurrent calls
-          setTimeout(() => {
-            if (isMounted) refreshSavedCount();
-          }, 750);
-        }
-      } else {
-        setUser(null);
-        setSavedCount(0);
-      }
-      setLoading(false);
-    });
-
-    // Listen for custom events to refresh saved count with throttling
+  // Listen for custom events to refresh saved count with throttling
+  useEffect(() => {
     const handleRefreshSavedCount = () => {
       console.log('handleRefreshSavedCount triggered');
       // Add small delay to prevent rapid consecutive calls
       setTimeout(() => refreshSavedCount(), 200);
     };
+    
     if (typeof window !== 'undefined') {
       window.addEventListener('refreshSavedCount', handleRefreshSavedCount);
     }
 
     return () => {
-      isMounted = false;
-      clearTimeout(timeout);
-      subscription.unsubscribe();
-      // Clean up event listener
       if (typeof window !== 'undefined') {
         window.removeEventListener('refreshSavedCount', handleRefreshSavedCount);
       }
     };
-  }, []); // Remove user dependency to prevent infinite loops
+  }, [refreshSavedCount]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -217,88 +111,179 @@ export default function AuthButtonSimple() {
     };
   }, [showMobileMenu]);
 
-  const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: typeof window !== 'undefined' ? window.location.origin + '/movies' : undefined,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'select_account',
-        },
-      },
-    });
+  // Handle sign in with error handling
+  const handleSignIn = async () => {
+    try {
+      await signIn();
+    } catch (err) {
+      console.error('Sign in failed:', err);
+    }
   };
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
+  // Handle sign out with error handling
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (err) {
+      console.error('Sign out failed:', err);
+    }
   };
 
   if (loading) {
     return (
-      <div className="h-8 w-24 rounded-full bg-slate-200 animate-pulse" />
+      <div className="h-8 w-24 rounded-full bg-slate-200 dark:bg-gray-700 animate-pulse" />
     );
   }
 
   return (
     <>
+      {/* Error display */}
+      {error && (
+        <div className="fixed top-4 right-4 bg-red-100 dark:bg-red-900/90 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 px-4 py-3 rounded z-50">
+          <div className="flex items-center justify-between">
+            <span className="text-sm">{error}</span>
+            <button
+              onClick={clearError}
+              className="ml-4 text-red-500 dark:text-red-300 hover:text-red-700 dark:hover:text-red-100"
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center gap-3">
-        {user ? (
-          // Logged in - show My Library
-          <Link
-            href="/library"
-            className="text-slate-600 hover:text-purple-600 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50 flex items-center gap-2"
-          >
-            <span>My Library</span>
-            {savedCount > 0 && (
-              <span className="bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full min-w-[1.5rem] text-center">
-                {savedCount}
-              </span>
-            )}
-          </Link>
-        ) : (
-          // Logged out - show Sign In button
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex items-center gap-3">
+          {user ? (
+            <>
+              <Link
+                href="/library"
+                className="text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 px-3 py-2 rounded-full hover:bg-purple-50 flex items-center gap-2"
+              >
+                <span>My Library</span>
+                {savedCount > 0 && (
+                  <span className="bg-purple-100 text-purple-700 text-xs font-medium px-2 py-1 rounded-full min-w-[1.5rem] text-center">
+                    {savedCount}
+                  </span>
+                )}
+              </Link>
+              
+              {/* Desktop Dropdown Menu */}
+              <div className="relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMobileMenu(!showMobileMenu);
+                  }}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </button>
+
+                {/* Desktop Dropdown */}
+                {showMobileMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 py-2 z-50">
+                    <Link
+                      href="/add-movie"
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      Add Movie
+                    </Link>
+                    <Link
+                      href="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      onClick={() => setShowMobileMenu(false)}
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setIsFeedbackModalOpen(true);
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Feedback
+                    </button>
+                    
+                    <hr className="my-2 border-gray-200 dark:border-gray-600" />
+                    
+                    <button
+                      onClick={() => {
+                        handleSignOut();
+                        setShowMobileMenu(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={handleSignIn}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium text-sm hover:from-purple-600 hover:to-pink-600"
+            >
+              Sign In
+            </button>
+          )}
+        </div>
+
+        {/* Mobile Hamburger Menu */}
+        <div className="lg:hidden relative">
           <button
-            onClick={signInWithGoogle}
-            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium text-sm hover:from-purple-600 hover:to-pink-600"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMobileMenu(!showMobileMenu);
+            }}
+            className="lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           >
-            Sign In
-          </button>
-        )}
-        
-        {/* Hamburger Menu Button */}
-        <div className="relative">
-                     <button
-             onClick={(e) => {
-               e.stopPropagation();
-               setShowMobileMenu(!showMobileMenu);
-             }}
-             className="p-2 text-slate-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-all duration-300"
-           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
-          
-                     {/* Dropdown Menu */}
-           {showMobileMenu && (
-             <div 
-               className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-200/50 py-2 z-50 backdrop-blur-sm"
-               onClick={(e) => e.stopPropagation()}
-             >
+
+          {/* Mobile Menu Dropdown */}
+          {showMobileMenu && (
+            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 py-2 z-50">
               {user ? (
-                // Logged in menu
                 <>
                   <Link
                     href="/profile"
-                    className="block px-4 py-3 text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 font-medium"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => setShowMobileMenu(false)}
                   >
                     My Profile
                   </Link>
                   <Link
                     href="/add-movie"
-                    className="block px-4 py-3 text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 font-medium"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => setShowMobileMenu(false)}
                   >
                     Add Movie to DB
@@ -308,51 +293,44 @@ export default function AuthButtonSimple() {
                       setIsFeedbackModalOpen(true);
                       setShowMobileMenu(false);
                     }}
-                    className="block w-full text-left px-4 py-3 text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 font-medium"
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     Feedback
                   </button>
-                  <div className="border-t border-slate-200 my-2"></div>
+                  
+                  <hr className="my-2 border-gray-200 dark:border-gray-600" />
+                  
                   <button
                     onClick={() => {
-                      signOut();
+                      handleSignOut();
                       setShowMobileMenu(false);
                     }}
-                    className="block w-full text-left px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition-all duration-200 font-medium"
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     Sign Out
                   </button>
                 </>
-                              ) : (
-                // Logged out menu
-                <>
-                  <Link
-                    href="/add-movie"
-                    className="block px-4 py-3 text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 font-medium"
-                    onClick={() => setShowMobileMenu(false)}
-                  >
-                    Add Movie to DB
-                  </Link>
-                  <button
-                    onClick={() => {
-                      setIsFeedbackModalOpen(true);
-                      setShowMobileMenu(false);
-                    }}
-                    className="block w-full text-left px-4 py-3 text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition-all duration-200 font-medium"
-                  >
-                    Feedback
-                  </button>
-                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleSignIn();
+                    setShowMobileMenu(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Sign In
+                </button>
               )}
             </div>
           )}
         </div>
       </div>
-      
-              <WorkingFeedbackModal
-          isOpen={isFeedbackModalOpen}
-          onClose={() => setIsFeedbackModalOpen(false)}
-        />
+
+      {/* Feedback Modal */}
+      <WorkingFeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+      />
     </>
   );
 }

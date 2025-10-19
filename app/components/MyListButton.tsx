@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 
 interface MyListButtonProps {
@@ -22,9 +23,9 @@ export default function MyListButton({
   showText = true,
   onAuthRequired 
 }: MyListButtonProps) {
+  const { user, signIn } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
 
@@ -55,62 +56,44 @@ export default function MyListButton({
   };
 
   useEffect(() => {
-    checkAuthAndSavedStatus();
-  }, [movieId]);
+    checkSavedStatus();
+  }, [movieId, user]);
 
-  const checkAuthAndSavedStatus = async () => {
+  const checkSavedStatus = async () => {
+    if (!user) {
+      setIsSaved(false);
+      return;
+    }
+
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const { data, error } = await supabase
+        .from('saved_movies')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('movie_id', movieId)
+        .single();
       
-      let finalUser = user;
-      if (!user) {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        finalUser = session?.user || null;
-      }
-      
-      setUser(finalUser);
-      
-      if (finalUser) {
-        // Check if movie is already saved - implement proper state check
-        try {
-          const { data, error } = await supabase
-            .from('saved_movies')
-            .select('id')
-            .eq('user_id', finalUser.id)
-            .eq('movie_id', movieId)
-            .single();
-          
-          if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
-            console.warn('Error checking saved status in MyListButton:', error);
-            setIsSaved(false);
-          } else {
-            const saved = !!data;
-            setIsSaved(saved);
-          }
-        } catch (error) {
-          console.warn('Could not check saved status in MyListButton:', error);
-          setIsSaved(false);
-        }
+      if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+        console.warn('Error checking saved status:', error);
+        setIsSaved(false);
+      } else {
+        setIsSaved(!!data);
       }
     } catch (error) {
-      console.error('Error checking auth:', error);
+      console.warn('Could not check saved status:', error);
+      setIsSaved(false);
     }
   };
 
   const handleToggle = async () => {
     if (!user) {
-      // Trigger auth flow - simple redirect to sign in
+      // Trigger auth flow
       if (onAuthRequired) {
         onAuthRequired();
       } else {
-        // Default behavior: trigger auth via Supabase
+        // Use centralized sign in
         try {
-          await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-              redirectTo: window.location.href
-            }
-          });
+          await signIn();
         } catch (error) {
           console.error('Error signing in:', error);
         }

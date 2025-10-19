@@ -177,14 +177,14 @@ export default function LibraryPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/30">
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-purple-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-800/95 dark:bg-gray-900/95 shadow-sm border-b border-slate-200 dark:border-gray-600/60 dark:border-gray-700/60">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
           <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <span className="text-white text-lg">🧸</span>
             </div>
-            <span className="text-slate-800">Tiny Viewers</span>
+            <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
           </Link>
           <nav className="flex items-center gap-4 text-sm font-medium">
             <AuthButtonSimple />
@@ -196,20 +196,20 @@ export default function LibraryPage() {
         <div className="mb-8">
           <Link 
             href="/movies"
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 text-sm font-medium mb-6 hover:gap-3 group"
+            className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 text-sm font-medium mb-6 hover:gap-3 group"
           >
             <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
             <span>Back to Movies</span>
           </Link>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-900 mb-3 tracking-tight leading-none">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-900 dark:text-slate-100 mb-3 tracking-tight leading-none">
             <span className="text-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text">My Library</span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl">Saved movies for quick access across devices.</p>
+          <p className="text-lg text-gray-800 dark:text-gray-200 max-w-2xl">Saved movies for quick access across devices.</p>
         </div>
 
         {!isAuthed && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 text-center">
-            <p className="mb-4 text-slate-700">Sign in to view your saved movies.</p>
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-600 p-6 text-center">
+            <p className="mb-4 text-slate-700 dark:text-slate-300">Sign in to view your saved movies.</p>
             <AuthButtonSimple />
           </div>
         )}
@@ -217,7 +217,7 @@ export default function LibraryPage() {
         {isAuthed && loading && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="aspect-[2/3] rounded-xl bg-slate-200 animate-pulse" />
+              <div key={i} className="aspect-[2/3] rounded-xl bg-slate-200 dark:bg-gray-700 animate-pulse" />
             ))}
           </div>
         )}
@@ -228,11 +228,11 @@ export default function LibraryPage() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-xl border border-slate-200 p-8 text-center"
+              className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-600 p-8 text-center"
             >
               <div className="text-6xl mb-4">🎬</div>
-              <h2 className="text-2xl font-light text-slate-800 mb-3">Start Your Movie Library</h2>
-              <p className="text-slate-600 mb-6 max-w-md mx-auto">
+              <h2 className="text-2xl font-light text-slate-800 dark:text-slate-100 mb-3">Start Your Movie Library</h2>
+              <p className="text-slate-600 dark:text-slate-200 mb-6 max-w-md mx-auto">
                 Save movies you love and discover new favorites. Your personal collection of kid-safe films awaits!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -252,12 +252,12 @@ export default function LibraryPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white rounded-xl border border-slate-200 p-6"
+                className="bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-600 p-6"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-2xl">✨</span>
-                  <h3 className="text-xl font-semibold text-slate-800">Popular with Parents</h3>
-                  <span className="text-sm text-slate-500">Get started with these favorites</span>
+                  <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Popular with Parents</h3>
+                  <span className="text-sm text-slate-500 dark:text-slate-400">Get started with these favorites</span>
                 </div>
                 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -272,7 +272,7 @@ export default function LibraryPage() {
                         className="group relative"
                       >
                         <Link href={`/movies/${movie.id}`} className="block">
-                          <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-sm border border-slate-200 bg-white hover:shadow-md transition-all duration-200">
+                          <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-sm border border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:shadow-md transition-all duration-200">
                             {posterUrl ? (
                               <Image 
                                 src={posterUrl} 
@@ -282,10 +282,10 @@ export default function LibraryPage() {
                                 sizes="(max-width: 640px) 150px, (max-width: 1024px) 120px, 140px"
                               />
                             ) : (
-                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-100 to-purple-100">
+                              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-pink-100 to-purple-100 dark:from-gray-700 dark:to-gray-600">
                                 <div className="text-center p-2">
                                   <div className="text-2xl mb-1">🎬</div>
-                                  <p className="text-xs text-slate-600 font-medium leading-tight">{movie.title}</p>
+                                  <p className="text-xs text-slate-600 dark:text-slate-300 font-medium leading-tight">{movie.title}</p>
                                 </div>
                               </div>
                             )}
@@ -301,7 +301,7 @@ export default function LibraryPage() {
                             </div>
                           </div>
                         </Link>
-                        <div className="mt-2 text-xs text-slate-700 line-clamp-2 leading-tight">{movie.title}</div>
+                        <div className="mt-2 text-xs text-slate-700 dark:text-slate-300 line-clamp-2 leading-tight">{movie.title}</div>
                       </motion.div>
                     );
                   })}
@@ -310,7 +310,7 @@ export default function LibraryPage() {
                 <div className="mt-6 text-center">
                   <Link 
                     href="/movies" 
-                    className="text-purple-600 hover:text-purple-700 text-sm font-medium hover:underline"
+                    className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 text-sm font-medium hover:underline"
                   >
                     View all movies →
                   </Link>
@@ -323,25 +323,25 @@ export default function LibraryPage() {
         {isAuthed && !loading && movies.length > 0 && (
           <div>
             <div className="flex items-center justify-between mb-4">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-xl border border-slate-200 dark:border-gray-600 shadow-sm">
                 <span className="text-2xl">🎬</span>
                 <div>
-                  <div className="text-xl font-bold text-slate-900">{movies.length}</div>
-                  <div className="text-xs text-slate-600 -mt-0.5">saved</div>
+                  <div className="text-xl font-bold text-slate-900 dark:text-slate-100">{movies.length}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-300 -mt-0.5">saved</div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <div className="text-sm text-slate-600">Sort</div>
-                <div className="bg-slate-100 rounded-xl p-1">
+                <div className="text-sm text-slate-600 dark:text-slate-300">Sort</div>
+                <div className="bg-slate-100 dark:bg-gray-600 rounded-xl p-1">
                   <button
                     onClick={() => setSortBy('recent')}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${sortBy === 'recent' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${sortBy === 'recent' ? 'bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}
                   >
                     Recent
                   </button>
                   <button
                     onClick={() => setSortBy('title')}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${sortBy === 'title' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${sortBy === 'title' ? 'bg-white dark:bg-gray-800 text-slate-900 dark:text-slate-100 shadow-sm' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:text-slate-100'}`}
                   >
                     Title A-Z
                   </button>
@@ -354,12 +354,12 @@ export default function LibraryPage() {
                 return (
                   <div key={m.id} className="group relative">
                     <Link href={`/movies/${m.id}`} className="block">
-                      <div className="relative aspect-[2/3] overflow-hidden rounded-xl shadow-sm border border-slate-200 bg-white hover:shadow-md transition-all duration-200">
+                      <div className="relative aspect-[2/3] overflow-hidden rounded-xl shadow-sm border border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 hover:shadow-md transition-all duration-200">
                         {posterUrl ? (
                           <Image src={posterUrl} alt={m.title} fill className="object-cover transition-all duration-300 group-hover:scale-105" sizes="(max-width: 1024px) 200px, 240px" />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-slate-100">
-                            <div className="text-sm text-slate-700 p-3 text-center">{m.title}</div>
+                          <div className="w-full h-full flex items-center justify-center bg-slate-100 dark:bg-gray-600">
+                            <div className="text-sm text-slate-700 dark:text-slate-300 p-3 text-center">{m.title}</div>
                           </div>
                         )}
                       </div>
@@ -411,7 +411,7 @@ export default function LibraryPage() {
                       </button>
                     </div>
                     
-                    <div className="mt-2 text-sm text-slate-800 line-clamp-2">{m.title}</div>
+                    <div className="mt-2 text-sm text-slate-800 dark:text-slate-100 line-clamp-2">{m.title}</div>
                   </div>
                 );
               })}

@@ -5,7 +5,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { supabase } from '../../../lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { Movie, Scene, AgeFlag } from '../../../types';
 
 import AuthButtonSimple from '../../components/AuthButtonSimple';
@@ -137,7 +137,7 @@ const MovieDetailsPage = () => {
       4: 'bg-orange-500',
       5: 'bg-red-500'
     };
-    return colors[score as keyof typeof colors] || 'bg-gray-500';
+    return colors[score as keyof typeof colors] || 'bg-gray-50 dark:bg-gray-8000';
   };
 
   const getScoreDescription = (score: number): string => {
@@ -173,15 +173,15 @@ const MovieDetailsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Header */}
-        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-900/95 shadow-sm border-b border-slate-200/60 dark:border-gray-700/60">
           <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
             <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <span className="text-white text-lg">🧸</span>
               </div>
-              <span className="text-slate-800">Tiny Viewers</span>
+              <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm font-medium">
               <AuthButtonSimple />
@@ -198,7 +198,7 @@ const MovieDetailsPage = () => {
             <div className="text-center">
               <div className="text-5xl mb-6 animate-bounce">🎬</div>
               <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600 mb-6"></div>
-              <h1 className="text-2xl font-light text-slate-800 tracking-tight" style={{
+              <h1 className="text-2xl font-light text-slate-800 dark:text-slate-100 tracking-tight" style={{
                 fontFamily: 'system-ui, -apple-system, serif',
               }}>Loading movie details...</h1>
             </div>
@@ -210,15 +210,15 @@ const MovieDetailsPage = () => {
 
   if (error || !movie) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Header */}
-        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-900/95 shadow-sm border-b border-slate-200/60 dark:border-gray-700/60">
           <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
             <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <span className="text-white text-lg">🧸</span>
               </div>
-              <span className="text-slate-800">Tiny Viewers</span>
+              <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm font-medium">
               <AuthButtonSimple />
@@ -234,7 +234,7 @@ const MovieDetailsPage = () => {
           >
             <Link 
               href={backUrl}
-              className="inline-flex items-center gap-2 text-slate-600 hover:text-purple-600 transition-all duration-300 text-base font-medium mb-8 hover:gap-3 group bg-white/50 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-100"
+              className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 text-base font-medium mb-8 hover:gap-3 group bg-white dark:bg-gray-800/50 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-100 dark:border-gray-600"
             >
               <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
               <span>Back to Movies</span>
@@ -245,7 +245,7 @@ const MovieDetailsPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center py-16 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100"
+            className="text-center py-16 bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100 dark:border-gray-600"
           >
             <div className="text-6xl mb-6">😞</div>
             <h1 className="text-3xl font-light text-red-600 mb-6 tracking-tight" style={{
@@ -267,7 +267,7 @@ const MovieDetailsPage = () => {
   const { displayTitle, displayYear } = formatTitleWithYear(movie.title, movie.release_year);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative">
       {/* Whimsical Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -345,13 +345,13 @@ const MovieDetailsPage = () => {
       />
       
       {/* Whimsical Apple-style Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/60 shadow-sm">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900/90 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-700/60 shadow-sm">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
           <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <span className="text-white text-lg">🧸</span>
             </div>
-            <span className="text-slate-800">Tiny Viewers</span>
+            <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
           </Link>
           <div className="flex items-center gap-4">
             <AuthButtonSimple />
@@ -370,7 +370,7 @@ const MovieDetailsPage = () => {
         >
           <Link 
             href={backUrl}
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-all duration-300 text-sm font-medium group"
+            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-100 transition-all duration-300 text-sm font-medium group"
           >
             <motion.span 
               className="text-lg group-hover:-translate-x-1 transition-transform duration-200"
@@ -402,7 +402,7 @@ const MovieDetailsPage = () => {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="lg:sticky lg:top-32 lg:self-start"
           >
-            <div className="relative aspect-[2/3] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl bg-white border border-gray-200/60 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-500 group max-w-[200px] sm:max-w-none mx-auto lg:mx-0">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-gray-600/60 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-500 group max-w-[200px] sm:max-w-none mx-auto lg:mx-0">
               {/* Magical Border Glow */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -449,10 +449,10 @@ const MovieDetailsPage = () => {
                   priority
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
                   <div className="text-center p-6">
                     <div className="text-6xl mb-4">🎬</div>
-                    <p className="text-lg text-slate-600 font-medium">{movie.title}</p>
+                    <p className="text-lg text-slate-600 dark:text-slate-200 font-medium">{movie.title}</p>
                   </div>
                 </div>
               )}
@@ -466,7 +466,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 p-4 sm:p-8 relative overflow-hidden"
+              className="bg-white dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-600/60 p-4 sm:p-8 relative overflow-hidden"
             >
               {/* Playful Background Pattern */}
               <div className="absolute inset-0 opacity-5">
@@ -488,23 +488,23 @@ const MovieDetailsPage = () => {
               
               <div className="text-center mb-8 relative z-10">
                 <motion.h1 
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 tracking-tight"
+                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 tracking-tight"
                   whileHover={{ scale: 1.02 }}
                 >
                   {displayTitle}
                 </motion.h1>
                 <motion.div 
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full border border-blue-200/60"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 px-4 py-2 rounded-full border border-blue-200/60 dark:border-blue-700/60"
                   whileHover={{ scale: 1.05 }}
                 >
                   <motion.span 
-                    className="text-gray-600"
+                    className="text-gray-600 dark:text-gray-300"
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
                     📅
                   </motion.span>
-                  <span className="text-sm text-gray-700 font-medium">{movie.release_year}</span>
+                  <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{movie.release_year}</span>
                 </motion.div>
               </div>
 
@@ -530,7 +530,7 @@ const MovieDetailsPage = () => {
               />
               <div className="text-center">
                 <motion.div 
-                  className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 border border-gray-200/60 relative overflow-hidden"
+                  className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 border border-gray-200/60 dark:border-gray-600/60 relative overflow-hidden"
                   whileHover={{ scale: 1.01 }}
                 >
                   {/* Subtle floating elements */}
@@ -550,7 +550,7 @@ const MovieDetailsPage = () => {
                       📖
                     </motion.div>
                   </div>
-                  <p className="text-gray-700 leading-relaxed text-base relative z-10">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base relative z-10">
                     {description}
                   </p>
                 </motion.div>
@@ -558,7 +558,7 @@ const MovieDetailsPage = () => {
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                   {(movie as any).imdb_rating ? (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-50 to-orange-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-amber-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-amber-200/60 dark:border-amber-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -570,13 +570,13 @@ const MovieDetailsPage = () => {
                         📽️
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 text-lg">{parseFloat((movie as any).imdb_rating).toFixed(1)}</div>
+                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{parseFloat((movie as any).imdb_rating).toFixed(1)}</div>
                         <div className="text-amber-700 text-xs font-medium">IMDB</div>
                       </div>
                     </motion.div>
                   ) : movie.tmdb_rating ? (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-blue-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-blue-200/60 dark:border-blue-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -588,13 +588,13 @@ const MovieDetailsPage = () => {
                         🎬
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 text-lg">{parseFloat(movie.tmdb_rating).toFixed(1)}</div>
+                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{parseFloat(movie.tmdb_rating).toFixed(1)}</div>
                         <div className="text-blue-700 text-xs font-medium">TMDB</div>
                       </div>
                     </motion.div>
                   ) : (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-50 to-pink-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-purple-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-purple-200/60 dark:border-purple-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -606,14 +606,14 @@ const MovieDetailsPage = () => {
                         ⭐
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 text-lg">{displayRating}</div>
+                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{displayRating}</div>
                         <div className="text-purple-700 text-xs font-medium">Rating</div>
                       </div>
                     </motion.div>
                   )}
                   
                   <motion.div 
-                    className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-gray-50 to-slate-50 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-gray-200/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                    className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-800 dark:to-gray-700 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-gray-200/60 dark:border-gray-600/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
                     whileHover={{ scale: 1.05, rotate: 1 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -625,8 +625,8 @@ const MovieDetailsPage = () => {
                       📅
                     </motion.span>
                     <div>
-                      <div className="font-bold text-gray-900 text-lg">{movie.release_year}</div>
-                      <div className="text-gray-600 text-xs font-medium">Year</div>
+                      <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{movie.release_year}</div>
+                      <div className="text-gray-600 dark:text-gray-300 text-xs font-medium">Year</div>
                     </div>
                   </motion.div>
                   
@@ -665,7 +665,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 p-4 sm:p-8 relative overflow-hidden"
+              className="bg-white dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-600/60 p-4 sm:p-8 relative overflow-hidden"
             >
               {/* Magical Background Elements */}
               <div className="absolute inset-0 opacity-5">
@@ -701,13 +701,13 @@ const MovieDetailsPage = () => {
               
               <div className="text-center mb-8 relative z-10">
                 <motion.h2 
-                  className="text-2xl font-bold text-gray-900 mb-3"
+                  className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3"
                   whileHover={{ scale: 1.02 }}
                 >
                   🛡️ Age Safety Guide
                 </motion.h2>
                 <motion.p 
-                  className="text-gray-600 text-base"
+                  className="text-gray-600 dark:text-gray-300 text-base"
                   whileHover={{ scale: 1.01 }}
                 >
                   How appropriate is this movie for different ages?
@@ -727,7 +727,7 @@ const MovieDetailsPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col text-center p-3 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/60 hover:shadow-xl transition-all duration-500 group relative overflow-hidden"
+                      className="flex flex-col text-center p-3 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 border border-gray-200/60 dark:border-gray-500/60 hover:shadow-xl transition-all duration-500 group relative overflow-hidden"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -766,18 +766,18 @@ const MovieDetailsPage = () => {
                         >
                           {ratingInfo.icon}
                         </motion.div>
-                        <div className="text-base font-semibold text-gray-900">{ageLabel}</div>
+                        <div className="text-base font-semibold text-gray-900 dark:text-gray-100">{ageLabel}</div>
                       </div>
                       
                       {/* Middle section with score */}
                       <div className="mb-3">
-                        <div className="text-2xl font-bold text-gray-900">{score}/5</div>
-                        <div className="text-sm text-gray-600 mt-1">{getScoreDescription(score)}</div>
+                        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{score}/5</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">{getScoreDescription(score)}</div>
                       </div>
                       
                       {/* Bottom section with progress bar - aligned */}
                       <div className="mt-auto">
-                        <div className="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-3 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(score / 5) * 100}%` }}
@@ -797,7 +797,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/60 p-8 relative overflow-hidden"
+              className="bg-white dark:bg-gray-900/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/60 p-8 relative overflow-hidden"
             >
               {/* Playful Background Elements */}
               <div className="absolute inset-0 opacity-5">
@@ -833,14 +833,14 @@ const MovieDetailsPage = () => {
               
               <div className="flex flex-col gap-3 mb-6 relative z-10">
                 <motion.h2 
-                  className="text-2xl font-bold text-gray-900"
+                  className="text-2xl font-bold text-gray-900 dark:text-gray-100"
                   whileHover={{ scale: 1.02 }}
                 >
                   Scene Analysis
                 </motion.h2>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                   <motion.span 
-                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-gray-600 bg-gray-100 rounded-lg font-medium w-fit"
+                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-lg font-medium w-fit"
                     whileHover={{ scale: 1.05 }}
                   >
                     {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
@@ -856,7 +856,7 @@ const MovieDetailsPage = () => {
               {!scenes || scenes.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-3xl mb-3">🎭</div>
-                  <p className="text-base text-slate-600">No scenes analyzed yet.</p>
+                  <p className="text-base text-slate-600 dark:text-slate-200">No scenes analyzed yet.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -866,7 +866,7 @@ const MovieDetailsPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                      className="group bg-gradient-to-r from-gray-50 to-blue-50 p-5 rounded-xl shadow-sm transition-all duration-500 hover:shadow-lg border border-gray-200/60 relative overflow-hidden"
+                      className="group bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 p-5 rounded-xl shadow-sm transition-all duration-500 hover:shadow-lg border border-gray-200/60 dark:border-gray-600/60 relative overflow-hidden"
                       whileHover={{ scale: 1.02, rotate: 0.5 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -894,11 +894,11 @@ const MovieDetailsPage = () => {
                             {index + 1}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-base font-semibold text-slate-800">
+                            <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">
                               {scene.timestamp_start} - {scene.timestamp_end}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="text-xs text-slate-600">Intensity:</span>
+                              <span className="text-xs text-slate-600 dark:text-slate-300">Intensity:</span>
                               <div className="flex items-center gap-2">
                                 <div 
                                   className="w-2.5 h-2.5 rounded-full flex-shrink-0"
@@ -978,7 +978,7 @@ const MovieDetailsPage = () => {
                           {/* Age-specific Recommendations - Mobile Optimized */}
                           {(scene.age_flags || scene.intensity) && (
                             <div className="mt-3">
-                              <h4 className="text-xs font-medium text-slate-600 mb-2">Age Recommendations:</h4>
+                              <h4 className="text-xs font-medium text-slate-600 dark:text-slate-300 mb-2">Age Recommendations:</h4>
                               <div className="flex flex-wrap gap-2">
                                 {Object.entries(scene.age_flags || generateAgeFlags(scene.intensity)).map(([age, flag]) => (
                                   <div 

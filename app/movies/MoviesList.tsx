@@ -68,7 +68,7 @@ function getSmartAgeRecommendation(movie: Movie): { label: string; colorClasses:
   
   return { 
     label: "Check ratings", 
-    colorClasses: { bg: "bg-slate-100/90", text: "text-slate-800", border: "border-slate-200/50" }, 
+    colorClasses: { bg: "bg-slate-100/90", text: "text-slate-800 dark:text-slate-100", border: "border-slate-200/50" }, 
     emoji: "⚠️" 
   };
 }
@@ -229,7 +229,7 @@ export default function MoviesList({
         <div className="text-center">
           <div className="text-4xl mb-6 animate-bounce">🎬</div>
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-purple-200 border-t-purple-600 mb-4"></div>
-          <p className="text-xl text-slate-600 font-medium">Loading movies...</p>
+          <p className="text-xl text-slate-600 dark:text-slate-300 font-medium">Loading movies...</p>
         </div>
       </motion.div>
     );
@@ -244,10 +244,10 @@ export default function MoviesList({
         className="text-center py-16"
       >
         <div className="text-6xl mb-6">🎭</div>
-        <h2 className="text-3xl font-light text-slate-800 mb-6 tracking-tight" style={{
+        <h2 className="text-3xl font-light text-slate-800 dark:text-slate-100 mb-6 tracking-tight" style={{
           fontFamily: 'system-ui, -apple-system, serif',
         }}>No Movies Found</h2>
-        <div className="text-lg text-slate-600 space-y-1 mb-8">
+        <div className="text-lg text-slate-600 dark:text-slate-300 space-y-1 mb-8">
           <p>We couldn't find any movies matching your criteria.</p>
           {searchQuery && <p className="font-semibold">Search: "{searchQuery}"</p>}
           {ageFilter && <p className="font-semibold">Age: {ageFilter}+ years</p>}
@@ -317,11 +317,11 @@ export default function MoviesList({
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                         <div className="flex-1 min-w-0">
-                          <h2 className="text-lg sm:text-xl font-semibold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 truncate">
+                          <h2 className="text-lg sm:text-xl font-semibold text-slate-800 dark:text-slate-100 group-hover:text-purple-700 transition-colors duration-300 truncate">
                             {displayTitle}
                           </h2>
                           {displayYear && (
-                            <p className="text-sm text-slate-500">{displayYear}</p>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500">{displayYear}</p>
                           )}
                         </div>
                         
@@ -336,12 +336,12 @@ export default function MoviesList({
                               <span className="text-xs ml-1 opacity-75">{ratingSource}</span>
                             </span>
                           ) : (
-                            <span className="text-xs text-slate-400 px-3 py-1">No Rating</span>
+                            <span className="text-xs text-slate-400 dark:text-slate-500 px-3 py-1">No Rating</span>
                           )}
                         </div>
                       </div>
                       
-                      <div className="text-sm text-slate-600">
+                      <div className="text-sm text-slate-600 dark:text-slate-300">
                         <p>Click to view detailed age analysis and content breakdown</p>
                       </div>
                     </div>
@@ -410,8 +410,8 @@ export default function MoviesList({
                     <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 flex items-center justify-center">
                       <div className="text-center p-4">
                         <div className="text-4xl mb-3">🎬</div>
-                        <p className="text-sm text-slate-600 font-medium leading-tight px-2">{displayTitle}</p>
-                        {displayYear && <p className="text-xs text-slate-500 mt-1">{displayYear}</p>}
+                        <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-tight px-2">{displayTitle}</p>
+                        {displayYear && <p className="text-xs text-slate-500 dark:text-slate-400 dark:text-slate-500 mt-1">{displayYear}</p>}
                       </div>
                     </div>
                   )}
@@ -432,7 +432,7 @@ export default function MoviesList({
                 <div className="p-4 sm:p-5 flex-1 flex flex-col">
                   <div className="flex-1 flex flex-col">
                     <div className="flex items-start gap-2 mb-2 min-h-[3rem]">
-                      <h2 className="text-base sm:text-lg font-bold text-slate-800 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight flex-1" title={movie.title}>
+                      <h2 className="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 group-hover:text-purple-700 transition-colors duration-300 line-clamp-2 leading-tight flex-1" title={movie.title}>
                         {displayTitle}
                       </h2>
                       <div className="flex-shrink-0 mt-1 opacity-70 hover:opacity-100 transition-opacity duration-200">
@@ -448,7 +448,7 @@ export default function MoviesList({
                     
                     <div className="flex items-center justify-between mb-4 mt-auto">
                       {displayYear && (
-                        <span className="text-sm text-slate-500 font-medium">{displayYear}</span>
+                        <span className="text-sm text-slate-500 dark:text-slate-400 dark:text-slate-500 font-medium">{displayYear}</span>
                       )}
                       {displayRating && displayRating > 0 ? (
                         <span className={`flex items-center gap-1 px-2 py-1 rounded-lg text-sm font-semibold ${ratingBg} ${ratingColor} border`}>
@@ -457,7 +457,7 @@ export default function MoviesList({
                           <span className="text-xs opacity-75">{ratingSource}</span>
                         </span>
                       ) : (
-                        <span className="text-xs text-slate-400 px-2 py-1">No Rating</span>
+                        <span className="text-xs text-slate-400 dark:text-slate-500 px-2 py-1">No Rating</span>
                       )}
                     </div>
                   </div>

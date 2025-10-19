@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Heart, Sparkles } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,9 +13,9 @@ interface SaveButtonProps {
 }
 
 export default function SaveButton({ movieId, movieTitle, size = 'md' }: SaveButtonProps) {
+  const { user, signIn } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
 
@@ -31,39 +32,29 @@ export default function SaveButton({ movieId, movieTitle, size = 'md' }: SaveBut
   };
 
   useEffect(() => {
-    checkAuthAndSavedStatus();
-  }, [movieId]);
+    checkSavedStatus();
+  }, [movieId, user]);
 
-  const checkAuthAndSavedStatus = async () => {
-    try {
-      console.log('SaveButton: Starting auth check...');
-      const { data: { user }, error } = await supabase.auth.getUser();
-      console.log('SaveButton: Auth result - user:', user?.id, 'error:', error);
-      
-      let finalUser = user;
-      if (!user) {
-        // Try getting session as fallback
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log('SaveButton: Session fallback - session:', session?.user?.id, 'error:', sessionError);
-        finalUser = session?.user || null;
-      }
-      
-      setUser(finalUser);
-      
-      if (finalUser) {
-        // TEMPORARY FIX: Skip database check due to 406 errors
-        // Just default to not saved - the button will toggle correctly
-        console.log('SaveButton: Skipping database check due to 406 errors, defaulting to not saved');
-        setIsSaved(false);
-      }
-    } catch (error) {
-      console.error('Error checking auth:', error);
+  const checkSavedStatus = async () => {
+    if (!user) {
+      setIsSaved(false);
+      return;
     }
+
+    // TEMPORARY FIX: Skip database check due to 406 errors
+    // Just default to not saved - the button will toggle correctly
+    console.log('SaveButton: Skipping database check due to 406 errors, defaulting to not saved');
+    setIsSaved(false);
   };
 
   const handleSaveToggle = async () => {
     if (!user) {
-      // Could trigger auth modal here
+      // Use centralized sign in
+      try {
+        await signIn();
+      } catch (error) {
+        console.error('Error signing in:', error);
+      }
       return;
     }
 

@@ -236,7 +236,7 @@ export default function UnifiedAnalysisManager({
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute inset-0 bg-white/30 rounded-full"
+          className="absolute inset-0 bg-white dark:bg-gray-800/30 rounded-full"
         />
       </motion.button>
 
@@ -247,7 +247,7 @@ export default function UnifiedAnalysisManager({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-16 right-4 sm:bottom-24 sm:right-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-3 sm:p-4 z-[9999] min-w-[260px] sm:min-w-[280px]"
+          className="fixed bottom-16 right-4 sm:bottom-24 sm:right-6 bg-white dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-3 sm:p-4 z-[9999] min-w-[260px] sm:min-w-[280px]"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
@@ -263,7 +263,7 @@ export default function UnifiedAnalysisManager({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <span className="text-slate-600 text-xs">×</span>
+              <span className="text-slate-600 dark:text-slate-300 text-xs">×</span>
             </motion.button>
           </div>
 
@@ -341,7 +341,7 @@ export default function UnifiedAnalysisManager({
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-3 p-2 bg-slate-100 rounded-lg text-xs text-slate-600"
+              className="mt-3 p-2 bg-slate-100 rounded-lg text-xs text-slate-600 dark:text-slate-300"
             >
               {currentStep}
             </motion.div>
@@ -357,7 +357,7 @@ export default function UnifiedAnalysisManager({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.95 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-16 right-4 sm:bottom-24 sm:right-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-4 sm:p-6 z-[9999] max-w-[calc(100vw-2rem)] sm:max-w-md"
+          className="fixed bottom-16 right-4 sm:bottom-24 sm:right-6 bg-white dark:bg-gray-800/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-200/60 p-4 sm:p-6 z-[9999] max-w-[calc(100vw-2rem)] sm:max-w-md"
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -376,7 +376,7 @@ export default function UnifiedAnalysisManager({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
-              <span className="text-slate-600 text-sm">×</span>
+              <span className="text-slate-600 dark:text-slate-300 text-sm">×</span>
             </motion.button>
           </div>
 
@@ -424,7 +424,7 @@ export default function UnifiedAnalysisManager({
                       
                       return (
                         <div key={age} className="flex items-center justify-between">
-                          <span className="text-xs text-slate-600">{getAgeLabel(age)}</span>
+                          <span className="text-xs text-slate-600 dark:text-slate-300">{getAgeLabel(age)}</span>
                           <div className="flex items-center gap-1">
                             <span className={`px-2 py-1 rounded-md text-xs font-semibold border ${getScoreColor(score)}`}>
                               {score}

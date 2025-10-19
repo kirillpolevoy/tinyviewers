@@ -141,9 +141,9 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50 text-gray-900" style={{ scrollBehavior: 'smooth' }}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-sky-50 via-purple-50 to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100" style={{ scrollBehavior: 'smooth' }}>
       {/* NAV - Simplified for better performance */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 shadow-sm border-b border-slate-200/60">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 dark:bg-gray-900/95 shadow-sm border-b border-slate-200/60 dark:border-gray-700/60">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
           <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
@@ -175,7 +175,7 @@ export default function HomePage() {
             animate: { opacity: 1, y: 0 },
             transition: { duration: 0.8, type: "tween", ease: "easeOut" }
           })}
-          className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 mb-6 relative leading-[0.9] cursor-default tracking-tight"
+          className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 dark:text-slate-100 mb-6 relative leading-[0.9] cursor-default tracking-tight"
           style={{
             fontFamily: 'system-ui, -apple-system, serif',
             letterSpacing: '-0.02em',
@@ -196,7 +196,7 @@ export default function HomePage() {
           </p>
         </motion.div>
 
-        <motion.p {...fadeInUp} className="text-base max-w-lg text-slate-600 mb-8 text-center leading-relaxed">
+        <motion.p {...fadeInUp} className="text-base max-w-lg text-gray-800 dark:text-gray-200 mb-8 text-center leading-relaxed">
           Scene‑by‑scene scary scores & age‑specific warnings for parents of 2–5 year olds. 👶
         </motion.p>
 
@@ -204,14 +204,14 @@ export default function HomePage() {
         <motion.div {...fadeInUp} className="w-full max-w-2xl space-y-4 sm:space-y-6 px-4 sm:px-0">
           {/* Primary Search Action */}
           <form onSubmit={handleSearch} className="relative">
-            <div className="relative flex bg-white rounded-xl sm:rounded-2xl shadow-lg border-2 border-pink-300/70 hover:border-purple-400/70 transition-all duration-200">
+            <div className="relative flex bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border-2 border-pink-300/70 dark:border-pink-500/50 hover:border-purple-400/70 dark:hover:border-purple-500/50 transition-all duration-200">
               <Search className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 text-purple-500" size={18} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search movies..."
-                className="w-full pl-12 sm:pl-16 pr-16 sm:pr-24 py-3.5 sm:py-5 bg-transparent rounded-xl sm:rounded-2xl text-base sm:text-lg placeholder:text-slate-400 focus:ring-0 focus:outline-none font-medium"
+                className="w-full pl-12 sm:pl-16 pr-16 sm:pr-24 py-3.5 sm:py-5 bg-transparent rounded-xl sm:rounded-2xl text-base sm:text-lg text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:ring-0 focus:outline-none font-medium"
               />
               <button 
                 type="submit"
