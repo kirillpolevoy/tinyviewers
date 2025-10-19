@@ -611,7 +611,7 @@ onClick={() => window.open('mailto:feedback@tinyviewers.com', '_blank')}
                                     }}
                                   >
                                     <span className="text-sm leading-none flex items-center flex-shrink-0">{flag}</span>
-                                    <span className="font-medium leading-none whitespace-nowrap">{age === '12m' ? '12m' : age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
+                                    <span className="font-medium leading-none whitespace-nowrap">{age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
                                   </div>
                                 ))}
                               </div>

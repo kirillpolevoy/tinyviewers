@@ -105,18 +105,8 @@ export default function HomePage() {
         // Filter for movies that are good for younger children (lower age scores are better)
         // and ensure they have scenes data
         const toddlerFriendlyWithScenes = data?.filter(movie => {
-          // Handle both old (12m/24m/36m) and new (24m/36m/48m/60m) age structures
           const scores = movie.age_scores;
-          let avgScore;
-          
-          if ((scores as any)['48m'] !== undefined && (scores as any)['60m'] !== undefined) {
-            // New structure: 24m/36m/48m/60m
-            avgScore = ((scores as any)['24m'] + (scores as any)['36m'] + (scores as any)['48m'] + (scores as any)['60m']) / 4;
-          } else {
-            // Old structure: 12m/24m/36m - use these until database is migrated
-            avgScore = ((scores as any)['12m'] + (scores as any)['24m'] + (scores as any)['36m']) / 3;
-          }
-          
+          const avgScore = (scores['24m'] + scores['36m'] + scores['48m'] + scores['60m']) / 4;
           return avgScore <= 3; // Only movies with low intensity scores
         }).slice(0, 3) || [];
 
@@ -142,19 +132,10 @@ export default function HomePage() {
     // Simple logic to determine age recommendation
     const scores = movie.age_scores;
     
-    // Handle both old and new age structures
-    if ((scores as any)['48m'] !== undefined && (scores as any)['60m'] !== undefined) {
-      // New structure: 24m/36m/48m/60m
-      if ((scores as any)['24m'] <= 2) return "✅ 2y+";
-      if ((scores as any)['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
-      if ((scores as any)['48m'] <= 2) return "⚠️ 3y | ✅ 4y+";
-      if ((scores as any)['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
-    } else {
-      // Old structure: 12m/24m/36m - map to new labels
-      if ((scores as any)['12m'] <= 2) return "✅ 1y+";
-      if ((scores as any)['24m'] <= 2) return "⚠️ 1y | ✅ 2y+";
-      if ((scores as any)['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
-    }
+    if (scores['24m'] <= 2) return "✅ 2y+";
+    if (scores['36m'] <= 2) return "⚠️ 2y | ✅ 3y+";
+    if (scores['48m'] <= 2) return "⚠️ 3y | ✅ 4y+";
+    if (scores['60m'] <= 2) return "⚠️ 4y | ✅ 5y+";
     
     return "⚠️ Check age ratings";
   };

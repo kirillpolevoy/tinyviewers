@@ -45,47 +45,26 @@ function formatTitleWithYear(title: string, year?: number | null): { displayTitl
 function getSmartAgeRecommendation(movie: Movie): { label: string; colorClasses: { bg: string; text: string; border: string }; emoji: string } {
   const scores = movie.age_scores;
   
-  // Handle both old and new age structures
-  if ((scores as any)['48m'] !== undefined && (scores as any)['60m'] !== undefined) {
-    // New structure: 24m/36m/48m/60m
-    if (scores['24m'] <= 2) return { 
-      label: "Perfect for 2+", 
-      colorClasses: { bg: "bg-emerald-100/90", text: "text-emerald-800", border: "border-emerald-200/50" }, 
-      emoji: "✨" 
-    };
-    if (scores['36m'] <= 2) return { 
-      label: "Great for 3+", 
-      colorClasses: { bg: "bg-blue-100/90", text: "text-blue-800", border: "border-blue-200/50" }, 
-      emoji: "👍" 
-    };
-    if ((scores as any)['48m'] <= 2) return { 
-      label: "Good for 4+", 
-      colorClasses: { bg: "bg-purple-100/90", text: "text-purple-800", border: "border-purple-200/50" }, 
-      emoji: "👌" 
-    };
-    if ((scores as any)['60m'] <= 2) return { 
-      label: "Best for 5+", 
-      colorClasses: { bg: "bg-pink-100/90", text: "text-pink-800", border: "border-pink-200/50" }, 
-      emoji: "🎯" 
-    };
-  } else {
-    // Old structure: 12m/24m/36m - map to new labels
-    if ((scores as any)['12m'] <= 2) return { 
-      label: "Perfect for 1+", 
-      colorClasses: { bg: "bg-emerald-100/90", text: "text-emerald-800", border: "border-emerald-200/50" }, 
-      emoji: "✨" 
-    };
-    if (scores['24m'] <= 2) return { 
-      label: "Great for 2+", 
-      colorClasses: { bg: "bg-blue-100/90", text: "text-blue-800", border: "border-blue-200/50" }, 
-      emoji: "👍" 
-    };
-    if (scores['36m'] <= 2) return { 
-      label: "Good for 3+", 
-      colorClasses: { bg: "bg-purple-100/90", text: "text-purple-800", border: "border-purple-200/50" }, 
-      emoji: "👌" 
-    };
-  }
+  if (scores['24m'] <= 2) return { 
+    label: "Perfect for 2+", 
+    colorClasses: { bg: "bg-emerald-100/90", text: "text-emerald-800", border: "border-emerald-200/50" }, 
+    emoji: "✨" 
+  };
+  if (scores['36m'] <= 2) return { 
+    label: "Great for 3+", 
+    colorClasses: { bg: "bg-blue-100/90", text: "text-blue-800", border: "border-blue-200/50" }, 
+    emoji: "👍" 
+  };
+  if (scores['48m'] <= 2) return { 
+    label: "Good for 4+", 
+    colorClasses: { bg: "bg-purple-100/90", text: "text-purple-800", border: "border-purple-200/50" }, 
+    emoji: "👌" 
+  };
+  if (scores['60m'] <= 2) return { 
+    label: "Best for 5+", 
+    colorClasses: { bg: "bg-pink-100/90", text: "text-pink-800", border: "border-pink-200/50" }, 
+    emoji: "🎯" 
+  };
   
   return { 
     label: "Check ratings", 
@@ -175,16 +154,10 @@ export default function MoviesList({
                 // Sort by youngest recommended age first
                 const getMinAge = (movie: Movie) => {
                   const scores = movie.age_scores;
-                  if ((scores as any)['48m'] !== undefined) {
-                    if (scores['24m'] <= 2) return 2;
-                    if (scores['36m'] <= 2) return 3;
-                    if ((scores as any)['48m'] <= 2) return 4;
-                    if ((scores as any)['60m'] <= 2) return 5;
-                  } else {
-                    if ((scores as any)['12m'] <= 2) return 1;
-                    if (scores['24m'] <= 2) return 2;
-                    if (scores['36m'] <= 2) return 3;
-                  }
+                  if (scores['24m'] <= 2) return 2;
+                  if (scores['36m'] <= 2) return 3;
+                  if (scores['48m'] <= 2) return 4;
+                  if (scores['60m'] <= 2) return 5;
                   return 6; // Fallback for movies with no good age match
                 };
                 return getMinAge(a) - getMinAge(b);

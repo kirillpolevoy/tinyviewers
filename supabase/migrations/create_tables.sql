@@ -6,9 +6,10 @@ CREATE TABLE movies (
     poster_url TEXT NOT NULL,
     rating TEXT NOT NULL,
     age_scores JSONB NOT NULL DEFAULT '{
-        "12m": 0,
         "24m": 0,
-        "36m": 0
+        "36m": 0,
+        "48m": 0,
+        "60m": 0
     }'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
@@ -23,9 +24,10 @@ CREATE TABLE scenes (
     tags TEXT[] NOT NULL DEFAULT '{}',
     intensity INTEGER NOT NULL CHECK (intensity >= 0 AND intensity <= 10),
     age_flags JSONB NOT NULL DEFAULT '{
-        "12m": "🚫",
         "24m": "🚫",
-        "36m": "⚠️"
+        "36m": "⚠️",
+        "48m": "✅",
+        "60m": "✅"
     }'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
@@ -40,12 +42,12 @@ INSERT INTO movies (title, summary, poster_url, rating, age_scores) VALUES
     'A heartwarming story about friendship',
     'https://example.com/poster1.jpg',
     'G',
-    '{"12m": 2, "24m": 1, "36m": 1}'
+    '{"24m": 1, "36m": 1, "48m": 1, "60m": 1}'
 ),
 (
     'Sample Movie 2',
     'An adventure in the magical forest',
     'https://example.com/poster2.jpg',
     'G',
-    '{"12m": 3, "24m": 2, "36m": 1}'
+    '{"24m": 2, "36m": 1, "48m": 1, "60m": 1}'
 ); 
