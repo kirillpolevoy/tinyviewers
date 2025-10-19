@@ -52,6 +52,12 @@ export async function GET(request: NextRequest) {
       success: true,
       movie,
       scenes: scenes || []
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
 
   } catch (error) {
