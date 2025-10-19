@@ -165,7 +165,7 @@ export default function MoviesList({
             <div className="flex items-center space-x-4">
               <p className="text-sm text-[#6B6B63] font-light">Rating: {movie.rating}</p>
               <div className="flex items-center space-x-3">
-                {(['12m', '24m', '36m'] as const).map((age) => (
+                {(['24m', '36m', '48m', '60m'] as const).map((age) => (
                   <div key={age} className="flex items-center space-x-1">
                     <span className="text-xs text-[#6B6B63]/60 font-light">{age}</span>
                     <span className="text-sm font-light text-[#2C2C27]">{movie.age_scores[age]}</span>
