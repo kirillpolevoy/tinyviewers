@@ -1,8 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --tv-surface-card: rgba(255, 255, 255, 0.9);
+  --tv-surface-card-muted: rgba(248, 250, 252, 0.9);
+  --tv-surface-overlay: rgba(255, 255, 255, 0.75);
+  --tv-surface-elevated: #ffffff;
+  --tv-border-subtle: rgba(148, 163, 184, 0.35);
+  --tv-border-strong: rgba(99, 102, 241, 0.45);
+  --tv-text-primary: #0f172a;
+  --tv-text-secondary: #334155;
+  --tv-text-muted: #475569;
+  --tv-progress-track: rgba(148, 163, 184, 0.3);
+  --tv-safe-bg: #ecfdf5;
+  --tv-safe-border: #6ee7b7;
+  --tv-safe-text: #047857;
+  --tv-caution-bg: #fef3c7;
+  --tv-caution-border: #fbbf24;
+  --tv-caution-text: #92400e;
+  --tv-skip-bg: #fee2e2;
+  --tv-skip-border: #fb7185;
+  --tv-skip-text: #b91c1c;
+  --tv-intensity-low: #10b981;
+  --tv-intensity-medium: #f59e0b;
+  --tv-intensity-high: #ef4444;
+}
+
+html.dark {
+  color-scheme: dark;
+  --background: #020817;
+  --foreground: #e2e8f0;
+  --tv-surface-card: rgba(2, 8, 23, 0.85);
+  --tv-surface-card-muted: rgba(15, 23, 42, 0.85);
+  --tv-surface-overlay: rgba(15, 23, 42, 0.7);
+  --tv-surface-elevated: rgba(30, 41, 59, 0.95);
+  --tv-border-subtle: rgba(148, 163, 184, 0.35);
+  --tv-border-strong: rgba(129, 140, 248, 0.55);
+  --tv-text-primary: #f8fafc;
+  --tv-text-secondary: #cbd5f5;
+  --tv-text-muted: #a5b4fc;
+  --tv-progress-track: rgba(100, 116, 139, 0.35);
+  --tv-safe-bg: rgba(16, 185, 129, 0.16);
+  --tv-safe-border: rgba(52, 211, 153, 0.6);
+  --tv-safe-text: #bbf7d0;
+  --tv-caution-bg: rgba(245, 158, 11, 0.16);
+  --tv-caution-border: rgba(251, 191, 36, 0.7);
+  --tv-caution-text: #fde68a;
+  --tv-skip-bg: rgba(239, 68, 68, 0.16);
+  --tv-skip-border: rgba(248, 113, 113, 0.7);
+  --tv-skip-text: #fecaca;
+  --tv-intensity-low: #34d399;
+  --tv-intensity-medium: #fbbf24;
+  --tv-intensity-high: #f87171;
 }
 
 @theme inline {
@@ -10,13 +61,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

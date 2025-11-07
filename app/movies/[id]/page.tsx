@@ -12,6 +12,7 @@ import AuthButtonSimple from '../../components/AuthButtonSimple';
 import MyListButton from '../../components/MyListButton';
 import UnifiedAnalysisManager from '../../components/UnifiedAnalysisManager';
 import KeyboardShortcuts from '../../components/KeyboardShortcuts';
+import ThemeToggle from '../../components/ThemeToggle';
 
 const RATING_MEANINGS = {
   1: 'Very gentle – no intense content',
@@ -76,6 +77,18 @@ function formatTitleWithYear(title: string, year?: number | null): { displayTitl
   }
 }
 
+const AGE_FLAG_STYLE_MAP: Record<AgeFlag, string> = {
+  '✅': 'bg-[var(--tv-safe-bg)] border-[var(--tv-safe-border)] text-[var(--tv-safe-text)]',
+  '⚠️': 'bg-[var(--tv-caution-bg)] border-[var(--tv-caution-border)] text-[var(--tv-caution-text)]',
+  '🚫': 'bg-[var(--tv-skip-bg)] border-[var(--tv-skip-border)] text-[var(--tv-skip-text)]'
+};
+
+const getIntensityColorToken = (intensity: number): string => {
+  if (intensity <= 2) return 'var(--tv-intensity-low)';
+  if (intensity <= 4) return 'var(--tv-intensity-medium)';
+  return 'var(--tv-intensity-high)';
+};
+
 const MovieDetailsPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -129,17 +142,6 @@ const MovieDetailsPage = () => {
     return 'notRecommended';
   };
 
-  const getRatingColor = (score: number): string => {
-    const colors = {
-      1: 'bg-emerald-500',
-      2: 'bg-green-500',
-      3: 'bg-yellow-500',
-      4: 'bg-orange-500',
-      5: 'bg-red-500'
-    };
-    return colors[score as keyof typeof colors] || 'bg-gray-50 dark:bg-gray-8000';
-  };
-
   const getScoreDescription = (score: number): string => {
     return RATING_MEANINGS[score as keyof typeof RATING_MEANINGS] || '';
   };
@@ -175,15 +177,16 @@ const MovieDetailsPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Header */}
-        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-900/95 shadow-sm border-b border-slate-200/60 dark:border-gray-700/60">
+        <header className="sticky top-0 z-50 border-b border-[var(--tv-border-subtle)] bg-[var(--tv-surface-elevated)] backdrop-blur-xl shadow-sm">
           <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
             <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <span className="text-white text-lg">🧸</span>
               </div>
-              <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
+              <span className="text-[var(--tv-text-primary)]">Tiny Viewers</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm font-medium">
+            <nav className="flex items-center gap-3 text-sm font-medium">
+              <ThemeToggle />
               <AuthButtonSimple />
             </nav>
           </div>
@@ -198,7 +201,7 @@ const MovieDetailsPage = () => {
             <div className="text-center">
               <div className="text-5xl mb-6 animate-bounce">🎬</div>
               <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-purple-200 border-t-purple-600 mb-6"></div>
-              <h1 className="text-2xl font-light text-slate-800 dark:text-slate-100 tracking-tight" style={{
+              <h1 className="text-2xl font-light tracking-tight text-[var(--tv-text-primary)]" style={{
                 fontFamily: 'system-ui, -apple-system, serif',
               }}>Loading movie details...</h1>
             </div>
@@ -212,15 +215,16 @@ const MovieDetailsPage = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50/50 via-purple-50/30 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         {/* Header */}
-        <header className="sticky top-0 z-50 backdrop-blur-xl bg-white dark:bg-gray-900/95 shadow-sm border-b border-slate-200/60 dark:border-gray-700/60">
+        <header className="sticky top-0 z-50 border-b border-[var(--tv-border-subtle)] bg-[var(--tv-surface-elevated)] backdrop-blur-xl shadow-sm">
           <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
             <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
                 <span className="text-white text-lg">🧸</span>
               </div>
-              <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
+              <span className="text-[var(--tv-text-primary)]">Tiny Viewers</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm font-medium">
+            <nav className="flex items-center gap-3 text-sm font-medium">
+              <ThemeToggle />
               <AuthButtonSimple />
             </nav>
           </div>
@@ -234,7 +238,7 @@ const MovieDetailsPage = () => {
           >
             <Link 
               href={backUrl}
-              className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 text-base font-medium mb-8 hover:gap-3 group bg-white dark:bg-gray-800/50 px-4 py-2 rounded-full backdrop-blur-sm border border-pink-100 dark:border-gray-600"
+              className="group mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] px-4 py-2 text-base font-medium text-[var(--tv-text-secondary)] transition-all duration-300 hover:gap-3 hover:text-[var(--tv-text-primary)]"
             >
               <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span>
               <span>Back to Movies</span>
@@ -245,7 +249,7 @@ const MovieDetailsPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center py-16 bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-lg border border-pink-100 dark:border-gray-600"
+            className="rounded-2xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] py-16 text-center shadow-lg backdrop-blur-sm"
           >
             <div className="text-6xl mb-6">😞</div>
             <h1 className="text-3xl font-light text-red-600 mb-6 tracking-tight" style={{
@@ -345,15 +349,16 @@ const MovieDetailsPage = () => {
       />
       
       {/* Whimsical Apple-style Navigation */}
-      <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900/90 backdrop-blur-xl border-b border-gray-200/60 dark:border-gray-700/60 shadow-sm">
+      <nav className="sticky top-0 z-50 border-b border-[var(--tv-border-subtle)] bg-[var(--tv-surface-elevated)] backdrop-blur-xl shadow-sm">
         <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-4">
           <Link href="/" className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-3 hover:scale-105 transition-transform duration-300">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
               <span className="text-white text-lg">🧸</span>
             </div>
-            <span className="text-slate-800 dark:text-slate-100">Tiny Viewers</span>
+            <span className="text-[var(--tv-text-primary)]">Tiny Viewers</span>
           </Link>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <AuthButtonSimple />
           </div>
         </div>
@@ -370,7 +375,7 @@ const MovieDetailsPage = () => {
         >
           <Link 
             href={backUrl}
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:text-gray-100 transition-all duration-300 text-sm font-medium group"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-[var(--tv-text-secondary)] transition-all duration-300 hover:text-[var(--tv-text-primary)]"
           >
             <motion.span 
               className="text-lg group-hover:-translate-x-1 transition-transform duration-200"
@@ -402,7 +407,7 @@ const MovieDetailsPage = () => {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="lg:sticky lg:top-32 lg:self-start"
           >
-            <div className="relative aspect-[2/3] overflow-hidden rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl bg-white dark:bg-gray-800 border border-gray-200/60 dark:border-gray-600/60 hover:shadow-xl sm:hover:shadow-2xl transition-all duration-500 group max-w-[200px] sm:max-w-none mx-auto lg:mx-0">
+            <div className="group relative mx-auto aspect-[2/3] max-w-[200px] overflow-hidden rounded-xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] shadow-lg transition-all duration-500 hover:shadow-xl sm:max-w-none sm:rounded-2xl sm:shadow-xl sm:hover:shadow-2xl lg:mx-0">
               {/* Magical Border Glow */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -450,9 +455,9 @@ const MovieDetailsPage = () => {
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
-                  <div className="text-center p-6">
+                  <div className="p-6 text-center">
                     <div className="text-6xl mb-4">🎬</div>
-                    <p className="text-lg text-slate-600 dark:text-slate-200 font-medium">{movie.title}</p>
+                    <p className="text-lg font-medium text-[var(--tv-text-secondary)]">{movie.title}</p>
                   </div>
                 </div>
               )}
@@ -466,7 +471,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="bg-white dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-600/60 p-4 sm:p-8 relative overflow-hidden"
+              className="relative overflow-hidden rounded-xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] p-4 shadow-lg backdrop-blur-sm sm:rounded-2xl sm:p-8"
             >
               {/* Playful Background Pattern */}
               <div className="absolute inset-0 opacity-5">
@@ -488,23 +493,23 @@ const MovieDetailsPage = () => {
               
               <div className="text-center mb-8 relative z-10">
                 <motion.h1 
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 sm:mb-3 tracking-tight"
+                  className="mb-2 text-2xl font-bold tracking-tight text-[var(--tv-text-primary)] sm:mb-3 sm:text-3xl lg:text-4xl"
                   whileHover={{ scale: 1.02 }}
                 >
                   {displayTitle}
                 </motion.h1>
                 <motion.div 
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 px-4 py-2 rounded-full border border-blue-200/60 dark:border-blue-700/60"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-4 py-2"
                   whileHover={{ scale: 1.05 }}
                 >
                   <motion.span 
-                    className="text-gray-600 dark:text-gray-300"
+                    className="text-[var(--tv-text-secondary)]"
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
                     📅
                   </motion.span>
-                  <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{movie.release_year}</span>
+                  <span className="text-sm font-medium text-[var(--tv-text-primary)]">{movie.release_year}</span>
                 </motion.div>
               </div>
 
@@ -530,7 +535,7 @@ const MovieDetailsPage = () => {
               />
               <div className="text-center">
                 <motion.div 
-                  className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 p-4 sm:p-6 rounded-xl mb-4 sm:mb-6 border border-gray-200/60 dark:border-gray-600/60 relative overflow-hidden"
+                  className="relative mb-4 rounded-xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card-muted)] p-4 sm:mb-6 sm:p-6"
                   whileHover={{ scale: 1.01 }}
                 >
                   {/* Subtle floating elements */}
@@ -550,15 +555,15 @@ const MovieDetailsPage = () => {
                       📖
                     </motion.div>
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base relative z-10">
+                  <p className="relative z-10 text-base leading-relaxed text-[var(--tv-text-secondary)]">
                     {description}
                   </p>
                 </motion.div>
                 
-                <div className="flex items-center justify-center gap-4 flex-wrap">
+                <div className="flex flex-wrap items-center justify-center gap-4">
                   {(movie as any).imdb_rating ? (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-amber-200/60 dark:border-amber-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-3 py-3 text-[var(--tv-text-primary)] shadow-sm transition-all duration-300 hover:shadow-lg sm:h-16 sm:gap-3 sm:rounded-xl sm:px-5 sm:py-4"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -570,13 +575,13 @@ const MovieDetailsPage = () => {
                         📽️
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{parseFloat((movie as any).imdb_rating).toFixed(1)}</div>
-                        <div className="text-amber-700 text-xs font-medium">IMDB</div>
+                        <div className="text-lg font-bold text-[var(--tv-text-primary)]">{parseFloat((movie as any).imdb_rating).toFixed(1)}</div>
+                        <div className="text-xs font-medium text-[var(--tv-text-secondary)]">IMDB</div>
                       </div>
                     </motion.div>
                   ) : movie.tmdb_rating ? (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-blue-200/60 dark:border-blue-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-3 py-3 text-[var(--tv-text-primary)] shadow-sm transition-all duration-300 hover:shadow-lg sm:h-16 sm:gap-3 sm:rounded-xl sm:px-5 sm:py-4"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -588,13 +593,13 @@ const MovieDetailsPage = () => {
                         🎬
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{parseFloat(movie.tmdb_rating).toFixed(1)}</div>
-                        <div className="text-blue-700 text-xs font-medium">TMDB</div>
+                        <div className="text-lg font-bold text-[var(--tv-text-primary)]">{parseFloat(movie.tmdb_rating).toFixed(1)}</div>
+                        <div className="text-xs font-medium text-[var(--tv-text-secondary)]">TMDB</div>
                       </div>
                     </motion.div>
                   ) : (
                     <motion.div 
-                      className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-purple-200/60 dark:border-purple-700/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                      className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-3 py-3 text-[var(--tv-text-primary)] shadow-sm transition-all duration-300 hover:shadow-lg sm:h-16 sm:gap-3 sm:rounded-xl sm:px-5 sm:py-4"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -606,14 +611,14 @@ const MovieDetailsPage = () => {
                         ⭐
                       </motion.span>
                       <div>
-                        <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{displayRating}</div>
-                        <div className="text-purple-700 text-xs font-medium">Rating</div>
+                        <div className="text-lg font-bold text-[var(--tv-text-primary)]">{displayRating}</div>
+                        <div className="text-xs font-medium text-[var(--tv-text-secondary)]">Rating</div>
                       </div>
                     </motion.div>
                   )}
                   
                   <motion.div 
-                    className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-800 dark:to-gray-700 px-3 sm:px-5 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-gray-200/60 dark:border-gray-600/60 shadow-sm hover:shadow-lg transition-all duration-300 h-12 sm:h-16"
+                    className="inline-flex h-12 items-center gap-2 rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-3 py-3 text-[var(--tv-text-primary)] shadow-sm transition-all duration-300 hover:shadow-lg sm:h-16 sm:gap-3 sm:rounded-xl sm:px-5 sm:py-4"
                     whileHover={{ scale: 1.05, rotate: 1 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -625,8 +630,8 @@ const MovieDetailsPage = () => {
                       📅
                     </motion.span>
                     <div>
-                      <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{movie.release_year}</div>
-                      <div className="text-gray-600 dark:text-gray-300 text-xs font-medium">Year</div>
+                      <div className="text-lg font-bold text-[var(--tv-text-primary)]">{movie.release_year}</div>
+                      <div className="text-xs font-medium text-[var(--tv-text-secondary)]">Year</div>
                     </div>
                   </motion.div>
                   
@@ -665,7 +670,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="bg-white dark:bg-gray-800/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-gray-200/60 dark:border-gray-600/60 p-4 sm:p-8 relative overflow-hidden"
+              className="relative overflow-hidden rounded-xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] p-4 shadow-lg backdrop-blur-sm sm:rounded-2xl sm:p-8"
             >
               {/* Magical Background Elements */}
               <div className="absolute inset-0 opacity-5">
@@ -699,15 +704,15 @@ const MovieDetailsPage = () => {
                 </motion.div>
               </div>
               
-              <div className="text-center mb-8 relative z-10">
+              <div className="relative z-10 mb-8 text-center">
                 <motion.h2 
-                  className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3"
+                  className="mb-3 text-2xl font-bold text-[var(--tv-text-primary)]"
                   whileHover={{ scale: 1.02 }}
                 >
                   🛡️ Age Safety Guide
                 </motion.h2>
                 <motion.p 
-                  className="text-gray-600 dark:text-gray-300 text-base"
+                  className="text-base text-[var(--tv-text-secondary)]"
                   whileHover={{ scale: 1.01 }}
                 >
                   How appropriate is this movie for different ages?
@@ -727,7 +732,7 @@ const MovieDetailsPage = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col text-center p-3 sm:p-6 rounded-lg sm:rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 border border-gray-200/60 dark:border-gray-500/60 hover:shadow-xl transition-all duration-500 group relative overflow-hidden"
+                      className="flex flex-col text-center p-3 sm:p-6 rounded-lg sm:rounded-xl bg-[var(--tv-surface-card-muted)] border border-[var(--tv-border-subtle)] text-[var(--tv-text-primary)] hover:shadow-xl transition-all duration-500 group relative overflow-hidden"
                       whileHover={{ scale: 1.05, rotate: 1 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -766,23 +771,24 @@ const MovieDetailsPage = () => {
                         >
                           {ratingInfo.icon}
                         </motion.div>
-                        <div className="text-base font-semibold text-gray-900 dark:text-gray-100">{ageLabel}</div>
+                        <div className="text-base font-semibold text-[var(--tv-text-primary)]">{ageLabel}</div>
                       </div>
                       
                       {/* Middle section with score */}
                       <div className="mb-3">
-                        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{score}/5</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">{getScoreDescription(score)}</div>
+                        <div className="text-2xl font-bold text-[var(--tv-text-primary)]">{score}/5</div>
+                        <div className="text-sm text-[var(--tv-text-secondary)] mt-1">{getScoreDescription(score)}</div>
                       </div>
                       
                       {/* Bottom section with progress bar - aligned */}
                       <div className="mt-auto">
-                        <div className="h-3 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                        <div className="h-3 w-full rounded-full overflow-hidden" style={{ backgroundColor: 'var(--tv-progress-track)' }}>
                           <motion.div 
                             initial={{ width: 0 }}
                             animate={{ width: `${(score / 5) * 100}%` }}
                             transition={{ duration: 0.8, delay: 0.9 + index * 0.1 }}
-                            className={`h-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-full`}
+                            className="h-full rounded-full"
+                            style={{ backgroundColor: getIntensityColorToken(score) }}
                           />
                         </div>
                       </div>
@@ -797,7 +803,7 @@ const MovieDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="bg-white dark:bg-gray-900/95 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200/60 p-8 relative overflow-hidden"
+              className="relative overflow-hidden rounded-2xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] p-8 shadow-lg backdrop-blur-sm"
             >
               {/* Playful Background Elements */}
               <div className="absolute inset-0 opacity-5">
@@ -833,20 +839,20 @@ const MovieDetailsPage = () => {
               
               <div className="flex flex-col gap-3 mb-6 relative z-10">
                 <motion.h2 
-                  className="text-2xl font-bold text-gray-900 dark:text-gray-100"
+                  className="text-2xl font-bold text-[var(--tv-text-primary)]"
                   whileHover={{ scale: 1.02 }}
                 >
                   Scene Analysis
                 </motion.h2>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                   <motion.span 
-                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-lg font-medium w-fit"
+                    className="inline-flex w-fit items-center justify-center rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-3 py-2 text-sm font-medium text-[var(--tv-text-secondary)]"
                     whileHover={{ scale: 1.05 }}
                   >
                     {scenes.length} {scenes.length === 1 ? 'scene' : 'scenes'}
                   </motion.span>
                   <motion.span 
-                    className="inline-flex items-center justify-center px-3 py-2 text-sm text-emerald-700 bg-emerald-100 rounded-lg font-medium w-fit"
+                    className="inline-flex w-fit items-center justify-center rounded-lg border border-[var(--tv-safe-border)] bg-[var(--tv-safe-bg)] px-3 py-2 text-sm font-medium text-[var(--tv-safe-text)]"
                     whileHover={{ scale: 1.05 }}
                   >
                     ✨ Age Recommendations Included
@@ -854,22 +860,25 @@ const MovieDetailsPage = () => {
                 </div>
               </div>
               {!scenes || scenes.length === 0 ? (
-                <div className="text-center py-8">
+                <div className="py-8 text-center">
                   <div className="text-3xl mb-3">🎭</div>
-                  <p className="text-base text-slate-600 dark:text-slate-200">No scenes analyzed yet.</p>
+                  <p className="text-base text-[var(--tv-text-secondary)]">No scenes analyzed yet.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {scenes.map((scene, index) => (
-                    <motion.div 
-                      key={scene.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                      className="group bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 p-5 rounded-xl shadow-sm transition-all duration-500 hover:shadow-lg border border-gray-200/60 dark:border-gray-600/60 relative overflow-hidden"
-                      whileHover={{ scale: 1.02, rotate: 0.5 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
+                  {scenes.map((scene, index) => {
+                    const intensityColor = getIntensityColorToken(scene.intensity);
+
+                    return (
+                      <motion.div 
+                        key={scene.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                        className="group relative overflow-hidden rounded-xl border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card)] p-5 text-[var(--tv-text-primary)] shadow-sm transition-all duration-500 hover:shadow-lg"
+                        whileHover={{ scale: 1.02, rotate: 0.5 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
                       {/* Subtle floating elements */}
                       <div className="absolute inset-0 pointer-events-none">
                         <motion.div
@@ -888,74 +897,54 @@ const MovieDetailsPage = () => {
                           🎬
                         </motion.div>
                       </div>
-                      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4">
+                        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
                         <div className="flex items-center gap-3 flex-1">
                           <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-sm flex-shrink-0">
                             {index + 1}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">
+                              <h3 className="text-base font-semibold text-[var(--tv-text-primary)]">
                               {scene.timestamp_start} - {scene.timestamp_end}
                             </h3>
-                            <div className="flex items-center gap-2 mt-1">
-                              <span className="text-xs text-slate-600 dark:text-slate-300">Intensity:</span>
+                              <div className="mt-1 flex items-center gap-2">
+                                <span className="text-xs text-[var(--tv-text-secondary)]">Intensity:</span>
                               <div className="flex items-center gap-2">
                                 <div 
-                                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                                  style={{
-                                    backgroundColor: scene.intensity <= 2 ? '#10b981' : 
-                                                   scene.intensity <= 4 ? '#f59e0b' : 
-                                                   '#ef4444'
-                                  }} 
-                                />
-                                <span 
-                                  className="text-xs font-semibold"
-                                  style={{
-                                    color: scene.intensity <= 2 ? '#10b981' : 
-                                           scene.intensity <= 4 ? '#f59e0b' : 
-                                           '#ef4444'
-                                  }}
-                                >
-                                  {scene.intensity}/5
-                                </span>
+                                    className="h-2.5 w-2.5 flex-shrink-0 rounded-full"
+                                    style={{ backgroundColor: intensityColor }}
+                                  />
+                                  <span 
+                                    className="text-xs font-semibold"
+                                    style={{ color: intensityColor }}
+                                  >
+                                    {scene.intensity}/5
+                                  </span>
                               </div>
                             </div>
                           </div>
                         </div>
 
                         <div className="w-full sm:w-40">
-                          <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full transition-all duration-500 rounded-full"
-                              style={{
-                                width: `${(scene.intensity / 5) * 100}%`,
-                                backgroundColor: scene.intensity <= 2 ? '#10b981' : 
-                                               scene.intensity <= 4 ? '#f59e0b' : 
-                                               '#ef4444'
-                              }} 
-                            />
-                          </div>
+                            <div className="h-2 w-full overflow-hidden rounded-full" style={{ backgroundColor: 'var(--tv-progress-track)' }}>
+                              <div 
+                                className="h-full rounded-full transition-all duration-500"
+                                style={{
+                                  width: `${(scene.intensity / 5) * 100}%`,
+                                  backgroundColor: intensityColor
+                                }} 
+                              />
+                            </div>
                         </div>
                       </div>
                       
                       {/* Scene Description */}
                       <div className="relative mb-4">
                         <div 
-                          className="absolute left-0 top-0 w-[2px] h-full rounded-full"
-                          style={{
-                            background: `linear-gradient(to bottom, 
-                                        transparent,
-                                        ${scene.intensity <= 2 ? '#10b981' : 
-                                          scene.intensity <= 4 ? '#f59e0b' : 
-                                          '#ef4444'} 10%,
-                                        ${scene.intensity <= 2 ? '#10b981' : 
-                                          scene.intensity <= 4 ? '#f59e0b' : 
-                                          '#ef4444'} 90%,
-                                        transparent)`
-                          }}
+                          className="absolute left-0 top-0 h-full w-[2px] rounded-full"
+                          style={{ backgroundColor: intensityColor, opacity: 0.85 }}
                         />
                         <div className="pl-4">
-                          <p className="text-sm text-slate-700 leading-relaxed mb-3">
+                          <p className="mb-3 text-sm leading-relaxed text-[var(--tv-text-secondary)]">
                             {scene.description}
                           </p>
                           
@@ -966,7 +955,7 @@ const MovieDetailsPage = () => {
                                 {scene.tags.map((tag, tagIndex) => (
                                   <span 
                                     key={tagIndex}
-                                    className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full border border-blue-200 font-medium"
+                                    className="rounded-full border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-overlay)] px-2 py-1 text-xs font-medium text-[var(--tv-text-secondary)]"
                                   >
                                     {tag}
                                   </span>
@@ -978,43 +967,37 @@ const MovieDetailsPage = () => {
                           {/* Age-specific Recommendations - Mobile Optimized */}
                           {(scene.age_flags || scene.intensity) && (
                             <div className="mt-3">
-                              <h4 className="text-xs font-medium text-slate-600 dark:text-slate-300 mb-2">Age Recommendations:</h4>
+                              <h4 className="mb-2 text-xs font-medium text-[var(--tv-text-secondary)]">Age Recommendations:</h4>
                               <div className="flex flex-wrap gap-2">
-                                {Object.entries(scene.age_flags || generateAgeFlags(scene.intensity)).map(([age, flag]) => (
-                                  <div 
-                                    key={age}
-                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border transition-all duration-200 hover:shadow-sm"
-                                    style={{
-                                      backgroundColor: flag === '✅' ? '#dcfce7' : 
-                                                     flag === '⚠️' ? '#fef3c7' : 
-                                                     '#fee2e2',
-                                      borderColor: flag === '✅' ? '#86efac' : 
-                                                  flag === '⚠️' ? '#fbbf24' : 
-                                                  '#fca5a5',
-                                      color: flag === '✅' ? '#166534' : 
-                                            flag === '⚠️' ? '#92400e' : 
-                                            '#b91c1c'
-                                    }}
-                                  >
-                                    <span className="text-sm leading-none flex items-center flex-shrink-0">{flag}</span>
-                                    <span className="font-medium leading-none whitespace-nowrap">{age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
-                                  </div>
-                                ))}
+                                {Object.entries(scene.age_flags || generateAgeFlags(scene.intensity)).map(([age, flag]) => {
+                                  const flagKey = flag as AgeFlag;
+                                  const chipClassName = AGE_FLAG_STYLE_MAP[flagKey] ?? AGE_FLAG_STYLE_MAP['⚠️'];
+
+                                  return (
+                                    <div 
+                                      key={age}
+                                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border transition-all duration-200 hover:shadow-sm ${chipClassName}`}
+                                    >
+                                      <span className="text-sm leading-none flex items-center flex-shrink-0">{flag}</span>
+                                      <span className="font-medium leading-none whitespace-nowrap">{age === '24m' ? '2y' : age === '36m' ? '3y' : age === '48m' ? '4y' : '5y'}+</span>
+                                    </div>
+                                  );
+                                })}
                               </div>
-                              <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                                <h5 className="text-xs font-semibold text-slate-700 mb-2 uppercase tracking-wide">Legend:</h5>
-                                <div className="flex flex-wrap gap-4 text-xs">
+                              <div className="mt-3 rounded-lg border border-[var(--tv-border-subtle)] bg-[var(--tv-surface-card-muted)] p-3">
+                                <h5 className="text-xs font-semibold uppercase tracking-wide text-[var(--tv-text-secondary)]">Legend:</h5>
+                                <div className="mt-2 flex flex-wrap gap-4 text-xs text-[var(--tv-text-secondary)]">
                                   <div className="flex items-center gap-1.5">
                                     <span className="text-sm flex-shrink-0">✅</span>
-                                    <span className="text-slate-700 font-medium">Safe</span>
+                                    <span className="font-medium">Safe</span>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <span className="text-sm flex-shrink-0">⚠️</span>
-                                    <span className="text-slate-700 font-medium">Caution</span>
+                                    <span className="font-medium">Caution</span>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <span className="text-sm flex-shrink-0">🚫</span>
-                                    <span className="text-slate-700 font-medium">Skip</span>
+                                    <span className="font-medium">Skip</span>
                                   </div>
                                 </div>
                               </div>
@@ -1022,8 +1005,9 @@ const MovieDetailsPage = () => {
                           )}
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    );
+                  })}
                 </div>
               )}
             </motion.div>
