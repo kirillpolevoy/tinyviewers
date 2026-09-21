@@ -24,6 +24,10 @@ and each failing request was re-run against production after the redeploy.
 - The first API build served poor labels (barracuda, diver and pelican scenes all tagged "shark"; "monsters"
   returned nothing for Finding Nemo). Fixed before the merge: Sonnet now decides what is present per scene;
   Jev is kept as an unasserted second opinion; "monsters" broadens to the whole creatures group.
+- I took the API down for about six minutes. I had added `scene-api` to the repository-root `.vercelignore` to
+  keep it out of the main site's build; that file also applies to the `tinyviewers-scenes` project, so the first
+  GitHub-triggered deployment had no source and served 404. I promoted the previous good deployment back,
+  removed the line, and the next GitHub deployment built correctly and is what production serves now.
 - The Vercel connector I have could not change project settings (403); I used the Vercel CLI's own login to
   set the root directory and connect GitHub.
 
