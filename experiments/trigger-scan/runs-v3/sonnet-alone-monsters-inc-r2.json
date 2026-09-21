@@ -1,0 +1,892 @@
+{
+  "arm": "sonnet-alone",
+  "film": "monsters-inc",
+  "label": "r2",
+  "movie": {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "imdb_id": "tt0198781",
+    "track": "data/monsters-inc.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "whole transcript, no Jev input of any kind",
+  "jev_run": null,
+  "jev_candidates": null,
+  "started_at": "2026-09-21T02:02:33.682Z",
+  "wall_s": 75.485,
+  "latency_ms": 75483,
+  "usage": {
+    "input_tokens": 49510,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 3604,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 7200,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 53114,
+  "output_tokens": 7200,
+  "cost_usd": 0.1717408,
+  "returned_scenes": 16,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 1,
+  "scenes": [
+    {
+      "title": "Nightmare Training Simulation",
+      "start_ms": 127334,
+      "end_ms": 198267,
+      "start": "00:02:07",
+      "end": "00:03:18",
+      "start_cue": "C0010",
+      "end_cue": "C0028",
+      "description": "A shadowy monster figure creeps into a child's bedroom at night and lunges, causing screaming and an alarm before it's revealed to be a training exercise. The dark room, creaking door, and sudden snarling attack could startle a young child.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "closet",
+        "nightmare",
+        "scream",
+        "dark bedroom"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S01"
+    },
+    {
+      "title": "Scaring Sleeping Children",
+      "start_ms": 891829,
+      "end_ms": 1016014,
+      "start": "00:14:51",
+      "end": "00:16:56",
+      "start_cue": "C0352",
+      "end_cue": "C0413",
+      "description": "Monsters go through doors into children's bedrooms to frighten them so they scream, and we hear multiple children screaming in fear as this happens repeatedly on the scare floor. The repeated screaming may upset sensitive children even though it's presented as the monsters' normal job.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scare floor",
+        "children screaming",
+        "monster",
+        "bedroom door"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S02"
+    },
+    {
+      "title": "Sock Contamination Alert",
+      "start_ms": 1056601,
+      "end_ms": 1144522,
+      "start": "00:17:36",
+      "end": "00:19:04",
+      "start_cue": "C0436",
+      "end_cue": "C0479",
+      "description": "A monster is found with a child's sock stuck to him, triggering a loud red alert siren and a tense decontamination scene with agents in hazmat gear, drills, and an explosion. The blaring alarms and panic could be startling.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "alarm",
+        "decontamination",
+        "siren",
+        "explosion"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S03"
+    },
+    {
+      "title": "Toddler Loose in the Apartment",
+      "start_ms": 1364722,
+      "end_ms": 1536364,
+      "start": "00:22:44",
+      "end": "00:25:36",
+      "start_cue": "C0587",
+      "end_cue": "C0647",
+      "description": "A human toddler girl sneaks through a door into the monsters' world and chases a terrified Sulley around his apartment, with lots of screaming, crashing, and panicked hiding. The comedic reversal (a giant monster scared of a small child) is fast and chaotic and could be intense for a young viewer despite the humor.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "toddler",
+        "monster",
+        "chase",
+        "apartment",
+        "hide and seek"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S04"
+    },
+    {
+      "title": "Restaurant Panic and Sirens",
+      "start_ms": 1641402,
+      "end_ms": 1757149,
+      "start": "00:27:21",
+      "end": "00:29:17",
+      "start_cue": "C0705",
+      "end_cue": "C0762",
+      "description": "The child is discovered in a crowded sushi restaurant, causing mass screaming and panic among the monster patrons, followed by wailing sirens, an explosion, and a helicopter warning of an emergency. The citywide panic and loud noises could be overwhelming.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "restaurant",
+        "panic",
+        "sirens",
+        "explosion",
+        "crowd screaming"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S05"
+    },
+    {
+      "title": "Electric Shock Panic Over Crying Child",
+      "start_ms": 1758958,
+      "end_ms": 1875140,
+      "start": "00:29:18",
+      "end": "00:31:15",
+      "start_cue": "C0764",
+      "end_cue": "C0832",
+      "description": "The characters desperately try to stop the toddler from crying because her screams cause dangerous electrical buzzing and exploding light bulbs; when she cries or screams, everyone panics and cowers in fear. The repeated loud buzzing, shattering glass, and adult panic could be distressing.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "crying",
+        "electric shock",
+        "panic",
+        "light bulbs breaking"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S06"
+    },
+    {
+      "title": "Villain's Threat to Whoever Let the Child Out",
+      "start_ms": 2364054,
+      "end_ms": 2421446,
+      "start": "00:39:24",
+      "end": "00:40:21",
+      "start_cue": "C1059",
+      "end_cue": "C1082",
+      "description": "Randall, a menacing monster, angrily vows that whoever let the child escape is \"dead,\" while hiding in fear from CDA agents. The threatening tone from a scary-looking villain could unsettle children.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "villain",
+        "threat",
+        "menacing monster"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S07"
+    },
+    {
+      "title": "Mike Captured by the Scream Extractor",
+      "start_ms": 3140028,
+      "end_ms": 3259781,
+      "start": "00:52:20",
+      "end": "00:54:19",
+      "start_cue": "C1399",
+      "end_cue": "C1461",
+      "description": "Randall corners Mike, mistaking him for the missing child, and turns on a massive, loud machine designed to violently extract screams, trapping and terrifying Mike inside it while he screams for help. The large grinding machine bearing down on a helpless character is intense.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "trapped",
+        "machine",
+        "scream extractor",
+        "villain",
+        "help"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S08"
+    },
+    {
+      "title": "Sulley's Roar Terrifies Boo",
+      "start_ms": 3320581,
+      "end_ms": 3397690,
+      "start": "00:55:20",
+      "end": "00:56:37",
+      "start_cue": "C1500",
+      "end_cue": "C1543",
+      "description": "Forced to perform a scare demonstration, Sulley roars ferociously without realizing the toddler Boo is watching, and she screams in genuine terror and cries inconsolably afterward, now fearful of her friend. A child could find the sudden monstrous roar and the little girl's prolonged crying upsetting.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "roar",
+        "scared child",
+        "crying",
+        "monster",
+        "betrayal"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S09"
+    },
+    {
+      "title": "Waternoose's Betrayal and Banishment",
+      "start_ms": 3432331,
+      "end_ms": 3524757,
+      "start": "00:57:12",
+      "end": "00:58:44",
+      "start_cue": "C1560",
+      "end_cue": "C1600",
+      "description": "The trusted company boss reveals his cruel plan and forcibly throws Sulley and Mike through a magic door, banishing them to a frozen wasteland; earlier he coldly states he will \"take care of\" the child, implying harm. A child could be frightened by the sudden betrayal by an authority figure and the threat to the little girl.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "betrayal",
+        "banishment",
+        "villain",
+        "trapped"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S10"
+    },
+    {
+      "title": "Abandoned in a Blizzard",
+      "start_ms": 3719730,
+      "end_ms": 3810955,
+      "start": "01:01:59",
+      "end": "01:03:30",
+      "start_cue": "C1699",
+      "end_cue": "C1715",
+      "description": "After a bitter argument, Mike abandons Sulley alone in a dangerous snowy mountain wilderness, telling him he's \"on his own,\" and Sulley wanders off into a fierce blizzard risking freezing. The friendship breakup and the image of a character alone in a deadly storm could upset a child who fears separation.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "blizzard",
+        "alone",
+        "argument",
+        "friendship",
+        "snowstorm"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S11"
+    },
+    {
+      "title": "Randall Attacks George and Battles Sulley",
+      "start_ms": 3833214,
+      "end_ms": 3934648,
+      "start": "01:03:53",
+      "end": "01:05:34",
+      "start_cue": "C1723",
+      "end_cue": "C1780",
+      "description": "Randall violently grabs a coworker monster and forces him through a door, then physically fights Sulley with punches and being thrown into machinery while Waternoose orders him finished off. The repeated physical blows and a villain trying to seriously hurt the hero could be intense for children.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fight",
+        "punches",
+        "villain",
+        "machinery"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S12"
+    },
+    {
+      "title": "Chase Through the Door Vault",
+      "start_ms": 4042933,
+      "end_ms": 4347309,
+      "start": "01:07:22",
+      "end": "01:12:27",
+      "start_cue": "C1850",
+      "end_cue": "C1970",
+      "description": "Sulley, Mike, and Boo are pursued at high speed through a giant warehouse of moving doors, riding them like a rollercoaster while dodging Randall, including near-falls and a moment where Randall grabs Boo and threatens to hurt Sulley. The frantic chase, heights, and villain grabbing the child are tense.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "door chase",
+        "falling",
+        "villain",
+        "rescue",
+        "conveyor"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S13"
+    },
+    {
+      "title": "Waternoose's Kidnapping Threat and Arrest",
+      "start_ms": 4536080,
+      "end_ms": 4624728,
+      "start": "01:15:36",
+      "end": "01:17:04",
+      "start_cue": "C2073",
+      "end_cue": "C2119",
+      "description": "The company boss furiously declares he would \"kidnap a thousand children\" and silence anyone in his way before being exposed and arrested by authorities. Hearing an adult authority figure openly threaten to kidnap and harm children could be disturbing.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "kidnapping threat",
+        "arrest",
+        "villain caught"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S14"
+    },
+    {
+      "title": "Saying Goodbye to Boo",
+      "start_ms": 4648396,
+      "end_ms": 4800915,
+      "start": "01:17:28",
+      "end": "01:20:00",
+      "start_cue": "C2130",
+      "end_cue": "C2172",
+      "description": "Sulley must permanently send his little friend Boo back home and her door is then destroyed so they can never see each other again, a bittersweet farewell. A child could feel sad about the forced separation between friends, even though the tone stays gentle.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goodbye",
+        "separation",
+        "friendship",
+        "sad ending"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S15"
+    }
+  ]
+}

@@ -22,6 +22,9 @@ const FILMS = JSON.parse(fs.readFileSync(path.join(here, 'films.json'), 'utf8'))
 const { cues } = FILM ? loadFilm(FILM) : loadTrack(jev.track);
 const cueIndex = new Map(cues.map((c, i) => [c.id, i]));
 const CONTEXT_LINES = 6;
+// --synopsis <json with {plot, cast}>: ground the labeller in an outside plot summary and cast list
+// (e.g. Wikipedia), so it knows who and what is on screen when the subtitle lines do not say.
+const GROUNDING = args.synopsis ? JSON.parse(fs.readFileSync(args.synopsis, 'utf8')) : null;
 const BRIDGE_MS = 20_000;
 
 // ---- 1. candidates: consecutive flagged beats, bridging one short unflagged beat ------------------
@@ -62,7 +65,7 @@ For each scene:
 Attribute ids:
 ${VOCAB}
 
-${FILM ? `Film: ${FILMS[FILM].title} (${FILMS[FILM].year})` : `Characters: ${JSON.stringify(glossary.characters)}`}`;
+${FILM ? `Film: ${FILMS[FILM].title} (${FILMS[FILM].year})` : `Characters: ${JSON.stringify(glossary.characters)}`}${GROUNDING ? `\n\nPlot summary of the whole film, from an outside source. Use it to identify which moment of the story the lines belong to and who or what is present. Name characters and creatures as the summary and cast list do. Never describe a character, creature or event that neither the lines nor this summary support.\n${GROUNDING.plot}\n\nCast:\n${GROUNDING.cast}` : ''}`;
 
 const obj = (properties) => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
 const SEV = { type: 'integer', enum: [0, 1, 2, 3] };
@@ -153,13 +156,13 @@ const out = {
   scenes: deduped,
 };
 if (FILM) fs.mkdirSync(path.join(here, 'scenes'), { recursive: true });
-fs.writeFileSync(FILM ? path.join(here, 'scenes', `${FILM}${HAIKU ? '.haiku' : ''}.json`) : path.join(here, `scenes.nemo${WHOLE ? '' : '.stretch-only'}${HAIKU ? '.haiku' : ''}.json`), JSON.stringify(out, null, 2));
+fs.writeFileSync(FILM ? path.join(here, 'scenes', `${FILM}${HAIKU ? '.haiku' : ''}.json`) : path.join(here, `scenes.nemo${WHOLE ? '' : '.stretch-only'}${HAIKU ? '.haiku' : ''}${GROUNDING ? '.grounded' : ''}.json`), JSON.stringify(out, null, 2));
 
 // also save in the experiment's run format so compare.js can score it against the reference list
 const legacyOf = (attrs) => [...new Set(attrs.map((a) => byId.get(a.id).legacy))];
 saveRun({
   film: FILM,
-  arm: WHOLE ? `jev-checklist+${TAG}-whole` : `jev-finds+${TAG}-labels`, track: jev.track, model, from: args.from, startedAt, wallMs: Date.now() - Date.parse(startedAt), calls: results.length,
+  arm: (WHOLE ? `jev-checklist+${TAG}-whole` : `jev-finds+${TAG}-labels`) + (GROUNDING ? '+grounded' : ''), track: jev.track, model, from: args.from, startedAt, wallMs: Date.now() - Date.parse(startedAt), calls: results.length,
   inputTokens: usages.reduce((s, u) => s + (u.input_tokens ?? 0) + (u.cache_read_input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0), 0), outputTokens: usages.reduce((s, u) => s + u.output_tokens, 0), costUsd: costUsd(model, usages),
   events: deduped.map((s) => ({ id: s.id, title: s.title, start_cue: s.start_cue, end_cue: s.end_cue, validCues: true, startMs: s.start_ms, endMs: s.end_ms, categories: legacyOf(s.attributes), severity: Math.max(s.severity['5-7'], s.severity['8-10']), evidence_cues: [] })),
 }, FILM ? 'runs-films' : 'runs');

@@ -117,3 +117,97 @@ All five unseen films together (161 reference scenes, 109 serious, 25 calm contr
   48% found (other films 48-68% / 46-65%), Jev's 15% / 41%, scenes found 24 of 29. Either knowing a film
   helps Sonnet more than the subtitles do, or that film's reference list is weaker (its drafter said it
   knew the film less well). This cannot be separated without a human-reviewed list.
+
+## Rescored on shared time units (2026-09-20, supersedes every label figure above)
+
+Scorer: `score.js` / `rescore.js`, explained in `METRICS.md`; 13 tests; useless baselines (whole film with
+every label, every beat with every label, nothing, matched random) lose on every headline measure.
+Validated independently: a from-scratch recomputation of two films landed within 1-4 points (the scorer
+counts a 5 s bin as covered on any overlap, which lifts both sides slightly and symmetrically).
+Five unseen films pooled, 161 reference scenes = 120 of 436 minutes, no boundary tolerance:
+
+| | Flagged min | Flagged time inside a reference scene | Scenes at least half covered | Calm controls hit (>5 s) | "Anything flagged" F1 (floor 46%) | Label F1, 53 attributes | Label F1, 12 groups |
+|---|---|---|---|---|---|---|---|
+| Jev finder (as used in the pipeline) | 181 | 46% | 76% | 10 of 25 | 59% | - | - |
+| Jev labels, per-attribute thresholds (leave one film out) | 163 | 42% | 69% | 12 of 25 | 54% | 23% | 31% |
+| Jev finds, Sonnet labels | 130 | 58% | 71% | 4 of 25 | 64% | 33% | 40% |
+| Baseline: whole film, every label | 436 | 28% | 100% | 25 of 25 | 46% | 3% | 11% |
+| Baseline: random, matched to Jev | 164 | 28% | 36% | 20 of 25 | 36% | 5% | 10% |
+
+What changed:
+- "Jev finds 91% of scenes" is withdrawn. Honest pair: 90% touched by any overlap (a matched random flagger
+  reaches 74%), 76% at least half covered, while flagging 181 minutes against 120 of reference.
+- Sonnet still out-labels Jev, but the gap halves (attributes 33% vs 23%, groups 40% vs 31%); much of the old
+  gap was the scoring defect. "Jev cannot label" is withdrawn in favour of "this beat-labelling setup scores
+  below Sonnet"; both are far above the baselines (3-5% / 10-11%) and both are low in absolute terms.
+- "Only character distress is usable from Jev" is withdrawn: hostility, peril, distress, death and violence
+  are in the same band, and Jev beats Sonnet on the animals group.
+- "The Wild Robot scored lowest for everyone" is withdrawn: Monsters, Inc. is Sonnet's worst film for labels;
+  the "models know famous films" explanation has no support.
+- Calm controls: Jev hits 10 of 25 at a 5 s threshold (the earlier "8 of 25" used the most forgiving one).
+- Still true: all reference lists are Claude-drafted and unreviewed; 147 of 415 labels are visual-only; 11
+  attributes have no examples.
+
+## Fair comparisons and the presence layer (2026-09-20)
+
+All numbers below were re-derived independently of the scripts that produced them (from the raw run files)
+and matched. Five unseen films; references Claude-drafted and unreviewed.
+
+**Does Jev help Sonnet find scenes? No measurable difference.** Shared 5 s time units, no tolerance:
+
+| Pipeline | Flagged min (reference: 120) | "Anything flagged" P / R / F1 | Attribute labels P / R / F1 | Cost, 5 films |
+|---|---|---|---|---|
+| Sonnet alone, run 1 | 165 | 56% / 77% / 65% | 21% / 49% / 30% | $0.84 |
+| Sonnet alone, run 2 | 153 | 59% / 75% / 66% | 22% / 48% / 30% | $0.80 |
+| Sonnet with Jev's flagged stretches as a checklist | 139 | 60% / 70% / 65% | 27% / 46% / 34% | $1.18 |
+| Jev finds, Sonnet labels each stretch | 130 | 59% / 63% / 61% | 25% / 42% / 31% | $0.91 |
+| Jev alone (finder; labels with held-out thresholds) | 181 / 163 | 49% / 72% / 59% | 19% / 28% / 23% | $0.15 |
+
+The spread between pipelines is smaller than Sonnet's disagreement with itself: two identical Sonnet-alone
+runs agree on only 64% of their flagged time (53-86% per film). Jev as a gate in front of Sonnet is not
+justified by this evidence; neither is it shown to hurt.
+
+**Can Jev label? On identical scenes it is close to Sonnet.** Units = the reference scenes and calm
+controls, bounds given, labels hidden, same lines, same context, same definitions (`run-matched.js`):
+
+| | 53 attributes P / R / F1 | 12 groups P / R / F1 | False labels on 25 calm controls |
+|---|---|---|---|
+| Sonnet | 44% / 52% / 48% | 57% / 62% / 59% | 7 |
+| Jev, thresholds tuned on the other four films | 33% / 49% / 40% | 44% / 69% / 54% | 6 (attributes) / 22 (groups) |
+| Jev at 0.7, no context lines or film title | 40% / 38% / 39% | 53% / 45% / 49% | 7 / 6 |
+
+The earlier 20-plus point gap came from the scoring defect and from judging 8-line beats; context lines and
+the film title made no difference to Jev. Jev matches or beats Sonnet on violence, scary creatures and
+hostility, and loses clearly on captivity, death and loss, separation, and anything that depends on who
+someone is to someone else (grief, abandonment, bullying). Sonnet's own 48% is a weak ceiling: agreement
+with Claude-drafted lists, not accuracy.
+
+**Presence layer (`taxonomy-v3.js`, `run-jev-v3.js`, `TAXONOMY-V3.md`).** 29 "is X in this scene" items
+(monster, ghost, shark, gun, needle, darkness...), a parallel "only talked about" channel, 37 events, 4
+scores, 6 modifiers; the retold veto applies to events only. Six films, $0.48. Hand check of 97 confident
+hits: 74 right (76%). It now fires on Mufasa's ghost (3 of 3 right) and on the monsters in Monsters, Inc.
+(46 beats, sampled hits right), both of which v2 missed by design. Weak: shark (5 of 9; it guesses a shark
+when a scary sea creature is unnamed), fire, robot (sound captions read as things). Invisible to
+subtitles: Nemo's net, the Lion King fire, Zazu's cage. A "no" from a text-blind item means "not assessed".
+All six films are now development data for presence; recall is unmeasured.
+
+## Grounding descriptions in an outside plot summary (Finding Nemo, 2026-09-20)
+
+The app pulls nothing from IMDb today: `fetch-metadata` uses the IMDb id only to look the film up on TMDB,
+stores TMDB's one-paragraph overview, and fills `imdb_rating` with TMDB's vote average; the OMDb key is
+unused. Tested instead: Wikipedia's plot section (802 words) and voice cast given to Sonnet as INPUT
+(`build-scenes.js --synopsis data/nemo.context.json`), one run per mode, about $0.06 more per film.
+
+| Known wrong description | Per stretch, grounded | Whole transcript, grounded |
+|---|---|---|
+| Pelican rescue described as "a shark offers a ride" | error gone, but the scene was dropped | fixed: "The pelican Nigel scoops Marlin and Dory into his mouth..." |
+| Whale swallowing them described as a krill swarm | partly: "a huge whale appears... they swim away" (still no swallowing) | still wrong: "nearly swept toward a whale's mouth... get clear" |
+| Invented "Bruce returns" at 00:31 (whole mode only) | was already right | NEW invention: "wake up resting on top of a real shark" |
+
+Scene finding and labels did not move beyond Sonnet's own run-to-run noise. A code check (every creature or
+character named in a description must occur in the scene's lines, else in the outside plot, else flag) caught
+the shark-for-pelican error, but as one of about ten "plot only" creature flags per film, and it cannot catch
+an invented event whose key word is spoken in the scene ("sharks" is said in Dory's sleep-talk).
+Conclusion: grounding fixes wrong-identity errors where the summary covers the moment, does nothing where the
+summary is silent (wordless moments), and does not stop invention. Descriptions still need human review;
+the code check is useful only to order the review queue.

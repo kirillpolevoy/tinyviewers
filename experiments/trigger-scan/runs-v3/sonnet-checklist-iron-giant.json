@@ -1,0 +1,1110 @@
+{
+  "arm": "sonnet-checklist",
+  "film": "iron-giant",
+  "label": "r1",
+  "movie": {
+    "title": "The Iron Giant",
+    "year": 1999,
+    "imdb_id": "tt0129167",
+    "track": "data/iron-giant.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "build-scenes.js --context whole (whole transcript + Jev checklist)",
+  "jev_run": "2026-09-21T01-01-32-jev-v3-universal-iron-giant.json",
+  "jev_candidates": 25,
+  "started_at": "2026-09-21T02:03:49.231Z",
+  "wall_s": 140.633,
+  "latency_ms": 140631,
+  "usage": {
+    "input_tokens": 25219,
+    "cache_creation_input_tokens": 3666,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 3666,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 12990,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 28885,
+  "output_tokens": 12990,
+  "cost_usd": 0.189503,
+  "returned_scenes": 22,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 0,
+  "scenes": [
+    {
+      "title": "Sinking trawler mayday call",
+      "start_ms": 77160,
+      "end_ms": 101558,
+      "start": "00:01:17",
+      "end": "00:01:41",
+      "start_cue": "C0002",
+      "end_cue": "C0008",
+      "description": "A sailor radios for help as his boat takes on water and he loses his bearings in fog, then reports seeing something strange near a lighthouse before the call cuts off.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.4,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.03,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "boat",
+        "storm",
+        "distress call",
+        "sinking"
+      ],
+      "text_visibility": "high",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Something unseen at night",
+      "start_ms": 437562,
+      "end_ms": 511259,
+      "start": "00:07:17",
+      "end": "00:08:31",
+      "start_cue": "C0092",
+      "end_cue": "C0098",
+      "description": "Alone in the dark, a character hears strange noises and reacts with alarm as something invisible destroys a TV antenna nearby.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.11,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dark",
+        "noise",
+        "antenna",
+        "night"
+      ],
+      "text_visibility": "low",
+      "candidate": "K04",
+      "id": "S02"
+    },
+    {
+      "title": "Mom searches for missing Hogarth",
+      "start_ms": 817900,
+      "end_ms": 842799,
+      "start": "00:13:37",
+      "end": "00:14:02",
+      "start_cue": "C0105",
+      "end_cue": "C0113",
+      "description": "Hogarth is found calling for help after wandering off at night, and his mother, terrified she had lost him, scolds him through tears of relief.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "lost child",
+        "night",
+        "mother worried",
+        "scared"
+      ],
+      "text_visibility": "high",
+      "candidate": "K05",
+      "id": "S03"
+    },
+    {
+      "title": "Kids argue over the monster story",
+      "start_ms": 922004,
+      "end_ms": 947737,
+      "start": "00:15:22",
+      "end": "00:15:47",
+      "start_cue": "C0138",
+      "end_cue": "C0144",
+      "description": "A group of boys mock and threaten Hogarth for insisting he knows the truth about the giant creature, with one bully telling him to be quiet or else.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "bully",
+        "kids",
+        "argument",
+        "monster talk"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S04"
+    },
+    {
+      "title": "Mansley sees the bitten car",
+      "start_ms": 1062775,
+      "end_ms": 1067279,
+      "start": "00:17:42",
+      "end": "00:17:47",
+      "start_cue": "C0182",
+      "end_cue": "C0183",
+      "description": "A government agent is startled and exclaims in shock after seeing the huge bite mark left in a car by the unseen giant.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "startle",
+        "car damage",
+        "reaction"
+      ],
+      "text_visibility": "high",
+      "candidate": "K07",
+      "id": "S05"
+    },
+    {
+      "title": "Giant told to stay behind",
+      "start_ms": 1420257,
+      "end_ms": 1465510,
+      "start": "00:23:40",
+      "end": "00:24:25",
+      "start_cue": "C0263",
+      "end_cue": "C0271",
+      "description": "Hogarth firmly tells the giant robot it must stay in the forest and not follow him home, and the giant reacts with sad confusion at being left alone.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "robot",
+        "left alone",
+        "forest",
+        "sad"
+      ],
+      "text_visibility": "high",
+      "candidate": "K09",
+      "id": "S06"
+    },
+    {
+      "title": "Giant knocked down by train",
+      "start_ms": 1487199,
+      "end_ms": 1555933,
+      "start": "00:24:47",
+      "end": "00:25:55",
+      "start_cue": "C0277",
+      "end_cue": "C0292",
+      "description": "The giant robot gets tangled with train tracks and is struck by an oncoming train while children scramble to get clear, leaving everyone unsure if it survived until it stirs again.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.26,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.55,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.26,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "train",
+        "crash",
+        "robot hit",
+        "kids running"
+      ],
+      "text_visibility": "high",
+      "candidate": "K10",
+      "id": "S07"
+    },
+    {
+      "title": "Giant peers through the window at dinner",
+      "start_ms": 1683395,
+      "end_ms": 1764154,
+      "start": "00:28:03",
+      "end": "00:29:24",
+      "start_cue": "C0314",
+      "end_cue": "C0333",
+      "description": "During a family dinner prayer, Hogarth is startled to see the giant robot's face looming outside the window, causing him to stumble over his words in front of a suspicious guest.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "window",
+        "giant face",
+        "startled",
+        "dinner"
+      ],
+      "text_visibility": "high",
+      "candidate": "K11",
+      "id": "S08"
+    },
+    {
+      "title": "Hiding the giant from being seen",
+      "start_ms": 2146495,
+      "end_ms": 2275498,
+      "start": "00:35:46",
+      "end": "00:37:55",
+      "start_cue": "C0446",
+      "end_cue": "C0467",
+      "description": "Hogarth and the giant nervously hide from people nearby, worried the huge robot will be discovered, before an artist confronts them with a crowbar.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "hiding",
+        "discovery",
+        "tension",
+        "junkyard"
+      ],
+      "text_visibility": "high",
+      "candidate": "K12",
+      "id": "S09"
+    },
+    {
+      "title": "Startled by a dog",
+      "start_ms": 2381104,
+      "end_ms": 2419600,
+      "start": "00:39:41",
+      "end": "00:40:19",
+      "start_cue": "C0508",
+      "end_cue": "C0519",
+      "description": "A sudden noise makes Hogarth and Dean panic, thinking danger is near, until they realize it is only Dean's dog and calm down.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dog",
+        "surprise",
+        "scare",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S10"
+    },
+    {
+      "title": "Mansley questions Hogarth",
+      "start_ms": 2578802,
+      "end_ms": 2602950,
+      "start": "00:42:58",
+      "end": "00:43:22",
+      "start_cue": "C0561",
+      "end_cue": "C0569",
+      "description": "A government agent presses young Hogarth with rapid, probing questions about the giant robot, making the boy uncomfortable and eager to get away.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "interrogation",
+        "stranger",
+        "questions",
+        "uneasy"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S11"
+    },
+    {
+      "title": "Kent's ominous speech about the atomic age",
+      "start_ms": 2672395,
+      "end_ms": 2739920,
+      "start": "00:44:32",
+      "end": "00:45:39",
+      "start_cue": "C0591",
+      "end_cue": "C0615",
+      "description": "Over ice cream, a government agent tells Hogarth unsettling things about hidden dangers in the world and hints that the giant should be destroyed out of fear, without yet knowing Hogarth's connection to it.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "cold war",
+        "fear talk",
+        "threat",
+        "atomic age"
+      ],
+      "text_visibility": "high",
+      "candidate": "K15",
+      "id": "S12"
+    },
+    {
+      "title": "The deer's death and talk of dying",
+      "start_ms": 3082347,
+      "end_ms": 3236584,
+      "start": "00:51:22",
+      "end": "00:53:56",
+      "start_cue": "C0671",
+      "end_cue": "C0699",
+      "description": "Hogarth and the giant watch a deer get shot by a hunter and die; the giant is confused and upset, and Hogarth gently explains death and souls to comfort him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.17,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.08,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.24,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "deer",
+        "hunter",
+        "gun",
+        "death",
+        "soul"
+      ],
+      "text_visibility": "high",
+      "candidate": "K16",
+      "id": "S13"
+    },
+    {
+      "title": "Threat to take Hogarth from his mother",
+      "start_ms": 3254686,
+      "end_ms": 3329552,
+      "start": "00:54:14",
+      "end": "00:55:29",
+      "start_cue": "C0701",
+      "end_cue": "C0729",
+      "description": "Kent Mansley corners Hogarth alone, shows him photographic proof of the giant, and threatens to have him taken away from his mother unless he reveals where it is hidden.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.41,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.36,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "blackmail",
+        "threat",
+        "taken away",
+        "interrogation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K18",
+      "id": "S14"
+    },
+    {
+      "title": "Giant returns fire on Mansley",
+      "start_ms": 3739129,
+      "end_ms": 3763861,
+      "start": "01:02:19",
+      "end": "01:02:43",
+      "start_cue": "C0805",
+      "end_cue": "C0811",
+      "description": "When Mansley shoots a gun at the giant robot, it reacts defensively and fires back, startling everyone nearby.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gunfire",
+        "robot defends",
+        "explosion",
+        "startle"
+      ],
+      "text_visibility": "high",
+      "candidate": "K21",
+      "id": "S15"
+    },
+    {
+      "title": "Giant rampages through town with Hogarth",
+      "start_ms": 3798313,
+      "end_ms": 3932821,
+      "start": "01:03:18",
+      "end": "01:05:32",
+      "start_cue": "C0822",
+      "end_cue": "C0849",
+      "description": "The giant, provoked into defense mode, storms through the town carrying Hogarth in its hand while panicked townspeople and soldiers react as if it is attacking, and Hogarth's mother sees him in danger.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.6,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "rampage",
+        "town chaos",
+        "robot carrying boy",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S16"
+    },
+    {
+      "title": "Flying escape and near misses",
+      "start_ms": 3946377,
+      "end_ms": 4096318,
+      "start": "01:05:46",
+      "end": "01:08:16",
+      "start_cue": "C0850",
+      "end_cue": "C0873",
+      "description": "The giant flies through the sky carrying Hogarth to escape, narrowly avoiding a bus and other hazards, while the boy clings on and is nearly caught by Mansley.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.13,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "flying",
+        "near miss",
+        "chase",
+        "bus"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S17"
+    },
+    {
+      "title": "Army opens fire, Hogarth knocked out",
+      "start_ms": 4113961,
+      "end_ms": 4215228,
+      "start": "01:08:33",
+      "end": "01:10:15",
+      "start_cue": "C0874",
+      "end_cue": "C0887",
+      "description": "Soldiers surround and open fire on the giant robot as it tries to protect itself, and in the chaos Hogarth is found unconscious and rushed away in a car.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "army attack",
+        "gunfire",
+        "unconscious boy",
+        "retreat"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S18"
+    },
+    {
+      "title": "Mother searches amid evacuation",
+      "start_ms": 4276707,
+      "end_ms": 4321084,
+      "start": "01:11:16",
+      "end": "01:12:01",
+      "start_cue": "C0905",
+      "end_cue": "C0913",
+      "description": "As soldiers evacuate the area, Hogarth's mother realizes her son may still be out there with the giant and desperately tries to stop the coming attack.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "evacuation",
+        "mother panicking",
+        "missing son",
+        "crisis"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S19"
+    },
+    {
+      "title": "Missile crisis and Mansley restrained",
+      "start_ms": 4373137,
+      "end_ms": 4450338,
+      "start": "01:12:53",
+      "end": "01:14:10",
+      "start_cue": "C0927",
+      "end_cue": "C0949",
+      "description": "As a missile is launched toward the town, soldiers physically hold Mansley down while he panics and begs to live, with everyone believing they are about to die.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.28,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.34,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "missile",
+        "panic",
+        "restrained",
+        "imminent destruction"
+      ],
+      "text_visibility": "high",
+      "candidate": "K24",
+      "id": "S20"
+    },
+    {
+      "title": "The giant's sacrifice",
+      "start_ms": 4453217,
+      "end_ms": 4593106,
+      "start": "01:14:13",
+      "end": "01:16:33",
+      "start_cue": "C0950",
+      "end_cue": "C0963",
+      "description": "The giant robot repairs itself, tells Hogarth he loves him, and flies up alone to intercept the incoming missile so the town will be saved, appearing to be destroyed.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.08,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.25,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "loved_one_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.06,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.11,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "sacrifice",
+        "goodbye",
+        "explosion",
+        "robot dies"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S21"
+    },
+    {
+      "title": "Hogarth grieves and receives a keepsake",
+      "start_ms": 4660382,
+      "end_ms": 4723403,
+      "start": "01:17:40",
+      "end": "01:18:43",
+      "start_cue": "C0970",
+      "end_cue": "C0975",
+      "description": "Months later, Hogarth is given the only recovered piece of the giant and quietly says he misses his friend.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "loved_one_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.47,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "grief",
+        "keepsake",
+        "missing him",
+        "memorial"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S22"
+    }
+  ]
+}
