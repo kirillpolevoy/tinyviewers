@@ -1,3 +1,5 @@
+# Keep the experiment folder out of every Vercel build in this repo.
+# Do NOT list scene-api here: this file also applies to the tinyviewers-scenes project
+# (root directory scene-api), and listing it produced an empty build and a 404 API.
 experiments
-scene-api
 story-builder-prototype
