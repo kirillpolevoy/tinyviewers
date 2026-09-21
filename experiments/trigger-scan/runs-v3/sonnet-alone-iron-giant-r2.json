@@ -1,0 +1,840 @@
+{
+  "arm": "sonnet-alone",
+  "film": "iron-giant",
+  "label": "r2",
+  "movie": {
+    "title": "The Iron Giant",
+    "year": 1999,
+    "imdb_id": "tt0129167",
+    "track": "data/iron-giant.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "whole transcript, no Jev input of any kind",
+  "jev_run": null,
+  "jev_candidates": null,
+  "started_at": "2026-09-21T02:02:33.416Z",
+  "wall_s": 135.856,
+  "latency_ms": 135853,
+  "usage": {
+    "input_tokens": 23673,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 3602,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 12845,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 27275,
+  "output_tokens": 12845,
+  "cost_usd": 0.1765164,
+  "returned_scenes": 14,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 0,
+  "scenes": [
+    {
+      "title": "Ship Lost in Storm",
+      "start_ms": 74960,
+      "end_ms": 101558,
+      "start": "00:01:14",
+      "end": "00:01:41",
+      "start_cue": "C0001",
+      "end_cue": "C0008",
+      "description": "A fishing boat radios a mayday call during a storm, losing control near a lighthouse and glimpsing something huge before contact is lost.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "storm",
+        "shipwreck",
+        "mayday",
+        "sea monster",
+        "radio"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S01"
+    },
+    {
+      "title": "Alone in the Dark House",
+      "start_ms": 442191,
+      "end_ms": 511259,
+      "start": "00:07:22",
+      "end": "00:08:31",
+      "start_cue": "C0093",
+      "end_cue": "C0098",
+      "description": "Home alone at night, Hogarth hears strange noises and sees something devour the TV antenna outside, leaving him frightened and unsure what is out there.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dark",
+        "alone",
+        "antenna",
+        "noise",
+        "night"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S02"
+    },
+    {
+      "title": "Hogarth Missing, Mom Terrified",
+      "start_ms": 687395,
+      "end_ms": 842799,
+      "start": "00:11:27",
+      "end": "00:14:02",
+      "start_cue": "C0099",
+      "end_cue": "C0113",
+      "description": "Hogarth's mother frantically searches for him at night after he wanders off near a dangerous encounter, and she is visibly shaken, thinking she had lost him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "lost child",
+        "night search",
+        "frightened mother"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S03"
+    },
+    {
+      "title": "Meeting the Giant Robot",
+      "start_ms": 1103441,
+      "end_ms": 1234404,
+      "start": "00:18:23",
+      "end": "00:20:34",
+      "start_cue": "C0193",
+      "end_cue": "C0202",
+      "description": "Hogarth and a bystander call out to lure a huge, unknown metal creature out of hiding, and its enormous, strange appearance is startling before it proves harmless.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "uncanny_figures",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "giant robot",
+        "metal monster",
+        "huge creature"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S04"
+    },
+    {
+      "title": "Train Crash With the Giant",
+      "start_ms": 1520566,
+      "end_ms": 1555933,
+      "start": "00:25:20",
+      "end": "00:25:55",
+      "start_cue": "C0287",
+      "end_cue": "C0292",
+      "description": "A train crashes into the giant on the tracks, and Hogarth briefly fears his new friend has been destroyed before it moves again.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "train crash",
+        "collision",
+        "giant robot"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S05"
+    },
+    {
+      "title": "The Deer's Death",
+      "start_ms": 3038720,
+      "end_ms": 3236584,
+      "start": "00:50:38",
+      "end": "00:53:56",
+      "start_cue": "C0666",
+      "end_cue": "C0699",
+      "description": "Hunters shoot and kill a deer that Hogarth and the giant were quietly admiring, leading to a sad conversation about death and dying.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pet_animal_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "deer",
+        "hunters",
+        "gunshot",
+        "death"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S06"
+    },
+    {
+      "title": "Kent's Threatening Interrogation",
+      "start_ms": 3249806,
+      "end_ms": 3416347,
+      "start": "00:54:09",
+      "end": "00:56:56",
+      "start_cue": "C0700",
+      "end_cue": "C0748",
+      "description": "A government agent shines a bright light on Hogarth alone at night, threatens to have him taken away from his mother, and tries to convince him this is all just a bad dream to force him to reveal the giant's location.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "interrogation",
+        "threat",
+        "flashlight",
+        "scared",
+        "government agent"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S07"
+    },
+    {
+      "title": "Giant's Defensive Blast",
+      "start_ms": 3719567,
+      "end_ms": 3803192,
+      "start": "01:01:59",
+      "end": "01:03:23",
+      "start_cue": "C0803",
+      "end_cue": "C0824",
+      "description": "A man shoots at the giant, provoking a powerful defensive blast that destroys things nearby and terrifies everyone, with Hogarth nearly caught in the danger.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gunfire",
+        "explosion",
+        "robot attack",
+        "scared"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S08"
+    },
+    {
+      "title": "Boys Trapped on the Water Tower",
+      "start_ms": 3852283,
+      "end_ms": 3880602,
+      "start": "01:04:12",
+      "end": "01:04:40",
+      "start_cue": "C0834",
+      "end_cue": "C0841",
+      "description": "Two boys climb a water tower and become stuck, screaming in fear of falling until the giant rescues them.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "water tower",
+        "falling",
+        "stuck",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S09"
+    },
+    {
+      "title": "Giant Seems to Attack the Town",
+      "start_ms": 3895118,
+      "end_ms": 3997052,
+      "start": "01:04:55",
+      "end": "01:06:37",
+      "start_cue": "C0842",
+      "end_cue": "C0862",
+      "description": "After being fired upon, the giant's defensive mode activates and it begins smashing through the town while soldiers mobilize and townspeople panic, believing it is attacking on purpose.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "transformation",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "rampage",
+        "tanks",
+        "soldiers",
+        "destruction",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S10"
+    },
+    {
+      "title": "Chaotic Chase Through Town",
+      "start_ms": 4003393,
+      "end_ms": 4226448,
+      "start": "01:06:43",
+      "end": "01:10:26",
+      "start_cue": "C0863",
+      "end_cue": "C0888",
+      "description": "Hogarth is carried through the chaos as the giant flees soldiers, narrowly dodging vehicles while explosions and gunfire continue around them.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "bus",
+        "danger",
+        "flying",
+        "battle"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S11"
+    },
+    {
+      "title": "Military Assault and Hogarth Unconscious",
+      "start_ms": 4226616,
+      "end_ms": 4321084,
+      "start": "01:10:26",
+      "end": "01:12:01",
+      "start_cue": "C0889",
+      "end_cue": "C0913",
+      "description": "Soldiers open heavy fire on the giant, Hogarth is knocked unconscious and separated from his mother, and the military prepares an extreme response as she screams for him.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gunfire",
+        "unconscious",
+        "separated",
+        "battle",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S12"
+    },
+    {
+      "title": "Missile Threat and the Giant's Sacrifice",
+      "start_ms": 4323671,
+      "end_ms": 4593106,
+      "start": "01:12:03",
+      "end": "01:16:33",
+      "start_cue": "C0914",
+      "end_cue": "C0963",
+      "description": "A nuclear missile is launched toward the town, and the giant chooses to fly up and intercept it himself, leaving Hogarth and his mother fearing they will lose him forever as the missile detonates.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "nuclear missile",
+        "explosion",
+        "sacrifice",
+        "goodbye"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S13"
+    },
+    {
+      "title": "Remembering the Giant",
+      "start_ms": 4660382,
+      "end_ms": 4723403,
+      "start": "01:17:40",
+      "end": "01:18:43",
+      "start_cue": "C0970",
+      "end_cue": "C0975",
+      "description": "Months later, Hogarth is given a small piece of the giant that was recovered, and he quietly says he misses his lost friend.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "memorial",
+        "missing him",
+        "keepsake"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S14"
+    }
+  ]
+}

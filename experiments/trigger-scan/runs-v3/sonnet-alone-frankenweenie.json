@@ -1,0 +1,870 @@
+{
+  "arm": "sonnet-alone",
+  "film": "frankenweenie",
+  "label": "r1",
+  "movie": {
+    "title": "Frankenweenie",
+    "year": 2012,
+    "imdb_id": "tt1142977",
+    "track": "data/frankenweenie.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "whole transcript, no Jev input of any kind",
+  "jev_run": null,
+  "jev_candidates": null,
+  "started_at": "2026-09-21T02:01:36.202Z",
+  "wall_s": 100.386,
+  "latency_ms": 100383,
+  "usage": {
+    "input_tokens": 23185,
+    "cache_creation_input_tokens": 3602,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 3602,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 10328,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 26787,
+  "output_tokens": 10328,
+  "cost_usd": 0.158655,
+  "returned_scenes": 16,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 1,
+  "scenes": [
+    {
+      "title": "Sparky hit by car",
+      "start_ms": 859400,
+      "end_ms": 934729,
+      "start": "00:14:19",
+      "end": "00:15:34",
+      "start_cue": "C0219",
+      "end_cue": "C0230",
+      "description": "During a baseball game, Victor's dog Sparky chases a ball into the street and is struck by a car, dying in front of him.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "vehicle_crash",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pet_animal_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dog",
+        "car accident",
+        "death",
+        "street",
+        "baseball"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S01"
+    },
+    {
+      "title": "Grieving for Sparky",
+      "start_ms": 972520,
+      "end_ms": 1033207,
+      "start": "00:16:12",
+      "end": "00:17:13",
+      "start_cue": "C0231",
+      "end_cue": "C0241",
+      "description": "Victor's parents try to comfort him as he cries over the loss of his dog, talking about death and moving on.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pet_animal_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "grief",
+        "crying",
+        "comfort",
+        "loss"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S02"
+    },
+    {
+      "title": "Dead animal electricity demonstration",
+      "start_ms": 1077560,
+      "end_ms": 1143166,
+      "start": "00:17:57",
+      "end": "00:19:03",
+      "start_cue": "C0243",
+      "end_cue": "C0253",
+      "description": "The science teacher shows the class how electricity makes a dead animal's muscles twitch, grossing out the students.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dead animal",
+        "electricity",
+        "science class",
+        "twitching"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S03"
+    },
+    {
+      "title": "Digging up Sparky's grave",
+      "start_ms": 1174600,
+      "end_ms": 1485483,
+      "start": "00:19:34",
+      "end": "00:24:45",
+      "start_cue": "C0256",
+      "end_cue": "C0270",
+      "description": "In a dark thunderstorm at night, Victor secretly digs up his dead dog's grave and carries the body home, a tense and eerie scene.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "grave",
+        "night",
+        "storm",
+        "dead dog"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S04"
+    },
+    {
+      "title": "Reanimating Sparky with lightning",
+      "start_ms": 1552120,
+      "end_ms": 1649486,
+      "start": "00:25:52",
+      "end": "00:27:29",
+      "start_cue": "C0271",
+      "end_cue": "C0286",
+      "description": "Victor uses lightning and electricity in a dramatic experiment to bring his dead dog back to life, a startling but ultimately joyful moment.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "transformation",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "lightning",
+        "electricity",
+        "resurrection",
+        "laboratory",
+        "dog"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S05"
+    },
+    {
+      "title": "Rooftop experiment explosion",
+      "start_ms": 2500880,
+      "end_ms": 2572841,
+      "start": "00:41:40",
+      "end": "00:42:52",
+      "start_cue": "C0487",
+      "end_cue": "C0509",
+      "description": "Victor and Edgar's rooftop experiment sparks and explodes, causing fire and a fall risk before sirens arrive; the boys are hurt.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "roof",
+        "explosion",
+        "fire",
+        "fall",
+        "experiment"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S06"
+    },
+    {
+      "title": "Mayor's frightening speech about children's heads",
+      "start_ms": 2666360,
+      "end_ms": 2716841,
+      "start": "00:44:26",
+      "end": "00:45:16",
+      "start_cue": "C0533",
+      "end_cue": "C0550",
+      "description": "An angry science teacher tells a shocked crowd of parents that he wants to 'crack open' their children's heads for science, alarming everyone present.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "speech",
+        "crowd",
+        "shock",
+        "science teacher"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S07"
+    },
+    {
+      "title": "Sparky revealed alive and runs off scared",
+      "start_ms": 3024040,
+      "end_ms": 3327567,
+      "start": "00:50:24",
+      "end": "00:55:27",
+      "start_cue": "C0640",
+      "end_cue": "C0699",
+      "description": "Victor's parents discover his stitched-together dog Sparky is alive, causing shock and screaming; Sparky flees terrified into the dark, and Victor searches for him among bats and shadows.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "phobia_animals",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "reanimated dog",
+        "shock",
+        "missing dog",
+        "dark",
+        "search"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S08"
+    },
+    {
+      "title": "Colossus the mummy turtle awakens",
+      "start_ms": 3245480,
+      "end_ms": 3796403,
+      "start": "00:54:05",
+      "end": "01:03:16",
+      "start_cue": "C0692",
+      "end_cue": "C0762",
+      "description": "A boy performs a ritual to bring his dead pet turtle back to life; the creature rises from its wrappings and lets out a monstrous roar, frightening those nearby.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "transformation",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "mummy",
+        "turtle",
+        "resurrection",
+        "monster",
+        "roar"
+      ],
+      "text_visibility": "low",
+      "candidate": null,
+      "id": "S09"
+    },
+    {
+      "title": "Sea-Monkeys turn savage",
+      "start_ms": 3802000,
+      "end_ms": 3975886,
+      "start": "01:03:22",
+      "end": "01:06:15",
+      "start_cue": "C0764",
+      "end_cue": "C0793",
+      "description": "Reanimated Sea-Monkeys grow into small aggressive monsters and attack the boy who created them, terrifying him and his friends.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "phobia_animals",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "transformation",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "sea-monkeys",
+        "creatures",
+        "attack",
+        "monster"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S10"
+    },
+    {
+      "title": "Mob chases Sparky as a monster",
+      "start_ms": 3991040,
+      "end_ms": 4262363,
+      "start": "01:06:31",
+      "end": "01:11:02",
+      "start_cue": "C0796",
+      "end_cue": "C0862",
+      "description": "A giant reanimated creature rampages through the Dutch Day festival causing fires and panic, while a mob mistakenly believes Sparky is the monster and chases him shouting to kill him.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "giant monster",
+        "chase",
+        "crowd panic",
+        "fire",
+        "mob"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S11"
+    },
+    {
+      "title": "Persephone attacked by vampire cat",
+      "start_ms": 4308880,
+      "end_ms": 4334804,
+      "start": "01:11:48",
+      "end": "01:12:14",
+      "start_cue": "C0870",
+      "end_cue": "C0880",
+      "description": "Elsa's poodle Persephone is attacked by the transformed monstrous cat and appears to be turned to stone, terrifying Elsa before she is restored.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "transformation",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "poodle",
+        "cat attack",
+        "stone",
+        "fear"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S12"
+    },
+    {
+      "title": "Elsa trapped in burning windmill",
+      "start_ms": 4394960,
+      "end_ms": 4512761,
+      "start": "01:13:14",
+      "end": "01:15:12",
+      "start_cue": "C0894",
+      "end_cue": "C0930",
+      "description": "Elsa becomes trapped inside a burning windmill and dangles from a dangerous height while Victor risks his own life climbing up to save her as flames spread.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fire",
+        "windmill",
+        "rescue",
+        "height",
+        "danger"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S13"
+    },
+    {
+      "title": "Parents believe Victor has died",
+      "start_ms": 4537440,
+      "end_ms": 4597700,
+      "start": "01:15:37",
+      "end": "01:16:37",
+      "start_cue": "C0931",
+      "end_cue": "C0946",
+      "description": "As the burning windmill collapses, Victor's parents scream and sob, believing their son has just been killed.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fire",
+        "collapse",
+        "parents crying",
+        "fear"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S14"
+    },
+    {
+      "title": "Sparky fades away again",
+      "start_ms": 4635240,
+      "end_ms": 4751166,
+      "start": "01:17:15",
+      "end": "01:19:11",
+      "start_cue": "C0947",
+      "end_cue": "C0958",
+      "description": "Sparky seems to disappear after saving everyone, and a heartbroken Victor tells him he doesn't have to come back, believing he has lost his dog for good.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "pet_animal_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": null,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dog",
+        "goodbye",
+        "loss",
+        "sacrifice"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S15"
+    }
+  ]
+}

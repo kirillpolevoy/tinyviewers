@@ -1,0 +1,1934 @@
+{
+  "movie": {
+    "title": "Finding Nemo",
+    "year": 2003,
+    "imdb_id": "tt0266543"
+  },
+  "release": {
+    "subtitle_track": "Finding.Nemo.2003.Bluray.Original.SDH",
+    "note": "timestamps belong to this release; the track stored in Supabase runs 21.1 s earlier"
+  },
+  "analysis_run": {
+    "started_at": "2026-09-21T03:40:43.784Z",
+    "detector": "jev-1.13.0",
+    "detector_run": "2026-09-21T00-25-40-jev-v3-universal-sdh-r1.json",
+    "labeller": "claude-sonnet-5",
+    "taxonomy": "taxonomy-v2",
+    "candidates": 35,
+    "context": "flagged stretch only",
+    "rejected_candidates": [
+      "K02 00:05:58",
+      "K04 00:10:22",
+      "K07 00:17:48",
+      "K16 00:38:23",
+      "K18 00:42:57",
+      "K21 00:53:35",
+      "K22 00:55:27",
+      "K23 00:56:31",
+      "K24 00:57:28",
+      "K26 01:02:24",
+      "K27 01:05:22",
+      "K35 01:31:21"
+    ],
+    "scenes_the_screener_missed": [],
+    "cost_usd": {
+      "detector": 0.033418476,
+      "labeller": 0.26282340000000004
+    },
+    "wall_s": 41.819
+  },
+  "scenes": [
+    {
+      "title": "Barracuda attack and loss of family",
+      "start_ms": 186520,
+      "end_ms": 258466,
+      "start": "00:03:06",
+      "end": "00:04:18",
+      "start_cue": "C0042",
+      "end_cue": "C0054",
+      "description": "A predator attacks the reef home; Marlin is knocked unconscious and wakes to find his wife and eggs gone, calling desperately for her.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.6,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.55,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "parent_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "barracuda",
+        "attack",
+        "missing family",
+        "unconscious",
+        "calling out"
+      ],
+      "text_visibility": "high",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Nemo's fin teasing at school",
+      "start_ms": 550759,
+      "end_ms": 560143,
+      "start": "00:09:10",
+      "end": "00:09:20",
+      "start_cue": "C0130",
+      "end_cue": "C0132",
+      "description": "Other kids comment that Nemo's fin looks funny, and an adult tells them to be nice; a mild moment of a child being singled out for looking different.",
+      "severity": {
+        "5-7": 0,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fin",
+        "school",
+        "kids",
+        "teasing"
+      ],
+      "text_visibility": "high",
+      "candidate": "K03",
+      "id": "S02"
+    },
+    {
+      "title": "Marlin scolds Nemo near open water",
+      "start_ms": 774024,
+      "end_ms": 820736,
+      "start": "00:12:54",
+      "end": "00:13:40",
+      "start_cue": "C0203",
+      "end_cue": "C0221",
+      "description": "Nemo is dared to swim near the dangerous open water by other kids, and his father Marlin swoops in, panics, and embarrasses him in front of them before angrily lecturing him, leading Nemo to say he hates him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "dangerous_act",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "adult_rages_at_child",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.68,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "open water",
+        "dad yelling",
+        "embarrassment",
+        "dare"
+      ],
+      "text_visibility": "high",
+      "candidate": "K05",
+      "id": "S03"
+    },
+    {
+      "title": "Nemo swims to the boat",
+      "start_ms": 836795,
+      "end_ms": 889638,
+      "start": "00:13:56",
+      "end": "00:14:49",
+      "start_cue": "C0227",
+      "end_cue": "C0247",
+      "description": "Nemo defiantly swims toward a boat despite his father's frantic warnings, ignoring calls to come back.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "dangerous_act",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "adult_rages_at_child",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "boat",
+        "disobey",
+        "chase",
+        "warning"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S04"
+    },
+    {
+      "title": "Nemo captured by divers",
+      "start_ms": 895228,
+      "end_ms": 954411,
+      "start": "00:14:55",
+      "end": "00:15:54",
+      "start_cue": "C0248",
+      "end_cue": "C0261",
+      "description": "Divers scoop Nemo up from the sea as he screams for his father, who desperately tries to reach him but fails.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.63,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "divers",
+        "capture",
+        "boat",
+        "scream"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S05"
+    },
+    {
+      "title": "Marlin searches in despair",
+      "start_ms": 960168,
+      "end_ms": 1022980,
+      "start": "00:16:00",
+      "end": "00:17:02",
+      "start_cue": "C0262",
+      "end_cue": "C0285",
+      "description": "Marlin frantically searches the empty water calling for his missing son, panicking and begging other sea creatures for help finding the boat.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "searching",
+        "panic",
+        "missing son",
+        "crying"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S06"
+    },
+    {
+      "title": "Marlin's story moves the sharks",
+      "start_ms": 1365949,
+      "end_ms": 1388762,
+      "start": "00:22:45",
+      "end": "00:23:08",
+      "start_cue": "C0387",
+      "end_cue": "C0393",
+      "description": "Marlin explains that his son was taken by divers, and the sharks react emotionally, one crying about never knowing his father.",
+      "severity": {
+        "5-7": 0,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "sharks",
+        "crying",
+        "missing son",
+        "support group"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S07"
+    },
+    {
+      "title": "Shark smells blood and turns dangerous",
+      "start_ms": 1394435,
+      "end_ms": 1446028,
+      "start": "00:23:14",
+      "end": "00:24:06",
+      "start_cue": "C0396",
+      "end_cue": "C0410",
+      "description": "After Dory gets bitten and starts bleeding, the shark Bruce loses control and chases Marlin and Dory, becoming a real threat before they narrowly escape and find themselves trapped with no way out.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.59,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "blood_wounds",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "shark",
+        "blood",
+        "chase",
+        "bite",
+        "trapped"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S08"
+    },
+    {
+      "title": "Bruce's blood-scented rampage",
+      "start_ms": 1483566,
+      "end_ms": 1530028,
+      "start": "00:24:43",
+      "end": "00:25:30",
+      "start_cue": "C0421",
+      "end_cue": "C0434",
+      "description": "Bruce the shark smells Marlin's blood and loses control, chasing Marlin and Dory through the sunken submarine, setting off explosive mines as they try to escape.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.73,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.67,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "shark",
+        "explosion",
+        "mines",
+        "chase",
+        "submarine"
+      ],
+      "text_visibility": "low",
+      "candidate": "K09",
+      "id": "S09"
+    },
+    {
+      "title": "Nemo calls for his dad",
+      "start_ms": 1533699,
+      "end_ms": 1539037,
+      "start": "00:25:33",
+      "end": "00:25:39",
+      "start_cue": "C0435",
+      "end_cue": "C0436",
+      "description": "In a brief cut, Nemo is heard calling out for his father, alone and scared.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.67,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "nemo",
+        "calling",
+        "alone",
+        "dad"
+      ],
+      "text_visibility": "high",
+      "candidate": "K09",
+      "id": "S10"
+    },
+    {
+      "title": "Nemo taken from bag, meets tank gang",
+      "start_ms": 1585126,
+      "end_ms": 1642891,
+      "start": "00:26:25",
+      "end": "00:27:22",
+      "start_cue": "C0444",
+      "end_cue": "C0462",
+      "description": "Newly captured Nemo is dropped into an unfamiliar fish tank full of strange creatures, cries in fear and asks where his dad is, wondering if he'll ever get home.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.17,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.37,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fish tank",
+        "aquarium",
+        "separation",
+        "scared",
+        "dentist office"
+      ],
+      "text_visibility": "high",
+      "candidate": "K10",
+      "id": "S11"
+    },
+    {
+      "title": "Fish narrate root canal",
+      "start_ms": 1668626,
+      "end_ms": 1704911,
+      "start": "00:27:48",
+      "end": "00:28:24",
+      "start_cue": "C0471",
+      "end_cue": "C0486",
+      "description": "The tank fish playfully narrate and comment on a human patient's root canal happening off-screen, using dental jargon; it's mostly comic banter rather than a scary scene for the fish characters themselves.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "needles_hospital",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dentist",
+        "root canal",
+        "drill",
+        "tank fish"
+      ],
+      "text_visibility": "low",
+      "candidate": "K11",
+      "id": "S12"
+    },
+    {
+      "title": "Darla revealed as fish killer",
+      "start_ms": 1759467,
+      "end_ms": 1775231,
+      "start": "00:29:19",
+      "end": "00:29:35",
+      "start_cue": "C0505",
+      "end_cue": "C0509",
+      "description": "The dentist's niece Darla is shown to have accidentally killed her last pet fish, and Nemo learns he is meant to be her new gift.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pet_animal_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.48,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "darla",
+        "fish killer",
+        "pet death",
+        "gift"
+      ],
+      "text_visibility": "high",
+      "candidate": "K12",
+      "id": "S13"
+    },
+    {
+      "title": "Nemo stuck trying to escape",
+      "start_ms": 1776192,
+      "end_ms": 1825323,
+      "start": "00:29:36",
+      "end": "00:30:25",
+      "start_cue": "C0510",
+      "end_cue": "C0520",
+      "description": "Nemo panics that he cannot get back to his father and gets physically stuck while attempting the escape plan, calling out for help while the other fish debate whether to assist him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.68,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "stuck",
+        "tank filter",
+        "escape attempt",
+        "calling for dad"
+      ],
+      "text_visibility": "high",
+      "candidate": "K12",
+      "id": "S14"
+    },
+    {
+      "title": "Dory's sleep-talk and mask lost",
+      "start_ms": 1862778,
+      "end_ms": 1950865,
+      "start": "00:31:02",
+      "end": "00:32:30",
+      "start_cue": "C0531",
+      "end_cue": "C0549",
+      "description": "Dory sleep-talks and briefly screams while things get chaotic, then Marlin loses the mask with the address needed to find Nemo, causing him distress.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dory",
+        "sleep talking",
+        "scream",
+        "lost mask",
+        "address"
+      ],
+      "text_visibility": "low",
+      "candidate": "K13",
+      "id": "S15"
+    },
+    {
+      "title": "Anglerfish attack in the dark",
+      "start_ms": 2021896,
+      "end_ms": 2084874,
+      "start": "00:33:41",
+      "end": "00:34:44",
+      "start_cue": "C0573",
+      "end_cue": "C0594",
+      "description": "Marlin and Dory are drawn toward a mysterious glowing light, which turns out to be a scary anglerfish; it chases them and they scream and lose sight in the dark before escaping and finding the diver's mask.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.35,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "anglerfish",
+        "light",
+        "dark",
+        "chase",
+        "scared"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S16"
+    },
+    {
+      "title": "Escaping danger, thought dead",
+      "start_ms": 2122121,
+      "end_ms": 2140346,
+      "start": "00:35:22",
+      "end": "00:35:40",
+      "start_cue": "C0608",
+      "end_cue": "C0611",
+      "description": "Something sudden makes Marlin duck and briefly believe he has died, before realizing he and Dory are safe and celebrating.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "duck",
+        "danger",
+        "scare",
+        "relief"
+      ],
+      "text_visibility": "low",
+      "candidate": "K15",
+      "id": "S17"
+    },
+    {
+      "title": "Marlin tries to send Dory away",
+      "start_ms": 2473472,
+      "end_ms": 2511258,
+      "start": "00:41:13",
+      "end": "00:41:51",
+      "start_cue": "C0692",
+      "end_cue": "C0703",
+      "description": "Marlin tells Dory he wants to continue searching for his son alone, and Dory becomes upset and starts to cry, thinking he doesn't like her.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.35,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dory",
+        "crying",
+        "leaving",
+        "alone"
+      ],
+      "text_visibility": "high",
+      "candidate": "K17",
+      "id": "S18"
+    },
+    {
+      "title": "Jellyfish sting encounter",
+      "start_ms": 2711084,
+      "end_ms": 2750873,
+      "start": "00:45:11",
+      "end": "00:45:50",
+      "start_cue": "C0777",
+      "end_cue": "C0791",
+      "description": "Marlin and Dory encounter a small jellyfish; Dory picks it up like a pet and gets stung, causing a brief scare before Marlin reassures her she'll be fine.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "phobia_animals",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.06,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "jellyfish",
+        "sting",
+        "ocean"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S19"
+    },
+    {
+      "title": "Jellyfish forest game",
+      "start_ms": 2754336,
+      "end_ms": 2891138,
+      "start": "00:45:54",
+      "end": "00:48:11",
+      "start_cue": "C0792",
+      "end_cue": "C0838",
+      "description": "Marlin and Dory get trapped in a forest of jellyfish and turn escaping into a hopping game, but both get badly stung and Dory collapses unconscious while Marlin desperately tries to keep her awake to remember an address.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dangerous_act",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.73,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "jellyfish",
+        "sting",
+        "unconscious",
+        "trapped",
+        "game"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S20"
+    },
+    {
+      "title": "Nemo caught in filter machinery",
+      "start_ms": 3037952,
+      "end_ms": 3079660,
+      "start": "00:50:37",
+      "end": "00:51:19",
+      "start_cue": "C0872",
+      "end_cue": "C0882",
+      "description": "Nemo gets pulled into the tank's filter machinery while trying to clog it, and the other fish frantically try to save him as he struggles and cries for help.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "filter",
+        "trapped",
+        "fish tank",
+        "machinery",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S21"
+    },
+    {
+      "title": "Dentist pulls wrong tooth",
+      "start_ms": 3535241,
+      "end_ms": 3548628,
+      "start": "00:58:55",
+      "end": "00:59:08",
+      "start_cue": "C1006",
+      "end_cue": "C1009",
+      "description": "A child accidentally pulls a tooth in a startling moment during a dental visit, played for laughs.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "needles_hospital",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.73,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dentist",
+        "tooth",
+        "surprise"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S22"
+    },
+    {
+      "title": "Nemo caught in the filter",
+      "start_ms": 3619658,
+      "end_ms": 3655693,
+      "start": "01:00:19",
+      "end": "01:00:55",
+      "start_cue": "C1036",
+      "end_cue": "C1047",
+      "description": "Nemo swims into the tank's filter mechanism to clog it as part of an escape plan and gets stuck, and his friends scramble to free him before he is hurt; he emerges safe but covered in grime.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "filter",
+        "fish tank",
+        "stuck",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S23"
+    },
+    {
+      "title": "Whale approaches, krill swarm",
+      "start_ms": 4003917,
+      "end_ms": 4019265,
+      "start": "01:06:43",
+      "end": "01:06:59",
+      "start_cue": "C1156",
+      "end_cue": "C1160",
+      "description": "A huge whale appears near Marlin and Dory, and they must swim away quickly to avoid it as krill scatter around them.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.37,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.39,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "whale",
+        "krill",
+        "swim away",
+        "ocean"
+      ],
+      "text_visibility": "low",
+      "candidate": "K28",
+      "id": "S24"
+    },
+    {
+      "title": "Swallowed by the whale",
+      "start_ms": 4170751,
+      "end_ms": 4225137,
+      "start": "01:09:30",
+      "end": "01:10:25",
+      "start_cue": "C1188",
+      "end_cue": "C1200",
+      "description": "Marlin and Dory find themselves trapped inside a whale's mouth; Marlin panics and despairs while Dory plays and stays calm.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.36,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "whale",
+        "stuck",
+        "trapped",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S25"
+    },
+    {
+      "title": "Trapped in the Whale",
+      "start_ms": 4294249,
+      "end_ms": 4403607,
+      "start": "01:11:34",
+      "end": "01:13:23",
+      "start_cue": "C1217",
+      "end_cue": "C1245",
+      "description": "Marlin and Dory are swallowed inside a giant whale's mouth, panicking as it roars and the water level drops, fearing they will be eaten before the whale releases them.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.36,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "whale",
+        "swallowed",
+        "trapped",
+        "water draining",
+        "roaring"
+      ],
+      "text_visibility": "high",
+      "candidate": "K30",
+      "id": "S26"
+    },
+    {
+      "title": "Escape plan foiled",
+      "start_ms": 4456411,
+      "end_ms": 4512424,
+      "start": "01:14:16",
+      "end": "01:15:12",
+      "start_cue": "C1256",
+      "end_cue": "C1275",
+      "description": "The Tank Gang wake to find the dentist has installed a new automatic filter, ruining their planned escape from the fish tank.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.15,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sealed_in",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.13,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fish tank",
+        "filter",
+        "escape plan",
+        "aquarium"
+      ],
+      "text_visibility": "high",
+      "candidate": "K31",
+      "id": "S27"
+    },
+    {
+      "title": "Nemo's risky escape attempt",
+      "start_ms": 4513051,
+      "end_ms": 4565060,
+      "start": "01:15:13",
+      "end": "01:16:05",
+      "start_cue": "C1276",
+      "end_cue": "C1293",
+      "description": "As Darla the girl approaches, Nemo tries to escape through the tank machinery and nearly falls or gets hurt, panicking and crying for help before Gill and the others get him to safety.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.21,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.37,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.48,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fish tank",
+        "escape",
+        "machinery",
+        "darla",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K31",
+      "id": "S28"
+    },
+    {
+      "title": "Pelican startles Marlin",
+      "start_ms": 4570066,
+      "end_ms": 4598677,
+      "start": "01:16:10",
+      "end": "01:16:38",
+      "start_cue": "C1294",
+      "end_cue": "C1300",
+      "description": "While searching the harbor for the boat, Marlin and Dory are suddenly startled by a large pelican swooping close, and Marlin fears being eaten.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.67,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.33,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "pelican",
+        "harbor",
+        "boats",
+        "scare"
+      ],
+      "text_visibility": "high",
+      "candidate": "K31",
+      "id": "S29"
+    },
+    {
+      "title": "Darla catches Nemo, tank gang's chaotic rescue",
+      "start_ms": 4748328,
+      "end_ms": 4900020,
+      "start": "01:19:08",
+      "end": "01:21:40",
+      "start_cue": "C1339",
+      "end_cue": "C1387",
+      "description": "Darla the dentist's rough young niece grabs Nemo, who plays dead to survive; the other fish create pandemonium to save him, and he's flushed toward the drain while his father watches, only to be swept away again just as they reunite.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.28,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dentist",
+        "piranha",
+        "fish tank",
+        "drain",
+        "darla",
+        "played dead"
+      ],
+      "text_visibility": "high",
+      "candidate": "K32",
+      "id": "S30"
+    },
+    {
+      "title": "Marlin believes Nemo is dead",
+      "start_ms": 4932678,
+      "end_ms": 5031610,
+      "start": "01:22:12",
+      "end": "01:23:51",
+      "start_cue": "C1388",
+      "end_cue": "C1413",
+      "description": "Convinced that his son has died, a devastated Marlin says a tearful goodbye to Dory and leaves to go home alone.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goodbye",
+        "grief",
+        "giving up",
+        "sad fish"
+      ],
+      "text_visibility": "high",
+      "candidate": "K32",
+      "id": "S31"
+    },
+    {
+      "title": "Pelicans attack, Dory captured, Nemo calls for Dad",
+      "start_ms": 5043497,
+      "end_ms": 5083495,
+      "start": "01:24:03",
+      "end": "01:24:43",
+      "start_cue": "C1414",
+      "end_cue": "C1427",
+      "description": "A flock of pelicans swoop in and one snatches Dory in its beak while Nemo desperately calls out for his missing father amid the chaos.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "pelicans",
+        "beak",
+        "chase",
+        "calling for dad"
+      ],
+      "text_visibility": "high",
+      "candidate": "K32",
+      "id": "S32"
+    },
+    {
+      "title": "Fish surprised Nemo is alive",
+      "start_ms": 5136173,
+      "end_ms": 5179924,
+      "start": "01:25:36",
+      "end": "01:26:19",
+      "start_cue": "C1445",
+      "end_cue": "C1461",
+      "description": "A group of fish are shocked to see Nemo alive after believing he had died, then a menacing creature frightens one of them into revealing where Marlin went.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "mistaken death",
+        "threat",
+        "interrogation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K33",
+      "id": "S33"
+    },
+    {
+      "title": "Reunion and net rescue",
+      "start_ms": 5184889,
+      "end_ms": 5290118,
+      "start": "01:26:24",
+      "end": "01:28:10",
+      "start_cue": "C1462",
+      "end_cue": "C1491",
+      "description": "Marlin and Nemo are joyfully reunited, but then Dory gets caught in a fishing net and Nemo bravely leads a plan to save her by getting all the fish to swim downward together, worrying his father.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.49,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "reunion",
+        "fishing net",
+        "trawler",
+        "rescue plan"
+      ],
+      "text_visibility": "high",
+      "candidate": "K33",
+      "id": "S34"
+    },
+    {
+      "title": "Nemo unresponsive after net escape",
+      "start_ms": 5368781,
+      "end_ms": 5393137,
+      "start": "01:29:28",
+      "end": "01:29:53",
+      "start_cue": "C1508",
+      "end_cue": "C1514",
+      "description": "After breaking free from the fishing net, Nemo is found motionless and unresponsive; his father Marlin frantically searches for him and holds him, fearing he may be dead.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.46,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "unconscious fish",
+        "father searching",
+        "net rescue",
+        "fear of death"
+      ],
+      "text_visibility": "high",
+      "candidate": "K34",
+      "id": "S35"
+    }
+  ]
+}

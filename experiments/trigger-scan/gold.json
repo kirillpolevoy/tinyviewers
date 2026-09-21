@@ -1,0 +1,702 @@
+[
+  {
+    "id": "G01",
+    "title": "Barracuda attack; Coral and the eggs are lost",
+    "start_cue": "C0042",
+    "end_cue": "C0059",
+    "start": "00:03:06",
+    "end": "00:04:57",
+    "categories": [
+      "peril_chase",
+      "predator_creature",
+      "death_loss",
+      "injury_pain",
+      "emotional_distress"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C0043",
+      "C0046",
+      "C0048",
+      "C0054"
+    ],
+    "text_visibility": "medium",
+    "note": "Barracuda stalks and lunges, Marlin is knocked out (C0047 groan), wakes to find Coral and all but one egg gone and grieves. The barracuda is never named in the text and the attack itself (03:26-03:40) and the discovery of the empty nest (04:17-04:41) are wordless; end is set at C0059 so the grief over the single egg is inside the range. not in text: loud musical sting / lunge at 03:26."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL: Mr Ray arrives, Nemo joins the class",
+    "start_cue": "C0138",
+    "end_cue": "C0164",
+    "start": "00:09:35",
+    "end": "00:10:51",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Songs, science question, goodbye at school. Nothing frightening; Marlin is only mildly over-protective."
+  },
+  {
+    "id": "G02",
+    "title": "Drop-off dare and Marlin berating Nemo (\"I hate you\")",
+    "start_cue": "C0201",
+    "end_cue": "C0221",
+    "start": "00:12:47",
+    "end": "00:13:40",
+    "categories": [
+      "imitable_risk",
+      "shouting_aggression"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0203",
+      "C0206",
+      "C0220",
+      "C0221"
+    ],
+    "text_visibility": "high",
+    "note": "Kids dare each other to swim out over open water toward the boat; Marlin angrily tells Nemo off in front of his friends and Nemo says \"I hate you\". Mild, but it is the imitable-risk / parent-child conflict set-up. Unsure whether a parent wants this as a separate item or merged into the capture scene."
+  },
+  {
+    "id": "G03",
+    "title": "Nemo defies Marlin, touches the boat and is taken by the diver",
+    "start_cue": "C0231",
+    "end_cue": "C0259",
+    "start": "00:14:05",
+    "end": "00:15:42",
+    "categories": [
+      "imitable_risk",
+      "peril_chase",
+      "captivity_confinement",
+      "separation_abandonment",
+      "emotional_distress",
+      "shouting_aggression"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C0240",
+      "C0248",
+      "C0249",
+      "C0252"
+    ],
+    "text_visibility": "high",
+    "note": "Nemo deliberately swims out to the boat against a direct order while Marlin yells; a masked diver looms up behind him (jump scare), Nemo screams \"Daddy, help me!\" and is netted and carried off. Borderline loud_sudden_sound: C0248 \"Aagghh!\" is a spelled-out scream, not a bracketed caption, so not tagged. not in text: second diver's camera flash blinds Marlin (~15:10); boat engine roar."
+  },
+  {
+    "id": "G04",
+    "title": "Marlin panics chasing the boat and begs for help",
+    "start_cue": "C0260",
+    "end_cue": "C0283",
+    "start": "00:15:51",
+    "end": "00:16:57",
+    "categories": [
+      "emotional_distress",
+      "separation_abandonment"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C0264",
+      "C0271",
+      "C0275",
+      "C0282"
+    ],
+    "text_visibility": "high",
+    "note": "Marlin loses the boat, breaks down (\"No. Please, no\", \"My son!\", \"They took him away\"). Pure parental panic/despair; no physical threat. Contiguous with the capture scene; could be merged."
+  },
+  {
+    "id": "G05",
+    "title": "Bruce the shark appears and marches them to the \"party\"",
+    "start_cue": "C0316",
+    "end_cue": "C0333",
+    "start": "00:19:00",
+    "end": "00:20:01",
+    "categories": [
+      "predator_creature",
+      "emotional_distress"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C0318",
+      "C0320",
+      "C0322",
+      "C0325"
+    ],
+    "text_visibility": "medium",
+    "note": "A huge grinning great white looms out of the gloom, calls them \"bites\" and \"morsels\" and escorts them through a minefield; Marlin and Dory are visibly terrified (mostly visual). The meeting that follows (C0334-C0396) is played for comedy and is NOT flagged. Severity 1 vs 2 is a judgment call."
+  },
+  {
+    "id": "G06",
+    "title": "Bruce's blood frenzy, chase through the submarine, mines explode",
+    "start_cue": "C0397",
+    "end_cue": "C0434",
+    "start": "00:23:16",
+    "end": "00:25:30",
+    "categories": [
+      "peril_chase",
+      "predator_creature",
+      "injury_pain",
+      "captivity_confinement",
+      "emotional_distress"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C0398",
+      "C0406",
+      "C0410",
+      "C0416"
+    ],
+    "text_visibility": "high",
+    "note": "Dory gets a nosebleed, Bruce smells blood and goes feral (\"I'm having fish tonight\"), smashing through the sub after them while they find every exit blocked; ends with the torpedo setting off the minefield. not in text: the chain of mine explosions and bright flashes happens between C0433 (PING) and C0434; no caption marks it, so loud_sudden_sound / flashing_light_inferred are not tagged. Bruce's black-eyed face bursting through the door at C0416 is a jump scare."
+  },
+  {
+    "id": "G07",
+    "title": "Nemo alone in the bag, then terrified in the dentist's tank",
+    "start_cue": "C0435",
+    "end_cue": "C0451",
+    "start": "00:25:33",
+    "end": "00:26:54",
+    "categories": [
+      "captivity_confinement",
+      "separation_abandonment",
+      "emotional_distress"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0436",
+      "C0446",
+      "C0450",
+      "C0451"
+    ],
+    "text_visibility": "high",
+    "note": "Nemo calls for his dad, is tipped into the tank, darts around in fright (captioned cries/whimpers) and says \"I want to go home\". Resolves quickly once the tank fish turn out friendly. Severity 1 vs 2 uncertain for a child sensitive to separation. 25:37-26:02 is a wordless establishing stretch inside the range."
+  },
+  {
+    "id": "G08",
+    "title": "Darla revealed as a \"fish killer\"; Nemo panics and gets stuck in the intake tube",
+    "start_cue": "C0497",
+    "end_cue": "C0521",
+    "start": "00:28:58",
+    "end": "00:30:30",
+    "categories": [
+      "death_loss",
+      "captivity_confinement",
+      "emotional_distress"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0506",
+      "C0509",
+      "C0511",
+      "C0517"
+    ],
+    "text_visibility": "high",
+    "note": "Photo of Darla holding a dead fish in a bag (\"She wouldn't stop shaking the bag\", \"Poor Chuckles\"), Nemo bolts, wedges himself in the filter tube and cries \"Daddy! Help me!\" until Gill coaches him out. not in text: Psycho-style string sting on the photo. Severity 1 vs 2 uncertain."
+  },
+  {
+    "id": "G09",
+    "title": "Submarine tips off the ledge and falls into the trench",
+    "start_cue": "C0533",
+    "end_cue": "C0538",
+    "start": "00:31:26",
+    "end": "00:32:01",
+    "categories": [
+      "peril_chase",
+      "loud_sudden_sound"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0536",
+      "C0537"
+    ],
+    "text_visibility": "low",
+    "note": "Marlin wakes to the sub teetering; Dory wakes screaming \"Sharks eat fish!\" and they fall (captioned scream). About 20 seconds and mostly visual. One of the weakest inclusions; delete if the parent thinks it is padding. not in text: metal groaning/crash."
+  },
+  {
+    "id": "G10",
+    "title": "Pitch-dark abyss: \"Something's got me\", the mysterious light",
+    "start_cue": "C0560",
+    "end_cue": "C0583",
+    "start": "00:33:03",
+    "end": "00:34:11",
+    "categories": [
+      "darkness_unknown"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0560",
+      "C0569",
+      "C0571"
+    ],
+    "text_visibility": "medium",
+    "note": "Screen is fully black, the characters cannot see and are jumpy (\"Something's got me!\", \"am I dead?\"), then are drawn to a glowing lure. Played partly for laughs; it is the eerie build-up to the anglerfish."
+  },
+  {
+    "id": "G11",
+    "title": "Anglerfish attack in the dark",
+    "start_cue": "C0584",
+    "end_cue": "C0610",
+    "start": "00:34:11",
+    "end": "00:35:32",
+    "categories": [
+      "predator_creature",
+      "peril_chase",
+      "darkness_unknown",
+      "emotional_distress",
+      "loud_sudden_sound"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C0584",
+      "C0585",
+      "C0586",
+      "C0609"
+    ],
+    "text_visibility": "medium",
+    "note": "The light turns out to be the lure of a huge fanged anglerfish (jump-scare reveal at \"Good feeling's gone\"), which chases Marlin in darkness while Dory reads the mask; they scream (caption). The creature is never named in the subtitles at this point - only later retellings call it a \"monster with huge teeth\"."
+  },
+  {
+    "id": "G12",
+    "title": "Night-time initiation on Mount Wannahockaloogie / Ring of Fire",
+    "start_cue": "C0628",
+    "end_cue": "C0646",
+    "start": "00:37:06",
+    "end": "00:38:59",
+    "categories": [
+      "imitable_risk",
+      "darkness_unknown"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0628",
+      "C0639",
+      "C0644"
+    ],
+    "text_visibility": "medium",
+    "note": "Nemo is woken at night, led to a glowing volcano with ominous chanting and told to swim through the \"Ring of Fire\" (turns out to be bubbles; \"Isn't there another way? He's just a boy\"). Spooky staging that ends as a joke. Categories are a loose fit: the dare is imposed rather than sought, and Nemo is apprehensive rather than terrified. not in text: red flickering volcano light."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL: Gill explains the escape plan",
+    "start_cue": "C0654",
+    "end_cue": "C0675",
+    "start": "00:39:16",
+    "end": "00:40:18",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm planning talk in the tank (jam the filter, roll out the window). Danger is only discussed hypothetically."
+  },
+  {
+    "id": "G13",
+    "title": "Marlin tells Dory he does not want her with him; Dory cries",
+    "start_cue": "C0690",
+    "end_cue": "C0703",
+    "start": "00:41:05",
+    "end": "00:41:51",
+    "categories": [
+      "separation_abandonment",
+      "emotional_distress"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0693",
+      "C0695",
+      "C0700",
+      "C0703"
+    ],
+    "text_visibility": "high",
+    "note": "Marlin tries to send Dory away (\"I don't want you with me\", \"You mean you don't like me?\", \"Don't cry\"). Short and gentle, reversed within two minutes. Low-end inclusion."
+  },
+  {
+    "id": "G14",
+    "title": "Dory stung by the little jellyfish; surrounded; the bouncing race",
+    "start_cue": "C0781",
+    "end_cue": "C0821",
+    "start": "00:45:22",
+    "end": "00:47:16",
+    "categories": [
+      "injury_pain",
+      "peril_chase"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C0781",
+      "C0782",
+      "C0793",
+      "C0811"
+    ],
+    "text_visibility": "high",
+    "note": "Dory is stung (\"Ow!\"), then they find themselves inside a huge jellyfish bloom (\"This is bad, Dory\") and race out over the tops (\"So, we're cheating death now\"). The race is scored as fun, so severity 1, but they are in a lethal hazard throughout - 1 vs 2 is uncertain."
+  },
+  {
+    "id": "G15",
+    "title": "Dory trapped and stung in the jellyfish; both collapse",
+    "start_cue": "C0822",
+    "end_cue": "C0838",
+    "start": "00:47:17",
+    "end": "00:48:11",
+    "categories": [
+      "peril_chase",
+      "injury_pain",
+      "emotional_distress"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C0824",
+      "C0826",
+      "C0827",
+      "C0833"
+    ],
+    "text_visibility": "medium",
+    "note": "Marlin realises Dory is still inside, goes back, is stung repeatedly (SIZZLING caption, scream), drags out a limp, scarred Dory (\"Stay awake!\") and both lose consciousness as the screen fades. Borderline loud_sudden_sound: C0827 \"Aagghh!\" is a spelled-out scream, not a caption, so not tagged. not in text: electric zap flashes on each sting."
+  },
+  {
+    "id": "G16",
+    "title": "Nemo jams the filter; pebble slips and he is sucked toward the fan",
+    "start_cue": "C0861",
+    "end_cue": "C0883",
+    "start": "00:49:42",
+    "end": "00:51:24",
+    "categories": [
+      "peril_chase",
+      "imitable_risk",
+      "emotional_distress"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C0863",
+      "C0873",
+      "C0876",
+      "C0883"
+    ],
+    "text_visibility": "high",
+    "note": "A child is sent into machinery to wedge a pebble in a spinning fan; it pops loose and he is dragged backwards toward the blades screaming \"Help me!\" until pulled out on a plant strand; he is left shaking and whimpering. Wordless danger stretch 50:20-50:37."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL: Riding the EAC with the turtle kids",
+    "start_cue": "C0928",
+    "end_cue": "C0953",
+    "start": "00:54:35",
+    "end": "00:55:49",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Squirt shows off, fin/noggin greetings, turtle pile and kids' questions (\"Mr Fish, did you die?\" is a joke). Nothing should be flagged."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL (hard): the story of Marlin's journey is retold across the ocean",
+    "start_cue": "C0960",
+    "end_cue": "C0984",
+    "start": "00:56:07",
+    "end": "00:57:13",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Sea creatures excitedly retell the sharks/explosions/\"horrible creature with razor-sharp teeth\". Danger is only remembered/narrated, which the taxonomy explicitly says is NOT a flag. Deliberately a tough false-positive probe."
+  },
+  {
+    "id": "G17",
+    "title": "Nemo swims back into the filter on his own",
+    "start_cue": "C1036",
+    "end_cue": "C1044",
+    "start": "01:00:19",
+    "end": "01:00:48",
+    "categories": [
+      "peril_chase",
+      "imitable_risk"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C1036",
+      "C1038",
+      "C1043"
+    ],
+    "text_visibility": "high",
+    "note": "Inspired by his dad, Nemo goes back into the filter and jams the fan while the gang panic (\"Not again!\", \"You've got your life ahead of you\") and briefly cannot tell if he is alive. About 30 seconds, ends in triumph."
+  },
+  {
+    "id": "G18",
+    "title": "The whale looms out of the murk and swallows Marlin and Dory",
+    "start_cue": "C1156",
+    "end_cue": "C1160",
+    "start": "01:06:43",
+    "end": "01:06:59",
+    "categories": [
+      "peril_chase",
+      "predator_creature",
+      "captivity_confinement"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1157",
+      "C1159",
+      "C1160"
+    ],
+    "text_visibility": "medium",
+    "note": "A gigantic whale rises behind the two tiny fish, krill flee (\"Swim away!\"), and they are sucked into its mouth (\"Move, Dory! Move!\"). The swallow itself (~01:06:58-01:07:04) is wordless, directly after C1160. The whale's shadow is ominous from about C1119/C1138 but that stretch is played as comedy and not flagged. predator_creature is debatable because the whale turns out to be benign."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL: the filthy tank and the dentist decides to clean it",
+    "start_cue": "C1168",
+    "end_cue": "C1187",
+    "start": "01:07:26",
+    "end": "01:08:29",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Gross-out comedy in the green tank; the plan works. Nothing frightening."
+  },
+  {
+    "id": "G19",
+    "title": "Trapped inside the whale; Marlin rams the baleen and despairs",
+    "start_cue": "C1188",
+    "end_cue": "C1206",
+    "start": "01:09:30",
+    "end": "01:10:49",
+    "categories": [
+      "captivity_confinement",
+      "emotional_distress"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C1188",
+      "C1194",
+      "C1196",
+      "C1198"
+    ],
+    "text_visibility": "high",
+    "note": "Marlin hurls himself at the baleen yelling, then collapses with a captioned despairing groan (\"I promised him I'd never let anything happen to him\") while Dory plays. More sad than scary; 1 vs 2 uncertain."
+  },
+  {
+    "id": "G20",
+    "title": "Whale roars, water drains, the drop down the throat and out the blowhole",
+    "start_cue": "C1216",
+    "end_cue": "C1246",
+    "start": "01:11:28",
+    "end": "01:13:33",
+    "categories": [
+      "captivity_confinement",
+      "peril_chase",
+      "emotional_distress",
+      "loud_sudden_sound"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1216",
+      "C1222",
+      "C1229",
+      "C1243"
+    ],
+    "text_visibility": "high",
+    "note": "Captioned whale roars, the water level falls, Marlin is convinced they are being eaten (\"That's eating us!\"), they cling to the tongue over a dark throat, let go and are blasted out screaming. predator_creature not tagged because the whale is actually helping them, but Marlin believes otherwise - debatable."
+  },
+  {
+    "id": "G21",
+    "title": "False \"Darla!\" alarm, then the dentist nets and bags Nemo",
+    "start_cue": "C1276",
+    "end_cue": "C1293",
+    "start": "01:15:13",
+    "end": "01:16:05",
+    "categories": [
+      "captivity_confinement",
+      "peril_chase",
+      "emotional_distress"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1280",
+      "C1282",
+      "C1290",
+      "C1293"
+    ],
+    "text_visibility": "high",
+    "note": "Nemo is scooped out in a net screaming \"Help me!\", the gang fail to save him, he is sealed in a bag crying \"I don't want to go belly-up!\" and Darla arrives. not in text: door slam / Psycho strings on each \"Darla!\"."
+  },
+  {
+    "id": "G22",
+    "title": "Swallowed by the pelican, stranded on the dock, seagull \"Mine!\" chase",
+    "start_cue": "C1298",
+    "end_cue": "C1330",
+    "start": "01:16:21",
+    "end": "01:18:37",
+    "categories": [
+      "predator_creature",
+      "peril_chase"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1299",
+      "C1300",
+      "C1320",
+      "C1325"
+    ],
+    "text_visibility": "medium",
+    "note": "A pelican scoops them up (\"I didn't come this far to be breakfast\"), they flop gasping on the dock, a mob of seagulls closes in and chases Nigel through the harbour with the fish in his beak. C1301-C1310 is a comic interlude inside the range. Tone is largely comic, so 1 vs 2 is uncertain; the threat from the gulls is almost entirely visual apart from \"Mine!\". not in text: gulls crash into a sail."
+  },
+  {
+    "id": "G23",
+    "title": "Darla arrives; Nemo plays dead; she shakes the bag; Nemo gasps on the tray and goes down the drain",
+    "start_cue": "C1331",
+    "end_cue": "C1387",
+    "start": "01:18:44",
+    "end": "01:21:40",
+    "categories": [
+      "peril_chase",
+      "death_loss",
+      "captivity_confinement",
+      "emotional_distress",
+      "loud_sudden_sound"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1341",
+      "C1359",
+      "C1365",
+      "C1374"
+    ],
+    "text_visibility": "high",
+    "note": "Captioned fish screams, Nemo floats belly-up (\"He's dead\"), is nearly binned, Marlin sees him apparently dead, Darla shakes the bag yelling \"Wake up!\", chaos with captioned screams, Nemo lies gasping out of water before being flicked down the drain, and father and son are torn apart again (\"Daddy?\"). Frantic slapstick tone but a real threat to the child hero; I scored 2, a parent could reasonably say 3. shouting_aggression not tagged (Darla is rough rather than hostile) - debatable. not in text: Psycho strings, bag bursting."
+  },
+  {
+    "id": "G24",
+    "title": "Marlin believes Nemo is dead and leaves Dory",
+    "start_cue": "C1388",
+    "end_cue": "C1413",
+    "start": "01:22:12",
+    "end": "01:23:51",
+    "categories": [
+      "death_loss",
+      "separation_abandonment",
+      "emotional_distress"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1395",
+      "C1396",
+      "C1400",
+      "C1412"
+    ],
+    "text_visibility": "high",
+    "note": "Nigel apologises, Marlin says \"Nemo's gone\" and swims away while Dory begs \"Please don't go away... I don't want to forget\". Quiet, sustained grief and abandonment. The rubric lists \"deep grief\" under 3; I scored 2 because the audience knows Nemo is alive. The wordless, sombre flight back (01:21:38-01:22:12) precedes C1388."
+  },
+  {
+    "id": "G25",
+    "title": "Nemo alone calling for his dad, grabbed at by crabs; Dory lost and confused",
+    "start_cue": "C1420",
+    "end_cue": "C1432",
+    "start": "01:24:20",
+    "end": "01:25:01",
+    "categories": [
+      "separation_abandonment",
+      "emotional_distress"
+    ],
+    "severity": 1,
+    "control": false,
+    "evidence": [
+      "C1421",
+      "C1423",
+      "C1430",
+      "C1432"
+    ],
+    "text_visibility": "medium",
+    "note": "Nemo pops out of the pipe, a crab snaps at him (\"Gotcha!\"), he swims off shouting \"Dad!\"; Dory, abandoned, circles in distress (\"I think I lost somebody, but I can't remember\"). Brief and the weakest inclusion on the list; the crab grab is too slight for predator_creature."
+  },
+  {
+    "id": "G26",
+    "title": "Fishing net: Dory and then Nemo trapped, \"swim down!\"",
+    "start_cue": "C1473",
+    "end_cue": "C1507",
+    "start": "01:26:51",
+    "end": "01:29:26",
+    "categories": [
+      "peril_chase",
+      "captivity_confinement",
+      "emotional_distress",
+      "imitable_risk",
+      "loud_sudden_sound"
+    ],
+    "severity": 3,
+    "control": false,
+    "evidence": [
+      "C1475",
+      "C1477",
+      "C1479",
+      "C1482"
+    ],
+    "text_visibility": "high",
+    "note": "A trawl net scoops up a screaming shoal with Dory inside (captioned scream); Nemo swims into the net against Marlin's \"Nemo, no! Get out of there\" and is hauled toward the surface. Turns triumphant from about C1497, so 2 vs 3 is uncertain. imitable_risk is debatable: he defies his father, but it is framed as heroic and Marlin then consents."
+  },
+  {
+    "id": "G27",
+    "title": "Nemo lies motionless under the net; Marlin thinks he has lost him",
+    "start_cue": "C1508",
+    "end_cue": "C1516",
+    "start": "01:29:28",
+    "end": "01:30:02",
+    "categories": [
+      "death_loss",
+      "injury_pain",
+      "emotional_distress"
+    ],
+    "severity": 2,
+    "control": false,
+    "evidence": [
+      "C1509",
+      "C1511",
+      "C1513",
+      "C1514"
+    ],
+    "text_visibility": "medium",
+    "note": "Nemo is found limp and unresponsive; Marlin cradles him repeating the opening scene's \"Daddy's here. Daddy's got you\" before Nemo coughs awake. Only ~30 seconds, but it is an apparent death of the child hero; 1 vs 2 vs 3 is a judgment call."
+  },
+  {
+    "id": "K06",
+    "title": "CONTROL: reunion chat about sea turtles and the new first day of school",
+    "start_cue": "C1519",
+    "end_cue": "C1539",
+    "start": "01:30:18",
+    "end": "01:31:25",
+    "categories": [],
+    "severity": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Happy ending: sea-turtle ages, race to school, Marlin finally tells his joke. Ends before the (friendly) sharks reappear at C1540."
+  }
+]

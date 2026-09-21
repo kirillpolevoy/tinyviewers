@@ -1,0 +1,529 @@
+{
+  "arm": "sonnet-presence",
+  "film": "nemo",
+  "track": "nemo",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:25:21.545Z",
+  "wall_s": 15.346,
+  "scenes_asked": 30,
+  "input_tokens": 24419,
+  "cache_creation_input_tokens": 6293,
+  "cache_read_input_tokens": 182497,
+  "output_tokens": 2003,
+  "cost_usd": 0.1210999,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Barracuda Attack",
+      "start_cue": "C0042",
+      "end_cue": "C0047",
+      "start_ms": 186520,
+      "end_ms": 222472,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2046
+    },
+    {
+      "id": "S02",
+      "title": "Coral Is Gone",
+      "start_cue": "C0048",
+      "end_cue": "C0059",
+      "start_ms": 226977,
+      "end_ms": 297505,
+      "present": [
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2413
+    },
+    {
+      "id": "S03",
+      "title": "Playground Teasing About Nemo's Fin",
+      "start_cue": "C0130",
+      "end_cue": "C0138",
+      "start_ms": 550759,
+      "end_ms": 578161,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1476
+    },
+    {
+      "id": "S04",
+      "title": "Marlin Scolds Nemo at the Drop Off",
+      "start_cue": "C0203",
+      "end_cue": "C0221",
+      "start_ms": 774024,
+      "end_ms": 820736,
+      "present": [
+        {
+          "id": "deep_dark_water",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2145
+    },
+    {
+      "id": "S05",
+      "title": "Nemo Captured by Divers",
+      "start_cue": "C0231",
+      "end_cue": "C0261",
+      "start_ms": 845637,
+      "end_ms": 954411,
+      "present": [
+        {
+          "id": "vehicle_crash",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2484
+    },
+    {
+      "id": "S06",
+      "title": "Marlin's Desperate Search",
+      "start_cue": "C0263",
+      "end_cue": "C0290",
+      "start_ms": 966842,
+      "end_ms": 1033574,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1446
+    },
+    {
+      "id": "S07",
+      "title": "Bruce Smells Blood",
+      "start_cue": "C0397",
+      "end_cue": "C0410",
+      "start_ms": 1396980,
+      "end_ms": 1446028,
+      "present": [
+        {
+          "id": "shark",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "blood_wound",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1860
+    },
+    {
+      "id": "S08",
+      "title": "Chased Through the Minefield",
+      "start_cue": "C0421",
+      "end_cue": "C0436",
+      "start_ms": 1483566,
+      "end_ms": 1539037,
+      "present": [
+        {
+          "id": "shark",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "explosion",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "blood_wound",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2326
+    },
+    {
+      "id": "S09",
+      "title": "Nemo Wakes Alone in the Tank",
+      "start_cue": "C0444",
+      "end_cue": "C0462",
+      "start_ms": 1585126,
+      "end_ms": 1642891,
+      "present": [
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2848
+    },
+    {
+      "id": "S10",
+      "title": "Root Canal Commentary",
+      "start_cue": "C0471",
+      "end_cue": "C0486",
+      "start_ms": 1668626,
+      "end_ms": 1704911,
+      "present": [
+        {
+          "id": "needle_medical",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2048
+    },
+    {
+      "id": "S11",
+      "title": "Darla's Reputation with Pets",
+      "start_cue": "C0505",
+      "end_cue": "C0509",
+      "start_ms": 1759467,
+      "end_ms": 1775231,
+      "present": [],
+      "talked_about_only": [
+        "hospital_illness"
+      ],
+      "latency_ms": 1379
+    },
+    {
+      "id": "S12",
+      "title": "Nemo Stuck in the Décor",
+      "start_cue": "C0510",
+      "end_cue": "C0522",
+      "start_ms": 1776192,
+      "end_ms": 1833581,
+      "present": [
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "blood_wound"
+      ],
+      "latency_ms": 2727
+    },
+    {
+      "id": "S13",
+      "title": "Waking Up on a Shark",
+      "start_cue": "C0531",
+      "end_cue": "C0549",
+      "start_ms": 1862778,
+      "end_ms": 1950865,
+      "present": [
+        {
+          "id": "shark",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "deep_dark_water",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "blood_wound"
+      ],
+      "latency_ms": 3564
+    },
+    {
+      "id": "S14",
+      "title": "Anglerfish Attack in the Dark",
+      "start_cue": "C0568",
+      "end_cue": "C0611",
+      "start_ms": 2004378,
+      "end_ms": 2140346,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "deep_dark_water",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2396
+    },
+    {
+      "id": "S15",
+      "title": "Marlin Tries to Send Dory Away",
+      "start_cue": "C0692",
+      "end_cue": "C0707",
+      "start_ms": 2473472,
+      "end_ms": 2521519,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1845
+    },
+    {
+      "id": "S16",
+      "title": "Jellyfish Forest Peril",
+      "start_cue": "C0777",
+      "end_cue": "C0838",
+      "start_ms": 2711084,
+      "end_ms": 2891138,
+      "present": [
+        {
+          "id": "blood_wound",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2115
+    },
+    {
+      "id": "S17",
+      "title": "Nemo Trapped in the Filter",
+      "start_cue": "C0872",
+      "end_cue": "C0883",
+      "start_ms": 3037952,
+      "end_ms": 3084122,
+      "present": [
+        {
+          "id": "dangerous_machine",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2043
+    },
+    {
+      "id": "S18",
+      "title": "Marlin Found Unconscious",
+      "start_cue": "C0884",
+      "end_cue": "C0891",
+      "start_ms": 3093758,
+      "end_ms": 3115028,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1941
+    },
+    {
+      "id": "S19",
+      "title": "Dory Badly Hurt, Marlin's Guilt",
+      "start_cue": "C0915",
+      "end_cue": "C0922",
+      "start_ms": 3215088,
+      "end_ms": 3236483,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1920
+    },
+    {
+      "id": "S20",
+      "title": "Second Filter Incident",
+      "start_cue": "C1036",
+      "end_cue": "C1047",
+      "start_ms": 3619658,
+      "end_ms": 3655693,
+      "present": [
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1547
+    },
+    {
+      "id": "S21",
+      "title": "Krill Swarm Near the Whale",
+      "start_cue": "C1157",
+      "end_cue": "C1160",
+      "start_ms": 4006211,
+      "end_ms": 4019265,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "spider_insect",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2222
+    },
+    {
+      "id": "S22",
+      "title": "Nemo Nearly Falls",
+      "start_cue": "C1280",
+      "end_cue": "C1292",
+      "start_ms": 4524104,
+      "end_ms": 4559805,
+      "present": [
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "heights",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1607
+    },
+    {
+      "id": "S23",
+      "title": "Nigel the Pelican's Wild Ride",
+      "start_cue": "C1319",
+      "end_cue": "C1333",
+      "start_ms": 4658363,
+      "end_ms": 4731184,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 2723
+    },
+    {
+      "id": "S24",
+      "title": "Darla Believes Nemo Is Dead",
+      "start_cue": "C1339",
+      "end_cue": "C1348",
+      "start_ms": 4748328,
+      "end_ms": 4771767,
+      "present": [
+        {
+          "id": "hospital_illness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1442
+    },
+    {
+      "id": "S25",
+      "title": "Rescue Chaos at the Dentist",
+      "start_cue": "C1349",
+      "end_cue": "C1387",
+      "start_ms": 4773019,
+      "end_ms": 4900020,
+      "present": [
+        {
+          "id": "hospital_illness",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1773
+    },
+    {
+      "id": "S26",
+      "title": "Marlin Gives Up, Leaves Dory",
+      "start_cue": "C1394",
+      "end_cue": "C1413",
+      "start_ms": 4969215,
+      "end_ms": 5031610,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 2163
+    },
+    {
+      "id": "S27",
+      "title": "Nemo Caught Again, Dory Hurt",
+      "start_cue": "C1414",
+      "end_cue": "C1427",
+      "start_ms": 5043497,
+      "end_ms": 5083495,
+      "present": [
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2635
+    },
+    {
+      "id": "S28",
+      "title": "Trapped in the Fishing Net",
+      "start_cue": "C1473",
+      "end_cue": "C1502",
+      "start_ms": 5211749,
+      "end_ms": 5343463,
+      "present": [
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "vehicle_crash",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1729
+    },
+    {
+      "id": "S29",
+      "title": "Nemo Unconscious, Marlin's Terror",
+      "start_cue": "C1508",
+      "end_cue": "C1518",
+      "start_ms": 5368781,
+      "end_ms": 5408987,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1358
+    },
+    {
+      "id": "S30",
+      "title": "Sharks Visit the School",
+      "start_cue": "C1539",
+      "end_cue": "C1546",
+      "start_ms": 5481977,
+      "end_ms": 5503539,
+      "present": [
+        {
+          "id": "shark",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2368
+    }
+  ]
+}

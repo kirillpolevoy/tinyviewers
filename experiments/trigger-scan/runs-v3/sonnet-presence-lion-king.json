@@ -1,0 +1,287 @@
+{
+  "arm": "sonnet-presence",
+  "film": "lion-king",
+  "track": "lion-king",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:26:58.147Z",
+  "wall_s": 8.398,
+  "scenes_asked": 12,
+  "input_tokens": 11591,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 42276,
+  "output_tokens": 1256,
+  "cost_usd": 0.0441972,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Scar Dangles Zazu Over Ledge",
+      "start_cue": "C0070",
+      "end_cue": "C0073",
+      "start_ms": 338070,
+      "end_ms": 345614,
+      "present": [
+        {
+          "id": "heights",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2259
+    },
+    {
+      "id": "S02",
+      "title": "Elephant Graveyard",
+      "start_cue": "C0324",
+      "end_cue": "C0328",
+      "start_ms": 1116551,
+      "end_ms": 1128529,
+      "present": [
+        {
+          "id": "skeleton_corpse",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "graveyard_funeral",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1926
+    },
+    {
+      "id": "S03",
+      "title": "Hyena Chase in the Graveyard",
+      "start_cue": "C0340",
+      "end_cue": "C0421",
+      "start_ms": 1160829,
+      "end_ms": 1496025,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "graveyard_funeral",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "skeleton_corpse",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2517
+    },
+    {
+      "id": "S04",
+      "title": "Be Prepared - Scar's Plot to Kill",
+      "start_cue": "C0499",
+      "end_cue": "C0534",
+      "start_ms": 1714466,
+      "end_ms": 1813319,
+      "present": [
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "fire",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "hospital_illness"
+      ],
+      "latency_ms": 3975
+    },
+    {
+      "id": "S05",
+      "title": "Wildebeest Stampede and Mufasa's Death",
+      "start_cue": "C0559",
+      "end_cue": "C0606",
+      "start_ms": 1915487,
+      "end_ms": 2323263,
+      "present": [
+        {
+          "id": "vehicle_crash",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "heights",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1745
+    },
+    {
+      "id": "S06",
+      "title": "Hyenas Ordered to Kill Simba",
+      "start_cue": "C0607",
+      "end_cue": "C0616",
+      "start_ms": 2376367,
+      "end_ms": 2411990,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1749
+    },
+    {
+      "id": "S07",
+      "title": "Simba Collapses in the Desert",
+      "start_cue": "C0625",
+      "end_cue": "C0647",
+      "start_ms": 2489751,
+      "end_ms": 2566031,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1958
+    },
+    {
+      "id": "S08",
+      "title": "Pumbaa Attacked by a Lioness",
+      "start_cue": "C0859",
+      "end_cue": "C0870",
+      "start_ms": 3215098,
+      "end_ms": 3294731,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2246
+    },
+    {
+      "id": "S09",
+      "title": "Mufasa's Ghost in the Sky",
+      "start_cue": "C1083",
+      "end_cue": "C1101",
+      "start_ms": 3983417,
+      "end_ms": 4042851,
+      "present": [
+        {
+          "id": "ghost_spirit",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1829
+    },
+    {
+      "id": "S10",
+      "title": "Scar's Confession and Betrayal",
+      "start_cue": "C1226",
+      "end_cue": "C1257",
+      "start_ms": 4489189,
+      "end_ms": 4593928,
+      "present": [
+        {
+          "id": "heights",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "fire",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "blood_wound"
+      ],
+      "latency_ms": 3616
+    },
+    {
+      "id": "S11",
+      "title": "Wildfire Battle for Pride Rock",
+      "start_cue": "C1258",
+      "end_cue": "C1291",
+      "start_ms": 4605779,
+      "end_ms": 4751399,
+      "present": [
+        {
+          "id": "fire",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "heights",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1906
+    },
+    {
+      "id": "S12",
+      "title": "Scar's Demise",
+      "start_cue": "C1292",
+      "end_cue": "C1298",
+      "start_ms": 4804168,
+      "end_ms": 4827163,
+      "present": [
+        {
+          "id": "fire",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2028
+    }
+  ]
+}

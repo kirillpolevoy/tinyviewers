@@ -1,0 +1,548 @@
+{
+  "arm": "jev-finds+haiku-labels",
+  "track": "sdh",
+  "model": "claude-haiku-4-5",
+  "from": "runs/2026-09-21T00-25-40-jev-v3-universal-sdh-r1.json",
+  "startedAt": "2026-09-21T00:52:22.663Z",
+  "wallMs": 28926,
+  "calls": 35,
+  "inputTokens": 136492,
+  "outputTokens": 5938,
+  "costUsd": 0.166182,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Barracuda attack",
+      "start_cue": "C0036",
+      "end_cue": "C0054",
+      "validCues": true,
+      "startMs": 169920,
+      "endMs": 258466,
+      "categories": [
+        "predator_creature",
+        "emotional_distress",
+        "separation_abandonment",
+        "death_loss",
+        "darkness_unknown",
+        "loud_sudden_sound"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Nemo's fin is noticed at school",
+      "start_cue": "C0130",
+      "end_cue": "C0135",
+      "validCues": true,
+      "startMs": 550759,
+      "endMs": 569569,
+      "categories": [
+        "predator_creature",
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Nemo defies his father and swims toward the boat",
+      "start_cue": "C0203",
+      "end_cue": "C0211",
+      "validCues": true,
+      "startMs": 774024,
+      "endMs": 793376,
+      "categories": [
+        "imitable_risk",
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Marlin angrily scolds Nemo for his recklessness",
+      "start_cue": "C0212",
+      "end_cue": "C0221",
+      "validCues": true,
+      "startMs": 793460,
+      "endMs": 820736,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Nemo's disobedience and abduction",
+      "start_cue": "C0231",
+      "end_cue": "C0285",
+      "validCues": true,
+      "startMs": 845637,
+      "endMs": 1022980,
+      "categories": [
+        "separation_abandonment",
+        "imitable_risk",
+        "shouting_aggression",
+        "emotional_distress",
+        "peril_chase"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "Nemo taken by divers",
+      "start_cue": "C0383",
+      "end_cue": "C0393",
+      "validCues": true,
+      "startMs": 1357690,
+      "endMs": 1388762,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Sharks attack and feed frenzy",
+      "start_cue": "C0394",
+      "end_cue": "C0410",
+      "validCues": true,
+      "startMs": 1388846,
+      "endMs": 1446028,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "injury_pain",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Bruce chases the fish for the mask",
+      "start_cue": "C0421",
+      "end_cue": "C0436",
+      "validCues": true,
+      "startMs": 1483566,
+      "endMs": 1539037,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "emotional_distress",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "Nemo arrives at the dentist's tank, frightened",
+      "start_cue": "C0444",
+      "end_cue": "C0462",
+      "validCues": true,
+      "startMs": 1585126,
+      "endMs": 1642891,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Dentist's scary tools and procedure",
+      "start_cue": "C0471",
+      "end_cue": "C0486",
+      "validCues": true,
+      "startMs": 1668626,
+      "endMs": 1704911,
+      "categories": [
+        "injury_pain",
+        "emotional_distress",
+        "loud_sudden_sound",
+        "peril_chase"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Introduction to Darla the fish killer",
+      "start_cue": "C0505",
+      "end_cue": "C0509",
+      "validCues": true,
+      "startMs": 1759467,
+      "endMs": 1775231,
+      "categories": [
+        "separation_abandonment",
+        "peril_chase"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Nemo trapped in the castle",
+      "start_cue": "C0510",
+      "end_cue": "C0520",
+      "validCues": true,
+      "startMs": 1776192,
+      "endMs": 1825323,
+      "categories": [
+        "captivity_confinement",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "Marlin loses Nemo's mask in the wreck",
+      "start_cue": "C0532",
+      "end_cue": "C0549",
+      "validCues": true,
+      "startMs": 1875791,
+      "endMs": 1950865,
+      "categories": [
+        "darkness_unknown",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Lured by the anglerfish",
+      "start_cue": "C0573",
+      "end_cue": "C0591",
+      "validCues": true,
+      "startMs": 2021896,
+      "endMs": 2078242,
+      "categories": [
+        "darkness_unknown",
+        "emotional_distress",
+        "loud_sudden_sound",
+        "predator_creature"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "Ring of Fire initiation test",
+      "start_cue": "C0640",
+      "end_cue": "C0645",
+      "validCues": true,
+      "startMs": 2303635,
+      "endMs": 2328826,
+      "categories": [
+        "imitable_risk",
+        "loud_sudden_sound"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Marlin tells Dory to leave",
+      "start_cue": "C0692",
+      "end_cue": "C0703",
+      "validCues": true,
+      "startMs": 2473472,
+      "endMs": 2511258,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Jellyfish sting and game",
+      "start_cue": "C0777",
+      "end_cue": "C0797",
+      "validCues": true,
+      "startMs": 2711084,
+      "endMs": 2770267,
+      "categories": [
+        "predator_creature",
+        "injury_pain",
+        "peril_chase",
+        "imitable_risk"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Jellyfish game and Dory stung",
+      "start_cue": "C0798",
+      "end_cue": "C0827",
+      "validCues": true,
+      "startMs": 2770352,
+      "endMs": 2854977,
+      "categories": [
+        "predator_creature",
+        "injury_pain",
+        "peril_chase",
+        "imitable_risk",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S19",
+      "title": "Dory loses consciousness",
+      "start_cue": "C0828",
+      "end_cue": "C0838",
+      "validCues": true,
+      "startMs": 2857063,
+      "endMs": 2891138,
+      "categories": [
+        "injury_pain",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S20",
+      "title": "Nemo caught in sea anemone",
+      "start_cue": "C0872",
+      "end_cue": "C0882",
+      "validCues": true,
+      "startMs": 3037952,
+      "endMs": 3079660,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S21",
+      "title": "Marlin's story: sharks and the deep",
+      "start_cue": "C0970",
+      "end_cue": "C0975",
+      "validCues": true,
+      "startMs": 3395601,
+      "endMs": 3413743,
+      "categories": [
+        "predator_creature",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S22",
+      "title": "Seagulls mock Marlin",
+      "start_cue": "C0986",
+      "end_cue": "C0992",
+      "validCues": true,
+      "startMs": 3448654,
+      "endMs": 3468214,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S23",
+      "title": "Nemo trapped in the filter",
+      "start_cue": "C1036",
+      "end_cue": "C1047",
+      "validCues": true,
+      "startMs": 3619658,
+      "endMs": 3655693,
+      "categories": [
+        "peril_chase",
+        "captivity_confinement",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S24",
+      "title": "Whale encounter and escape",
+      "start_cue": "C1156",
+      "end_cue": "C1160",
+      "validCues": true,
+      "startMs": 4003917,
+      "endMs": 4019265,
+      "categories": [
+        "loud_sudden_sound",
+        "darkness_unknown"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S25",
+      "title": "Trapped inside a whale",
+      "start_cue": "C1188",
+      "end_cue": "C1200",
+      "validCues": true,
+      "startMs": 4170751,
+      "endMs": 4225137,
+      "categories": [
+        "captivity_confinement",
+        "loud_sudden_sound",
+        "emotional_distress",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S26",
+      "title": "Whale swallows characters",
+      "start_cue": "C1217",
+      "end_cue": "C1245",
+      "validCues": true,
+      "startMs": 4294249,
+      "endMs": 4403607,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "captivity_confinement",
+        "emotional_distress",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S27",
+      "title": "Nemo trapped in the cleaning machine",
+      "start_cue": "C1280",
+      "end_cue": "C1292",
+      "validCues": true,
+      "startMs": 4524104,
+      "endMs": 4559805,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S28",
+      "title": "Marlin and Dory chased by pelican",
+      "start_cue": "C1298",
+      "end_cue": "C1300",
+      "validCues": true,
+      "startMs": 4581744,
+      "endMs": 4598677,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S29",
+      "title": "Darla catches Nemo in the tank",
+      "start_cue": "C1339",
+      "end_cue": "C1377",
+      "validCues": true,
+      "startMs": 4748328,
+      "endMs": 4863275,
+      "categories": [
+        "peril_chase",
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S30",
+      "title": "Marlin believes Nemo is dead",
+      "start_cue": "C1386",
+      "end_cue": "C1413",
+      "validCues": true,
+      "startMs": 4894766,
+      "endMs": 5031610,
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S31",
+      "title": "Nemo captured by pelican fishermen",
+      "start_cue": "C1420",
+      "end_cue": "C1427",
+      "validCues": true,
+      "startMs": 5060723,
+      "endMs": 5083495,
+      "categories": [
+        "captivity_confinement",
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S32",
+      "title": "Reunion and fishing net peril",
+      "start_cue": "C1445",
+      "end_cue": "C1491",
+      "validCues": true,
+      "startMs": 5136173,
+      "endMs": 5290118,
+      "categories": [
+        "death_loss",
+        "separation_abandonment",
+        "peril_chase",
+        "emotional_distress",
+        "imitable_risk"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S33",
+      "title": "Marlin reunites with Nemo",
+      "start_cue": "C1508",
+      "end_cue": "C1514",
+      "validCues": true,
+      "startMs": 5368781,
+      "endMs": 5393137,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    }
+  ]
+}

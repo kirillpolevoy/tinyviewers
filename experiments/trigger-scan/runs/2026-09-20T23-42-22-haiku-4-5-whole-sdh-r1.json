@@ -1,0 +1,295 @@
+{
+  "arm": "haiku-4-5-whole",
+  "track": "sdh",
+  "label": "r1",
+  "model": "claude-haiku-4-5",
+  "startedAt": "2026-09-20T23:42:10.577Z",
+  "events": [
+    {
+      "id": "E01",
+      "title": "Coral and eggs attacked by barracuda",
+      "start_cue": "C0042",
+      "end_cue": "C0054",
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "death_loss",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C0042",
+        "C0046",
+        "C0048",
+        "C0051"
+      ],
+      "validCues": true,
+      "startMs": 186520,
+      "endMs": 258466
+    },
+    {
+      "id": "E02",
+      "title": "Marlin grieves Coral and eggs",
+      "start_cue": "C0055",
+      "end_cue": "C0059",
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0048",
+        "C0052",
+        "C0055"
+      ],
+      "validCues": true,
+      "startMs": 281532,
+      "endMs": 297505
+    },
+    {
+      "id": "E03",
+      "title": "Nemo defies safety rules and swims toward boat",
+      "start_cue": "C0200",
+      "end_cue": "C0243",
+      "categories": [
+        "imitable_risk",
+        "peril_chase"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0201",
+        "C0207",
+        "C0240"
+      ],
+      "validCues": true,
+      "startMs": 763513,
+      "endMs": 880045
+    },
+    {
+      "id": "E04",
+      "title": "Nemo captured by divers",
+      "start_cue": "C0244",
+      "end_cue": "C0270",
+      "categories": [
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C0249",
+        "C0253",
+        "C0259",
+        "C0265"
+      ],
+      "validCues": true,
+      "startMs": 880338,
+      "endMs": 983607
+    },
+    {
+      "id": "E05",
+      "title": "Marlin's distress and desperation searching for Nemo",
+      "start_cue": "C0273",
+      "end_cue": "C0288",
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0275",
+        "C0281",
+        "C0283"
+      ],
+      "validCues": true,
+      "startMs": 991741,
+      "endMs": 1030529
+    },
+    {
+      "id": "E06",
+      "title": "Sharks at feeding frenzy attempt",
+      "start_cue": "C0318",
+      "end_cue": "C0407",
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "injury_pain"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0320",
+        "C0397",
+        "C0402",
+        "C0406"
+      ],
+      "validCues": true,
+      "startMs": 1144811,
+      "endMs": 1427092
+    },
+    {
+      "id": "E07",
+      "title": "Nemo trapped and frightened in dentist's office",
+      "start_cue": "C0444",
+      "end_cue": "C0474",
+      "categories": [
+        "captivity_confinement",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0446",
+        "C0450",
+        "C0458"
+      ],
+      "validCues": true,
+      "startMs": 1585126,
+      "endMs": 1675340
+    },
+    {
+      "id": "E08",
+      "title": "Nemo learns he will be given to Darla, a fish killer",
+      "start_cue": "C0497",
+      "end_cue": "C0511",
+      "categories": [
+        "peril_chase",
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0497",
+        "C0507",
+        "C0510"
+      ],
+      "validCues": true,
+      "startMs": 1738946,
+      "endMs": 1784199
+    },
+    {
+      "id": "E09",
+      "title": "Jellyfish forest encounter with stinging",
+      "start_cue": "C0778",
+      "end_cue": "C0838",
+      "categories": [
+        "injury_pain",
+        "peril_chase"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C0782",
+        "C0787",
+        "C0826"
+      ],
+      "validCues": true,
+      "startMs": 2714296,
+      "endMs": 2891138
+    },
+    {
+      "id": "E10",
+      "title": "Inside whale's mouth with water draining",
+      "start_cue": "C1193",
+      "end_cue": "C1240",
+      "categories": [
+        "captivity_confinement",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C1194",
+        "C1222",
+        "C1229"
+      ],
+      "validCues": true,
+      "startMs": 4193273,
+      "endMs": 4379458
+    },
+    {
+      "id": "E11",
+      "title": "Nemo playing dead to avoid Darla",
+      "start_cue": "C1339",
+      "end_cue": "C1349",
+      "categories": [
+        "death_loss",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": [
+        "C1341",
+        "C1347",
+        "C1349"
+      ],
+      "validCues": true,
+      "startMs": 4748328,
+      "endMs": 4775062
+    },
+    {
+      "id": "E12",
+      "title": "Marlin loses Nemo and believes him dead",
+      "start_cue": "C1382",
+      "end_cue": "C1413",
+      "categories": [
+        "death_loss",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C1388",
+        "C1396",
+        "C1406",
+        "C1410"
+      ],
+      "validCues": true,
+      "startMs": 4880293,
+      "endMs": 5031610
+    },
+    {
+      "id": "E13",
+      "title": "Fishing net traps Dory and all fish; rescue attempt",
+      "start_cue": "C1461",
+      "end_cue": "C1507",
+      "categories": [
+        "captivity_confinement",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C1475",
+        "C1478",
+        "C1481",
+        "C1496"
+      ],
+      "validCues": true,
+      "startMs": 5177381,
+      "endMs": 5366402
+    },
+    {
+      "id": "E14",
+      "title": "Nemo caught in fishing net and unconscious",
+      "start_cue": "C1508",
+      "end_cue": "C1516",
+      "categories": [
+        "peril_chase",
+        "captivity_confinement",
+        "injury_pain",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": [
+        "C1511",
+        "C1514",
+        "C1515"
+      ],
+      "validCues": true,
+      "startMs": 5368781,
+      "endMs": 5402647
+    }
+  ],
+  "wallMs": 11540,
+  "calls": 1,
+  "inputTokens": 36954,
+  "outputTokens": 1053,
+  "costUsd": 0.042219
+}

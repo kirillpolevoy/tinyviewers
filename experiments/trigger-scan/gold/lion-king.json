@@ -1,0 +1,1023 @@
+[
+  {
+    "id": "G01",
+    "title": "Scar toys with a captive mouse",
+    "start_cue": "C0055",
+    "end_cue": "C0058",
+    "start": "00:04:55",
+    "end": "00:05:10",
+    "attributes": [
+      "animal_in_danger",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0057",
+      "C0058"
+    ],
+    "text_visibility": "medium",
+    "note": "Scar dangles a squeaking (non-speaking) mouse under his paw and tells it it will never see another day; he is about to eat it. Mild and brief; the mouse escapes."
+  },
+  {
+    "id": "G02",
+    "title": "Scar pounces on Zazu and holds him in his jaws",
+    "start_cue": "C0069",
+    "end_cue": "C0072",
+    "start": "00:05:35",
+    "end": "00:05:43",
+    "attributes": [
+      "monster_threatens",
+      "captured"
+    ],
+    "visual_only": [
+      "captured"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0069",
+      "C0070",
+      "C0072"
+    ],
+    "text_visibility": "medium",
+    "note": "Scar stalks Zazu, lunges and traps him in his mouth until Mufasa orders \"Drop him.\" Partly comic, rescued within seconds. The catch itself is not in the lines."
+  },
+  {
+    "id": "G03",
+    "title": "Mufasa and Scar face off",
+    "start_cue": "C0088",
+    "end_cue": "C0094",
+    "start": "00:06:26",
+    "end": "00:06:43",
+    "attributes": [
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0088",
+      "C0090",
+      "C0091"
+    ],
+    "text_visibility": "medium",
+    "note": "Veiled threat (\"Perhaps you shouldn't turn your back on me\"); Mufasa leaps in front of Scar with a roar and both growl. Borderline: no explicit threat of harm and nobody is touched. One of the least-sure inclusions."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL: Mufasa shows Simba the kingdom / circle of life talk",
+    "start_cue": "C0118",
+    "end_cue": "C0144",
+    "start": "00:08:59",
+    "end": "00:10:09",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm father-son lesson. Mildly tricky: mentions eating antelope and \"when we die\" in the abstract."
+  },
+  {
+    "id": "G04",
+    "title": "Cubs enter the elephant graveyard",
+    "start_cue": "C0323",
+    "end_cue": "C0339",
+    "start": "00:18:24",
+    "end": "00:19:12",
+    "attributes": [
+      "corpses_undead",
+      "dangerous_act"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0324",
+      "C0327",
+      "C0336",
+      "C0339"
+    ],
+    "text_visibility": "high",
+    "note": "Dark, misty boneyard with giant elephant skulls; \"It's really creepy\". Simba heads for the skull right after Zazu says they are in very real danger, and after his father forbade the place that morning (dangerous_act)."
+  },
+  {
+    "id": "G05",
+    "title": "Hyenas emerge from the skull and menace the cubs",
+    "start_cue": "C0340",
+    "end_cue": "C0367",
+    "start": "00:19:20",
+    "end": "00:20:30",
+    "attributes": [
+      "monster_threatens",
+      "threatens_harm",
+      "jump_scare"
+    ],
+    "visual_only": [
+      "jump_scare"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0350",
+      "C0360",
+      "C0363"
+    ],
+    "text_visibility": "medium",
+    "note": "Cackling from inside the skull startles the cubs; three hyenas circle them and joke about eating them (\"cub sandwich\"). The threat is delivered as jokes, so the text tone is comic while the picture is menacing."
+  },
+  {
+    "id": "G06",
+    "title": "Zazu stuffed into the birdie boiler; Simba confronts the hyenas",
+    "start_cue": "C0368",
+    "end_cue": "C0374",
+    "start": "00:20:37",
+    "end": "00:20:57",
+    "attributes": [
+      "captured",
+      "monster_threatens"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0370",
+      "C0372",
+      "C0373",
+      "C0374"
+    ],
+    "text_visibility": "medium",
+    "note": "The cubs have just fled (a short wordless run sits in the gap before C0368). Hyenas catch Zazu and shoot him off a steam vent (comic); Simba challenges them and they turn on him."
+  },
+  {
+    "id": "G07",
+    "title": "Hyenas chase and corner the cubs",
+    "start_cue": "C0375",
+    "end_cue": "C0378",
+    "start": "00:21:14",
+    "end": "00:21:45",
+    "attributes": [
+      "chased",
+      "monster_threatens",
+      "terrified",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "chased",
+      "physical_violence"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0375",
+      "C0376",
+      "C0377"
+    ],
+    "text_visibility": "low",
+    "note": "Mostly wordless (about 00:20:55-00:21:50): chase through the bones, Nala slides back toward the hyenas screaming \"Simba!\", Simba claws Shenzi's face, the cubs are trapped against a rib cage and the hyenas advance (\"Here, kitty, kitty\"). Runs a few seconds past C0378 until Mufasa's roar."
+  },
+  {
+    "id": "G08",
+    "title": "Mufasa attacks the hyenas and threatens them",
+    "start_cue": "C0379",
+    "end_cue": "C0388",
+    "start": "00:21:57",
+    "end": "00:22:20",
+    "attributes": [
+      "physical_violence",
+      "threatens_harm"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0379",
+      "C0380",
+      "C0382"
+    ],
+    "text_visibility": "medium",
+    "note": "Mufasa bursts in roaring and pummels the hyenas (the blows fall in the wordless seconds just before C0379), pins them: \"If you ever come near my son again...\". Loud and sudden, but it is the rescue and the hyenas grovel comically."
+  },
+  {
+    "id": "G09",
+    "title": "Mufasa angry with Simba; the walk to the scolding",
+    "start_cue": "C0389",
+    "end_cue": "C0404",
+    "start": "00:22:28",
+    "end": "00:24:00",
+    "attributes": [
+      "adult_rages_at_child"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0390",
+      "C0396",
+      "C0400",
+      "C0401"
+    ],
+    "text_visibility": "medium",
+    "note": "Mufasa snaps \"You deliberately disobeyed me\", sends Nala home to \"teach my son a lesson\", bellows \"Simba!\"; Simba cowers and creeps over. Stern more than raging; only C0390 and C0400 are raised-voice anger, so the attribute is borderline. Upsetting for children sensitive to a parent's anger."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL (hard): Mufasa and Simba make up, joke about the hyenas, play-wrestle",
+    "start_cue": "C0405",
+    "end_cue": "C0422",
+    "start": "00:24:01",
+    "end": "00:24:57",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard: retells the earlier danger (\"I thought I might lose you\", \"those hyenas were even scareder\") and has playful \"Oh, no! No!\" / \"Aah! Come here!\" / \"Gotcha!\" roughhousing. Nothing should be flagged."
+  },
+  {
+    "id": "G10",
+    "title": "Scar announces the plan to kill Mufasa and Simba; Be Prepared finale",
+    "start_cue": "C0499",
+    "end_cue": "C0534",
+    "start": "00:28:34",
+    "end": "00:30:13",
+    "attributes": [
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0499",
+      "C0501",
+      "C0502",
+      "C0531"
+    ],
+    "text_visibility": "medium",
+    "note": "Explicit murder plot against a father and his child (C0499-C0502); Scar roars at the hyenas; the second half of the song has green light, erupting geysers, a goose-stepping hyena army and Scar towering on a rising rock. The frightening imagery is visual; the lyrics are wordy and indirect. The targets are absent, so threatens_harm is a slightly loose fit."
+  },
+  {
+    "id": "G11",
+    "title": "Scar leaves Simba in the gorge",
+    "start_cue": "C0546",
+    "end_cue": "C0558",
+    "start": "00:30:53",
+    "end": "00:31:33",
+    "attributes": [
+      "betrayal"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0546",
+      "C0547",
+      "C0558"
+    ],
+    "text_visibility": "medium",
+    "note": "The trusted uncle lures the cub to the spot where he means to have him killed: snaps \"No!\", \"Just stay on this rock\", \"it's to die for\". Not frightening in itself; ominous only if the child has understood the plot. Borderline inclusion."
+  },
+  {
+    "id": "G12",
+    "title": "Stampede erupts; Simba runs for his life",
+    "start_cue": "C0565",
+    "end_cue": "C0566",
+    "start": "00:32:14",
+    "end": "00:33:19",
+    "attributes": [
+      "in_hazard",
+      "terrified"
+    ],
+    "visual_only": [
+      "in_hazard",
+      "terrified"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0566"
+    ],
+    "text_visibility": "low",
+    "note": "Almost entirely wordless (about 00:32:20-00:33:15): hyenas drive the wildebeest over the rim, the ground shakes, close-up of Simba's terror, he flees in front of the herd. C0565 is Simba grumbling before it starts and C0566 is Zazu calmly noticing the herd; the cues only bracket the action."
+  },
+  {
+    "id": "G13",
+    "title": "Mufasa told Simba is in the stampede; Simba clings to a tree; rescue",
+    "start_cue": "C0567",
+    "end_cue": "C0578",
+    "start": "00:33:19",
+    "end": "00:34:51",
+    "attributes": [
+      "family_in_danger",
+      "in_hazard",
+      "terrified",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0568",
+      "C0569",
+      "C0570",
+      "C0571",
+      "C0577",
+      "C0578"
+    ],
+    "text_visibility": "high",
+    "note": "\"Stampede in the gorge. Simba's down there.\" Simba hangs from a cracking dead tree screaming for help; Scar backhands Zazu into the rock wall (C0577 \"Oof!\"); wordless from about 00:34:15: Mufasa dives in, is hit, catches Simba, puts him on a ledge and is swept away (C0578 \"Dad!\")."
+  },
+  {
+    "id": "G14",
+    "title": "Scar throws Mufasa off the cliff; Mufasa falls to his death",
+    "start_cue": "C0579",
+    "end_cue": "C0583",
+    "start": "00:35:14",
+    "end": "00:35:53",
+    "attributes": [
+      "fall_from_height",
+      "dies_now",
+      "physical_violence",
+      "in_hazard",
+      "terrified"
+    ],
+    "visual_only": [
+      "fall_from_height",
+      "dies_now",
+      "physical_violence",
+      "in_hazard"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0580",
+      "C0581",
+      "C0582",
+      "C0583"
+    ],
+    "text_visibility": "medium",
+    "note": "Mufasa claws up the cliff and begs \"Brother! Help me!\"; Scar sinks his claws into his paws, says \"Long live the king\" and throws him back into the stampede. Simba watches the fall and screams \"No!\". The fall and the death are not stated in the lines. betrayal not marked: the question is about a child and the victim here is an adult."
+  },
+  {
+    "id": "G15",
+    "title": "Simba finds his father's body",
+    "start_cue": "C0584",
+    "end_cue": "C0593",
+    "start": "00:36:05",
+    "end": "00:37:18",
+    "attributes": [
+      "parent_dies",
+      "corpses_undead",
+      "child_lost",
+      "sobbing_despair",
+      "grieving"
+    ],
+    "visual_only": [
+      "corpses_undead"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0585",
+      "C0587",
+      "C0589",
+      "C0590",
+      "C0592"
+    ],
+    "text_visibility": "medium",
+    "note": "The dust clears, Simba finds Mufasa lying still, tugs his ear, \"You got to get up\", cries \"Help! Somebody! Anybody\", then crawls under the dead paw weeping. The word dead is not said until C0600. unconscious deliberately not marked: he is dead, not passed out (a text-only reader may well say unconscious)."
+  },
+  {
+    "id": "G16",
+    "title": "Scar blames Simba and tells him to run away",
+    "start_cue": "C0594",
+    "end_cue": "C0605",
+    "start": "00:37:49",
+    "end": "00:38:34",
+    "attributes": [
+      "betrayal",
+      "abandoned",
+      "parent_dies",
+      "sobbing_despair",
+      "runs_away"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0595",
+      "C0600",
+      "C0601",
+      "C0602",
+      "C0605"
+    ],
+    "text_visibility": "high",
+    "note": "\"The king is dead. And if it weren't for you, he'd still be alive.\" The crying cub is made to believe he killed his father and is sent away for ever by the uncle he trusts; he runs."
+  },
+  {
+    "id": "G17",
+    "title": "\"Kill him\": hyenas hunt Simba to the thorns",
+    "start_cue": "C0606",
+    "end_cue": "C0607",
+    "start": "00:38:41",
+    "end": "00:39:38",
+    "attributes": [
+      "chased",
+      "threatens_harm",
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "chased",
+      "monster_threatens"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0606",
+      "C0607"
+    ],
+    "text_visibility": "low",
+    "note": "One spoken line, then a wordless chase (about 00:38:45-00:39:35): three hyenas pursue the cub along a ledge, he leaps off and tumbles into a thorn thicket. C0607 is the hyenas watching him get away."
+  },
+  {
+    "id": "G18",
+    "title": "Hyenas shout death threats after Simba",
+    "start_cue": "C0608",
+    "end_cue": "C0615",
+    "start": "00:39:39",
+    "end": "00:39:59",
+    "attributes": [
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0612",
+      "C0613",
+      "C0615"
+    ],
+    "text_visibility": "high",
+    "note": "Comic bickering (Banzai full of thorns) ending in \"If you ever come back, we'll kill you!\" shouted after the fleeing cub. Simba is already out of reach."
+  },
+  {
+    "id": "G19",
+    "title": "Scar's eulogy; the pride mourns; hyenas take over Pride Rock",
+    "start_cue": "C0616",
+    "end_cue": "C0624",
+    "start": "00:40:08",
+    "end": "00:40:42",
+    "attributes": [
+      "grieving",
+      "believed_dead",
+      "loved_one_dies"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0616",
+      "C0617",
+      "C0618",
+      "C0623"
+    ],
+    "text_visibility": "high",
+    "note": "The lionesses bow their heads, Sarabi and Nala weep for Mufasa (really dead) and Simba (believed dead); then hyenas pour out of the shadows with glowing eyes (visual, eerie)."
+  },
+  {
+    "id": "G20",
+    "title": "Simba collapsed in the desert with vultures on him",
+    "start_cue": "C0625",
+    "end_cue": "C0630",
+    "start": "00:41:29",
+    "end": "00:41:48",
+    "attributes": [
+      "unconscious"
+    ],
+    "visual_only": [
+      "unconscious"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0629"
+    ],
+    "text_visibility": "low",
+    "note": "From about 00:40:50, wordless: the cub lies unresponsive on cracked ground while buzzards gather and peck at him; Timon and Pumbaa scatter them (comic) and find \"it's still alive\"."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL: Hakuna Matata, Pumbaa's story",
+    "start_cue": "C0699",
+    "end_cue": "C0722",
+    "start": "00:44:54",
+    "end": "00:45:48",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Comic song. Mildly tricky: Pumbaa retells being shunned and ashamed as a young warthog (a past event, played for laughs)."
+  },
+  {
+    "id": "G21",
+    "title": "Eating grubs",
+    "start_cue": "C0738",
+    "end_cue": "C0753",
+    "start": "00:46:23",
+    "end": "00:47:11",
+    "attributes": [
+      "phobia_animals"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0739",
+      "C0740",
+      "C0743",
+      "C0749"
+    ],
+    "text_visibility": "high",
+    "note": "Close-ups of wriggling grubs and beetles being slurped and crunched. Gross-out comedy, not fright; flagged only for children with an insect aversion. Borderline inclusion."
+  },
+  {
+    "id": "G22",
+    "title": "Scar rages at caged Zazu; \"eat Zazu\"",
+    "start_cue": "C0787",
+    "end_cue": "C0812",
+    "start": "00:48:53",
+    "end": "00:49:55",
+    "attributes": [
+      "captured",
+      "threatens_harm"
+    ],
+    "visual_only": [
+      "captured"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0788",
+      "C0790",
+      "C0791",
+      "C0803",
+      "C0812"
+    ],
+    "text_visibility": "medium",
+    "note": "Zazu is kept in a rib-cage prison in a bone-strewn cave; Scar explodes at the mention of Mufasa (\"I am the king!\") and tells the hungry hyenas to eat Zazu, then roars \"Out!\". sealed_in not marked: Zazu is not struggling to get out. captured is loose: he is already caged, not being caught."
+  },
+  {
+    "id": "G23",
+    "title": "Simba remembers his father under the stars",
+    "start_cue": "C0833",
+    "end_cue": "C0844",
+    "start": "00:51:06",
+    "end": "00:51:48",
+    "attributes": [
+      "grieving"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0833",
+      "C0834",
+      "C0835",
+      "C0844"
+    ],
+    "text_visibility": "medium",
+    "note": "Simba repeats what Mufasa told him about the kings in the stars, his friends laugh at it, he walks off alone and slumps down sadly. Quiet sadness; the teasing is friendly and unknowing, so no bullying."
+  },
+  {
+    "id": "G24",
+    "title": "Lioness stalks and chases Pumbaa",
+    "start_cue": "C0859",
+    "end_cue": "C0865",
+    "start": "00:53:35",
+    "end": "00:54:35",
+    "attributes": [
+      "chased",
+      "monster_threatens",
+      "terrified",
+      "unseen_threat",
+      "sealed_in"
+    ],
+    "visual_only": [
+      "chased",
+      "unseen_threat",
+      "sealed_in"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0860",
+      "C0862",
+      "C0864"
+    ],
+    "text_visibility": "medium",
+    "note": "Pumbaa alone senses something in the grass (C0860 \"Timon?\"), a snarling lioness springs and hunts him at full speed; he jams under a tree root and cannot get free (\"She's going to eat me!\"). Timon's lines keep it partly comic."
+  },
+  {
+    "id": "G25",
+    "title": "Simba and the lioness fight",
+    "start_cue": "C0866",
+    "end_cue": "C0870",
+    "start": "00:54:42",
+    "end": "00:54:54",
+    "attributes": [
+      "physical_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0868",
+      "C0869"
+    ],
+    "text_visibility": "medium",
+    "note": "Two adult lions roar, claw and bite in a realistic fight while Timon shouts \"Bite her head! Go for the jugular!\". Ends with Nala pinning Simba and the recognition."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL: Can You Feel the Love Tonight",
+    "start_cue": "C0952",
+    "end_cue": "C0975",
+    "start": "00:58:27",
+    "end": "00:59:56",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Romantic song. Mildly tricky words: \"she'd turn away from me\", \"he's hiding\"."
+  },
+  {
+    "id": "G26",
+    "title": "Simba cries out to his dead father: \"It's my fault\"",
+    "start_cue": "C1032",
+    "end_cue": "C1036",
+    "start": "01:02:36",
+    "end": "01:02:51",
+    "attributes": [
+      "grieving",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1032",
+      "C1033",
+      "C1035"
+    ],
+    "text_visibility": "high",
+    "note": "After the quarrel with Nala, Simba shouts at the night sky that Mufasa promised to be there, then breaks down blaming himself."
+  },
+  {
+    "id": "G27",
+    "title": "Mufasa's ghost in the clouds; \"Don't leave me\"",
+    "start_cue": "C1083",
+    "end_cue": "C1101",
+    "start": "01:06:23",
+    "end": "01:07:22",
+    "attributes": [
+      "grieving",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1084",
+      "C1097",
+      "C1099",
+      "C1100"
+    ],
+    "text_visibility": "high",
+    "note": "A vast ghost forms in storm clouds with a booming voice and thunder; Simba runs after it pleading \"No! Please, don't leave me! Father!\". ghost_supernatural NOT marked because the ghost neither threatens nor frightens Simba (he is awed, then bereft); a 5-7 year old may still find the apparition itself scary. Top uncertainty for the reviewer."
+  },
+  {
+    "id": "G28",
+    "title": "Rafiki whacks Simba on the head with his stick",
+    "start_cue": "C1111",
+    "end_cue": "C1119",
+    "start": "01:07:55",
+    "end": "01:08:19",
+    "attributes": [
+      "funny_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C1111",
+      "C1113",
+      "C1118"
+    ],
+    "text_visibility": "medium",
+    "note": "Copyable slapstick: a hard stick blow to the head played for laughs, then a second swing that Simba ducks. Flagged for imitation, not fright."
+  },
+  {
+    "id": "G29",
+    "title": "Scar strikes Sarabi",
+    "start_cue": "C1183",
+    "end_cue": "C1194",
+    "start": "01:12:52",
+    "end": "01:13:24",
+    "attributes": [
+      "physical_violence",
+      "family_in_danger"
+    ],
+    "visual_only": [
+      "physical_violence",
+      "family_in_danger"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1189",
+      "C1190",
+      "C1193",
+      "C1194"
+    ],
+    "text_visibility": "low",
+    "note": "Hyenas snap at Sarabi as she walks up; she defies Scar (\"you have sentenced us to death\" / \"so be it\"), he hits her across the face and she falls; Simba, watching, roars in the lightning and Scar thinks he sees Mufasa's ghost. The blow lands silently between C1193 and C1194."
+  },
+  {
+    "id": "G30",
+    "title": "Scar turns the pride on Simba: \"Murderer!\"",
+    "start_cue": "C1204",
+    "end_cue": "C1240",
+    "start": "01:13:55",
+    "end": "01:15:37",
+    "attributes": [
+      "threatens_harm",
+      "bullying"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1204",
+      "C1227",
+      "C1232",
+      "C1235",
+      "C1239"
+    ],
+    "text_visibility": "high",
+    "note": "Simba threatens to rip Scar apart; Scar forces him to admit responsibility for Mufasa's death in front of his mother and the pride, brands him a murderer and taunts him (\"Daddy isn't here to save you\") while hyenas back him toward the cliff edge. bullying is a loose fit for public humiliation by a villain."
+  },
+  {
+    "id": "G31",
+    "title": "Simba hangs from Pride Rock over the fire; \"I killed Mufasa\"",
+    "start_cue": "C1241",
+    "end_cue": "C1248",
+    "start": "01:15:37",
+    "end": "01:16:11",
+    "attributes": [
+      "fall_from_height",
+      "fire_disaster",
+      "physical_violence",
+      "terrified"
+    ],
+    "visual_only": [
+      "fall_from_height",
+      "fire_disaster",
+      "physical_violence"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C1241",
+      "C1245",
+      "C1247",
+      "C1248"
+    ],
+    "text_visibility": "medium",
+    "note": "Simba slips and dangles by his claws, lightning sets the dry land ablaze beneath him, Scar digs his claws into his paws exactly as he did to Mufasa (flashback of the death) and whispers the confession. Nala screams \"Simba!\"."
+  },
+  {
+    "id": "G32",
+    "title": "Simba pins Scar and chokes a confession out of him",
+    "start_cue": "C1249",
+    "end_cue": "C1257",
+    "start": "01:16:11",
+    "end": "01:16:33",
+    "attributes": [
+      "physical_violence"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1249",
+      "C1250",
+      "C1257"
+    ],
+    "text_visibility": "medium",
+    "note": "Simba leaps up, pins Scar with a paw on his throat and presses until he says it aloud; the fire spreads behind them. The violence is only implied by \"No, Simba, please\"."
+  },
+  {
+    "id": "G33",
+    "title": "Battle for Pride Rock",
+    "start_cue": "C1258",
+    "end_cue": "C1259",
+    "start": "01:16:45",
+    "end": "01:16:48",
+    "attributes": [
+      "war_mass_violence",
+      "physical_violence",
+      "fire_disaster"
+    ],
+    "visual_only": [
+      "war_mass_violence",
+      "physical_violence",
+      "fire_disaster"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1258"
+    ],
+    "text_visibility": "low",
+    "note": "Wordless battle from about 01:16:34 to 01:17:18: hyenas swarm and bite Simba, the lionesses charge, lions and hyenas maul each other among the flames. The two cues are Timon and Pumbaa's comic charge and only bracket the fighting."
+  },
+  {
+    "id": "G34",
+    "title": "Hyenas corner Timon and Zazu; Pumbaa charges",
+    "start_cue": "C1260",
+    "end_cue": "C1270",
+    "start": "01:17:18",
+    "end": "01:17:52",
+    "attributes": [
+      "monster_threatens",
+      "chased",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1261",
+      "C1262",
+      "C1268",
+      "C1269"
+    ],
+    "text_visibility": "medium",
+    "note": "Timon is chased into Zazu's cage, hyenas close in (\"Please, don't eat me\"), Pumbaa batters them (\"Mister Pig!\"). Comic relief inside the battle."
+  },
+  {
+    "id": "G35",
+    "title": "Simba corners Scar in the flames",
+    "start_cue": "C1271",
+    "end_cue": "C1290",
+    "start": "01:18:11",
+    "end": "01:19:05",
+    "attributes": [
+      "threatens_harm",
+      "fire_disaster"
+    ],
+    "visual_only": [
+      "fire_disaster"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1271",
+      "C1273",
+      "C1274",
+      "C1281",
+      "C1288"
+    ],
+    "text_visibility": "high",
+    "note": "Simba stalks Scar to the summit ringed by fire: \"You don't deserve to live.\" Scar begs for mercy and blames the hyenas. sobbing_despair not marked: the pleading is a villain's manipulation, though a literal reading of \"pleading\" could say yes."
+  },
+  {
+    "id": "G36",
+    "title": "Final fight; Scar is thrown off the cliff",
+    "start_cue": "C1291",
+    "end_cue": "C1291",
+    "start": "01:19:06",
+    "end": "01:19:11",
+    "attributes": [
+      "physical_violence",
+      "fire_disaster",
+      "fall_from_height",
+      "serious_injury"
+    ],
+    "visual_only": [
+      "physical_violence",
+      "fire_disaster",
+      "fall_from_height",
+      "serious_injury"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1291"
+    ],
+    "text_visibility": "low",
+    "note": "Only one cue. Scar flings embers into Simba's eyes, then a wordless slow-motion fight in the flames (about 01:19:11-01:20:00): roaring, heavy blows to the face, Scar leaps, Simba kicks him over the edge and he tumbles down the rock face."
+  },
+  {
+    "id": "G37",
+    "title": "The hyenas turn on Scar and kill him",
+    "start_cue": "C1292",
+    "end_cue": "C1298",
+    "start": "01:20:04",
+    "end": "01:20:27",
+    "attributes": [
+      "monster_threatens",
+      "dies_now",
+      "terrified",
+      "physical_violence",
+      "fire_disaster"
+    ],
+    "visual_only": [
+      "dies_now",
+      "physical_violence",
+      "fire_disaster"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1293",
+      "C1296",
+      "C1297",
+      "C1298"
+    ],
+    "text_visibility": "medium",
+    "note": "Injured Scar is surrounded by grinning hyenas who overheard his betrayal; he backs away pleading \"No! No!\" and they leap on him; the mauling is shown as shadows on the rock as flames close over. The death is implied, not stated."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL: Rain, Simba ascends Pride Rock, closing Circle of Life",
+    "start_cue": "C1299",
+    "end_cue": "C1316",
+    "start": "01:21:33",
+    "end": "01:23:10",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm, triumphant ending. Mildly tricky: Mufasa's disembodied \"Remember\" and Simba's roar (not in the lines)."
+  }
+]

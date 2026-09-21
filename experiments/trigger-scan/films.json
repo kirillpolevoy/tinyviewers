@@ -1,0 +1,36 @@
+{
+  "nemo": {
+    "title": "Finding Nemo",
+    "track": "data/nemo.sdh.srt"
+  },
+  "lion-king": {
+    "title": "The Lion King",
+    "year": 1994,
+    "imdb_id": "tt0110357",
+    "track": "data/lion-king.srt"
+  },
+  "iron-giant": {
+    "title": "The Iron Giant",
+    "year": 1999,
+    "imdb_id": "tt0129167",
+    "track": "data/iron-giant.srt"
+  },
+  "monsters-inc": {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "imdb_id": "tt0198781",
+    "track": "data/monsters-inc.srt"
+  },
+  "frankenweenie": {
+    "title": "Frankenweenie",
+    "year": 2012,
+    "imdb_id": "tt1142977",
+    "track": "data/frankenweenie.srt"
+  },
+  "wild-robot": {
+    "title": "The Wild Robot",
+    "year": 2024,
+    "imdb_id": "tt29623480",
+    "track": "data/wild-robot.srt"
+  }
+}

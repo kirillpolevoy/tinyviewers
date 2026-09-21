@@ -1,0 +1,1247 @@
+{
+  "arm": "sonnet-checklist",
+  "film": "wild-robot",
+  "label": "r1",
+  "movie": {
+    "title": "The Wild Robot",
+    "year": 2024,
+    "imdb_id": "tt29623480",
+    "track": "data/wild-robot.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "build-scenes.js --context whole (whole transcript + Jev checklist)",
+  "jev_run": "2026-09-21T01-01-41-jev-v3-universal-wild-robot.json",
+  "jev_candidates": 29,
+  "started_at": "2026-09-21T02:05:25.102Z",
+  "wall_s": 164.313,
+  "latency_ms": 164310,
+  "usage": {
+    "input_tokens": 42889,
+    "cache_creation_input_tokens": 3666,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 3666,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 16322,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 46555,
+  "output_tokens": 16322,
+  "cost_usd": 0.258163,
+  "returned_scenes": 23,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 0,
+  "scenes": [
+    {
+      "title": "Robot Crashes Ashore in Storm",
+      "start_ms": 58625,
+      "end_ms": 112679,
+      "start": "00:00:58",
+      "end": "00:01:52",
+      "start_cue": "C0003",
+      "end_cue": "C0012",
+      "description": "A violent storm sends a strange robot crashing onto the island; the loud crash and flashing camera frighten nearby otters.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.35,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.47,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "storm",
+        "thunder",
+        "crash",
+        "otters"
+      ],
+      "text_visibility": "low",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Robot Startles Forest Animals",
+      "start_ms": 264397,
+      "end_ms": 288288,
+      "start": "00:04:24",
+      "end": "00:04:48",
+      "start_cue": "C0041",
+      "end_cue": "C0049",
+      "description": "The newly activated robot approaches curious animals to offer help, but its odd appearance and camera flash make them shriek and run away.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.33,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "robot",
+        "startled",
+        "animals",
+        "forest"
+      ],
+      "text_visibility": "high",
+      "candidate": "K02",
+      "id": "S02"
+    },
+    {
+      "title": "Animals Mistake the Robot for a Monster",
+      "start_ms": 406439,
+      "end_ms": 486519,
+      "start": "00:06:46",
+      "end": "00:08:06",
+      "start_cue": "C0074",
+      "end_cue": "C0108",
+      "description": "A crowd of animals pokes at the motionless robot thinking it's dead, then screams and scatters in panic when it suddenly wakes and speaks, calling it a monster.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.34,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "robot",
+        "panic",
+        "screaming"
+      ],
+      "text_visibility": "high",
+      "candidate": "K03",
+      "id": "S03"
+    },
+    {
+      "title": "Raccoons Shock the Robot",
+      "start_ms": 555455,
+      "end_ms": 622856,
+      "start": "00:09:15",
+      "end": "00:10:22",
+      "start_cue": "C0126",
+      "end_cue": "C0152",
+      "description": "Mischievous raccoons play with the fallen robot on a riverbank, repeatedly shocking it with electricity while everyone yelps and screams for fun.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "raccoons",
+        "electricity",
+        "shock",
+        "river"
+      ],
+      "text_visibility": "low",
+      "candidate": "K04",
+      "id": "S04"
+    },
+    {
+      "title": "Swept Toward the Falls",
+      "start_ms": 622956,
+      "end_ms": 743309,
+      "start": "00:10:22",
+      "end": "00:12:23",
+      "start_cue": "C0153",
+      "end_cue": "C0170",
+      "description": "Amid crashing thunder, a large growling animal menaces the robot while the current sweeps it helplessly toward a dangerous waterfall.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.47,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.35,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.08,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "waterfall",
+        "river",
+        "growling",
+        "storm"
+      ],
+      "text_visibility": "low",
+      "candidate": "K04",
+      "id": "S05"
+    },
+    {
+      "title": "Robot Struggles After the Fall",
+      "start_ms": 790690,
+      "end_ms": 1041508,
+      "start": "00:13:10",
+      "end": "00:17:21",
+      "start_cue": "C0173",
+      "end_cue": "C0234",
+      "description": "Badly damaged from its fall, the robot drags itself through the forest, stepping through animal homes and causing frightened whimpers and yelps in a mostly comic but chaotic sequence.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "crash",
+        "injured",
+        "forest",
+        "chaos"
+      ],
+      "text_visibility": "low",
+      "candidate": "K05",
+      "id": "S06"
+    },
+    {
+      "title": "First Swim and Flight Lessons",
+      "start_ms": 1234401,
+      "end_ms": 1265765,
+      "start": "00:20:34",
+      "end": "00:21:05",
+      "start_cue": "C0319",
+      "end_cue": "C0331",
+      "description": "The robot pushes the baby gosling to eat, swim and fly; he coughs and struggles in the pond, then screams as he's tossed into the air to try flying and crashes down.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "drowning",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.25,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gosling",
+        "swimming",
+        "flying",
+        "pond"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S07"
+    },
+    {
+      "title": "Fox Teaches Eating (With a Sting)",
+      "start_ms": 1270804,
+      "end_ms": 1418918,
+      "start": "00:21:10",
+      "end": "00:23:38",
+      "start_cue": "C0332",
+      "end_cue": "C0398",
+      "description": "A fox who admits he might eat the gosling instead teaches him to find food, including disguising himself as a bear to raid a beehive, which ends with the gosling chased and stung by bees.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "phobia_animals",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.67,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.63,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fox",
+        "bees",
+        "bear disguise",
+        "sting"
+      ],
+      "text_visibility": "high",
+      "candidate": "K07",
+      "id": "S08"
+    },
+    {
+      "title": "Forced Swimming Lesson",
+      "start_ms": 1460293,
+      "end_ms": 1494094,
+      "start": "00:24:20",
+      "end": "00:24:54",
+      "start_cue": "C0417",
+      "end_cue": "C0432",
+      "description": "The fox tries to teach the gosling to swim by repeatedly tossing him into the water; the gosling coughs, gasps and screams each time before the robot steps in.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "drowning",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "swim",
+        "toss",
+        "gosling",
+        "water"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S09"
+    },
+    {
+      "title": "Mocking the Tree-Cutter",
+      "start_ms": 1538071,
+      "end_ms": 1571705,
+      "start": "00:25:38",
+      "end": "00:26:11",
+      "start_cue": "C0451",
+      "end_cue": "C0467",
+      "description": "A group of animals laughs at and taunts a squirrel obsessed with cutting down a huge tree, calling him names while he angrily threatens back.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "mockery",
+        "squirrel",
+        "tree",
+        "taunting"
+      ],
+      "text_visibility": "high",
+      "candidate": "K09",
+      "id": "S10"
+    },
+    {
+      "title": "Discovered and Startled by Thunder",
+      "start_ms": 1761928,
+      "end_ms": 1784551,
+      "start": "00:29:21",
+      "end": "00:29:44",
+      "start_cue": "C0544",
+      "end_cue": "C0553",
+      "description": "The tree-cutter confronts the robot and gosling for copying his home design just as a sudden thunderclap startles the gosling into frightened whimpering.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "thunder",
+        "confrontation",
+        "startled"
+      ],
+      "text_visibility": "high",
+      "candidate": "K11",
+      "id": "S11"
+    },
+    {
+      "title": "Another Creature Flees in Fear",
+      "start_ms": 1983249,
+      "end_ms": 2007741,
+      "start": "00:33:03",
+      "end": "00:33:27",
+      "start_cue": "C0622",
+      "end_cue": "C0632",
+      "description": "When the gosling tries to greet a potential animal friend, the frightened creature screams and runs away, leaving him hurt and confused.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "rejection",
+        "scream",
+        "run away"
+      ],
+      "text_visibility": "high",
+      "candidate": "K12",
+      "id": "S12"
+    },
+    {
+      "title": "Betting on the Swim Test",
+      "start_ms": 2061227,
+      "end_ms": 2130563,
+      "start": "00:34:21",
+      "end": "00:35:30",
+      "start_cue": "C0659",
+      "end_cue": "C0690",
+      "description": "Young opossums gleefully bet on whether the gosling will drown while he thrashes and struggles learning to swim in open water.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "drowning",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.73,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "swim test",
+        "opossums",
+        "betting",
+        "drowning joke"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S13"
+    },
+    {
+      "title": "Attacked as a Runt",
+      "start_ms": 2188922,
+      "end_ms": 2267734,
+      "start": "00:36:28",
+      "end": "00:37:47",
+      "start_cue": "C0710",
+      "end_cue": "C0745",
+      "description": "Other geese mock the gosling for being different and unwelcome, calling him a monster's child, and then a large aggressive goose violently attacks him in the water until the robot rescues him.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "discrimination",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "bullying",
+        "attack",
+        "geese",
+        "runt",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S14"
+    },
+    {
+      "title": "The Truth About His Family",
+      "start_ms": 2310143,
+      "end_ms": 2450817,
+      "start": "00:38:30",
+      "end": "00:40:50",
+      "start_cue": "C0757",
+      "end_cue": "C0809",
+      "description": "The gosling learns that the robot he called mother accidentally killed his real family, and he furiously rejects her, sobbing that she is not truly his mother.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "truth",
+        "family",
+        "grief",
+        "rejection"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S15"
+    },
+    {
+      "title": "A Frightening Fall From the Sky",
+      "start_ms": 2973907,
+      "end_ms": 2995929,
+      "start": "00:49:33",
+      "end": "00:49:55",
+      "start_cue": "C0957",
+      "end_cue": "C0967",
+      "description": "While practicing flying, the gosling loses control mid-air, screaming as he plummets before catching himself.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "flying lesson",
+        "fall",
+        "scream"
+      ],
+      "text_visibility": "high",
+      "candidate": "K16",
+      "id": "S16"
+    },
+    {
+      "title": "Storm Shelter Becomes a Trap",
+      "start_ms": 3762562,
+      "end_ms": 3957590,
+      "start": "01:02:42",
+      "end": "01:05:57",
+      "start_cue": "C1192",
+      "end_cue": "C1263",
+      "description": "Migrating geese take shelter from a storm inside a strange building full of robots that treat them as an 'infestation,' triggering alarms and a frantic chase to escape.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "storm",
+        "shelter",
+        "alarm",
+        "chase",
+        "robots"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S17"
+    },
+    {
+      "title": "Predators and Prey Trapped Together",
+      "start_ms": 4052752,
+      "end_ms": 4206072,
+      "start": "01:07:32",
+      "end": "01:10:06",
+      "start_cue": "C1298",
+      "end_cue": "C1343",
+      "description": "Sheltering together from the storm, natural predators and prey animals panic and start fighting, terrified they will be eaten or hurt before order is restored.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.46,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "shelter",
+        "predators",
+        "prey",
+        "fight",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S18"
+    },
+    {
+      "title": "A Tense Truce",
+      "start_ms": 4239706,
+      "end_ms": 4293460,
+      "start": "01:10:39",
+      "end": "01:11:33",
+      "start_cue": "C1360",
+      "end_cue": "C1379",
+      "description": "One animal warns the frightened, quarreling group that anyone who breaks the peace will die, forcing an uneasy truce among natural enemies stuck together.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "truce",
+        "threat",
+        "predators",
+        "tension"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S19"
+    },
+    {
+      "title": "The Company Comes Calling",
+      "start_ms": 4551951,
+      "end_ms": 4655121,
+      "start": "01:15:51",
+      "end": "01:17:35",
+      "start_cue": "C1447",
+      "end_cue": "C1480",
+      "description": "A cheerfully sinister company robot arrives to take the robot back for 'fixing,' speaking pleasantly while making clear she is unfeeling and will not be denied.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.08,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "company robot",
+        "creepy",
+        "capture threat"
+      ],
+      "text_visibility": "high",
+      "candidate": null,
+      "id": "S20"
+    },
+    {
+      "title": "Captured and Seemingly Lost",
+      "start_ms": 4665065,
+      "end_ms": 5057557,
+      "start": "01:17:45",
+      "end": "01:24:17",
+      "start_cue": "C1481",
+      "end_cue": "C1584",
+      "description": "Armed company robots attack with explosions, chase and capture the robot to erase her memories; she is struck down and appears lifeless until the gosling's heartfelt words revive her.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.1,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "battle",
+        "capture",
+        "explosions",
+        "collapse",
+        "revival"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S21"
+    },
+    {
+      "title": "The Island Fights Back",
+      "start_ms": 5066499,
+      "end_ms": 5250517,
+      "start": "01:24:26",
+      "end": "01:27:30",
+      "start_cue": "C1587",
+      "end_cue": "C1640",
+      "description": "All the island's animals band together in an all-out battle against the company's armed robots, dodging blasts and explosions to save their friend.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.37,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "battle",
+        "animals unite",
+        "explosions",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S22"
+    },
+    {
+      "title": "A Painful Goodbye",
+      "start_ms": 5323156,
+      "end_ms": 5443243,
+      "start": "01:28:43",
+      "end": "01:30:43",
+      "start_cue": "C1663",
+      "end_cue": "C1690",
+      "description": "To protect everyone she loves, the robot decides she must leave the island, leading to a tearful farewell as the gosling begs her not to go.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goodbye",
+        "farewell",
+        "crying",
+        "separation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K28",
+      "id": "S23"
+    }
+  ]
+}

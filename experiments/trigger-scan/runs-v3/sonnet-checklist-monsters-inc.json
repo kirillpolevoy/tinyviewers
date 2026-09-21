@@ -1,0 +1,1465 @@
+{
+  "arm": "sonnet-checklist",
+  "film": "monsters-inc",
+  "label": "r1",
+  "movie": {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "imdb_id": "tt0198781",
+    "track": "data/monsters-inc.srt"
+  },
+  "model": "claude-sonnet-5",
+  "taxonomy": "taxonomy-v2",
+  "prompt": "build-scenes.js --context whole (whole transcript + Jev checklist)",
+  "jev_run": "2026-09-21T01-01-38-jev-v3-universal-monsters-inc.json",
+  "jev_candidates": 32,
+  "started_at": "2026-09-21T02:03:54.532Z",
+  "wall_s": 223.122,
+  "latency_ms": 223121,
+  "usage": {
+    "input_tokens": 51517,
+    "cache_creation_input_tokens": 3668,
+    "cache_read_input_tokens": 0,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 3668,
+      "ephemeral_1h_input_tokens": 0
+    },
+    "output_tokens": 21215,
+    "service_tier": "standard",
+    "inference_geo": "global"
+  },
+  "input_tokens": 55185,
+  "output_tokens": 21215,
+  "cost_usd": 0.324354,
+  "returned_scenes": 30,
+  "invalid_cues": 0,
+  "dropped_zero_severity": 0,
+  "dropped_duplicate": 0,
+  "scenes": [
+    {
+      "title": "Opening scare simulation",
+      "start_ms": 132807,
+      "end_ms": 186989,
+      "start": "00:02:12",
+      "end": "00:03:06",
+      "start_cue": "C0011",
+      "end_cue": "C0024",
+      "description": "A monster creeps toward a sleeping child's bed in a training exercise, growls and screams follow before an alarm reveals it was only practice.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.97,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.19,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "bedroom",
+        "alarm",
+        "training",
+        "screaming"
+      ],
+      "text_visibility": "low",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Randall startles Mike",
+      "start_ms": 656985,
+      "end_ms": 673258,
+      "start": "00:10:56",
+      "end": "00:11:13",
+      "start_cue": "C0281",
+      "end_cue": "C0291",
+      "description": "Randall camouflages himself and pops out to frighten his coworker Mike, who jumps and yells before covering that he wasn't scared.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.97,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.73,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "randall",
+        "camouflage",
+        "surprise",
+        "sneak attack"
+      ],
+      "text_visibility": "high",
+      "candidate": "K05",
+      "id": "S02"
+    },
+    {
+      "title": "Scare floor: children scream, near miss",
+      "start_ms": 891829,
+      "end_ms": 1016014,
+      "start": "00:14:51",
+      "end": "00:16:56",
+      "start_cue": "C0352",
+      "end_cue": "C0413",
+      "description": "Monsters scare children behind bedroom doors while children's screams are heard repeatedly; one monster panics after a child almost touches him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.32,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scare floor",
+        "children screaming",
+        "doors",
+        "workplace"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S03"
+    },
+    {
+      "title": "Red alert: contamination scare",
+      "start_ms": 1061806,
+      "end_ms": 1148327,
+      "start": "00:17:41",
+      "end": "00:19:08",
+      "start_cue": "C0440",
+      "end_cue": "C0481",
+      "description": "A monster is accidentally touched by a child's sock, triggering a loud red alert; a decontamination team straps him down and shears off his fur while he screams in fear.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "red alert",
+        "decontamination",
+        "shears",
+        "sirens"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S04"
+    },
+    {
+      "title": "Randall sneaks up on Mike again",
+      "start_ms": 1258377,
+      "end_ms": 1290772,
+      "start": "00:20:58",
+      "end": "00:21:30",
+      "start_cue": "C0537",
+      "end_cue": "C0552",
+      "description": "Randall appears suddenly behind Mike, making him jump, then needles him about paperwork.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "randall",
+        "sneak",
+        "startle"
+      ],
+      "text_visibility": "high",
+      "candidate": "K09",
+      "id": "S05"
+    },
+    {
+      "title": "Boo surprises Sulley in the bedroom",
+      "start_ms": 1393451,
+      "end_ms": 1450710,
+      "start": "00:23:13",
+      "end": "00:24:10",
+      "start_cue": "C0598",
+      "end_cue": "C0621",
+      "description": "A little human girl (Boo) suddenly appears and chases the startled monster Sulley around a bedroom, with loud crashing toys.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.25,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "toddler",
+        "chase",
+        "toys",
+        "surprise"
+      ],
+      "text_visibility": "low",
+      "candidate": "K10",
+      "id": "S06"
+    },
+    {
+      "title": "Sulley terrified of Boo",
+      "start_ms": 1485514,
+      "end_ms": 1512107,
+      "start": "00:24:45",
+      "end": "00:25:12",
+      "start_cue": "C0631",
+      "end_cue": "C0642",
+      "description": "Sulley screams and stammers in fear as Boo happily approaches him, a comedic role-reversal where the monster is scared of the child.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "role reversal",
+        "monster scared",
+        "giggling child"
+      ],
+      "text_visibility": "low",
+      "candidate": "K11",
+      "id": "S07"
+    },
+    {
+      "title": "Child discovered at restaurant, panic",
+      "start_ms": 1623150,
+      "end_ms": 1712469,
+      "start": "00:27:03",
+      "end": "00:28:32",
+      "start_cue": "C0693",
+      "end_cue": "C0742",
+      "description": "Diners at a restaurant spot the human child and scream in terror; sirens wail as a CDA emergency team rushes in to seal off and decontaminate the area.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "restaurant",
+        "panic",
+        "cda",
+        "sirens",
+        "evacuation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S08"
+    },
+    {
+      "title": "Boo's scream shatters lights in the apartment",
+      "start_ms": 1758958,
+      "end_ms": 1850842,
+      "start": "00:29:18",
+      "end": "00:30:50",
+      "start_cue": "C0764",
+      "end_cue": "C0821",
+      "description": "While hiding the child in their apartment, Mike and Sulley panic as her crying causes electrical buzzing and light bulbs to burst; Mike calls her 'a killing machine.'",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "apartment",
+        "light bulbs",
+        "hiding",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S09"
+    },
+    {
+      "title": "Boo fears the closet monster",
+      "start_ms": 1961970,
+      "end_ms": 1991561,
+      "start": "00:32:41",
+      "end": "00:33:11",
+      "start_cue": "C0874",
+      "end_cue": "C0888",
+      "description": "Boo becomes frightened that Randall will emerge from her closet to scare her; Sulley shows her it's empty to comfort her.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.49,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "closet",
+        "monster under bed",
+        "fear",
+        "comfort"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S10"
+    },
+    {
+      "title": "Evading the CDA agents",
+      "start_ms": 2176025,
+      "end_ms": 2183260,
+      "start": "00:36:16",
+      "end": "00:36:23",
+      "start_cue": "C0975",
+      "end_cue": "C0980",
+      "description": "Mike and Sulley are chased and briefly grabbed by CDA agents investigating the missing child.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "cda agents",
+        "chase",
+        "capture attempt"
+      ],
+      "text_visibility": "high",
+      "candidate": "K16",
+      "id": "S11"
+    },
+    {
+      "title": "Boo briefly goes missing",
+      "start_ms": 2330186,
+      "end_ms": 2347063,
+      "start": "00:38:50",
+      "end": "00:39:07",
+      "start_cue": "C1044",
+      "end_cue": "C1053",
+      "description": "Mike frantically searches a restroom for Boo after losing track of her, panicking that she's gone.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "hide and seek",
+        "missing child",
+        "restroom",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K18",
+      "id": "S12"
+    },
+    {
+      "title": "Randall's deadly vow",
+      "start_ms": 2404029,
+      "end_ms": 2456809,
+      "start": "00:40:04",
+      "end": "00:40:56",
+      "start_cue": "C1073",
+      "end_cue": "C1104",
+      "description": "Randall angrily vows that whoever let the child escape will be killed, while Mike and Sulley scramble nervously nearby.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "threat",
+        "randall",
+        "revenge"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S13"
+    },
+    {
+      "title": "Sulley thrown into garbage machinery",
+      "start_ms": 2728533,
+      "end_ms": 2822757,
+      "start": "00:45:28",
+      "end": "00:47:02",
+      "start_cue": "C1244",
+      "end_cue": "C1270",
+      "description": "Sulley is hurled into a grinding, chopping garbage-processing area after being flagged as contaminated; loud crushing sounds play while Mike frantically searches and calls for him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "garbage chute",
+        "machinery",
+        "grinding",
+        "missing friend"
+      ],
+      "text_visibility": "low",
+      "candidate": "K22",
+      "id": "S14"
+    },
+    {
+      "title": "Chaotic factory chase",
+      "start_ms": 2877556,
+      "end_ms": 2906418,
+      "start": "00:47:57",
+      "end": "00:48:26",
+      "start_cue": "C1304",
+      "end_cue": "C1324",
+      "description": "Boo's uncontrollable laughter causes light bulbs to shatter loudly while the group frantically runs through the factory being chased.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "light bulbs",
+        "running",
+        "factory"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S15"
+    },
+    {
+      "title": "Randall grabs Mike in his secret lab",
+      "start_ms": 3095582,
+      "end_ms": 3106388,
+      "start": "00:51:35",
+      "end": "00:51:46",
+      "start_cue": "C1375",
+      "end_cue": "C1382",
+      "description": "Randall yanks and threatens Mike, demanding to know where the child is hidden, in his secret laboratory.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.09,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "secret lab",
+        "kidnapping",
+        "threat",
+        "randall"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S16"
+    },
+    {
+      "title": "Mike trapped in the scream extractor",
+      "start_ms": 3128749,
+      "end_ms": 3254243,
+      "start": "00:52:08",
+      "end": "00:54:14",
+      "start_cue": "C1391",
+      "end_cue": "C1457",
+      "description": "Randall straps Mike near a menacing machine designed to violently pull out screams; Mike is sucked toward it, screaming for help before being caught.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.39,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "extractor machine",
+        "trapped",
+        "help",
+        "villain"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S17"
+    },
+    {
+      "title": "Sulley forced to roar at Boo",
+      "start_ms": 3313608,
+      "end_ms": 3352346,
+      "start": "00:55:13",
+      "end": "00:55:52",
+      "start_cue": "C1494",
+      "end_cue": "C1520",
+      "description": "Waternoose forces Sulley to demonstrate scaring on Boo without warning; his ferocious roar makes her shriek in terror and cry, devastating both of them.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "forced roar",
+        "child crying",
+        "betrayal",
+        "training demo"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S18"
+    },
+    {
+      "title": "Waternoose's dark plan revealed",
+      "start_ms": 3359155,
+      "end_ms": 3450141,
+      "start": "00:55:59",
+      "end": "00:57:30",
+      "start_cue": "C1524",
+      "end_cue": "C1566",
+      "description": "Waternoose discovers Boo hiding and coldly declares he will 'take care of' the child, revealing a menacing plan under the guise of protecting the company.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "villain reveal",
+        "menace",
+        "authority figure",
+        "child in danger"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S19"
+    },
+    {
+      "title": "Banishment to the Himalayas",
+      "start_ms": 3450182,
+      "end_ms": 3532430,
+      "start": "00:57:30",
+      "end": "00:58:52",
+      "start_cue": "C1567",
+      "end_cue": "C1603",
+      "description": "Waternoose banishes Sulley and Mike by shoving them through a door into a frozen mountain wilderness, leaving them stranded far from home.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.44,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.47,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "banishment",
+        "exile",
+        "himalayas",
+        "snow"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S20"
+    },
+    {
+      "title": "Risking the blizzard",
+      "start_ms": 3626600,
+      "end_ms": 3640610,
+      "start": "01:00:26",
+      "end": "01:00:40",
+      "start_cue": "C1655",
+      "end_cue": "C1662",
+      "description": "Despite being warned never to go out in a blizzard, Sulley insists on heading out into the dangerous storm to save Boo.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "dangerous_act",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.12,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "blizzard",
+        "warning ignored",
+        "danger",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K28",
+      "id": "S21"
+    },
+    {
+      "title": "Mike and Sulley's friendship breaks down",
+      "start_ms": 3671380,
+      "end_ms": 3735168,
+      "start": "01:01:11",
+      "end": "01:02:15",
+      "start_cue": "C1679",
+      "end_cue": "C1706",
+      "description": "Stranded and upset, Mike angrily tells Sulley their friendship is over and refuses to help him rescue Boo, leaving Sulley to go alone.",
+      "severity": {
+        "5-7": 0,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "friendship",
+        "argument",
+        "abandonment"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S22"
+    },
+    {
+      "title": "Alone in the blizzard",
+      "start_ms": 3758337,
+      "end_ms": 3805108,
+      "start": "01:02:38",
+      "end": "01:03:25",
+      "start_cue": "C1707",
+      "end_cue": "C1714",
+      "description": "Sulley struggles alone through the howling blizzard, and a distant child's scream is heard, hinting Boo may be in danger.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.34,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "blizzard",
+        "alone",
+        "distant scream",
+        "storm"
+      ],
+      "text_visibility": "low",
+      "candidate": "K29",
+      "id": "S23"
+    },
+    {
+      "title": "Battle with Randall over the extractor",
+      "start_ms": 3860309,
+      "end_ms": 3934648,
+      "start": "01:04:20",
+      "end": "01:05:34",
+      "start_cue": "C1739",
+      "end_cue": "C1780",
+      "description": "Sulley fights Randall to stop him from using the scream-extraction machine on Boo; punches are thrown and Boo is in direct danger during the struggle.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fight",
+        "extractor",
+        "rescue",
+        "villain battle"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S24"
+    },
+    {
+      "title": "High-speed door chase above a drop",
+      "start_ms": 4048005,
+      "end_ms": 4119202,
+      "start": "01:07:28",
+      "end": "01:08:39",
+      "start_cue": "C1851",
+      "end_cue": "C1877",
+      "description": "Sulley and Mike ride a runaway door through the factory's vast door-storage system, dangling and screaming above a dizzying drop while being chased.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.4,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "heights",
+        "doors",
+        "runaway ride"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S25"
+    },
+    {
+      "title": "Randall corners and taunts Sulley",
+      "start_ms": 4301869,
+      "end_ms": 4325388,
+      "start": "01:11:41",
+      "end": "01:12:05",
+      "start_cue": "C1957",
+      "end_cue": "C1965",
+      "description": "Randall traps Sulley, mocking him as 'pathetic' and threatening that 'his time is up,' vowing to take care of the child himself.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.55,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "taunt",
+        "threat",
+        "cornered",
+        "villain"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S26"
+    },
+    {
+      "title": "Randall's comedic defeat",
+      "start_ms": 4359863,
+      "end_ms": 4384553,
+      "start": "01:12:39",
+      "end": "01:13:04",
+      "start_cue": "C1980",
+      "end_cue": "C1990",
+      "description": "Sulley throws Randall through a door into the human world where he is comically attacked by an alligator, ending his threat.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.43,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.44,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "comeuppance",
+        "alligator",
+        "comic ending"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S27"
+    },
+    {
+      "title": "Waternoose grabs for Boo, admits his plan",
+      "start_ms": 4495237,
+      "end_ms": 4559734,
+      "start": "01:14:55",
+      "end": "01:15:59",
+      "start_cue": "C2053",
+      "end_cue": "C2087",
+      "description": "Waternoose seizes Boo and, cornered, furiously confesses on camera that he'll 'kidnap a thousand children' to save his company, showing his true villainy.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.44,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "kidnapping",
+        "confession",
+        "villain",
+        "cornered"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S28"
+    },
+    {
+      "title": "Boo's door closes, seemingly for good",
+      "start_ms": 4798719,
+      "end_ms": 4813631,
+      "start": "01:19:58",
+      "end": "01:20:13",
+      "start_cue": "C2172",
+      "end_cue": "C2176",
+      "description": "After a joyful goodbye, Sulley watches Boo's door and its shredding machine as their connection appears to end for good, a bittersweet moment of loss.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goodbye",
+        "separation",
+        "door shredder",
+        "loss"
+      ],
+      "text_visibility": "low",
+      "candidate": "K30",
+      "id": "S29"
+    },
+    {
+      "title": "Post-credits jump scare gag",
+      "start_ms": 4900058,
+      "end_ms": 4901252,
+      "start": "01:21:40",
+      "end": "01:21:41",
+      "start_cue": "C2202",
+      "end_cue": "C2202",
+      "description": "A new child gasps in surprise as Mike's closet door opens for a comedic stand-up routine, a brief startle played for laughs.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "post-credits",
+        "startle",
+        "closet door"
+      ],
+      "text_visibility": "low",
+      "candidate": "K31",
+      "id": "S30"
+    }
+  ]
+}

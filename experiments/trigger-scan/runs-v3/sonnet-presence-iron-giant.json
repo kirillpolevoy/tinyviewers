@@ -1,0 +1,300 @@
+{
+  "arm": "sonnet-presence",
+  "film": "iron-giant",
+  "track": "iron-giant",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:27:06.623Z",
+  "wall_s": 9.141,
+  "scenes_asked": 13,
+  "input_tokens": 12027,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 45825,
+  "output_tokens": 1363,
+  "cost_usd": 0.046848999999999995,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Ship Lost in Storm",
+      "start_cue": "C0001",
+      "end_cue": "C0008",
+      "start_ms": 74960,
+      "end_ms": 101558,
+      "present": [
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "deep_dark_water",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2699
+    },
+    {
+      "id": "S02",
+      "title": "Something Unseen in the Dark",
+      "start_cue": "C0092",
+      "end_cue": "C0098",
+      "start_ms": 437562,
+      "end_ms": 511259,
+      "present": [
+        {
+          "id": "darkness",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "alien"
+      ],
+      "latency_ms": 2031
+    },
+    {
+      "id": "S03",
+      "title": "Hogarth Missing at Night",
+      "start_cue": "C0099",
+      "end_cue": "C0113",
+      "start_ms": 687395,
+      "end_ms": 842799,
+      "present": [
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1626
+    },
+    {
+      "id": "S04",
+      "title": "Meeting the Giant Robot",
+      "start_cue": "C0193",
+      "end_cue": "C0227",
+      "start_ms": 1103441,
+      "end_ms": 1315068,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "gun"
+      ],
+      "latency_ms": 2343
+    },
+    {
+      "id": "S05",
+      "title": "Giant Hit by Train",
+      "start_cue": "C0281",
+      "end_cue": "C0296",
+      "start_ms": 1499378,
+      "end_ms": 1574619,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "vehicle_crash",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2827
+    },
+    {
+      "id": "S06",
+      "title": "The Deer is Shot",
+      "start_cue": "C0666",
+      "end_cue": "C0699",
+      "start_ms": 3038720,
+      "end_ms": 3236584,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "gun"
+      ],
+      "latency_ms": 4080
+    },
+    {
+      "id": "S07",
+      "title": "Mansley Threatens Hogarth",
+      "start_cue": "C0700",
+      "end_cue": "C0736",
+      "start_ms": 3249806,
+      "end_ms": 3359790,
+      "present": [],
+      "talked_about_only": [
+        "robot_machine_being"
+      ],
+      "latency_ms": 2608
+    },
+    {
+      "id": "S08",
+      "title": "Giant Attacked, Turns into Weapon",
+      "start_cue": "C0792",
+      "end_cue": "C0827",
+      "start_ms": 3679277,
+      "end_ms": 3816914,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "gun",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 2016
+    },
+    {
+      "id": "S09",
+      "title": "Boys Trapped, Giant Rescues",
+      "start_cue": "C0834",
+      "end_cue": "C0841",
+      "start_ms": 3852283,
+      "end_ms": 3880602,
+      "present": [
+        {
+          "id": "heights",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 2438
+    },
+    {
+      "id": "S10",
+      "title": "Army Attacks the Giant in Town",
+      "start_cue": "C0842",
+      "end_cue": "C0885",
+      "start_ms": 3895118,
+      "end_ms": 4212100,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "gun",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "vehicle_crash",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 1952
+    },
+    {
+      "id": "S11",
+      "title": "Missile Launched, Facing Death",
+      "start_cue": "C0885",
+      "end_cue": "C0953",
+      "start_ms": 4210266,
+      "end_ms": 4480744,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "gun",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "explosion",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "vehicle_crash",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "hospital_illness",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 2392
+    },
+    {
+      "id": "S12",
+      "title": "The Giant's Sacrifice",
+      "start_cue": "C0954",
+      "end_cue": "C0963",
+      "start_ms": 4481370,
+      "end_ms": 4593106,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "explosion",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1571
+    },
+    {
+      "id": "S13",
+      "title": "Missing the Giant",
+      "start_cue": "C0964",
+      "end_cue": "C0975",
+      "start_ms": 4640029,
+      "end_ms": 4723403,
+      "present": [],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 1811
+    }
+  ]
+}

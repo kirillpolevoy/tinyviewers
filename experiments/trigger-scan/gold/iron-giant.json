@@ -1,0 +1,786 @@
+[
+  {
+    "id": "G01",
+    "title": "Storm at sea: sinking trawler meets the Giant",
+    "start_cue": "C0002",
+    "end_cue": "C0008",
+    "start": "00:01:17",
+    "end": "00:01:41",
+    "attributes": [
+      "fire_disaster",
+      "in_hazard",
+      "vehicle_crash"
+    ],
+    "visual_only": [
+      "vehicle_crash"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0002",
+      "C0003"
+    ],
+    "text_visibility": "medium",
+    "note": "Fisherman alone in a violent night storm, boat taking on water, calling Mayday. The worst part is wordless and follows C0008 (to about 00:02:30): the 'lighthouse' is the Giant's glowing eyes, the boat smashes into it and the man is thrown into the sea (he survives). Only the Mayday is in the text."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL: diner, Hogarth begs to keep a pet",
+    "start_cue": "C0010",
+    "end_cue": "C0029",
+    "start": "00:03:06",
+    "end": "00:03:56",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm comic mother/son talk about keeping a squirrel. Mentions 'cage' and 'set him free' but nothing is happening."
+  },
+  {
+    "id": "G02",
+    "title": "Home alone: horror movie on TV, noises on the roof",
+    "start_cue": "C0092",
+    "end_cue": "C0097",
+    "start": "00:07:17",
+    "end": "00:07:53",
+    "attributes": [
+      "unseen_threat"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0094",
+      "C0095"
+    ],
+    "text_visibility": "low",
+    "note": "Hogarth alone at night watching a brain-monster B-movie ('Who's there?' / 'No. No. No!' are the TV film's lines) while something unseen tears the antenna off the roof. The on-TV attack is a film within the film, so only unseen_threat is tagged. Mild."
+  },
+  {
+    "id": "G03",
+    "title": "Hogarth follows the trail into the dark woods alone",
+    "start_cue": "C0098",
+    "end_cue": "C0098",
+    "start": "00:08:28",
+    "end": "00:08:31",
+    "attributes": [
+      "unseen_threat"
+    ],
+    "visual_only": [
+      "unseen_threat"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0098"
+    ],
+    "text_visibility": "low",
+    "note": "Essentially wordless: after C0098 (00:08:28) Hogarth goes out at night with a BB gun and a flashlight, finds the chewed antenna and a path of snapped trees, and walks through the dark forest to the power station (runs until about 00:11:27). Bounded by the single nearest cue. Spooky music, sudden noises. Did not tag dangerous_act: his mother only forbade scary movies and late snacks, not this specifically."
+  },
+  {
+    "id": "G04",
+    "title": "Mother comes home to an empty house",
+    "start_cue": "C0099",
+    "end_cue": "C0103",
+    "start": "00:11:27",
+    "end": "00:11:54",
+    "attributes": [
+      "child_lost"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0101",
+      "C0103"
+    ],
+    "text_visibility": "medium",
+    "note": "Annie finds the house empty at night and calls for Hogarth with growing alarm, then drives out to search. Mild; tagged child_lost for a parent calling for a missing child."
+  },
+  {
+    "id": "G05",
+    "title": "The Giant appears at the power station and is electrocuted",
+    "start_cue": "C0104",
+    "end_cue": "C0105",
+    "start": "00:11:55",
+    "end": "00:13:40",
+    "attributes": [
+      "monster_threatens",
+      "in_hazard",
+      "serious_injury",
+      "unconscious",
+      "terrified"
+    ],
+    "visual_only": [
+      "monster_threatens",
+      "in_hazard",
+      "serious_injury",
+      "unconscious"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0105"
+    ],
+    "text_visibility": "low",
+    "note": "Almost entirely wordless between C0104 (00:11:55, Annie's last call, used only as the nearest bounding cue) and C0105 (00:13:37). The huge Giant looms out of the dark behind Hogarth, eats the substation, gets tangled in high-voltage lines and is electrocuted while screaming metallically; Hogarth flees, returns to pull the shutoff switch, the Giant collapses, then stirs and Hogarth runs screaming 'Help!'. Most frightening sequence in the first half for young children. monster_threatens is from Hogarth's point of view at this moment (the Giant is not yet known to be friendly)."
+  },
+  {
+    "id": "G06",
+    "title": "Classmates mock Hogarth",
+    "start_cue": "C0138",
+    "end_cue": "C0142",
+    "start": "00:15:22",
+    "end": "00:15:41",
+    "attributes": [
+      "bullying"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0138",
+      "C0142"
+    ],
+    "text_visibility": "high",
+    "note": "'What would you know about it, Poindexter?' / 'Shut up, you little spaz!'. Brief classroom put-downs. Just before it (C0127-C0131) the class watches a jaunty duck-and-cover film that says 'Atomic holocaust!'; not flagged separately (cartoon filmstrip, nobody is in danger) but a parent of an 8-10 may want to know."
+  },
+  {
+    "id": "G07",
+    "title": "The Giant looms over Hogarth in the woods; Hogarth runs",
+    "start_cue": "C0199",
+    "end_cue": "C0200",
+    "start": "00:18:37",
+    "end": "00:20:21",
+    "attributes": [
+      "chased",
+      "monster_threatens",
+      "terrified"
+    ],
+    "visual_only": [
+      "chased",
+      "monster_threatens",
+      "terrified"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0200"
+    ],
+    "text_visibility": "low",
+    "note": "Wordless between C0199 (00:18:37) and C0200 (00:20:17): Hogarth wakes at night to find the Giant towering directly behind him, screams and runs through the forest with the Giant striding after him, until the Giant sits and shows him the shutoff switch. C0200 ('So, I guess you're not gonna hurt me, huh?') is the release. The Giant turns out to be harmless, but at this moment Hogarth believes he is being hunted."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL: Hogarth teaches the Giant 'rock' and 'tree'",
+    "start_cue": "C0203",
+    "end_cue": "C0226",
+    "start": "00:20:36",
+    "end": "00:21:53",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Gentle, funny language lesson. Nothing to flag."
+  },
+  {
+    "id": "G08",
+    "title": "Train hits the Giant",
+    "start_cue": "C0277",
+    "end_cue": "C0295",
+    "start": "00:24:47",
+    "end": "00:26:12",
+    "attributes": [
+      "vehicle_crash",
+      "serious_injury",
+      "believed_dead"
+    ],
+    "visual_only": [
+      "serious_injury"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0288",
+      "C0289",
+      "C0291",
+      "C0292"
+    ],
+    "text_visibility": "medium",
+    "note": "The Giant has eaten the rails; a train bears down while they try to fix the track ('The train is coming!'), hits the Giant at speed, derails, and the Giant is smashed into pieces. Hogarth's 'Oh, no, no, no, no' then 'You're alive!' shows he briefly thinks the Giant was killed (believed_dead is inferred from those two lines, moderately sure). Parts reassemble afterwards. The engineer is later said to have a concussion."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL (hard): Mansley phones his boss about the 'giant metal monster'",
+    "start_cue": "C0347",
+    "end_cue": "C0370",
+    "start": "00:29:57",
+    "end": "00:31:02",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard: Mansley retells earlier events ('It ate my car', 'It caused a train wreck!', 'A giant metal monster', 'This thing is a menace') in a comic office phone call. All recounted, no one is in danger, played for laughs."
+  },
+  {
+    "id": "G09",
+    "title": "Dean meets the Giant",
+    "start_cue": "C0508",
+    "end_cue": "C0517",
+    "start": "00:39:41",
+    "end": "00:40:15",
+    "attributes": [
+      "terrified",
+      "scary_looking"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0510",
+      "C0511",
+      "C0515"
+    ],
+    "text_visibility": "medium",
+    "note": "The Giant looms over the junkyard; Dean panics ('My God!', 'Run, kid! Run!') and Hogarth shouts 'Don't squash him!'. Short and comic; Hogarth is calm. monster_threatens not tagged because the Giant is friendly and known to be by Hogarth."
+  },
+  {
+    "id": "G10",
+    "title": "Mansley's paranoid rant at Hogarth",
+    "start_cue": "C0605",
+    "end_cue": "C0615",
+    "start": "00:45:08",
+    "end": "00:45:39",
+    "attributes": [
+      "adult_rages_at_child"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0606",
+      "C0613",
+      "C0615"
+    ],
+    "text_visibility": "high",
+    "note": "Mansley works himself into shouting at Hogarth over ice cream: 'I'm talking about your goldarned security, Hogarth!', 'blow it to kingdom come', 'destroy it before it destroys us'. Semi-comic. Unsure whether it counts as anger AT the child rather than a rant in his face; threatens_harm not tagged since the target (the Giant) is absent and it is a statement of intent."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL: swimming at the lake",
+    "start_cue": "C0644",
+    "end_cue": "C0661",
+    "start": "00:48:20",
+    "end": "00:50:05",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Happy cannonball scene at the lake; teasing ('You weenie!', 'You big baby!') is friendly. The Giant's splash washes Dean onto the road, played as a gag."
+  },
+  {
+    "id": "G11",
+    "title": "Hunters shoot the deer",
+    "start_cue": "C0671",
+    "end_cue": "C0682",
+    "start": "00:51:22",
+    "end": "00:52:27",
+    "attributes": [
+      "pet_animal_dies",
+      "animal_in_danger",
+      "guns_shooting"
+    ],
+    "visual_only": [
+      "guns_shooting"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0674",
+      "C0678",
+      "C0679",
+      "C0681"
+    ],
+    "text_visibility": "high",
+    "note": "The Giant and Hogarth quietly watch a deer; it bounds off, a gunshot rings out offscreen, and they find it dead with two hunters standing over it (the hunters flee yelling 'It's the monster!'). The Giant touches the body: 'It's dead.' 'They shot it with that gun.' 'Guns kill.' The Giant's eyes briefly narrow at the rifle (first hint of his weapon reflex). The shot itself is sound only, so guns_shooting is marked visual_only. Bambi-style animal death, quiet but heavy."
+  },
+  {
+    "id": "G12",
+    "title": "'You die?' - talk about death and souls",
+    "start_cue": "C0683",
+    "end_cue": "C0699",
+    "start": "00:52:52",
+    "end": "00:53:56",
+    "attributes": [
+      "grieving"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0683",
+      "C0684",
+      "C0688",
+      "C0690"
+    ],
+    "text_visibility": "high",
+    "note": "The Giant is sad about the deer; Hogarth explains 'Things die. It's part of life', confirms that he himself will die someday, and the Giant asks 'I die?'. Gentle and consoling ('souls don't die') but it is a sustained, direct conversation about mortality. grieving is a loose fit (the Giant mourns the deer)."
+  },
+  {
+    "id": "G13",
+    "title": "Mansley interrogates Hogarth and threatens to take him from his mother",
+    "start_cue": "C0700",
+    "end_cue": "C0732",
+    "start": "00:54:09",
+    "end": "00:55:42",
+    "attributes": [
+      "adult_rages_at_child",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0703",
+      "C0720",
+      "C0721",
+      "C0728",
+      "C0729"
+    ],
+    "text_visibility": "high",
+    "note": "Mansley traps Hogarth alone at night, barks 'Sit down!', shines a lamp in his face and threatens: 'You can't protect him, Hogarth, any more than you can protect your mother', 'You'll be taken away from her, Hogarth.' Hogarth breaks and gives up the Giant's location. The harm threatened is separation from his mother rather than physical. Not tagged betrayal (Hogarth never trusted Mansley) or child_taken (only threatened)."
+  },
+  {
+    "id": "G14",
+    "title": "Mansley chloroforms Hogarth",
+    "start_cue": "C0733",
+    "end_cue": "C0736",
+    "start": "00:55:43",
+    "end": "00:55:59",
+    "attributes": [
+      "unconscious",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "unconscious",
+      "physical_violence"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0734",
+      "C0736"
+    ],
+    "text_visibility": "low",
+    "note": "While saying 'This is only a bad dream', Mansley presses a chloroform-soaked cloth over Hogarth's face until he passes out. Lines give almost nothing away. physical_violence is a judgement call (forcible drugging of a child rather than hitting)."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL: Dean passes the Giant off as a sculpture",
+    "start_cue": "C0759",
+    "end_cue": "C0771",
+    "start": "00:59:15",
+    "end": "01:00:02",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Dean's comic art-dealer patter to the General and Mansley. The Army is present but nothing threatening happens; tone is comedic."
+  },
+  {
+    "id": "G15",
+    "title": "Play turns dangerous: the Giant's weapon fires at Hogarth",
+    "start_cue": "C0803",
+    "end_cue": "C0810",
+    "start": "01:01:59",
+    "end": "01:02:41",
+    "attributes": [
+      "transformation",
+      "guns_shooting"
+    ],
+    "visual_only": [
+      "transformation",
+      "guns_shooting"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0805",
+      "C0807",
+      "C0808"
+    ],
+    "text_visibility": "low",
+    "note": "Hogarth points a toy ray gun at the Giant in play. The Giant's eyes turn red, he goes blank ('Hey. What's wrong?') and fires an energy beam that narrowly misses Hogarth; Dean tackles Hogarth out of the way. Mostly visual. guns_shooting used for the Giant's beam weapon (the film itself calls him 'a big gun that walks'); blade_weapon ('other weapon that is not a gun') is the alternative reading."
+  },
+  {
+    "id": "G16",
+    "title": "Dean drives the Giant away",
+    "start_cue": "C0811",
+    "end_cue": "C0826",
+    "start": "01:02:42",
+    "end": "01:03:31",
+    "attributes": [
+      "abandoned"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0811",
+      "C0812",
+      "C0816",
+      "C0818",
+      "C0820"
+    ],
+    "text_visibility": "high",
+    "note": "Dean shouts 'Get back! I said, get back! I mean it!', calls him 'a weapon! A big gun that walks!' and 'You almost did that to Hogarth!'. The Giant, ashamed ('I not gun'), flees while Hogarth calls 'Come back!'. abandoned is a moderately confident fit: he is ordered away by the adult sheltering him, though he also chooses to run."
+  },
+  {
+    "id": "G17",
+    "title": "Two boys dangle and fall from a rooftop",
+    "start_cue": "C0834",
+    "end_cue": "C0841",
+    "start": "01:04:12",
+    "end": "01:04:40",
+    "attributes": [
+      "fall_from_height",
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0835",
+      "C0837",
+      "C0838",
+      "C0839",
+      "C0840"
+    ],
+    "text_visibility": "high",
+    "note": "A railing gives way and two boys hang from a high building: 'I don't wanna fall! Help!', 'I'm slipping!', 'I can't hold on much longer!'. They fall and the Giant catches them. Children in realistic danger, quick rescue."
+  },
+  {
+    "id": "G18",
+    "title": "The Army opens fire on the Giant in town",
+    "start_cue": "C0844",
+    "end_cue": "C0853",
+    "start": "01:05:03",
+    "end": "01:06:04",
+    "attributes": [
+      "guns_shooting",
+      "war_mass_violence",
+      "terrified"
+    ],
+    "visual_only": [
+      "war_mass_violence"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0845",
+      "C0851",
+      "C0852",
+      "C0853"
+    ],
+    "text_visibility": "medium",
+    "note": "Tanks and soldiers fire on the Giant in the main street while he is holding Hogarth; townspeople flee ('Run!', 'Stop shooting! There's a kid in his hands!'). Loud explosions. Hogarth's mother is in the crowd."
+  },
+  {
+    "id": "G19",
+    "title": "Jets chase the Giant and Hogarth; shot out of the sky",
+    "start_cue": "C0863",
+    "end_cue": "C0873",
+    "start": "01:06:43",
+    "end": "01:08:16",
+    "attributes": [
+      "chased",
+      "guns_shooting",
+      "fall_from_height"
+    ],
+    "visual_only": [
+      "fall_from_height"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0864",
+      "C0869",
+      "C0870",
+      "C0872",
+      "C0873"
+    ],
+    "text_visibility": "medium",
+    "note": "The Giant flees with Hogarth in his hand, discovers he can fly, and is hunted by fighter jets firing missiles. After 'Man, that was close!' a missile hits them ('No!' / 'Ha. Gotcha!') and they plummet and crash. Begins with a brief exhilarating stretch ('You can fly!'). guns_shooting covers jet cannon and missiles."
+  },
+  {
+    "id": "G20",
+    "title": "Giant thinks Hogarth is dead and turns into a war machine",
+    "start_cue": "C0874",
+    "end_cue": "C0880",
+    "start": "01:08:33",
+    "end": "01:09:37",
+    "attributes": [
+      "believed_dead",
+      "unconscious",
+      "transformation",
+      "war_mass_violence",
+      "terrified"
+    ],
+    "visual_only": [
+      "believed_dead",
+      "unconscious",
+      "transformation"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0878",
+      "C0879",
+      "C0880"
+    ],
+    "text_visibility": "low",
+    "note": "Largely wordless between C0876 and C0877. The Giant wakes in the crater, nudges Hogarth's limp body and gets no response, and grieves; when the Army shoots him again he transforms into a red-eyed weapon bristling with cannons and vaporises tanks; soldiers scream 'Retreat!'. The emotional core (a child apparently dead, a friend turned monster) is invisible to subtitles."
+  },
+  {
+    "id": "G21",
+    "title": "Annie and Dean find Hogarth unconscious",
+    "start_cue": "C0881",
+    "end_cue": "C0882",
+    "start": "01:09:47",
+    "end": "01:09:53",
+    "attributes": [
+      "unconscious",
+      "family_in_danger"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0881",
+      "C0882"
+    ],
+    "text_visibility": "high",
+    "note": "Annie screams 'Hogarth!' at her son's limp body; Dean: 'He's unconscious, but he's okay.' Brief, quickly reassured."
+  },
+  {
+    "id": "G22",
+    "title": "The Giant's rampage: fleeing soldiers, battleships fire",
+    "start_cue": "C0883",
+    "end_cue": "C0888",
+    "start": "01:09:53",
+    "end": "01:10:26",
+    "attributes": [
+      "chased",
+      "war_mass_violence",
+      "guns_shooting",
+      "transformation"
+    ],
+    "visual_only": [
+      "transformation"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0884",
+      "C0885",
+      "C0888"
+    ],
+    "text_visibility": "medium",
+    "note": "The weaponised Giant pursues a fleeing jeep ('It's gaining on us. Faster!'), battleships shell him, and he destroys everything sent at him ('Nothing can stop this thing!'). The Giant remains a terrifying red-eyed machine throughout. C0889-C0899 that follow (deciding to use the atomic bomb) are tense talk only and not flagged."
+  },
+  {
+    "id": "G23",
+    "title": "Hogarth wakes and runs back toward the battle",
+    "start_cue": "C0900",
+    "end_cue": "C0910",
+    "start": "01:11:00",
+    "end": "01:11:42",
+    "attributes": [
+      "sobbing_despair",
+      "dangerous_act",
+      "child_lost"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0900",
+      "C0903",
+      "C0908",
+      "C0909"
+    ],
+    "text_visibility": "medium",
+    "note": "Annie weeps over her son ('Oh, my baby, I'm so sorry'); he wakes, is told 'Are you crazy, kid? You're lucky to be alive!', and slips out of the car to run toward the fighting while she cries 'Hogarth, no!'. dangerous_act and child_lost are both modest fits."
+  },
+  {
+    "id": "G24",
+    "title": "Hogarth stands in front of the Giant's weapon",
+    "start_cue": "C0911",
+    "end_cue": "C0922",
+    "start": "01:11:53",
+    "end": "01:12:37",
+    "attributes": [
+      "family_in_danger",
+      "guns_shooting",
+      "transformation",
+      "sobbing_despair"
+    ],
+    "visual_only": [
+      "guns_shooting",
+      "transformation"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0913",
+      "C0914",
+      "C0915",
+      "C0916",
+      "C0921"
+    ],
+    "text_visibility": "medium",
+    "note": "Annie pleads 'No! Stop! My son is out there!' as the Army readies its attack. Hogarth faces the monstrous Giant, whose cannon is aimed at him and charging, and pleads 'It's me, Hogarth. Remember? ... You don't have to be a gun.' The Giant reverts ('It's okay. It's okay.'). The aimed weapon and the change back are visual."
+  },
+  {
+    "id": "G25",
+    "title": "Standoff: Mansley orders the missile launch",
+    "start_cue": "C0926",
+    "end_cue": "C0937",
+    "start": "01:12:47",
+    "end": "01:13:17",
+    "attributes": [
+      "guns_shooting"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0926",
+      "C0930",
+      "C0931",
+      "C0932",
+      "C0937"
+    ],
+    "text_visibility": "high",
+    "note": "Troops have weapons trained on the Giant and the boy while Dean, the General and Mansley shout over each other ('Don't shoot! Don't shoot!', 'Hold your fire! The boy's alive?'). Mansley grabs the radio: 'Launch the missile now!'. guns_shooting is for guns pointed (not fired) at Hogarth and the Giant."
+  },
+  {
+    "id": "G26",
+    "title": "Nuclear missile is coming: 'everyone will die'",
+    "start_cue": "C0938",
+    "end_cue": "C0953",
+    "start": "01:13:25",
+    "end": "01:14:40",
+    "attributes": [
+      "war_mass_violence",
+      "sobbing_despair",
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0942",
+      "C0943",
+      "C0944",
+      "C0945",
+      "C0951",
+      "C0953"
+    ],
+    "text_visibility": "high",
+    "note": "The missile is targeted on the town itself. 'There's no way to survive this', 'You mean, we're all going to... / To die', Mansley panics 'I want to live!' and tries to flee; Hogarth tells the Giant 'When it comes down everyone will die'; a townsperson asks about a shelter, 'It wouldn't matter.' The whole town, including the children, stands waiting to die. war_mass_violence is for an incoming bombing of a town."
+  },
+  {
+    "id": "G27",
+    "title": "The Giant's goodbye and sacrifice",
+    "start_cue": "C0954",
+    "end_cue": "C0963",
+    "start": "01:14:41",
+    "end": "01:16:33",
+    "attributes": [
+      "dies_now",
+      "loved_one_dies",
+      "believed_dead",
+      "sobbing_despair"
+    ],
+    "visual_only": [
+      "dies_now",
+      "loved_one_dies"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0954",
+      "C0957",
+      "C0958",
+      "C0959",
+      "C0960",
+      "C0962"
+    ],
+    "text_visibility": "medium",
+    "note": "'I fix.' 'You stay. I go. No following.' Hogarth, in tears: 'I love you.' The Giant flies up to meet the missile, closes his eyes, says 'Superman', and is destroyed in the explosion (wordless, between C0962 and C0963) as Hogarth and the town watch. The goodbye is in the text; the death itself is not. He is later shown reassembling, which does not help a 5-7 in the moment. dies_now is from the characters' and audience's view at this moment."
+  },
+  {
+    "id": "G28",
+    "title": "Epilogue: 'I miss him'",
+    "start_cue": "C0970",
+    "end_cue": "C0974",
+    "start": "01:17:40",
+    "end": "01:17:52",
+    "attributes": [
+      "grieving"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0972",
+      "C0974"
+    ],
+    "text_visibility": "high",
+    "note": "Hogarth is given the only recovered piece of the Giant and says 'I miss him.' Quiet sadness; followed by the hopeful final shot."
+  }
+]

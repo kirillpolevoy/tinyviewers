@@ -1,0 +1,2294 @@
+{
+  "arm": "haiku-4-5-windowed",
+  "track": "sdh",
+  "label": "r1",
+  "model": "claude-haiku-4-5",
+  "startedAt": "2026-09-20T23:47:37.173Z",
+  "windows": [
+    {
+      "windowId": "W001",
+      "startMs": 53554,
+      "endMs": 127502,
+      "cueIds": [
+        "C0001",
+        "C0022"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2741,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3981
+    },
+    {
+      "windowId": "W002",
+      "startMs": 131215,
+      "endMs": 207749,
+      "cueIds": [
+        "C0023",
+        "C0046"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0046",
+      "usage": {
+        "input_tokens": 2937,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 4240
+    },
+    {
+      "windowId": "W003",
+      "startMs": 220971,
+      "endMs": 288872,
+      "cueIds": [
+        "C0047",
+        "C0057"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 1,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0048",
+      "usage": {
+        "input_tokens": 2579,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3213
+    },
+    {
+      "windowId": "W004",
+      "startMs": 291959,
+      "endMs": 400316,
+      "cueIds": [
+        "C0058",
+        "C0083"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2937,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3060
+    },
+    {
+      "windowId": "W005",
+      "startMs": 409576,
+      "endMs": 528736,
+      "cueIds": [
+        "C0084",
+        "C0122"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0104",
+      "usage": {
+        "input_tokens": 3331,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2923
+    },
+    {
+      "windowId": "W006",
+      "startMs": 528821,
+      "endMs": 647647,
+      "cueIds": [
+        "C0123",
+        "C0163"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0123",
+      "usage": {
+        "input_tokens": 3359,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1773
+    },
+    {
+      "windowId": "W007",
+      "startMs": 650359,
+      "endMs": 741157,
+      "cueIds": [
+        "C0164",
+        "C0193"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0168",
+      "usage": {
+        "input_tokens": 3086,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1836
+    },
+    {
+      "windowId": "W008",
+      "startMs": 744745,
+      "endMs": 863404,
+      "cueIds": [
+        "C0194",
+        "C0236"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0221",
+      "usage": {
+        "input_tokens": 3322,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2254
+    },
+    {
+      "windowId": "W009",
+      "startMs": 863488,
+      "endMs": 931013,
+      "cueIds": [
+        "C0237",
+        "C0258"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0249",
+      "usage": {
+        "input_tokens": 2790,
+        "output_tokens": 126,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1913
+    },
+    {
+      "windowId": "W010",
+      "startMs": 941107,
+      "endMs": 1033574,
+      "cueIds": [
+        "C0259",
+        "C0290"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0275",
+      "usage": {
+        "input_tokens": 2973,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1967
+    },
+    {
+      "windowId": "W011",
+      "startMs": 1060143,
+      "endMs": 1124373,
+      "cueIds": [
+        "C0291",
+        "C0311"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0296",
+      "usage": {
+        "input_tokens": 2856,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1786
+    },
+    {
+      "windowId": "W012",
+      "startMs": 1129004,
+      "endMs": 1201241,
+      "cueIds": [
+        "C0312",
+        "C0333"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0322",
+      "usage": {
+        "input_tokens": 2879,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1809
+    },
+    {
+      "windowId": "W013",
+      "startMs": 1216424,
+      "endMs": 1335918,
+      "cueIds": [
+        "C0334",
+        "C0376"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0338",
+      "usage": {
+        "input_tokens": 3383,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1779
+    },
+    {
+      "windowId": "W014",
+      "startMs": 1336002,
+      "endMs": 1427092,
+      "cueIds": [
+        "C0377",
+        "C0407"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 1,
+        "separation_abandonment": 1,
+        "injury_pain": 1,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0387",
+      "usage": {
+        "input_tokens": 3095,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1774
+    },
+    {
+      "windowId": "W015",
+      "startMs": 1432932,
+      "endMs": 1504127,
+      "cueIds": [
+        "C0408",
+        "C0428"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0410",
+      "usage": {
+        "input_tokens": 2827,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1843
+    },
+    {
+      "windowId": "W016",
+      "startMs": 1508883,
+      "endMs": 1581371,
+      "cueIds": [
+        "C0429",
+        "C0443"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0431",
+      "usage": {
+        "input_tokens": 2657,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1667
+    },
+    {
+      "windowId": "W017",
+      "startMs": 1585126,
+      "endMs": 1704911,
+      "cueIds": [
+        "C0444",
+        "C0486"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 1,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0450",
+      "usage": {
+        "input_tokens": 3381,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1805
+    },
+    {
+      "windowId": "W018",
+      "startMs": 1705871,
+      "endMs": 1784199,
+      "cueIds": [
+        "C0487",
+        "C0511"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C0511",
+      "usage": {
+        "input_tokens": 3023,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1894
+    },
+    {
+      "windowId": "W019",
+      "startMs": 1789455,
+      "endMs": 1858064,
+      "cueIds": [
+        "C0512",
+        "C0530"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0512",
+      "usage": {
+        "input_tokens": 2812,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1646
+    },
+    {
+      "windowId": "W020",
+      "startMs": 1862778,
+      "endMs": 1950865,
+      "cueIds": [
+        "C0531",
+        "C0549"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 1,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0540",
+      "usage": {
+        "input_tokens": 2797,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2049
+    },
+    {
+      "windowId": "W021",
+      "startMs": 1955037,
+      "endMs": 2052467,
+      "cueIds": [
+        "C0550",
+        "C0584"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0560",
+      "usage": {
+        "input_tokens": 3111,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1817
+    },
+    {
+      "windowId": "W022",
+      "startMs": 2057097,
+      "endMs": 2124539,
+      "cueIds": [
+        "C0585",
+        "C0608"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 1,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0585",
+      "usage": {
+        "input_tokens": 2882,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 4410
+    },
+    {
+      "windowId": "W023",
+      "startMs": 2128210,
+      "endMs": 2209916,
+      "cueIds": [
+        "C0609",
+        "C0627"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0609",
+      "usage": {
+        "input_tokens": 2798,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1576
+    },
+    {
+      "windowId": "W024",
+      "startMs": 2226141,
+      "endMs": 2299547,
+      "cueIds": [
+        "C0628",
+        "C0639"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0639",
+      "usage": {
+        "input_tokens": 2619,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1669
+    },
+    {
+      "windowId": "W025",
+      "startMs": 2303635,
+      "endMs": 2418833,
+      "cueIds": [
+        "C0640",
+        "C0675"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0652",
+      "usage": {
+        "input_tokens": 3248,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1836
+    },
+    {
+      "windowId": "W026",
+      "startMs": 2423422,
+      "endMs": 2541539,
+      "cueIds": [
+        "C0676",
+        "C0715"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0695",
+      "usage": {
+        "input_tokens": 3357,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1764
+    },
+    {
+      "windowId": "W027",
+      "startMs": 2542082,
+      "endMs": 2658697,
+      "cueIds": [
+        "C0716",
+        "C0761"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0730",
+      "usage": {
+        "input_tokens": 3461,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1693
+    },
+    {
+      "windowId": "W028",
+      "startMs": 2660534,
+      "endMs": 2750873,
+      "cueIds": [
+        "C0762",
+        "C0791"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 1,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0782",
+      "usage": {
+        "input_tokens": 3108,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1784
+    },
+    {
+      "windowId": "W029",
+      "startMs": 2754336,
+      "endMs": 2868323,
+      "cueIds": [
+        "C0792",
+        "C0832"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 1,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0827",
+      "usage": {
+        "input_tokens": 3278,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2319
+    },
+    {
+      "windowId": "W030",
+      "startMs": 2871703,
+      "endMs": 2963168,
+      "cueIds": [
+        "C0833",
+        "C0858"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0851",
+      "usage": {
+        "input_tokens": 2983,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1933
+    },
+    {
+      "windowId": "W031",
+      "startMs": 2971344,
+      "endMs": 3052174,
+      "cueIds": [
+        "C0859",
+        "C0876"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0873",
+      "usage": {
+        "input_tokens": 2857,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1874
+    },
+    {
+      "windowId": "W032",
+      "startMs": 3055887,
+      "endMs": 3153233,
+      "cueIds": [
+        "C0877",
+        "C0905"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 1,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0877",
+      "usage": {
+        "input_tokens": 3012,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1912
+    },
+    {
+      "windowId": "W033",
+      "startMs": 3175214,
+      "endMs": 3236483,
+      "cueIds": [
+        "C0906",
+        "C0922"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C0914",
+      "usage": {
+        "input_tokens": 2711,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1707
+    },
+    {
+      "windowId": "W034",
+      "startMs": 3246494,
+      "endMs": 3323904,
+      "cueIds": [
+        "C0923",
+        "C0943"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2871,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1589
+    },
+    {
+      "windowId": "W035",
+      "startMs": 3327200,
+      "endMs": 3433388,
+      "cueIds": [
+        "C0944",
+        "C0984"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 1,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C0975",
+      "usage": {
+        "input_tokens": 3340,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1900
+    },
+    {
+      "windowId": "W036",
+      "startMs": 3440021,
+      "endMs": 3530944,
+      "cueIds": [
+        "C0985",
+        "C1005"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1003",
+      "usage": {
+        "input_tokens": 2849,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1875
+    },
+    {
+      "windowId": "W037",
+      "startMs": 3535241,
+      "endMs": 3615862,
+      "cueIds": [
+        "C1006",
+        "C1035"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 1,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1030",
+      "usage": {
+        "input_tokens": 3112,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1811
+    },
+    {
+      "windowId": "W038",
+      "startMs": 3619658,
+      "endMs": 3737066,
+      "cueIds": [
+        "C1036",
+        "C1069"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1036",
+      "usage": {
+        "input_tokens": 3251,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1833
+    },
+    {
+      "windowId": "W039",
+      "startMs": 3744783,
+      "endMs": 3813434,
+      "cueIds": [
+        "C1070",
+        "C1093"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2931,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1704
+    },
+    {
+      "windowId": "W040",
+      "startMs": 3822736,
+      "endMs": 3909906,
+      "cueIds": [
+        "C1094",
+        "C1126"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1121",
+      "usage": {
+        "input_tokens": 3120,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1851
+    },
+    {
+      "windowId": "W041",
+      "startMs": 3919124,
+      "endMs": 4019265,
+      "cueIds": [
+        "C1127",
+        "C1160"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1159",
+      "usage": {
+        "input_tokens": 3174,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1910
+    },
+    {
+      "windowId": "W042",
+      "startMs": 4025439,
+      "endMs": 4109855,
+      "cueIds": [
+        "C1161",
+        "C1187"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C1167",
+      "usage": {
+        "input_tokens": 3046,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1729
+    },
+    {
+      "windowId": "W043",
+      "startMs": 4170751,
+      "endMs": 4266178,
+      "cueIds": [
+        "C1188",
+        "C1211"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1198",
+      "usage": {
+        "input_tokens": 2952,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1919
+    },
+    {
+      "windowId": "W044",
+      "startMs": 4276606,
+      "endMs": 4347259,
+      "cueIds": [
+        "C1212",
+        "C1232"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1222",
+      "usage": {
+        "input_tokens": 2865,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2074
+    },
+    {
+      "windowId": "W045",
+      "startMs": 4353683,
+      "endMs": 4427089,
+      "cueIds": [
+        "C1233",
+        "C1251"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1245",
+      "usage": {
+        "input_tokens": 2788,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1852
+    },
+    {
+      "windowId": "W046",
+      "startMs": 4430260,
+      "endMs": 4493655,
+      "cueIds": [
+        "C1252",
+        "C1270"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2795,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1665
+    },
+    {
+      "windowId": "W047",
+      "startMs": 4498995,
+      "endMs": 4559805,
+      "cueIds": [
+        "C1271",
+        "C1292"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1280",
+      "usage": {
+        "input_tokens": 2915,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1875
+    },
+    {
+      "windowId": "W048",
+      "startMs": 4563977,
+      "endMs": 4648769,
+      "cueIds": [
+        "C1293",
+        "C1317"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1300",
+      "usage": {
+        "input_tokens": 2932,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1823
+    },
+    {
+      "windowId": "W049",
+      "startMs": 4652732,
+      "endMs": 4717337,
+      "cueIds": [
+        "C1318",
+        "C1330"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 1,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1320",
+      "usage": {
+        "input_tokens": 2658,
+        "output_tokens": 110,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1805
+    },
+    {
+      "windowId": "W050",
+      "startMs": 4724220,
+      "endMs": 4792496,
+      "cueIds": [
+        "C1331",
+        "C1355"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C1341",
+      "usage": {
+        "input_tokens": 2965,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1918
+    },
+    {
+      "windowId": "W051",
+      "startMs": 4796125,
+      "endMs": 4866236,
+      "cueIds": [
+        "C1356",
+        "C1378"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1374",
+      "usage": {
+        "input_tokens": 2879,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1888
+    },
+    {
+      "windowId": "W052",
+      "startMs": 4870491,
+      "endMs": 4937974,
+      "cueIds": [
+        "C1379",
+        "C1389"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 3,
+      "peakCue": "C1386",
+      "usage": {
+        "input_tokens": 2604,
+        "output_tokens": 110,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1727
+    },
+    {
+      "windowId": "W053",
+      "startMs": 4956118,
+      "endMs": 5031610,
+      "cueIds": [
+        "C1390",
+        "C1413"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1396",
+      "usage": {
+        "input_tokens": 2847,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1700
+    },
+    {
+      "windowId": "W054",
+      "startMs": 5043497,
+      "endMs": 5112440,
+      "cueIds": [
+        "C1414",
+        "C1436"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 1,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1422",
+      "usage": {
+        "input_tokens": 2850,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1818
+    },
+    {
+      "windowId": "W055",
+      "startMs": 5121742,
+      "endMs": 5188433,
+      "cueIds": [
+        "C1437",
+        "C1463"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 1,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1449",
+      "usage": {
+        "input_tokens": 2947,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1933
+    },
+    {
+      "windowId": "W056",
+      "startMs": 5191771,
+      "endMs": 5290118,
+      "cueIds": [
+        "C1464",
+        "C1491"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 1,
+        "darkness_unknown": 0,
+        "shouting_aggression": 1,
+        "emotional_distress": 1,
+        "imitable_risk": 1,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 2,
+      "peakCue": "C1475",
+      "usage": {
+        "input_tokens": 3019,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1817
+    },
+    {
+      "windowId": "W057",
+      "startMs": 5294540,
+      "endMs": 5357310,
+      "cueIds": [
+        "C1492",
+        "C1506"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C1492",
+      "usage": {
+        "input_tokens": 2688,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1687
+    },
+    {
+      "windowId": "W058",
+      "startMs": 5364485,
+      "endMs": 5481059,
+      "cueIds": [
+        "C1507",
+        "C1538"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 1,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C1518",
+      "usage": {
+        "input_tokens": 3052,
+        "output_tokens": 110,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1781
+    },
+    {
+      "windowId": "W059",
+      "startMs": 5481977,
+      "endMs": 5546290,
+      "cueIds": [
+        "C1539",
+        "C1561"
+      ],
+      "categories": {
+        "peril_chase": 0,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 0,
+        "flashing_light_inferred": 0
+      },
+      "severity": 0,
+      "peakCue": "none",
+      "usage": {
+        "input_tokens": 2898,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1709
+    },
+    {
+      "windowId": "W060",
+      "startMs": 5564226,
+      "endMs": 5613350,
+      "cueIds": [
+        "C1562",
+        "C1575"
+      ],
+      "categories": {
+        "peril_chase": 1,
+        "predator_creature": 0,
+        "death_loss": 0,
+        "separation_abandonment": 0,
+        "injury_pain": 0,
+        "captivity_confinement": 0,
+        "darkness_unknown": 0,
+        "shouting_aggression": 0,
+        "emotional_distress": 0,
+        "imitable_risk": 0,
+        "loud_sudden_sound": 1,
+        "flashing_light_inferred": 0
+      },
+      "severity": 1,
+      "peakCue": "C1567",
+      "usage": {
+        "input_tokens": 2690,
+        "output_tokens": 109,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1840
+    }
+  ],
+  "wallMs": 30854,
+  "calls": 60,
+  "inputTokens": 178228,
+  "outputTokens": 6548,
+  "costUsd": 0.210968
+}
