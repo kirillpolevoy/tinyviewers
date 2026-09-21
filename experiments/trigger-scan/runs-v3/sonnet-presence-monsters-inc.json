@@ -1,0 +1,366 @@
+{
+  "arm": "sonnet-presence",
+  "film": "monsters-inc",
+  "track": "monsters-inc",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:27:15.845Z",
+  "wall_s": 9.085,
+  "scenes_asked": 16,
+  "input_tokens": 20232,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 56432,
+  "output_tokens": 1345,
+  "cost_usd": 0.0652004,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Scare Training Simulation Gone Wrong",
+      "start_cue": "C0015",
+      "end_cue": "C0028",
+      "start_ms": 166174,
+      "end_ms": 198267,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1688
+    },
+    {
+      "id": "S02",
+      "title": "Toxic Child Warning",
+      "start_cue": "C0051",
+      "end_cue": "C0066",
+      "start_ms": 239384,
+      "end_ms": 273916,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "scary_appearance"
+      ],
+      "latency_ms": 2204
+    },
+    {
+      "id": "S03",
+      "title": "Scare Floor - Children Screaming",
+      "start_cue": "C0329",
+      "end_cue": "C0413",
+      "start_ms": 759993,
+      "end_ms": 1016014,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2123
+    },
+    {
+      "id": "S04",
+      "title": "Shredder Threat",
+      "start_cue": "C0426",
+      "end_cue": "C0428",
+      "start_ms": 1038148,
+      "end_ms": 1045245,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "dangerous_machine"
+      ],
+      "latency_ms": 2032
+    },
+    {
+      "id": "S05",
+      "title": "Contamination Alert & Decontamination",
+      "start_cue": "C0441",
+      "end_cue": "C0479",
+      "start_ms": 1062807,
+      "end_ms": 1144522,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "explosion",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2306
+    },
+    {
+      "id": "S06",
+      "title": "Chased by the Human Child",
+      "start_cue": "C0600",
+      "end_cue": "C0647",
+      "start_ms": 1396621,
+      "end_ms": 1536364,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1624
+    },
+    {
+      "id": "S07",
+      "title": "Child Revealed at Restaurant - Panic",
+      "start_cue": "C0713",
+      "end_cue": "C0745",
+      "start_ms": 1652381,
+      "end_ms": 1722883,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "explosion",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2173
+    },
+    {
+      "id": "S08",
+      "title": "Fear of the 'Killing Machine'",
+      "start_cue": "C0832",
+      "end_cue": "C0866",
+      "start_ms": 1873878,
+      "end_ms": 1938836,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2584
+    },
+    {
+      "id": "S09",
+      "title": "Randall Traps Mike in Scream Extractor",
+      "start_cue": "C1366",
+      "end_cue": "C1457",
+      "start_ms": 3074660,
+      "end_ms": 3254243,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "vehicle_crash"
+      ],
+      "latency_ms": 2158
+    },
+    {
+      "id": "S10",
+      "title": "Boss Roars and Terrifies Boo",
+      "start_cue": "C1500",
+      "end_cue": "C1543",
+      "start_ms": 3320581,
+      "end_ms": 3397690,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3086
+    },
+    {
+      "id": "S11",
+      "title": "Betrayal and Banishment",
+      "start_cue": "C1560",
+      "end_cue": "C1600",
+      "start_ms": 3432331,
+      "end_ms": 3524757,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2643
+    },
+    {
+      "id": "S12",
+      "title": "Friends Fight, Left Alone in the Snow",
+      "start_cue": "C1682",
+      "end_cue": "C1706",
+      "start_ms": 3676318,
+      "end_ms": 3735168,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2623
+    },
+    {
+      "id": "S13",
+      "title": "Chase Through the Factory",
+      "start_cue": "C1849",
+      "end_cue": "C1956",
+      "start_ms": 4041331,
+      "end_ms": 4301829,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "heights",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2249
+    },
+    {
+      "id": "S14",
+      "title": "Randall Threatens to Take Boo",
+      "start_cue": "C1957",
+      "end_cue": "C1971",
+      "start_ms": 4301869,
+      "end_ms": 4348908,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1979
+    },
+    {
+      "id": "S15",
+      "title": "Villain's Kidnapping Threat",
+      "start_cue": "C2054",
+      "end_cue": "C2100",
+      "start_ms": 4497806,
+      "end_ms": 4586388,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2188
+    },
+    {
+      "id": "S16",
+      "title": "Saying Goodbye to Boo Forever",
+      "start_cue": "C2129",
+      "end_cue": "C2183",
+      "start_ms": 4646761,
+      "end_ms": 4850696,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2101
+    }
+  ]
+}

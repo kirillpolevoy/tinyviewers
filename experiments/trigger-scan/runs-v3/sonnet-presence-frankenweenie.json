@@ -1,0 +1,396 @@
+{
+  "arm": "sonnet-presence",
+  "film": "frankenweenie",
+  "track": "frankenweenie",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:27:25.007Z",
+  "wall_s": 10.357,
+  "scenes_asked": 15,
+  "input_tokens": 14347,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 52875,
+  "output_tokens": 1794,
+  "cost_usd": 0.057208999999999996,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Sparky hit by car",
+      "start_cue": "C0219",
+      "end_cue": "C0230",
+      "start_ms": 859400,
+      "end_ms": 934729,
+      "present": [
+        {
+          "id": "vehicle_crash",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2334
+    },
+    {
+      "id": "S02",
+      "title": "Grieving for Sparky",
+      "start_cue": "C0231",
+      "end_cue": "C0241",
+      "start_ms": 972520,
+      "end_ms": 1033207,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1192
+    },
+    {
+      "id": "S03",
+      "title": "Dead animal electricity demonstration",
+      "start_cue": "C0243",
+      "end_cue": "C0253",
+      "start_ms": 1077560,
+      "end_ms": 1143166,
+      "present": [
+        {
+          "id": "skeleton_corpse",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2184
+    },
+    {
+      "id": "S04",
+      "title": "Digging up Sparky's grave",
+      "start_cue": "C0256",
+      "end_cue": "C0270",
+      "start_ms": 1174600,
+      "end_ms": 1485483,
+      "present": [
+        {
+          "id": "graveyard_funeral",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "skeleton_corpse",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3702
+    },
+    {
+      "id": "S05",
+      "title": "Reanimating Sparky with lightning",
+      "start_cue": "C0271",
+      "end_cue": "C0286",
+      "start_ms": 1552120,
+      "end_ms": 1649486,
+      "present": [
+        {
+          "id": "reanimated_dead",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2295
+    },
+    {
+      "id": "S06",
+      "title": "Rooftop experiment explosion",
+      "start_cue": "C0487",
+      "end_cue": "C0509",
+      "start_ms": 2500880,
+      "end_ms": 2572841,
+      "present": [
+        {
+          "id": "heights",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "dangerous_machine",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1902
+    },
+    {
+      "id": "S07",
+      "title": "Mayor's frightening speech about children's heads",
+      "start_cue": "C0533",
+      "end_cue": "C0550",
+      "start_ms": 2666360,
+      "end_ms": 2716841,
+      "present": [],
+      "talked_about_only": [
+        "blood_wound"
+      ],
+      "latency_ms": 2095
+    },
+    {
+      "id": "S08",
+      "title": "Sparky revealed alive and runs off scared",
+      "start_cue": "C0640",
+      "end_cue": "C0699",
+      "start_ms": 3024040,
+      "end_ms": 3327567,
+      "present": [
+        {
+          "id": "reanimated_dead",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "rodent_bat",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3005
+    },
+    {
+      "id": "S09",
+      "title": "Colossus the mummy turtle awakens",
+      "start_cue": "C0692",
+      "end_cue": "C0762",
+      "start_ms": 3245480,
+      "end_ms": 3796403,
+      "present": [
+        {
+          "id": "reanimated_dead",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "rodent_bat",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "graveyard_funeral",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "witch_magic_villain",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "skeleton_corpse",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3050
+    },
+    {
+      "id": "S10",
+      "title": "Sea-Monkeys turn savage",
+      "start_cue": "C0764",
+      "end_cue": "C0793",
+      "start_ms": 3802000,
+      "end_ms": 3975886,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "reanimated_dead",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1821
+    },
+    {
+      "id": "S11",
+      "title": "Mob chases Sparky as a monster",
+      "start_cue": "C0796",
+      "end_cue": "C0862",
+      "start_ms": 3991040,
+      "end_ms": 4262363,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "reanimated_dead",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "scary_appearance",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1983
+    },
+    {
+      "id": "S12",
+      "title": "Persephone attacked by vampire cat",
+      "start_cue": "C0870",
+      "end_cue": "C0880",
+      "start_ms": 4308880,
+      "end_ms": 4334804,
+      "present": [
+        {
+          "id": "monster_creature",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2490
+    },
+    {
+      "id": "S13",
+      "title": "Elsa trapped in burning windmill",
+      "start_cue": "C0894",
+      "end_cue": "C0930",
+      "start_ms": 4394960,
+      "end_ms": 4512761,
+      "present": [
+        {
+          "id": "fire",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "heights",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "reanimated_dead",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2253
+    },
+    {
+      "id": "S14",
+      "title": "Parents believe Victor has died",
+      "start_cue": "C0931",
+      "end_cue": "C0946",
+      "start_ms": 4537440,
+      "end_ms": 4597700,
+      "present": [
+        {
+          "id": "reanimated_dead",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "fire",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3106
+    },
+    {
+      "id": "S15",
+      "title": "Sparky fades away again",
+      "start_cue": "C0947",
+      "end_cue": "C0958",
+      "start_ms": 4635240,
+      "end_ms": 4751166,
+      "present": [
+        {
+          "id": "reanimated_dead",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2265
+    }
+  ]
+}

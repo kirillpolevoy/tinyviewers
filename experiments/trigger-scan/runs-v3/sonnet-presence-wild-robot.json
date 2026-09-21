@@ -1,0 +1,409 @@
+{
+  "arm": "sonnet-presence",
+  "film": "wild-robot",
+  "track": "wild-robot",
+  "taxonomy": "v3",
+  "layer": "presence",
+  "model": "claude-sonnet-5",
+  "prompt": "one call per scene; scene lines + 6 context lines each side; outside plot summary where one exists",
+  "context_lines": 6,
+  "startedAt": "2026-09-21T04:27:35.444Z",
+  "wall_s": 10.897,
+  "scenes_asked": 17,
+  "input_tokens": 25657,
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 59925,
+  "output_tokens": 1978,
+  "cost_usd": 0.08307899999999999,
+  "scenes": [
+    {
+      "id": "S01",
+      "title": "Storm Wrecks the Ship",
+      "start_cue": "C0001",
+      "end_cue": "C0013",
+      "start_ms": 3269,
+      "end_ms": 121321,
+      "present": [
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "vehicle_crash",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2248
+    },
+    {
+      "id": "S02",
+      "title": "Animals Panic, Call Roz a Monster",
+      "start_cue": "C0074",
+      "end_cue": "C0116",
+      "start_ms": 406439,
+      "end_ms": 531998,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "skeleton_corpse"
+      ],
+      "latency_ms": 3391
+    },
+    {
+      "id": "S03",
+      "title": "Raccoons Wreck Roz for Fun",
+      "start_cue": "C0117",
+      "end_cue": "C0155",
+      "start_ms": 538805,
+      "end_ms": 631231,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2002
+    },
+    {
+      "id": "S04",
+      "title": "Roz Falls and Destroys a Goose Nest",
+      "start_cue": "C0157",
+      "end_cue": "C0177",
+      "start_ms": 638405,
+      "end_ms": 803870,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1910
+    },
+    {
+      "id": "S05",
+      "title": "A Difficult, Painful Hatching",
+      "start_cue": "C0179",
+      "end_cue": "C0206",
+      "start_ms": 819386,
+      "end_ms": 934234,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2704
+    },
+    {
+      "id": "S06",
+      "title": "Fox Threatens to Eat the Gosling",
+      "start_cue": "C0332",
+      "end_cue": "C0354",
+      "start_ms": 1270804,
+      "end_ms": 1320086,
+      "present": [
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1779
+    },
+    {
+      "id": "S07",
+      "title": "Fink Offers to Eat the Runt",
+      "start_cue": "C0426",
+      "end_cue": "C0439",
+      "start_ms": 1480914,
+      "end_ms": 1506806,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 3660
+    },
+    {
+      "id": "S08",
+      "title": "Brightbill's Dangerous Swim Jump",
+      "start_cue": "C0653",
+      "end_cue": "C0690",
+      "start_ms": 2048648,
+      "end_ms": 2130563,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "deep_dark_water",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2646
+    },
+    {
+      "id": "S09",
+      "title": "Brightbill Is Bullied and Attacked by Geese",
+      "start_cue": "C0696",
+      "end_cue": "C0752",
+      "start_ms": 2151384,
+      "end_ms": 2294060,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "deep_dark_water",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 3735
+    },
+    {
+      "id": "S10",
+      "title": "Brightbill Learns the Truth About His Family",
+      "start_cue": "C0757",
+      "end_cue": "C0809",
+      "start_ms": 2310143,
+      "end_ms": 2450817,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "blood_wound"
+      ],
+      "latency_ms": 1557
+    },
+    {
+      "id": "S11",
+      "title": "Learning to Fly: Falls and Fear",
+      "start_cue": "C0930",
+      "end_cue": "C1065",
+      "start_ms": 2889923,
+      "end_ms": 3261761,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "heights",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2841
+    },
+    {
+      "id": "S12",
+      "title": "Trapped by Malfunctioning Robots in a Storm",
+      "start_cue": "C1181",
+      "end_cue": "C1260",
+      "start_ms": 3718918,
+      "end_ms": 3943276,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2221
+    },
+    {
+      "id": "S13",
+      "title": "Trapped Together in a Deadly Storm",
+      "start_cue": "C1276",
+      "end_cue": "C1400",
+      "start_ms": 3996162,
+      "end_ms": 4374341,
+      "present": [
+        {
+          "id": "storm_lightning",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [
+        "monster_creature"
+      ],
+      "latency_ms": 1974
+    },
+    {
+      "id": "S14",
+      "title": "A Migration Leader Is Lost",
+      "start_cue": "C1429",
+      "end_cue": "C1433",
+      "start_ms": 4480513,
+      "end_ms": 4494394,
+      "present": [],
+      "talked_about_only": [],
+      "latency_ms": 1910
+    },
+    {
+      "id": "S15",
+      "title": "The Sinister Robot Vontra Arrives",
+      "start_cue": "C1447",
+      "end_cue": "C1500",
+      "start_ms": 4551951,
+      "end_ms": 4727027,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        },
+        {
+          "id": "gun",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [
+        "storm_lightning"
+      ],
+      "latency_ms": 2012
+    },
+    {
+      "id": "S16",
+      "title": "Battle Against Vontra's Robots",
+      "start_cue": "C1494",
+      "end_cue": "C1610",
+      "start_ms": 4699799,
+      "end_ms": 5125925,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "large_predator",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "gun",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "explosion",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "cage_net_trap",
+          "confidence": "stated_in_lines"
+        },
+        {
+          "id": "darkness",
+          "confidence": "known_from_film"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 2414
+    },
+    {
+      "id": "S17",
+      "title": "Roz Decides to Leave Forever",
+      "start_cue": "C1657",
+      "end_cue": "C1688",
+      "start_ms": 5306106,
+      "end_ms": 5412545,
+      "present": [
+        {
+          "id": "robot_machine_being",
+          "confidence": "stated_in_lines"
+        }
+      ],
+      "talked_about_only": [],
+      "latency_ms": 1943
+    }
+  ]
+}

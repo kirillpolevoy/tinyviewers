@@ -65,7 +65,7 @@ For each scene:
 Attribute ids:
 ${VOCAB}
 
-${FILM ? `Film: ${FILMS[FILM].title} (${FILMS[FILM].year})` : `Characters: ${JSON.stringify(glossary.characters)}`}${GROUNDING ? `\n\nPlot summary of the whole film, from an outside source. Use it to identify which moment of the story the lines belong to and who or what is present. Name characters and creatures as the summary and cast list do. Never describe a character, creature or event that neither the lines nor this summary support.\n${GROUNDING.plot}\n\nCast:\n${GROUNDING.cast}` : ''}`;
+${FILM ? `Film: ${FILMS[FILM].title} (${FILMS[FILM].year})` : `Characters: ${JSON.stringify(glossary.characters)}`}${GROUNDING ? `\n\nPlot summary of the whole film, from an outside source. Use it to identify which moment of the story the lines belong to and who or what is present. Name characters and creatures as the summary and cast list do. Never describe a character, creature or event that neither the lines nor this summary support.\n${GROUNDING.plot}${GROUNDING.cast ? `\n\nCast:\n${GROUNDING.cast}` : ''}` : ''}`;
 
 const obj = (properties) => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
 const SEV = { type: 'integer', enum: [0, 1, 2, 3] };
