@@ -1,0 +1,36 @@
+{
+  "tuned_on": [
+    "frankenweenie",
+    "iron-giant",
+    "lion-king",
+    "monsters-inc",
+    "wild-robot"
+  ],
+  "grid": [
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95,
+    1.01
+  ],
+  "note": "1.01 = attribute switched off; attributes with fewer than 3 reference examples use the single global threshold",
+  "global": 0.6,
+  "thresholds": {
+    "peril": 0.5,
+    "creatures": 0.4,
+    "violence": 0.6,
+    "death": 0.4,
+    "separation": 0.6,
+    "injury": 0.8,
+    "captivity": 0.4,
+    "eerie": 0.8,
+    "hostility": 0.7,
+    "distress": 0.8,
+    "animals": 0.7,
+    "copyable": 0.6
+  }
+}

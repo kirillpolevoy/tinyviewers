@@ -1,0 +1,1547 @@
+{
+  "movie": {
+    "title": "The Wild Robot",
+    "year": 2024,
+    "imdb_id": "tt29623480",
+    "track": "data/wild-robot.srt"
+  },
+  "release": {
+    "subtitle_track": "track stored in the app database"
+  },
+  "analysis_run": {
+    "started_at": "2026-09-21T01:09:28.301Z",
+    "detector": "jev-1.13.0",
+    "detector_run": "2026-09-21T01-01-41-jev-v3-universal-wild-robot.json",
+    "labeller": "claude-sonnet-5",
+    "taxonomy": "taxonomy-v2",
+    "candidates": 29,
+    "context": "flagged stretch only",
+    "rejected_candidates": [
+      "K02 00:04:24",
+      "K07 00:21:44",
+      "K09 00:25:38",
+      "K10 00:26:57",
+      "K12 00:33:03",
+      "K15 00:48:24",
+      "K18 00:57:51",
+      "K19 01:00:23",
+      "K29 01:39:59"
+    ],
+    "scenes_the_screener_missed": [],
+    "cost_usd": {
+      "detector": 0.03620799,
+      "labeller": 0.1461066
+    },
+    "wall_s": 31.757
+  },
+  "scenes": [
+    {
+      "title": "Otters startled by robot",
+      "start_ms": 105972,
+      "end_ms": 112679,
+      "start": "00:01:45",
+      "end": "00:01:52",
+      "start_cue": "C0010",
+      "end_cue": "C0012",
+      "description": "Small otters chatter in fright and squeal as an unfamiliar robot noise approaches them in the forest.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "otters",
+        "robot",
+        "forest",
+        "scared animals"
+      ],
+      "text_visibility": "low",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Robot Wakes, Animals Panic",
+      "start_ms": 406439,
+      "end_ms": 477510,
+      "start": "00:06:46",
+      "end": "00:07:57",
+      "start_cue": "C0074",
+      "end_cue": "C0105",
+      "description": "Forest animals discover the robot lying still, think it's dead, then it suddenly wakes up and speaks, causing them to scream and flee calling it a monster.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "robot",
+        "monster",
+        "scream",
+        "animals",
+        "waking up"
+      ],
+      "text_visibility": "high",
+      "candidate": "K03",
+      "id": "S02"
+    },
+    {
+      "title": "Monster Cry and Thunder",
+      "start_ms": 468702,
+      "end_ms": 486519,
+      "start": "00:07:48",
+      "end": "00:08:06",
+      "start_cue": "C0102",
+      "end_cue": "C0108",
+      "description": "Animals scream 'the monster' again as the robot wanders, followed by loud thunder crashing in the storm.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.26,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "thunder",
+        "storm",
+        "monster",
+        "scream"
+      ],
+      "text_visibility": "high",
+      "candidate": "K03",
+      "id": "S03"
+    },
+    {
+      "title": "Raccoons playing with robot",
+      "start_ms": 555455,
+      "end_ms": 633667,
+      "start": "00:09:15",
+      "end": "00:10:33",
+      "start_cue": "C0126",
+      "end_cue": "C0156",
+      "description": "Mischievous raccoons roughhouse and play electrically-charged pranks on each other and the robot, with lots of yelling and comic chaos, ending in a thunderstorm.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "raccoons",
+        "electric shock",
+        "thunder",
+        "playing"
+      ],
+      "text_visibility": "low",
+      "candidate": "K04",
+      "id": "S04"
+    },
+    {
+      "title": "Roz Attacked in the Wilderness",
+      "start_ms": 790690,
+      "end_ms": 1041508,
+      "start": "00:13:10",
+      "end": "00:17:21",
+      "start_cue": "C0173",
+      "end_cue": "C0234",
+      "description": "The robot Roz stumbles through a stormy forest, is chased and attacked by frightened, biting animals, and eventually falls and crashes down a rocky slope while screaming.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.55,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.63,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "robot",
+        "forest",
+        "storm",
+        "attack",
+        "fall",
+        "scream"
+      ],
+      "text_visibility": "low",
+      "candidate": "K05",
+      "id": "S05"
+    },
+    {
+      "title": "Gosling nearly drowns and falls",
+      "start_ms": 1247614,
+      "end_ms": 1265765,
+      "start": "00:20:47",
+      "end": "00:21:05",
+      "start_cue": "C0324",
+      "end_cue": "C0331",
+      "description": "The young gosling is nearly drowned in a pond and then dropped from a height while learning to fly, coughing and screaming in distress.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "drowning",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.25,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.21,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gosling",
+        "drowning",
+        "pond",
+        "falling",
+        "learning to fly"
+      ],
+      "text_visibility": "high",
+      "candidate": "K06",
+      "id": "S06"
+    },
+    {
+      "title": "Swimming lesson gone wrong",
+      "start_ms": 1465965,
+      "end_ms": 1479312,
+      "start": "00:24:25",
+      "end": "00:24:39",
+      "start_cue": "C0419",
+      "end_cue": "C0424",
+      "description": "A baby gosling is thrown or pushed into water to teach it swimming, and it screams and coughs while struggling in the water before recovering.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "drowning",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "gosling",
+        "swimming",
+        "water",
+        "coughing"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S07"
+    },
+    {
+      "title": "Startled by thunder",
+      "start_ms": 1761928,
+      "end_ms": 1779946,
+      "start": "00:29:21",
+      "end": "00:29:39",
+      "start_cue": "C0544",
+      "end_cue": "C0551",
+      "description": "A goose confronts Roz over a copied nest design, then a thunderclap startles a young gosling who whimpers in fear during the storm.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "thunder",
+        "storm",
+        "goose",
+        "gosling",
+        "argument"
+      ],
+      "text_visibility": "high",
+      "candidate": "K11",
+      "id": "S08"
+    },
+    {
+      "title": "Brightbill's Swimming Lessons",
+      "start_ms": 2066633,
+      "end_ms": 2137203,
+      "start": "00:34:26",
+      "end": "00:35:37",
+      "start_cue": "C0662",
+      "end_cue": "C0691",
+      "description": "Brightbill the goose flounders and gasps while learning to swim, with the other animals joking that he might drown; it looks alarming but is played for laughs.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.29,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "swimming",
+        "goose",
+        "drowning joke",
+        "comedy"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S09"
+    },
+    {
+      "title": "Bullied by Other Geese",
+      "start_ms": 2164230,
+      "end_ms": 2242142,
+      "start": "00:36:04",
+      "end": "00:37:22",
+      "start_cue": "C0699",
+      "end_cue": "C0733",
+      "description": "Other young geese mock Brightbill for being raised by a 'monster' robot, calling him a freak and hurting his wing, leaving him upset and excluded.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "bullying",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "discrimination",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "geese",
+        "mocking",
+        "freak show",
+        "teasing"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S10"
+    },
+    {
+      "title": "Rockmouth Goose Attack",
+      "start_ms": 2242242,
+      "end_ms": 2342409,
+      "start": "00:37:22",
+      "end": "00:39:02",
+      "start_cue": "C0734",
+      "end_cue": "C0770",
+      "description": "A huge aggressive goose called Rockmouth attacks Brightbill in the water, chasing and nearly eating him while other geese scream and Roz rushes to save him.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.6,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goose attack",
+        "chase",
+        "water",
+        "predator",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S11"
+    },
+    {
+      "title": "Truth About the Accident",
+      "start_ms": 2342509,
+      "end_ms": 2450817,
+      "start": "00:39:02",
+      "end": "00:40:50",
+      "start_cue": "C0771",
+      "end_cue": "C0809",
+      "description": "Brightbill learns that Roz accidentally caused the death of his real mother and siblings, and he angrily confronts her, feeling betrayed and heartbroken that she isn't truly his family.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "loved_one_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.31,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "betrayal",
+        "truth",
+        "mother's death",
+        "argument",
+        "heartbreak"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S12"
+    },
+    {
+      "title": "Time running out to fly",
+      "start_ms": 2814914,
+      "end_ms": 2870370,
+      "start": "00:46:54",
+      "end": "00:47:50",
+      "start_cue": "C0902",
+      "end_cue": "C0924",
+      "description": "The flock is leaving and Brightbill must learn to fly quickly or be left behind; there's tense urgency and conflict about whether to push him to fly.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.09,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "geese",
+        "flying",
+        "urgency",
+        "goodbye"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S13"
+    },
+    {
+      "title": "Brightbill's flying lesson fall",
+      "start_ms": 2973907,
+      "end_ms": 2998531,
+      "start": "00:49:33",
+      "end": "00:49:58",
+      "start_cue": "C0957",
+      "end_cue": "C0968",
+      "description": "A young bird practices flying by jumping and falling, panicking as he plummets before recovering; it's a training moment set to music, not a real threat.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "flying lesson",
+        "falling",
+        "bird",
+        "practice"
+      ],
+      "text_visibility": "low",
+      "candidate": "K16",
+      "id": "S14"
+    },
+    {
+      "title": "Learning to fly",
+      "start_ms": 3055155,
+      "end_ms": 3079245,
+      "start": "00:50:55",
+      "end": "00:51:19",
+      "start_cue": "C0994",
+      "end_cue": "C1001",
+      "description": "A young goose practices flying with encouragement from friends, briefly yelping in fear but ending up laughing and having fun.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.29,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "flying lesson",
+        "goose",
+        "practice",
+        "falling"
+      ],
+      "text_visibility": "high",
+      "candidate": "K17",
+      "id": "S15"
+    },
+    {
+      "title": "Storm shelter",
+      "start_ms": 3762562,
+      "end_ms": 3797330,
+      "start": "01:02:42",
+      "end": "01:03:17",
+      "start_cue": "C1192",
+      "end_cue": "C1204",
+      "description": "The geese and Roz take shelter from a thunderstorm, hiding and staying quiet until it passes.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "thunder",
+        "storm",
+        "shelter",
+        "geese"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S16"
+    },
+    {
+      "title": "Robot alarm panic",
+      "start_ms": 3826926,
+      "end_ms": 3859926,
+      "start": "01:03:46",
+      "end": "01:04:19",
+      "start_cue": "C1216",
+      "end_cue": "C1231",
+      "description": "An alarm blares and robots identify the geese as an 'animal infestation,' causing the birds to panic and scream in fear even though the robots cannot actually hurt them.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.28,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.29,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "alarm",
+        "robots",
+        "panic",
+        "infestation",
+        "screaming"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S17"
+    },
+    {
+      "title": "Flight lesson turns dangerous",
+      "start_ms": 3910744,
+      "end_ms": 3957590,
+      "start": "01:05:10",
+      "end": "01:05:57",
+      "start_cue": "C1250",
+      "end_cue": "C1263",
+      "description": "Birds practice flying in formation, then something goes wrong as one bird falls behind to buy time while others are told to keep going without it, ending in panicked honking and whimpering.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "birds",
+        "flying",
+        "migration",
+        "chase",
+        "panic"
+      ],
+      "text_visibility": "low",
+      "candidate": "K21",
+      "id": "S18"
+    },
+    {
+      "title": "Searching survivors after disaster",
+      "start_ms": 4052752,
+      "end_ms": 4144544,
+      "start": "01:07:32",
+      "end": "01:09:04",
+      "start_cue": "C1298",
+      "end_cue": "C1319",
+      "description": "Animals huddle together shaken and searching for missing loved ones after a disaster, with one young animal crying out for its mother; someone is found dead.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.13,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "survivors",
+        "missing mother",
+        "dead animal",
+        "aftermath",
+        "shelter"
+      ],
+      "text_visibility": "low",
+      "candidate": "K22",
+      "id": "S19"
+    },
+    {
+      "title": "Crowded shelter chaos and fight",
+      "start_ms": 4153119,
+      "end_ms": 4206072,
+      "start": "01:09:13",
+      "end": "01:10:06",
+      "start_cue": "C1320",
+      "end_cue": "C1343",
+      "description": "Crowded animals sheltering together suddenly panic and start fighting and screaming, with predators and prey mixed together, causing loud chaotic screaming.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.46,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "animal_in_danger",
+          "group": "animals",
+          "label": "Animals",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.39,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "animal fight",
+        "panic",
+        "screaming",
+        "predators",
+        "chaos"
+      ],
+      "text_visibility": "low",
+      "candidate": "K22",
+      "id": "S20"
+    },
+    {
+      "title": "Fink's speech about dying together",
+      "start_ms": 4251484,
+      "end_ms": 4256856,
+      "start": "01:10:51",
+      "end": "01:10:56",
+      "start_cue": "C1364",
+      "end_cue": "C1366",
+      "description": "During a storm shelter crisis, a character warns that anyone who leaves will die and that the whole group could die if they don't cooperate.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "death",
+        "survival",
+        "storm",
+        "danger"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S21"
+    },
+    {
+      "title": "Fink startles the geese",
+      "start_ms": 4463363,
+      "end_ms": 4474641,
+      "start": "01:14:23",
+      "end": "01:14:34",
+      "start_cue": "C1421",
+      "end_cue": "C1425",
+      "description": "A fox suddenly appears among the geese, causing frightened honking and screaming before everyone realizes he's a friend.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fox",
+        "surprise",
+        "geese",
+        "scream"
+      ],
+      "text_visibility": "high",
+      "candidate": "K24",
+      "id": "S22"
+    },
+    {
+      "title": "Robot Hunters Deploy Against Roz",
+      "start_ms": 4699799,
+      "end_ms": 4727027,
+      "start": "01:18:19",
+      "end": "01:18:47",
+      "start_cue": "C1494",
+      "end_cue": "C1500",
+      "description": "Robotic hunters are ordered to target Roz, launching flares and firing weapons as animals roar and growl nearby.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.46,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.1,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "robot hunters",
+        "flares",
+        "weapon",
+        "roaring",
+        "chase"
+      ],
+      "text_visibility": "low",
+      "candidate": "K25",
+      "id": "S23"
+    },
+    {
+      "title": "Animals turn on Roz",
+      "start_ms": 4783316,
+      "end_ms": 4844978,
+      "start": "01:19:43",
+      "end": "01:20:44",
+      "start_cue": "C1521",
+      "end_cue": "C1535",
+      "description": "The island animals, egged on by raccoons, gang up on Roz, howling and asking if she's there to kill them before capturing and roughing her up.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "raccoons",
+        "animals",
+        "capture",
+        "howling"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S24"
+    },
+    {
+      "title": "Explosion and Roz damaged",
+      "start_ms": 4849683,
+      "end_ms": 4897564,
+      "start": "01:20:49",
+      "end": "01:21:37",
+      "start_cue": "C1538",
+      "end_cue": "C1550",
+      "description": "Explosions rock the island as Roz is damaged and appears to collapse; her goose son calls out to her in alarm.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.1,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unconscious",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.1,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "explosion",
+        "robot damage",
+        "fire",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S25"
+    },
+    {
+      "title": "Captured and memories threatened",
+      "start_ms": 4902969,
+      "end_ms": 4963496,
+      "start": "01:21:42",
+      "end": "01:22:43",
+      "start_cue": "C1552",
+      "end_cue": "C1569",
+      "description": "Roz is captured by robotic agents who plan to erase all her memories against her wishes, and she pleads to keep even one.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.4,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "memory erase",
+        "robots",
+        "pleading",
+        "capture"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S26"
+    },
+    {
+      "title": "Roz's near-death and 'I love you Mom'",
+      "start_ms": 4963596,
+      "end_ms": 5066399,
+      "start": "01:22:43",
+      "end": "01:24:26",
+      "start_cue": "C1570",
+      "end_cue": "C1586",
+      "description": "Roz appears critically damaged after a crash, seemingly dying, and shares an emotional 'I love you, Mom' moment with Brightbill before reviving.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.51,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.41,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "loved_one_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "crash",
+        "dying robot",
+        "goodbye",
+        "love"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S27"
+    },
+    {
+      "title": "Vontra threatens to destroy Roz and Brightbill",
+      "start_ms": 5119819,
+      "end_ms": 5171638,
+      "start": "01:25:19",
+      "end": "01:26:11",
+      "start_cue": "C1608",
+      "end_cue": "C1626",
+      "description": "Weapons fire as the villain Vontra threatens to capture and dismantle both Roz and her goose son, saying they don't need to be 'in one piece.'",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "guns_shooting",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.11,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "weapons",
+        "threat",
+        "chase",
+        "robot villain"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S28"
+    },
+    {
+      "title": "Rallying for the final battle",
+      "start_ms": 5169836,
+      "end_ms": 5250517,
+      "start": "01:26:09",
+      "end": "01:27:30",
+      "start_cue": "C1626",
+      "end_cue": "C1640",
+      "description": "Roz and the animals prepare for a dangerous confrontation, with tense action and whooshing sounds as they charge into battle to defend the island.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.13,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.29,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "war_mass_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.37,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "battle",
+        "flying",
+        "robot",
+        "animals",
+        "island"
+      ],
+      "text_visibility": "low",
+      "candidate": "K27",
+      "id": "S29"
+    },
+    {
+      "title": "Roz Says Goodbye",
+      "start_ms": 5323156,
+      "end_ms": 5389489,
+      "start": "01:28:43",
+      "end": "01:29:49",
+      "start_cue": "C1663",
+      "end_cue": "C1682",
+      "description": "A robot friend explains she must leave to protect everyone she loves, and a young character cries, begging her not to go and fearing being alone or unable to reach her.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.17,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "goodbye",
+        "leaving",
+        "crying",
+        "separation",
+        "robot"
+      ],
+      "text_visibility": "high",
+      "candidate": "K28",
+      "id": "S30"
+    }
+  ]
+}

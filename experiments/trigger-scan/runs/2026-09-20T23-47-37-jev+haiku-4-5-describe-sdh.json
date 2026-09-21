@@ -1,0 +1,1822 @@
+{
+  "arm": "jev+haiku-4-5-describe",
+  "track": "sdh",
+  "model": "claude-haiku-4-5",
+  "startedAt": "2026-09-20T23:47:16.536Z",
+  "from": "runs/2026-09-20T23-40-41-jev-windowed-sdh-r1.json",
+  "scenes": [
+    {
+      "id": "S01",
+      "startMs": 131215,
+      "endMs": 207749,
+      "startCue": "C0023",
+      "endCue": "C0046",
+      "windowIds": [
+        "W002"
+      ],
+      "categories": {
+        "peril_chase": 0.66,
+        "predator_creature": 0.71,
+        "shouting_aggression": 0.54
+      },
+      "severity": 1.63,
+      "peakCue": "C0039",
+      "jevCategories": {
+        "peril_chase": 0.66,
+        "predator_creature": 0.71,
+        "shouting_aggression": 0.54
+      },
+      "claude": {
+        "description": "Marlin and Coral, an expectant clownfish couple, are having a sweet moment naming their unborn eggs when something suddenly threatens them. Coral is urgently told to get inside, and the scene ends with an alarming 'No!' suggesting danger is approaching.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "separation_abandonment",
+          "shouting_aggression",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2566,
+        "output_tokens": 102,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3947
+    },
+    {
+      "id": "S02",
+      "startMs": 220971,
+      "endMs": 288872,
+      "startCue": "C0047",
+      "endCue": "C0057",
+      "windowIds": [
+        "W003"
+      ],
+      "categories": {
+        "death_loss": 0.72,
+        "separation_abandonment": 0.55,
+        "emotional_distress": 0.87
+      },
+      "severity": 2.33,
+      "peakCue": "C0051",
+      "jevCategories": {
+        "death_loss": 0.72,
+        "separation_abandonment": 0.55,
+        "emotional_distress": 0.87
+      },
+      "claude": {
+        "description": "Marlin desperately searches for his wife Coral and discovers she is gone. He finds their only child Nemo and comforts him, but Coral is never coming back—this is the traumatic opening where Nemo's mother dies and Nemo is the sole survivor of their family.",
+        "is_real_trigger": true,
+        "categories": [
+          "death_loss",
+          "separation_abandonment",
+          "emotional_distress"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2217,
+        "output_tokens": 101,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3767
+    },
+    {
+      "id": "S03",
+      "startMs": 650359,
+      "endMs": 741157,
+      "startCue": "C0164",
+      "endCue": "C0193",
+      "windowIds": [
+        "W007"
+      ],
+      "categories": {
+        "shouting_aggression": 0.77,
+        "emotional_distress": 0.51
+      },
+      "severity": 1.53,
+      "peakCue": "C0170",
+      "jevCategories": {
+        "shouting_aggression": 0.77,
+        "emotional_distress": 0.51
+      },
+      "claude": {
+        "description": "Marlin becomes very upset and angry when he learns his son is going to the Drop Off, a dangerous reef area, yelling sarcastically about frying the children. He then argues with another parent about parenting, speaking harshly. This scene shows an anxious parent's strong fear and aggression about his child's safety.",
+        "is_real_trigger": true,
+        "categories": [
+          "shouting_aggression",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2709,
+        "output_tokens": 104,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3356
+    },
+    {
+      "id": "S04",
+      "startMs": 744745,
+      "endMs": 863404,
+      "startCue": "C0194",
+      "endCue": "C0236",
+      "windowIds": [
+        "W008"
+      ],
+      "categories": {
+        "shouting_aggression": 0.82,
+        "emotional_distress": 0.63,
+        "imitable_risk": 0.94
+      },
+      "severity": 1.64,
+      "peakCue": "C0221",
+      "jevCategories": {
+        "shouting_aggression": 0.82,
+        "emotional_distress": 0.63,
+        "imitable_risk": 0.94
+      },
+      "claude": {
+        "description": "Nemo disobeys his father's safety warnings and swims toward a boat in the ocean, and his father angrily yells at him, saying \"I hate you\" in frustration. A young child might be upset seeing a parent and child in conflict and hearing harsh words between them.",
+        "is_real_trigger": true,
+        "categories": [
+          "shouting_aggression",
+          "emotional_distress",
+          "imitable_risk"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2966,
+        "output_tokens": 101,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 3847
+    },
+    {
+      "id": "S05",
+      "startMs": 863488,
+      "endMs": 931013,
+      "startCue": "C0237",
+      "endCue": "C0258",
+      "windowIds": [
+        "W009"
+      ],
+      "categories": {
+        "peril_chase": 0.91,
+        "predator_creature": 0.66,
+        "death_loss": 0.57,
+        "separation_abandonment": 0.81,
+        "injury_pain": 0.62,
+        "shouting_aggression": 0.84,
+        "emotional_distress": 0.95,
+        "imitable_risk": 0.82,
+        "loud_sudden_sound": 0.82
+      },
+      "severity": 2.76,
+      "peakCue": "C0249",
+      "jevCategories": {
+        "peril_chase": 0.91,
+        "predator_creature": 0.66,
+        "death_loss": 0.57,
+        "separation_abandonment": 0.81,
+        "injury_pain": 0.62,
+        "shouting_aggression": 0.84,
+        "emotional_distress": 0.95,
+        "imitable_risk": 0.82,
+        "loud_sudden_sound": 0.82
+      },
+      "claude": {
+        "description": "Marlin angrily yells at his young son Nemo for disobeying and swimming toward a boat, then a group of divers suddenly attacks and captures Nemo while Marlin desperately tries to save him. This scene shows a parent losing his child and will likely upset a 5-year-old.",
+        "is_real_trigger": true,
+        "categories": [
+          "shouting_aggression",
+          "peril_chase",
+          "separation_abandonment",
+          "emotional_distress",
+          "loud_sudden_sound"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2473,
+        "output_tokens": 120,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1989
+    },
+    {
+      "id": "S06",
+      "startMs": 941107,
+      "endMs": 1033574,
+      "startCue": "C0259",
+      "endCue": "C0290",
+      "windowIds": [
+        "W010"
+      ],
+      "categories": {
+        "death_loss": 0.55,
+        "separation_abandonment": 0.78,
+        "emotional_distress": 0.97
+      },
+      "severity": 2.51,
+      "peakCue": "C0264",
+      "jevCategories": {
+        "death_loss": 0.55,
+        "separation_abandonment": 0.78,
+        "emotional_distress": 0.97
+      },
+      "claude": {
+        "description": "Nemo is taken away by a scuba diver in a boat, and his father Marlin desperately calls out for him, panicking and crying as he realizes his son is gone. This is an intense scene of a parent losing their child that may upset young viewers.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress",
+          "peril_chase"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2655,
+        "output_tokens": 96,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1753
+    },
+    {
+      "id": "S07",
+      "startMs": 1060143,
+      "endMs": 1124373,
+      "startCue": "C0291",
+      "endCue": "C0311",
+      "windowIds": [
+        "W011"
+      ],
+      "categories": {
+        "shouting_aggression": 0.77
+      },
+      "severity": 1.03,
+      "peakCue": "C0295",
+      "jevCategories": {
+        "shouting_aggression": 0.77
+      },
+      "claude": {
+        "description": "Marlin and Dory have a tense argument where Marlin gets frustrated and raises his voice at Dory, who keeps repeating herself due to memory loss. The confrontation includes aggressive posturing and heated language, though it ends when Dory apologizes and explains her condition.",
+        "is_real_trigger": false,
+        "categories": [
+          "shouting_aggression"
+        ],
+        "severity": 0
+      },
+      "usage": {
+        "input_tokens": 2496,
+        "output_tokens": 91,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1647
+    },
+    {
+      "id": "S08",
+      "startMs": 1336002,
+      "endMs": 1427092,
+      "startCue": "C0377",
+      "endCue": "C0407",
+      "windowIds": [
+        "W014"
+      ],
+      "categories": {
+        "peril_chase": 0.78,
+        "predator_creature": 0.89,
+        "injury_pain": 0.8,
+        "shouting_aggression": 0.71,
+        "emotional_distress": 0.9
+      },
+      "severity": 1.99,
+      "peakCue": "C0406",
+      "jevCategories": {
+        "peril_chase": 0.78,
+        "predator_creature": 0.89,
+        "injury_pain": 0.8,
+        "shouting_aggression": 0.71,
+        "emotional_distress": 0.9
+      },
+      "claude": {
+        "description": "Marlin tearfully tells sharks about his missing son Nemo, and the sharks become aggressive and try to eat the fish, snapping at them and saying they want to have 'fish for dinner.' A character gets hit and asks if they're bleeding.",
+        "is_real_trigger": true,
+        "categories": [
+          "predator_creature",
+          "peril_chase",
+          "emotional_distress",
+          "shouting_aggression",
+          "injury_pain"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2746,
+        "output_tokens": 102,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1704
+    },
+    {
+      "id": "S09",
+      "startMs": 1432932,
+      "endMs": 1504127,
+      "startCue": "C0408",
+      "endCue": "C0428",
+      "windowIds": [
+        "W015"
+      ],
+      "categories": {
+        "peril_chase": 0.65,
+        "predator_creature": 0.57,
+        "captivity_confinement": 0.87,
+        "emotional_distress": 0.68
+      },
+      "severity": 1.77,
+      "peakCue": "C0422",
+      "jevCategories": {
+        "peril_chase": 0.65,
+        "predator_creature": 0.57,
+        "captivity_confinement": 0.87,
+        "emotional_distress": 0.68
+      },
+      "claude": {
+        "description": "The sharks are in a dangerous feeding frenzy as one fish desperately tries to escape with a mask, yelling \"No, no, no!\" The scene shows the fish panicking and trapped with predatory sharks closing in.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "predator_creature",
+          "captivity_confinement",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2505,
+        "output_tokens": 93,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1570
+    },
+    {
+      "id": "S10",
+      "startMs": 1508883,
+      "endMs": 1581371,
+      "startCue": "C0429",
+      "endCue": "C0443",
+      "windowIds": [
+        "W016"
+      ],
+      "categories": {
+        "captivity_confinement": 0.54,
+        "emotional_distress": 0.53,
+        "loud_sudden_sound": 0.75
+      },
+      "severity": 1.25,
+      "peakCue": "C0443",
+      "jevCategories": {
+        "captivity_confinement": 0.54,
+        "emotional_distress": 0.53,
+        "loud_sudden_sound": 0.75
+      },
+      "claude": {
+        "description": "Nemo calls out for his dad in distress while he's being examined by the dentist, who discusses dental procedures on him. A child may be upset hearing Nemo scared and separated from his father, and confused or worried about the unfamiliar medical setting.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress",
+          "captivity_confinement"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2326,
+        "output_tokens": 96,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2210
+    },
+    {
+      "id": "S11",
+      "startMs": 1585126,
+      "endMs": 1704911,
+      "startCue": "C0444",
+      "endCue": "C0486",
+      "windowIds": [
+        "W017"
+      ],
+      "categories": {
+        "separation_abandonment": 0.56,
+        "captivity_confinement": 0.83,
+        "emotional_distress": 0.93,
+        "loud_sudden_sound": 0.58
+      },
+      "severity": 1.87,
+      "peakCue": "C0472",
+      "jevCategories": {
+        "separation_abandonment": 0.56,
+        "captivity_confinement": 0.83,
+        "emotional_distress": 0.93,
+        "loud_sudden_sound": 0.58
+      },
+      "claude": {
+        "description": "Nemo arrives at the dentist's office tank and is frightened and separated from his father, calling out for his dad while the fish around him discuss a dental procedure happening in the background. Nemo is scared and confused in an unfamiliar place with strangers.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress",
+          "captivity_confinement"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 3034,
+        "output_tokens": 97,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1914
+    },
+    {
+      "id": "S12",
+      "startMs": 1705871,
+      "endMs": 1784199,
+      "startCue": "C0487",
+      "endCue": "C0511",
+      "windowIds": [
+        "W018"
+      ],
+      "categories": {
+        "peril_chase": 0.71,
+        "death_loss": 0.69,
+        "separation_abandonment": 0.63,
+        "captivity_confinement": 0.9,
+        "emotional_distress": 0.73
+      },
+      "severity": 2.34,
+      "peakCue": "C0511",
+      "jevCategories": {
+        "peril_chase": 0.71,
+        "death_loss": 0.69,
+        "separation_abandonment": 0.63,
+        "captivity_confinement": 0.9,
+        "emotional_distress": 0.73
+      },
+      "claude": {
+        "description": "Nemo learns he's being given as a birthday present to a girl named Darla, who has a reputation for killing pet fish by shaking their bags. Nemo becomes distressed about being separated from his father and calls out for help.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress",
+          "death_loss"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2662,
+        "output_tokens": 89,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2630
+    },
+    {
+      "id": "S13",
+      "startMs": 1862778,
+      "endMs": 1950865,
+      "startCue": "C0531",
+      "endCue": "C0549",
+      "windowIds": [
+        "W020"
+      ],
+      "categories": {
+        "emotional_distress": 0.94,
+        "loud_sudden_sound": 0.96
+      },
+      "severity": 1.82,
+      "peakCue": "C0537",
+      "jevCategories": {
+        "emotional_distress": 0.94,
+        "loud_sudden_sound": 0.96
+      },
+      "claude": {
+        "description": "Marlin and Dory wake up in a dusty shipwreck and realize a crucial clue to finding Nemo (a mask with an address) has been lost. Marlin becomes distressed and upset, expressing despair about his search for his son.",
+        "is_real_trigger": true,
+        "categories": [
+          "emotional_distress",
+          "loud_sudden_sound",
+          "separation_abandonment"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2444,
+        "output_tokens": 97,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2374
+    },
+    {
+      "id": "S14",
+      "startMs": 1955037,
+      "endMs": 2052467,
+      "startCue": "C0550",
+      "endCue": "C0584",
+      "windowIds": [
+        "W021"
+      ],
+      "categories": {
+        "predator_creature": 0.54
+      },
+      "severity": 1.04,
+      "peakCue": "C0571",
+      "jevCategories": {
+        "predator_creature": 0.54
+      },
+      "claude": {
+        "description": "Marlin and Dory are drawn toward a glowing light in the darkness of the deep ocean. The light turns out to be an anglerfish's lure, and the massive predatory fish suddenly appears, chasing and trying to eat them.",
+        "is_real_trigger": true,
+        "categories": [
+          "predator_creature",
+          "peril_chase",
+          "darkness_unknown",
+          "loud_sudden_sound"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2750,
+        "output_tokens": 96,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1832
+    },
+    {
+      "id": "S15",
+      "startMs": 2057097,
+      "endMs": 2124539,
+      "startCue": "C0585",
+      "endCue": "C0608",
+      "windowIds": [
+        "W022"
+      ],
+      "categories": {
+        "peril_chase": 0.56,
+        "emotional_distress": 0.8,
+        "loud_sudden_sound": 0.98
+      },
+      "severity": 1.17,
+      "peakCue": "C0585",
+      "jevCategories": {
+        "peril_chase": 0.56,
+        "emotional_distress": 0.8,
+        "loud_sudden_sound": 0.98
+      },
+      "claude": {
+        "description": "Marlin and Dory are fleeing in panic from danger (they scream and say they can't see where they're going), and there's an urgent moment when they must duck to avoid an obstacle. A young child might find the sudden screaming and frantic action startling.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "emotional_distress",
+          "loud_sudden_sound"
+        ],
+        "severity": 1
+      },
+      "usage": {
+        "input_tokens": 2545,
+        "output_tokens": 99,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2105
+    },
+    {
+      "id": "S16",
+      "startMs": 2128210,
+      "endMs": 2209916,
+      "startCue": "C0609",
+      "endCue": "C0627",
+      "windowIds": [
+        "W023"
+      ],
+      "categories": {
+        "emotional_distress": 0.78
+      },
+      "severity": 1,
+      "peakCue": "C0609",
+      "jevCategories": {
+        "emotional_distress": 0.78
+      },
+      "claude": {
+        "description": "Marlin panics and thinks he's dying after being chased by sharks, but he and Dory quickly celebrate when they discover an important clue about where Nemo is. The sharks, though initially threatening, are revealed to be harmless.",
+        "is_real_trigger": false,
+        "categories": [
+          "emotional_distress"
+        ],
+        "severity": 1
+      },
+      "usage": {
+        "input_tokens": 2442,
+        "output_tokens": 81,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1569
+    },
+    {
+      "id": "S17",
+      "startMs": 2303635,
+      "endMs": 2418833,
+      "startCue": "C0640",
+      "endCue": "C0675",
+      "windowIds": [
+        "W025"
+      ],
+      "categories": {
+        "captivity_confinement": 0.88,
+        "shouting_aggression": 0.55
+      },
+      "severity": 1.66,
+      "peakCue": "C0652",
+      "jevCategories": {
+        "captivity_confinement": 0.88,
+        "shouting_aggression": 0.55
+      },
+      "claude": {
+        "description": "Nemo is initiated into a group of fish in the tank with a loud, chanting ceremony and given a new name. The fish then reveal they're trapped in the tank and planning an escape, mentioning that another character (Darla) is coming in five days and will cause harm—creating mild tension about danger and captivity.",
+        "is_real_trigger": false,
+        "categories": [
+          "captivity_confinement"
+        ],
+        "severity": 1
+      },
+      "usage": {
+        "input_tokens": 2892,
+        "output_tokens": 100,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2024
+    },
+    {
+      "id": "S18",
+      "startMs": 2660534,
+      "endMs": 2750873,
+      "startCue": "C0762",
+      "endCue": "C0791",
+      "windowIds": [
+        "W028"
+      ],
+      "categories": {
+        "peril_chase": 0.6,
+        "injury_pain": 0.92
+      },
+      "severity": 1.11,
+      "peakCue": "C0781",
+      "jevCategories": {
+        "peril_chase": 0.6,
+        "injury_pain": 0.92
+      },
+      "claude": {
+        "description": "Marlin and Dory navigate a dangerous trench and encounter jellyfish that sting them. Dory touches a jellyfish and gets stung, experiencing pain, and Marlin also gets stung while trying to help.",
+        "is_real_trigger": true,
+        "categories": [
+          "injury_pain",
+          "peril_chase",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2736,
+        "output_tokens": 88,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1428
+    },
+    {
+      "id": "S19",
+      "startMs": 2754336,
+      "endMs": 2868323,
+      "startCue": "C0792",
+      "endCue": "C0832",
+      "windowIds": [
+        "W029"
+      ],
+      "categories": {
+        "peril_chase": 0.81,
+        "injury_pain": 0.85,
+        "emotional_distress": 0.67,
+        "loud_sudden_sound": 0.87,
+        "flashing_light_inferred": 0.53
+      },
+      "severity": 1.65,
+      "peakCue": "C0826",
+      "jevCategories": {
+        "peril_chase": 0.81,
+        "injury_pain": 0.85,
+        "emotional_distress": 0.67,
+        "loud_sudden_sound": 0.87,
+        "flashing_light_inferred": 0.53
+      },
+      "claude": {
+        "description": "Marlin and Dory play a dangerous game hopping on jellyfish tentacles to escape, and Dory is stung and cries out in pain. The scene is tense and includes injury sounds that could startle a young child.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "injury_pain",
+          "emotional_distress",
+          "loud_sudden_sound"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2920,
+        "output_tokens": 96,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1651
+    },
+    {
+      "id": "S20",
+      "startMs": 2871703,
+      "endMs": 2963168,
+      "startCue": "C0833",
+      "endCue": "C0858",
+      "windowIds": [
+        "W030"
+      ],
+      "categories": {
+        "separation_abandonment": 0.57,
+        "captivity_confinement": 0.91
+      },
+      "severity": 1.15,
+      "peakCue": "C0843",
+      "jevCategories": {
+        "separation_abandonment": 0.57,
+        "captivity_confinement": 0.91
+      },
+      "claude": {
+        "description": "Nemo is trapped in a fish tank at a dentist's office and is attempting a dangerous escape through plumbing while the dentist is briefly away. The scene shows Nemo confined and anxious about the risky plan, which may worry young viewers about his safety and separation from his father.",
+        "is_real_trigger": true,
+        "categories": [
+          "captivity_confinement",
+          "peril_chase",
+          "separation_abandonment",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2642,
+        "output_tokens": 108,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1844
+    },
+    {
+      "id": "S21",
+      "startMs": 2971344,
+      "endMs": 3052174,
+      "startCue": "C0859",
+      "endCue": "C0876",
+      "windowIds": [
+        "W031"
+      ],
+      "categories": {
+        "peril_chase": 0.91,
+        "captivity_confinement": 0.86,
+        "emotional_distress": 0.85
+      },
+      "severity": 1.95,
+      "peakCue": "C0872",
+      "jevCategories": {
+        "peril_chase": 0.91,
+        "captivity_confinement": 0.86,
+        "emotional_distress": 0.85
+      },
+      "claude": {
+        "description": "Nemo becomes trapped in a narrow pipe with a spinning fan while other fish try to help him escape. He panics and calls for help as the situation grows dangerous and frightening.",
+        "is_real_trigger": true,
+        "categories": [
+          "captivity_confinement",
+          "emotional_distress",
+          "peril_chase"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2463,
+        "output_tokens": 78,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1473
+    },
+    {
+      "id": "S22",
+      "startMs": 3055887,
+      "endMs": 3153233,
+      "startCue": "C0877",
+      "endCue": "C0905",
+      "windowIds": [
+        "W032"
+      ],
+      "categories": {
+        "injury_pain": 0.78,
+        "emotional_distress": 0.59
+      },
+      "severity": 1.1,
+      "peakCue": "C0883",
+      "jevCategories": {
+        "injury_pain": 0.78,
+        "emotional_distress": 0.59
+      },
+      "claude": {
+        "description": "Marlin gets hurt and knocked unconscious after being attacked by jellyfish, leaving him limp and unresponsive until a sea turtle finds him. A young child might worry the character is dead or seriously injured.",
+        "is_real_trigger": true,
+        "categories": [
+          "injury_pain",
+          "emotional_distress",
+          "peril_chase"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2636,
+        "output_tokens": 83,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1596
+    },
+    {
+      "id": "S23",
+      "startMs": 3327200,
+      "endMs": 3433388,
+      "startCue": "C0944",
+      "endCue": "C0984",
+      "windowIds": [
+        "W035"
+      ],
+      "categories": {
+        "predator_creature": 0.52,
+        "separation_abandonment": 0.93,
+        "flashing_light_inferred": 0.76
+      },
+      "severity": 2.11,
+      "peakCue": "C0975",
+      "jevCategories": {
+        "predator_creature": 0.52,
+        "separation_abandonment": 0.93,
+        "flashing_light_inferred": 0.76
+      },
+      "claude": {
+        "description": "Marlin tells young sea turtle children about his son being taken by divers and recounts an exciting (but not graphically shown) adventure involving sharks and a scary deep-sea creature with sharp teeth. A 5-year-old may be upset by the story of a child being separated from his parent and the description of a frightening monster.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "predator_creature",
+          "darkness_unknown",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2961,
+        "output_tokens": 114,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1982
+    },
+    {
+      "id": "S24",
+      "startMs": 3440021,
+      "endMs": 3530944,
+      "startCue": "C0985",
+      "endCue": "C1005",
+      "windowIds": [
+        "W036"
+      ],
+      "categories": {
+        "separation_abandonment": 0.63,
+        "captivity_confinement": 0.63,
+        "shouting_aggression": 0.81,
+        "emotional_distress": 0.56,
+        "loud_sudden_sound": 0.69
+      },
+      "severity": 1.9,
+      "peakCue": "C0991",
+      "jevCategories": {
+        "separation_abandonment": 0.63,
+        "captivity_confinement": 0.63,
+        "shouting_aggression": 0.81,
+        "emotional_distress": 0.56,
+        "loud_sudden_sound": 0.69
+      },
+      "claude": {
+        "description": "Marlin learns his son Nemo was taken by divers and may be in danger heading toward the harbour; Gill feels guilty for putting Nemo in harm's way and apologizes for not reuniting him with his father. A young child may be upset by the reminder that Nemo was taken from his parent and is still separated from him.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2513,
+        "output_tokens": 107,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1708
+    },
+    {
+      "id": "S25",
+      "startMs": 3535241,
+      "endMs": 3615862,
+      "startCue": "C1006",
+      "endCue": "C1035",
+      "windowIds": [
+        "W037"
+      ],
+      "categories": {
+        "separation_abandonment": 0.66,
+        "loud_sudden_sound": 0.69,
+        "flashing_light_inferred": 0.6
+      },
+      "severity": 1.94,
+      "peakCue": "C1030",
+      "jevCategories": {
+        "separation_abandonment": 0.66,
+        "loud_sudden_sound": 0.69,
+        "flashing_light_inferred": 0.6
+      },
+      "claude": {
+        "description": "Nigel the pelican tells Nemo an exciting but dramatized story about how his father Marlin has been fighting sharks, jellyfish, and a scary monster to find him. The vivid descriptions of dangerous encounters may startle or worry a young child, even though the story is being told fondly.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "predator_creature",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2753,
+        "output_tokens": 104,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1810
+    },
+    {
+      "id": "S26",
+      "startMs": 3619658,
+      "endMs": 3737066,
+      "startCue": "C1036",
+      "endCue": "C1069",
+      "windowIds": [
+        "W038"
+      ],
+      "categories": {
+        "peril_chase": 0.6,
+        "captivity_confinement": 0.8,
+        "loud_sudden_sound": 0.52
+      },
+      "severity": 1.4,
+      "peakCue": "C1038",
+      "jevCategories": {
+        "peril_chase": 0.6,
+        "captivity_confinement": 0.8,
+        "loud_sudden_sound": 0.52
+      },
+      "claude": {
+        "description": "Nemo gets stuck in the tank's filter and has to be rescued by his tank-mates, who work together to pull him out before he's hurt. Later, the group prepares to escape through a dangerous ocean current they describe as a \"swirling vortex of terror.\"",
+        "is_real_trigger": true,
+        "categories": [
+          "captivity_confinement",
+          "peril_chase",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2871,
+        "output_tokens": 103,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1893
+    },
+    {
+      "id": "S27",
+      "startMs": 4170751,
+      "endMs": 4266178,
+      "startCue": "C1188",
+      "endCue": "C1211",
+      "windowIds": [
+        "W043"
+      ],
+      "categories": {
+        "captivity_confinement": 0.95,
+        "emotional_distress": 0.91,
+        "loud_sudden_sound": 0.78
+      },
+      "severity": 1.57,
+      "peakCue": "C1206",
+      "jevCategories": {
+        "captivity_confinement": 0.95,
+        "emotional_distress": 0.91,
+        "loud_sudden_sound": 0.78
+      },
+      "claude": {
+        "description": "Marlin becomes very distressed and panicked after realizing he and Dory are trapped inside a whale's mouth. He expresses despair about his situation and his broken promise to protect his son, showing visible emotional anguish.",
+        "is_real_trigger": true,
+        "categories": [
+          "captivity_confinement",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2577,
+        "output_tokens": 85,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1542
+    },
+    {
+      "id": "S28",
+      "startMs": 4276606,
+      "endMs": 4347259,
+      "startCue": "C1212",
+      "endCue": "C1232",
+      "windowIds": [
+        "W044"
+      ],
+      "categories": {
+        "peril_chase": 0.91,
+        "predator_creature": 0.92,
+        "captivity_confinement": 0.5,
+        "darkness_unknown": 0.51,
+        "emotional_distress": 0.68,
+        "loud_sudden_sound": 0.98
+      },
+      "severity": 2.26,
+      "peakCue": "C1229",
+      "jevCategories": {
+        "peril_chase": 0.91,
+        "predator_creature": 0.92,
+        "captivity_confinement": 0.5,
+        "darkness_unknown": 0.51,
+        "emotional_distress": 0.68,
+        "loud_sudden_sound": 0.98
+      },
+      "claude": {
+        "description": "Marlin and Dory are trapped inside a whale's mouth as it roars and water drains away, and they fear they're about to be eaten. The whale makes loud roaring sounds and the characters express panic about being swallowed.",
+        "is_real_trigger": true,
+        "categories": [
+          "predator_creature",
+          "captivity_confinement",
+          "loud_sudden_sound",
+          "emotional_distress",
+          "peril_chase"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2536,
+        "output_tokens": 103,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1680
+    },
+    {
+      "id": "S29",
+      "startMs": 4353683,
+      "endMs": 4427089,
+      "startCue": "C1233",
+      "endCue": "C1251",
+      "windowIds": [
+        "W045"
+      ],
+      "categories": {
+        "emotional_distress": 0.8,
+        "loud_sudden_sound": 0.97
+      },
+      "severity": 1.67,
+      "peakCue": "C1245",
+      "jevCategories": {
+        "emotional_distress": 0.8,
+        "loud_sudden_sound": 0.97
+      },
+      "claude": {
+        "description": "Marlin and Dory are arguing about whether Dory can speak whale, and Marlin expresses doubt that they will survive their journey. They make a loud whale call and scream as they go over a waterfall, but they emerge safely and excitedly celebrate arriving at their destination.",
+        "is_real_trigger": true,
+        "categories": [
+          "shouting_aggression",
+          "emotional_distress",
+          "loud_sudden_sound",
+          "peril_chase"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2419,
+        "output_tokens": 108,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2121
+    },
+    {
+      "id": "S30",
+      "startMs": 4498995,
+      "endMs": 4559805,
+      "startCue": "C1271",
+      "endCue": "C1292",
+      "windowIds": [
+        "W047"
+      ],
+      "categories": {
+        "peril_chase": 0.87,
+        "captivity_confinement": 0.73,
+        "emotional_distress": 0.87
+      },
+      "severity": 1.7,
+      "peakCue": "C1290",
+      "jevCategories": {
+        "peril_chase": 0.87,
+        "captivity_confinement": 0.73,
+        "emotional_distress": 0.87
+      },
+      "claude": {
+        "description": "Nemo and the tank fish execute a desperate escape plan that goes wrong, with Nemo calling for help and nearly falling out of the tank while the dentist almost catches him. The fish are panicking about Darla's arrival, and there's intense shouting and frantic activity as they try to save Nemo from danger.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "captivity_confinement",
+          "emotional_distress",
+          "shouting_aggression"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2540,
+        "output_tokens": 117,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2121
+    },
+    {
+      "id": "S31",
+      "startMs": 4563977,
+      "endMs": 4648769,
+      "startCue": "C1293",
+      "endCue": "C1317",
+      "windowIds": [
+        "W048"
+      ],
+      "categories": {
+        "peril_chase": 0.59,
+        "predator_creature": 0.69,
+        "emotional_distress": 0.62
+      },
+      "severity": 1.38,
+      "peakCue": "C1300",
+      "jevCategories": {
+        "peril_chase": 0.59,
+        "predator_creature": 0.69,
+        "emotional_distress": 0.62
+      },
+      "claude": {
+        "description": "Marlin and Dory are chased by a pelican (Nigel) who initially appears threatening and tries to catch them. Though Nigel turns out to be friendly, the chase and threat of being eaten by a predator bird may startle a young child.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "predator_creature",
+          "loud_sudden_sound"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2564,
+        "output_tokens": 97,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1606
+    },
+    {
+      "id": "S32",
+      "startMs": 4652732,
+      "endMs": 4717337,
+      "startCue": "C1318",
+      "endCue": "C1330",
+      "windowIds": [
+        "W049"
+      ],
+      "categories": {
+        "peril_chase": 0.53,
+        "predator_creature": 0.75,
+        "captivity_confinement": 0.51,
+        "shouting_aggression": 0.59
+      },
+      "severity": 1.77,
+      "peakCue": "C1320",
+      "jevCategories": {
+        "peril_chase": 0.53,
+        "predator_creature": 0.75,
+        "captivity_confinement": 0.51,
+        "shouting_aggression": 0.59
+      },
+      "claude": {
+        "description": "Marlin and Dory are being chased aggressively by a pelican named Nigel who keeps saying \"Mine!\" and telling them to jump into his mouth. While Nigel is actually friendly and trying to help, the intense pursuit and his threatening behavior may seem scary to a young child.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "shouting_aggression",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2326,
+        "output_tokens": 104,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1753
+    },
+    {
+      "id": "S33",
+      "startMs": 4724220,
+      "endMs": 4792496,
+      "startCue": "C1331",
+      "endCue": "C1355",
+      "windowIds": [
+        "W050"
+      ],
+      "categories": {
+        "peril_chase": 0.75,
+        "death_loss": 0.9,
+        "captivity_confinement": 0.64,
+        "emotional_distress": 0.83,
+        "loud_sudden_sound": 0.97
+      },
+      "severity": 2.08,
+      "peakCue": "C1341",
+      "jevCategories": {
+        "peril_chase": 0.75,
+        "death_loss": 0.9,
+        "captivity_confinement": 0.64,
+        "emotional_distress": 0.83,
+        "loud_sudden_sound": 0.97
+      },
+      "claude": {
+        "description": "Nemo is captured by the dentist's rough 8-year-old niece, Darla, who shakes his tank and appears to harm him; he plays dead to escape, and there are screams and chaotic moments as characters try to help him get away. A young child may be scared for Nemo's safety and upset by the loud, frantic action.",
+        "is_real_trigger": true,
+        "categories": [
+          "captivity_confinement",
+          "emotional_distress",
+          "loud_sudden_sound",
+          "death_loss"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2624,
+        "output_tokens": 126,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1885
+    },
+    {
+      "id": "S34",
+      "startMs": 4796125,
+      "endMs": 4866236,
+      "startCue": "C1356",
+      "endCue": "C1378",
+      "windowIds": [
+        "W051"
+      ],
+      "categories": {
+        "peril_chase": 0.73,
+        "separation_abandonment": 0.65,
+        "captivity_confinement": 0.65,
+        "shouting_aggression": 0.82,
+        "emotional_distress": 0.87,
+        "loud_sudden_sound": 0.9
+      },
+      "severity": 1.73,
+      "peakCue": "C1374",
+      "jevCategories": {
+        "peril_chase": 0.73,
+        "separation_abandonment": 0.65,
+        "captivity_confinement": 0.65,
+        "shouting_aggression": 0.82,
+        "emotional_distress": 0.87,
+        "loud_sudden_sound": 0.9
+      },
+      "claude": {
+        "description": "Nemo is caught by Darla, the dentist's rough young niece, and the tank fish try desperately to help him escape from her grip while she screams and thrashes. Marlin hears his son calling for him but cannot reach him, and Nemo is forcibly separated from the tank and taken away by the dentist.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "captivity_confinement",
+          "shouting_aggression",
+          "emotional_distress",
+          "loud_sudden_sound",
+          "peril_chase"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2532,
+        "output_tokens": 132,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 2042
+    },
+    {
+      "id": "S35",
+      "startMs": 4870491,
+      "endMs": 4937974,
+      "startCue": "C1379",
+      "endCue": "C1389",
+      "windowIds": [
+        "W052"
+      ],
+      "categories": {
+        "emotional_distress": 0.81,
+        "loud_sudden_sound": 0.55
+      },
+      "severity": 1.52,
+      "peakCue": "C1386",
+      "jevCategories": {
+        "emotional_distress": 0.81,
+        "loud_sudden_sound": 0.55
+      },
+      "claude": {
+        "description": "Nemo is flushed down a toilet drain after escaping from the dentist's tank, and Marlin hears Nemo cry out for him in distress. Marlin becomes very upset thinking his son is lost, though the other fish reassure him that drains lead to the ocean.",
+        "is_real_trigger": true,
+        "categories": [
+          "separation_abandonment",
+          "emotional_distress",
+          "peril_chase"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2243,
+        "output_tokens": 103,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1741
+    },
+    {
+      "id": "S36",
+      "startMs": 4956118,
+      "endMs": 5031610,
+      "startCue": "C1390",
+      "endCue": "C1413",
+      "windowIds": [
+        "W053"
+      ],
+      "categories": {
+        "death_loss": 0.82,
+        "separation_abandonment": 0.88,
+        "emotional_distress": 0.81
+      },
+      "severity": 2.24,
+      "peakCue": "C1396",
+      "jevCategories": {
+        "death_loss": 0.82,
+        "separation_abandonment": 0.88,
+        "emotional_distress": 0.81
+      },
+      "claude": {
+        "description": "Marlin believes his son Nemo is dead and decides to leave Dory behind, despite Dory's emotional pleas not to be abandoned. A young child may be upset by the idea of a parent giving up on finding their child and a friend being left alone.",
+        "is_real_trigger": true,
+        "categories": [
+          "death_loss",
+          "separation_abandonment",
+          "emotional_distress"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2514,
+        "output_tokens": 95,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1924
+    },
+    {
+      "id": "S37",
+      "startMs": 5043497,
+      "endMs": 5112440,
+      "startCue": "C1414",
+      "endCue": "C1436",
+      "windowIds": [
+        "W054"
+      ],
+      "categories": {
+        "peril_chase": 0.88,
+        "predator_creature": 0.84,
+        "separation_abandonment": 0.85,
+        "captivity_confinement": 0.85,
+        "shouting_aggression": 0.77,
+        "emotional_distress": 0.78
+      },
+      "severity": 1.99,
+      "peakCue": "C1420",
+      "jevCategories": {
+        "peril_chase": 0.88,
+        "predator_creature": 0.84,
+        "separation_abandonment": 0.85,
+        "captivity_confinement": 0.85,
+        "shouting_aggression": 0.77,
+        "emotional_distress": 0.78
+      },
+      "claude": {
+        "description": "Nemo is chased and captured by pelicans while calling out for his father, and Dory is also caught. After being released, Nemo is distressed and searching for Marlin, while Dory has lost her memory and cannot remember what happened. This scene shows a child character in immediate danger, separated from his parent, and very frightened.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "separation_abandonment",
+          "captivity_confinement",
+          "emotional_distress",
+          "shouting_aggression"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2520,
+        "output_tokens": 129,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1847
+    },
+    {
+      "id": "S38",
+      "startMs": 5121742,
+      "endMs": 5188433,
+      "startCue": "C1437",
+      "endCue": "C1463",
+      "windowIds": [
+        "W055"
+      ],
+      "categories": {
+        "predator_creature": 0.57,
+        "death_loss": 0.91,
+        "shouting_aggression": 0.75,
+        "emotional_distress": 0.53,
+        "loud_sudden_sound": 0.96
+      },
+      "severity": 1.4,
+      "peakCue": "C1449",
+      "jevCategories": {
+        "predator_creature": 0.57,
+        "death_loss": 0.91,
+        "shouting_aggression": 0.75,
+        "emotional_distress": 0.53,
+        "loud_sudden_sound": 0.96
+      },
+      "claude": {
+        "description": "Nemo is reunited with his father Marlin, but then a menacing barracuda suddenly appears and chases them. Nemo's friend thinks Nemo was dead, and there is shouting and a scream as the fish try to escape the predator.",
+        "is_real_trigger": true,
+        "categories": [
+          "predator_creature",
+          "peril_chase",
+          "death_loss",
+          "emotional_distress",
+          "loud_sudden_sound",
+          "shouting_aggression"
+        ],
+        "severity": 3
+      },
+      "usage": {
+        "input_tokens": 2597,
+        "output_tokens": 113,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1968
+    },
+    {
+      "id": "S39",
+      "startMs": 5191771,
+      "endMs": 5290118,
+      "startCue": "C1464",
+      "endCue": "C1491",
+      "windowIds": [
+        "W056"
+      ],
+      "categories": {
+        "peril_chase": 0.93,
+        "predator_creature": 0.5,
+        "captivity_confinement": 0.85,
+        "emotional_distress": 0.95,
+        "imitable_risk": 0.86,
+        "loud_sudden_sound": 0.97
+      },
+      "severity": 2.09,
+      "peakCue": "C1475",
+      "jevCategories": {
+        "peril_chase": 0.93,
+        "predator_creature": 0.5,
+        "captivity_confinement": 0.85,
+        "emotional_distress": 0.95,
+        "imitable_risk": 0.86,
+        "loud_sudden_sound": 0.97
+      },
+      "claude": {
+        "description": "Marlin desperately searches for his son Nemo and finds him in danger; characters are screaming and panicking as they try to escape a life-threatening situation where Dory needs to be rescued. A young fish must perform a dangerous task to save his friend, and his father worries he'll lose his son again.",
+        "is_real_trigger": true,
+        "categories": [
+          "peril_chase",
+          "emotional_distress",
+          "separation_abandonment",
+          "loud_sudden_sound"
+        ],
+        "severity": 2
+      },
+      "usage": {
+        "input_tokens": 2686,
+        "output_tokens": 113,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "service_tier": "standard",
+        "inference_geo": "not_available"
+      },
+      "latencyMs": 1931
+    }
+  ],
+  "wallMs": 20563,
+  "calls": 39,
+  "inputTokens": 101601,
+  "outputTokens": 3971,
+  "costUsd": 0.121456
+}

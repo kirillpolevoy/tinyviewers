@@ -1,0 +1,476 @@
+{
+  "film": "wild-robot",
+  "arm": "jev-finds+sonnet-labels",
+  "track": "wild-robot",
+  "model": "claude-sonnet-5",
+  "from": "runs-films/2026-09-21T01-01-41-jev-v3-universal-wild-robot.json",
+  "startedAt": "2026-09-21T01:09:28.301Z",
+  "wallMs": 31758,
+  "calls": 29,
+  "inputTokens": 134676,
+  "outputTokens": 6765,
+  "costUsd": 0.1461066,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Otters startled by robot",
+      "start_cue": "C0010",
+      "end_cue": "C0012",
+      "validCues": true,
+      "startMs": 105972,
+      "endMs": 112679,
+      "categories": [
+        "peril_chase",
+        "darkness_unknown"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Robot Wakes, Animals Panic",
+      "start_cue": "C0074",
+      "end_cue": "C0105",
+      "validCues": true,
+      "startMs": 406439,
+      "endMs": 477510,
+      "categories": [
+        "loud_sudden_sound",
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Monster Cry and Thunder",
+      "start_cue": "C0102",
+      "end_cue": "C0108",
+      "validCues": true,
+      "startMs": 468702,
+      "endMs": 486519,
+      "categories": [
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Raccoons playing with robot",
+      "start_cue": "C0126",
+      "end_cue": "C0156",
+      "validCues": true,
+      "startMs": 555455,
+      "endMs": 633667,
+      "categories": [
+        "imitable_risk",
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Roz Attacked in the Wilderness",
+      "start_cue": "C0173",
+      "end_cue": "C0234",
+      "validCues": true,
+      "startMs": 790690,
+      "endMs": 1041508,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "injury_pain",
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "Gosling nearly drowns and falls",
+      "start_cue": "C0324",
+      "end_cue": "C0331",
+      "validCues": true,
+      "startMs": 1247614,
+      "endMs": 1265765,
+      "categories": [
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Swimming lesson gone wrong",
+      "start_cue": "C0419",
+      "end_cue": "C0424",
+      "validCues": true,
+      "startMs": 1465965,
+      "endMs": 1479312,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Startled by thunder",
+      "start_cue": "C0544",
+      "end_cue": "C0551",
+      "validCues": true,
+      "startMs": 1761928,
+      "endMs": 1779946,
+      "categories": [
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "Brightbill's Swimming Lessons",
+      "start_cue": "C0662",
+      "end_cue": "C0691",
+      "validCues": true,
+      "startMs": 2066633,
+      "endMs": 2137203,
+      "categories": [
+        "imitable_risk"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Bullied by Other Geese",
+      "start_cue": "C0699",
+      "end_cue": "C0733",
+      "validCues": true,
+      "startMs": 2164230,
+      "endMs": 2242142,
+      "categories": [
+        "shouting_aggression",
+        "predator_creature"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Rockmouth Goose Attack",
+      "start_cue": "C0734",
+      "end_cue": "C0770",
+      "validCues": true,
+      "startMs": 2242242,
+      "endMs": 2342409,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "emotional_distress",
+        "shouting_aggression"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Truth About the Accident",
+      "start_cue": "C0771",
+      "end_cue": "C0809",
+      "validCues": true,
+      "startMs": 2342509,
+      "endMs": 2450817,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment",
+        "emotional_distress",
+        "death_loss"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "Time running out to fly",
+      "start_cue": "C0902",
+      "end_cue": "C0924",
+      "validCues": true,
+      "startMs": 2814914,
+      "endMs": 2870370,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Brightbill's flying lesson fall",
+      "start_cue": "C0957",
+      "end_cue": "C0968",
+      "validCues": true,
+      "startMs": 2973907,
+      "endMs": 2998531,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "Learning to fly",
+      "start_cue": "C0994",
+      "end_cue": "C1001",
+      "validCues": true,
+      "startMs": 3055155,
+      "endMs": 3079245,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Storm shelter",
+      "start_cue": "C1192",
+      "end_cue": "C1204",
+      "validCues": true,
+      "startMs": 3762562,
+      "endMs": 3797330,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Robot alarm panic",
+      "start_cue": "C1216",
+      "end_cue": "C1231",
+      "validCues": true,
+      "startMs": 3826926,
+      "endMs": 3859926,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Flight lesson turns dangerous",
+      "start_cue": "C1250",
+      "end_cue": "C1263",
+      "validCues": true,
+      "startMs": 3910744,
+      "endMs": 3957590,
+      "categories": [
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S19",
+      "title": "Searching survivors after disaster",
+      "start_cue": "C1298",
+      "end_cue": "C1319",
+      "validCues": true,
+      "startMs": 4052752,
+      "endMs": 4144544,
+      "categories": [
+        "death_loss",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S20",
+      "title": "Crowded shelter chaos and fight",
+      "start_cue": "C1320",
+      "end_cue": "C1343",
+      "validCues": true,
+      "startMs": 4153119,
+      "endMs": 4206072,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "imitable_risk"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S21",
+      "title": "Fink's speech about dying together",
+      "start_cue": "C1364",
+      "end_cue": "C1366",
+      "validCues": true,
+      "startMs": 4251484,
+      "endMs": 4256856,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S22",
+      "title": "Fink startles the geese",
+      "start_cue": "C1421",
+      "end_cue": "C1425",
+      "validCues": true,
+      "startMs": 4463363,
+      "endMs": 4474641,
+      "categories": [
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S23",
+      "title": "Robot Hunters Deploy Against Roz",
+      "start_cue": "C1494",
+      "end_cue": "C1500",
+      "validCues": true,
+      "startMs": 4699799,
+      "endMs": 4727027,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S24",
+      "title": "Animals turn on Roz",
+      "start_cue": "C1521",
+      "end_cue": "C1535",
+      "validCues": true,
+      "startMs": 4783316,
+      "endMs": 4844978,
+      "categories": [
+        "peril_chase",
+        "captivity_confinement",
+        "shouting_aggression"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S25",
+      "title": "Explosion and Roz damaged",
+      "start_cue": "C1538",
+      "end_cue": "C1550",
+      "validCues": true,
+      "startMs": 4849683,
+      "endMs": 4897564,
+      "categories": [
+        "peril_chase",
+        "injury_pain",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S26",
+      "title": "Captured and memories threatened",
+      "start_cue": "C1552",
+      "end_cue": "C1569",
+      "validCues": true,
+      "startMs": 4902969,
+      "endMs": 4963496,
+      "categories": [
+        "captivity_confinement",
+        "emotional_distress",
+        "shouting_aggression"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S27",
+      "title": "Roz's near-death and 'I love you Mom'",
+      "start_cue": "C1570",
+      "end_cue": "C1586",
+      "validCues": true,
+      "startMs": 4963596,
+      "endMs": 5066399,
+      "categories": [
+        "death_loss",
+        "injury_pain",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S28",
+      "title": "Vontra threatens to destroy Roz and Brightbill",
+      "start_cue": "C1608",
+      "end_cue": "C1626",
+      "validCues": true,
+      "startMs": 5119819,
+      "endMs": 5171638,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S29",
+      "title": "Rallying for the final battle",
+      "start_cue": "C1626",
+      "end_cue": "C1640",
+      "validCues": true,
+      "startMs": 5169836,
+      "endMs": 5250517,
+      "categories": [
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S30",
+      "title": "Roz Says Goodbye",
+      "start_cue": "C1663",
+      "end_cue": "C1682",
+      "validCues": true,
+      "startMs": 5323156,
+      "endMs": 5389489,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress",
+        "death_loss"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    }
+  ]
+}

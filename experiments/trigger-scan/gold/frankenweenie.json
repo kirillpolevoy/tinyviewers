@@ -1,0 +1,1043 @@
+[
+  {
+    "id": "G01",
+    "title": "Science teacher acts out a man being struck by lightning",
+    "start_cue": "C0096",
+    "end_cue": "C0103",
+    "start": "00:06:27",
+    "end": "00:06:46",
+    "attributes": [
+      "jump_scare"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0098",
+      "C0099",
+      "C0103"
+    ],
+    "text_visibility": "medium",
+    "note": "Gaunt, looming Mr. Rzykruski shouts 'Boom!' and mimes electrocution; the class gasps. Illustrative, nobody is in danger. Mild; least sure this belongs at all."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL (hard): Weird Girl's omen - past accidents retold",
+    "start_cue": "C0126",
+    "end_cue": "C0146",
+    "start": "00:09:10",
+    "end": "00:10:23",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard. Weird Girl recounts Mr. Whiskers' dreams: Bob 'fell in a manhole', Nassor 'got knocked unconscious' (brief comic flashbacks). Retold, deadpan, nobody in danger now. She is odd-looking but Victor does not react with fear."
+  },
+  {
+    "id": "G02",
+    "title": "Sparky chases the ball into the street and is hit by a car",
+    "start_cue": "C0222",
+    "end_cue": "C0229",
+    "start": "00:14:51",
+    "end": "00:15:29",
+    "attributes": [
+      "vehicle_crash",
+      "animal_in_danger",
+      "pet_animal_dies",
+      "dies_now",
+      "loved_one_dies"
+    ],
+    "visual_only": [
+      "pet_animal_dies",
+      "dies_now",
+      "loved_one_dies"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0225",
+      "C0226",
+      "C0228",
+      "C0229"
+    ],
+    "text_visibility": "medium",
+    "note": "Impact is off-screen: '(CAR APPROACHING)', '(THUDDING)', Victor cries 'Sparky! No!'. The death itself is not stated inside the range (only confirmed by the grave scene that follows), hence visual_only for the death attributes. loved_one_dies: Sparky is Victor's only friend."
+  },
+  {
+    "id": "G03",
+    "title": "Sparky's grave; parents comfort a grieving Victor; he cries in bed",
+    "start_cue": "C0230",
+    "end_cue": "C0241",
+    "start": "00:15:33",
+    "end": "00:17:13",
+    "attributes": [
+      "grieving",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0232",
+      "C0234",
+      "C0237",
+      "C0241"
+    ],
+    "text_visibility": "high",
+    "note": "Pet cemetery in the rain, then bedside talk: 'I don't want him in my heart. I want him here with me.' Victor sniffling alone. Deep, realistic pet-loss grief."
+  },
+  {
+    "id": "G04",
+    "title": "Dead frog made to kick with electricity in class",
+    "start_cue": "C0245",
+    "end_cue": "C0249",
+    "start": "00:18:09",
+    "end": "00:18:38",
+    "attributes": [
+      "corpses_undead"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0245",
+      "C0246",
+      "C0247"
+    ],
+    "text_visibility": "medium",
+    "note": "A dead frog's legs jerk when shocked; students exclaim in disgust. corpses_undead read literally (a dead animal body shown to characters). Mild."
+  },
+  {
+    "id": "G05",
+    "title": "Victor digs up Sparky's body in the pet cemetery at night",
+    "start_cue": "C0257",
+    "end_cue": "C0263",
+    "start": "00:20:27",
+    "end": "00:20:58",
+    "attributes": [
+      "corpses_undead",
+      "jump_scare"
+    ],
+    "visual_only": [
+      "corpses_undead"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0257",
+      "C0261",
+      "C0262"
+    ],
+    "text_visibility": "low",
+    "note": "Almost wordless: grunting while digging at night among gravestones, then Mr. Whiskers hisses and Victor gasps. The exhumation itself is invisible to text."
+  },
+  {
+    "id": "G06",
+    "title": "Attic laboratory: stitched corpse of Sparky raised into the lightning storm",
+    "start_cue": "C0267",
+    "end_cue": "C0272",
+    "start": "00:22:42",
+    "end": "00:26:01",
+    "attributes": [
+      "corpses_undead"
+    ],
+    "visual_only": [
+      "corpses_undead"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0268",
+      "C0270",
+      "C0271"
+    ],
+    "text_visibility": "low",
+    "note": "Nearly wordless Frankenstein sequence (22:42-26:00): the sewn-up dead dog with neck bolts is hoisted through the roof into a thunderstorm; loud thunder and electricity. Text shows only thunder/buzzing. Considered dangerous_act (kites in a lightning storm) but no adult forbade it and it is not a dare, so no."
+  },
+  {
+    "id": "G07",
+    "title": "Victor thinks it failed and mourns over Sparky's body",
+    "start_cue": "C0273",
+    "end_cue": "C0276",
+    "start": "00:26:38",
+    "end": "00:27:05",
+    "attributes": [
+      "grieving",
+      "sobbing_despair",
+      "corpses_undead"
+    ],
+    "visual_only": [
+      "sobbing_despair",
+      "corpses_undead"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0273",
+      "C0274"
+    ],
+    "text_visibility": "medium",
+    "note": "'I'm sorry, boy.' Victor hugs the lifeless body in despair, until Sparky's tail wags. The joyful 'You're alive!' that follows is not flagged."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL: breakfast, waffle iron and the 'robotic bucket'",
+    "start_cue": "C0301",
+    "end_cue": "C0312",
+    "start": "00:28:27",
+    "end": "00:29:16",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Light comic domestic scene; Victor hides Sparky under a bucket and tells him to stay. No danger or distress."
+  },
+  {
+    "id": "G08",
+    "title": "Stitched-up Sparky startles a neighbour, who screams",
+    "start_cue": "C0331",
+    "end_cue": "C0334",
+    "start": "00:30:51",
+    "end": "00:31:10",
+    "attributes": [
+      "scary_looking",
+      "jump_scare"
+    ],
+    "visual_only": [
+      "scary_looking"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0333",
+      "C0334"
+    ],
+    "text_visibility": "medium",
+    "note": "Sparky out in the neighbourhood; a neighbour hears growling, sees the undead dog and screams. Comic and brief. Not certain which neighbour (I believe Bob's mother)."
+  },
+  {
+    "id": "G09",
+    "title": "Bob's soda-rocket jetpack launch off the roof ends in a crash",
+    "start_cue": "C0491",
+    "end_cue": "C0509",
+    "start": "00:41:54",
+    "end": "00:42:52",
+    "attributes": [
+      "dangerous_act",
+      "fall_from_height",
+      "serious_injury",
+      "terrified"
+    ],
+    "visual_only": [
+      "fall_from_height"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0497",
+      "C0505",
+      "C0506",
+      "C0508",
+      "C0509"
+    ],
+    "text_visibility": "medium",
+    "note": "Toshiaki pressures a reluctant Bob into a rooftop launch (read as a dare); Bob flies, crashes, groans in pain, his mother screams, ambulance siren. He later has a broken arm. Comic tone, but a copyable stunt with a real injury. terrified is borderline (mother's scream)."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL: Victor talks with Mr. Rzykruski as he leaves",
+    "start_cue": "C0589",
+    "end_cue": "C0617",
+    "start": "00:47:20",
+    "end": "00:48:55",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm, warm conversation about science and doing things for the right reason. Nothing to flag."
+  },
+  {
+    "id": "G10",
+    "title": "Parents discover undead Sparky; mother screams; Sparky bolts",
+    "start_cue": "C0642",
+    "end_cue": "C0655",
+    "start": "00:50:58",
+    "end": "00:51:33",
+    "attributes": [
+      "corpses_undead",
+      "scary_looking",
+      "jump_scare",
+      "terrified",
+      "animal_in_danger"
+    ],
+    "visual_only": [
+      "scary_looking"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0643",
+      "C0644",
+      "C0646",
+      "C0650",
+      "C0654"
+    ],
+    "text_visibility": "medium",
+    "note": "Dad finds Sparky in the attic, Sparky runs into Mom who screams; the frightened dog whimpers and flees the house while Victor shouts 'Sparky, come back!'. animal_in_danger is borderline (Sparky crying out in fear, not hurt)."
+  },
+  {
+    "id": "G11",
+    "title": "Parents confront Victor: 'Reanimating a corpse!' - Victor pleads",
+    "start_cue": "C0656",
+    "end_cue": "C0666",
+    "start": "00:51:33",
+    "end": "00:52:01",
+    "attributes": [
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0657",
+      "C0658",
+      "C0664",
+      "C0666"
+    ],
+    "text_visibility": "high",
+    "note": "Dad is stern and upset rather than raging (so not adult_rages_at_child). Victor pleads to go after his runaway dog: 'I just wanted my dog back.' Mild; parents turn supportive right after. Unsure this needs flagging."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL (hard-ish): Dutch Day stage, Elsa's song",
+    "start_cue": "C0700",
+    "end_cue": "C0714",
+    "start": "00:55:30",
+    "end": "00:56:28",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Mayor introduces Elsa, who sings with lit candles on her head. 'I don't think this is safe', 'a lot of girls would kill to be in your place' / 'I'd welcome death' are deadpan jokes; nobody is in danger."
+  },
+  {
+    "id": "G12",
+    "title": "Classmates rob pet graves at night; Nassor at the tomb of Colossus",
+    "start_cue": "C0715",
+    "end_cue": "C0728",
+    "start": "00:56:33",
+    "end": "00:57:55",
+    "attributes": [
+      "corpses_undead"
+    ],
+    "visual_only": [
+      "corpses_undead"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0715",
+      "C0723",
+      "C0724",
+      "C0727",
+      "C0728"
+    ],
+    "text_visibility": "medium",
+    "note": "Kids enter the pet cemetery in a storm and dig up dead pets for their experiments (intercut with Elsa's song). 'Soon you shall be awakened', evil laughter, thunder. The wordless experiment set-ups run on to about 59:35."
+  },
+  {
+    "id": "G13",
+    "title": "Mr. Whiskers bites the dead bat as lightning strikes and mutates into a vampire cat",
+    "start_cue": "C0739",
+    "end_cue": "C0747",
+    "start": "00:59:58",
+    "end": "01:01:32",
+    "attributes": [
+      "transformation",
+      "animal_in_danger",
+      "scary_looking",
+      "terrified",
+      "phobia_animals"
+    ],
+    "visual_only": [
+      "transformation",
+      "scary_looking",
+      "phobia_animals"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0739",
+      "C0743",
+      "C0744",
+      "C0745",
+      "C0746",
+      "C0747"
+    ],
+    "text_visibility": "medium",
+    "note": "Body-horror transformation of a familiar pet: yowling, gurgling, bones cracking in shadow, then a fanged winged cat hisses at Weird Girl ('Mr. Whiskers?'). C0740 (exclaim in surprise) is probably Edgar's dead rat turning into the were-rat, intercut. Exact attribution of C0740/C0747 to characters is uncertain."
+  },
+  {
+    "id": "G14",
+    "title": "Bob alone by the pool: 'Is someone there?' - Sea-Monkeys attack",
+    "start_cue": "C0748",
+    "end_cue": "C0751",
+    "start": "01:01:35",
+    "end": "01:02:12",
+    "attributes": [
+      "unseen_threat",
+      "monster_threatens",
+      "jump_scare",
+      "terrified"
+    ],
+    "visual_only": [
+      "monster_threatens"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0749",
+      "C0750",
+      "C0751"
+    ],
+    "text_visibility": "high",
+    "note": "Gremlin-like Sea-Monkeys burst out at a child at night; growling then screaming."
+  },
+  {
+    "id": "G15",
+    "title": "Nassor raises Colossus from the tomb",
+    "start_cue": "C0752",
+    "end_cue": "C0756",
+    "start": "01:02:14",
+    "end": "01:02:44",
+    "attributes": [
+      "corpses_undead"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0752",
+      "C0753",
+      "C0754",
+      "C0756"
+    ],
+    "text_visibility": "medium",
+    "note": "Mausoleum at night, thudding footsteps build dread, then the payoff is a tiny mummified hamster (comic). Mild."
+  },
+  {
+    "id": "G16",
+    "title": "Toshiaki's turtle Shelley returns as a giant roaring monster",
+    "start_cue": "C0757",
+    "end_cue": "C0762",
+    "start": "01:02:56",
+    "end": "01:03:16",
+    "attributes": [
+      "transformation",
+      "monster_threatens",
+      "terrified"
+    ],
+    "visual_only": [
+      "transformation",
+      "monster_threatens"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0758",
+      "C0761",
+      "C0762"
+    ],
+    "text_visibility": "medium",
+    "note": "'Shelley?' - then a Gamera-sized turtle looms over the boys, who gasp fearfully; roaring."
+  },
+  {
+    "id": "G17",
+    "title": "A boy is chased by his monster through the dark streets",
+    "start_cue": "C0765",
+    "end_cue": "C0767",
+    "start": "01:03:37",
+    "end": "01:03:45",
+    "attributes": [
+      "chased",
+      "monster_threatens",
+      "terrified"
+    ],
+    "visual_only": [
+      "chased",
+      "monster_threatens"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0765",
+      "C0766",
+      "C0767"
+    ],
+    "text_visibility": "medium",
+    "note": "Heavy breathing, fearful cries, scream. I believe this is Edgar fleeing the were-rat; character attribution not certain from memory. C0764 (gleeful roars) just before is the Sea-Monkeys reaching the fair."
+  },
+  {
+    "id": "G18",
+    "title": "Giant Shelley's footsteps interrupt the boys asking Victor for help",
+    "start_cue": "C0790",
+    "end_cue": "C0791",
+    "start": "01:06:03",
+    "end": "01:06:09",
+    "attributes": [
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "monster_threatens"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0790",
+      "C0791"
+    ],
+    "text_visibility": "medium",
+    "note": "The lines before this are retelling ('Did you see those things?') and are not flagged; only the thundering footsteps and roar as the giant turtle looms over town. Brief."
+  },
+  {
+    "id": "G19",
+    "title": "Monsters attack the Dutch Day fair; crowd panics",
+    "start_cue": "C0796",
+    "end_cue": "C0828",
+    "start": "01:06:31",
+    "end": "01:08:17",
+    "attributes": [
+      "monster_threatens",
+      "war_mass_violence",
+      "chased",
+      "terrified"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0799",
+      "C0801",
+      "C0803",
+      "C0810",
+      "C0816",
+      "C0818",
+      "C0823",
+      "C0825"
+    ],
+    "text_visibility": "high",
+    "note": "Giant turtle stomps into the fair, Sea-Monkeys swarm, townspeople scream and flee; 'No! Get away!', 'This way! In here!'; Victor's mother screams as creatures besiege the parents. war_mass_violence read literally ('an attack on many people at once'); a parent may prefer to drop it. Sustained 100 s of screaming."
+  },
+  {
+    "id": "G20",
+    "title": "Nassor orders 'Kill!' - Shelley squashes Colossus",
+    "start_cue": "C0829",
+    "end_cue": "C0838",
+    "start": "01:08:32",
+    "end": "01:09:02",
+    "attributes": [
+      "threatens_harm",
+      "physical_violence",
+      "pet_animal_dies",
+      "dies_now"
+    ],
+    "visual_only": [
+      "physical_violence",
+      "pet_animal_dies",
+      "dies_now"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0830",
+      "C0831",
+      "C0836",
+      "C0837"
+    ],
+    "text_visibility": "medium",
+    "note": "Nassor sets his undead hamster on the giant turtle with 'Kill! Kill!'; the hamster is stomped flat ('(SQUISHING)', 'Colossus?'). Played for a laugh. pet_animal_dies/dies_now are debatable because the hamster was already undead."
+  },
+  {
+    "id": "G21",
+    "title": "Nassor is wrapped up and sealed in; another child screams 'Get away from me!'",
+    "start_cue": "C0839",
+    "end_cue": "C0845",
+    "start": "01:09:02",
+    "end": "01:09:22",
+    "attributes": [
+      "monster_threatens",
+      "sealed_in",
+      "terrified"
+    ],
+    "visual_only": [
+      "sealed_in"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0839",
+      "C0840",
+      "C0841",
+      "C0842",
+      "C0844",
+      "C0845"
+    ],
+    "text_visibility": "medium",
+    "note": "Nassor ends up bound like a mummy and shut inside a casket-like prop (muffled cries). Then a child backs away from a growling creature, screaming. From memory I cannot be sure which child says 'Get away from me!' (Edgar with the were-rat, I think)."
+  },
+  {
+    "id": "G22",
+    "title": "Victor and the boys lure the Sea-Monkeys, which burst after eating salt",
+    "start_cue": "C0850",
+    "end_cue": "C0851",
+    "start": "01:09:48",
+    "end": "01:09:54",
+    "attributes": [
+      "monster_threatens",
+      "chased",
+      "dies_now"
+    ],
+    "visual_only": [
+      "chased",
+      "dies_now"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0850",
+      "C0851"
+    ],
+    "text_visibility": "low",
+    "note": "'Hey! Over here!' - the swarm chases the boys, gorges on salted snacks and explodes into goo. Bounded by the nearest cues; the popping is wordless, ending at 'Cool.' (C0852)."
+  },
+  {
+    "id": "G23",
+    "title": "Were-rat attacks Edgar; Sparky fights it; Elsa cornered by the vampire cat",
+    "start_cue": "C0853",
+    "end_cue": "C0861",
+    "start": "01:10:16",
+    "end": "01:10:50",
+    "attributes": [
+      "monster_threatens",
+      "physical_violence",
+      "animal_in_danger",
+      "terrified"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0853",
+      "C0855",
+      "C0856",
+      "C0857",
+      "C0858",
+      "C0859",
+      "C0860"
+    ],
+    "text_visibility": "high",
+    "note": "Edgar screams, Elsa cries 'Help! Get back! Stay away from us!', Sparky whimpers as the were-rat throws him about; Victor shouts 'Sparky!'."
+  },
+  {
+    "id": "G24",
+    "title": "Giant Shelley grabs Toshiaki; Victor electrocutes the monsters",
+    "start_cue": "C0862",
+    "end_cue": "C0869",
+    "start": "01:11:00",
+    "end": "01:11:46",
+    "attributes": [
+      "monster_threatens",
+      "terrified",
+      "sobbing_despair",
+      "dies_now"
+    ],
+    "visual_only": [
+      "dies_now"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0862",
+      "C0863",
+      "C0864",
+      "C0865",
+      "C0866",
+      "C0867"
+    ],
+    "text_visibility": "high",
+    "note": "'No, no, no! You put me down! I gave you life!', 'Victor, I need help. Please!' Shelley and the were-rat are shocked with a live power line and revert to small dead animals ('Shelley?'). Considered fall_from_height (held high up) but he is not falling."
+  },
+  {
+    "id": "G25",
+    "title": "Vampire cat snatches Persephone and carries Elsa off to the windmill",
+    "start_cue": "C0870",
+    "end_cue": "C0880",
+    "start": "01:11:48",
+    "end": "01:12:14",
+    "attributes": [
+      "monster_threatens",
+      "animal_in_danger",
+      "captured",
+      "child_taken",
+      "terrified"
+    ],
+    "visual_only": [
+      "captured",
+      "child_taken"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0870",
+      "C0875",
+      "C0876",
+      "C0877",
+      "C0878",
+      "C0880"
+    ],
+    "text_visibility": "medium",
+    "note": "'No! Persephone! Bring her back!' The winged cat flies off with the poodle and then Elsa (her wig falls off). child_taken is a literal-reading stretch: a child carried off by a monster, from her guardian uncle who is not present."
+  },
+  {
+    "id": "G26",
+    "title": "Mob turns on Sparky: 'He's killed the little girl! Kill the monster!'",
+    "start_cue": "C0887",
+    "end_cue": "C0893",
+    "start": "01:12:32",
+    "end": "01:12:51",
+    "attributes": [
+      "threatens_harm",
+      "believed_dead",
+      "animal_in_danger",
+      "chased"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0888",
+      "C0891",
+      "C0893"
+    ],
+    "text_visibility": "high",
+    "note": "Mayor finds Sparky with Elsa's wig and concludes his niece is dead; torch-bearing mob sets off after the dog."
+  },
+  {
+    "id": "G27",
+    "title": "Elsa trapped in the windmill with the vampire cat while the mob hunts Sparky",
+    "start_cue": "C0894",
+    "end_cue": "C0902",
+    "start": "01:13:14",
+    "end": "01:13:45",
+    "attributes": [
+      "monster_threatens",
+      "terrified",
+      "chased",
+      "animal_in_danger",
+      "threatens_harm"
+    ],
+    "visual_only": [
+      "monster_threatens"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0894",
+      "C0896",
+      "C0897",
+      "C0900",
+      "C0901"
+    ],
+    "text_visibility": "high",
+    "note": "'Help! Stay away from us!' intercut with 'Get him!' and Sparky whining as he is chased up the hill."
+  },
+  {
+    "id": "G28",
+    "title": "Windmill catches fire with Elsa inside",
+    "start_cue": "C0903",
+    "end_cue": "C0911",
+    "start": "01:13:47",
+    "end": "01:14:13",
+    "attributes": [
+      "fire_disaster",
+      "terrified",
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "monster_threatens"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0903",
+      "C0905",
+      "C0906",
+      "C0908",
+      "C0909"
+    ],
+    "text_visibility": "high",
+    "note": "The mayor's torch ignites the windmill: 'Look out! It's on fire!', 'There's Elsa!', 'Help!', screaming. Victor and Sparky run in."
+  },
+  {
+    "id": "G29",
+    "title": "Elsa dangles from the burning windmill: 'I can't hold on much longer'",
+    "start_cue": "C0912",
+    "end_cue": "C0919",
+    "start": "01:14:17",
+    "end": "01:14:48",
+    "attributes": [
+      "fall_from_height",
+      "fire_disaster",
+      "terrified",
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "fire_disaster",
+      "monster_threatens"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0913",
+      "C0914",
+      "C0916",
+      "C0917",
+      "C0918"
+    ],
+    "text_visibility": "high",
+    "note": "Child hanging high up while the cat attacks and the mill burns; she slips and screams before being caught."
+  },
+  {
+    "id": "G30",
+    "title": "Victor trapped in the burning windmill; 'That's my son in there!'",
+    "start_cue": "C0920",
+    "end_cue": "C0930",
+    "start": "01:14:48",
+    "end": "01:15:12",
+    "attributes": [
+      "fire_disaster",
+      "in_hazard",
+      "family_in_danger",
+      "animal_in_danger",
+      "physical_violence",
+      "unconscious"
+    ],
+    "visual_only": [
+      "in_hazard",
+      "physical_violence",
+      "unconscious"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0921",
+      "C0922",
+      "C0923",
+      "C0929",
+      "C0930"
+    ],
+    "text_visibility": "medium",
+    "note": "Sparky fights the vampire cat; Victor falls and lies knocked out inside the collapsing mill; firefighters hold his parents back."
+  },
+  {
+    "id": "G31",
+    "title": "Mother sobs until Sparky drags Victor out of the fire",
+    "start_cue": "C0931",
+    "end_cue": "C0934",
+    "start": "01:15:37",
+    "end": "01:15:50",
+    "attributes": [
+      "sobbing_despair",
+      "family_in_danger",
+      "unconscious"
+    ],
+    "visual_only": [
+      "unconscious"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0931",
+      "C0932",
+      "C0934"
+    ],
+    "text_visibility": "high",
+    "note": "Parents weep fearing for Victor; Sparky pulls him out limp; 'Honey, are you all right?'. Considered believed_dead but the lines only show fear, not belief."
+  },
+  {
+    "id": "G32",
+    "title": "Vampire cat drags Sparky back in; cat is impaled; windmill collapses on Sparky",
+    "start_cue": "C0935",
+    "end_cue": "C0946",
+    "start": "01:15:55",
+    "end": "01:16:37",
+    "attributes": [
+      "monster_threatens",
+      "physical_violence",
+      "animal_in_danger",
+      "fire_disaster",
+      "in_hazard",
+      "dies_now",
+      "pet_animal_dies",
+      "loved_one_dies"
+    ],
+    "visual_only": [
+      "fire_disaster",
+      "in_hazard",
+      "dies_now",
+      "pet_animal_dies",
+      "loved_one_dies"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0937",
+      "C0940",
+      "C0944",
+      "C0945",
+      "C0946"
+    ],
+    "text_visibility": "low",
+    "note": "Almost all sound captions: yowls, hisses, whimpers, a screech as a burning beam spears the cat, Sparky's last whimper, then Victor's 'No!' as the mill falls. Sparky's second death; the emotional peak of the film."
+  },
+  {
+    "id": "G33",
+    "title": "Sparky's body carried out; Victor grieves",
+    "start_cue": "C0947",
+    "end_cue": "C0950",
+    "start": "01:17:15",
+    "end": "01:17:26",
+    "attributes": [
+      "grieving",
+      "corpses_undead",
+      "sobbing_despair"
+    ],
+    "visual_only": [
+      "corpses_undead",
+      "sobbing_despair"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0948",
+      "C0949"
+    ],
+    "text_visibility": "medium",
+    "note": "Wordless stretch from about 01:16:40 (fireman carries the limp body out and lays it down) belongs here; bounded by the nearest cues. 'You said that I need to let him go.'"
+  },
+  {
+    "id": "G34",
+    "title": "Townspeople try to jump-start Sparky's body with car batteries",
+    "start_cue": "C0951",
+    "end_cue": "C0954",
+    "start": "01:17:39",
+    "end": "01:18:05",
+    "attributes": [
+      "corpses_undead",
+      "grieving"
+    ],
+    "visual_only": [
+      "corpses_undead",
+      "grieving"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0951",
+      "C0953",
+      "C0954"
+    ],
+    "text_visibility": "low",
+    "note": "Cables clipped to the dead dog's bolts; engines rev, nothing happens. The lines alone read like a car scene."
+  },
+  {
+    "id": "G35",
+    "title": "Victor says goodbye: 'You don't have to come back'",
+    "start_cue": "C0955",
+    "end_cue": "C0956",
+    "start": "01:18:30",
+    "end": "01:18:36",
+    "attributes": [
+      "grieving",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0955",
+      "C0956"
+    ],
+    "text_visibility": "high",
+    "note": "Victor gives up hope and hugs the body. Followed by a wordless half minute before Sparky revives (C0958-C0960), which is not flagged."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL: end-credits song 'Strange Love'",
+    "start_cue": "C0968",
+    "end_cue": "C0987",
+    "start": "01:20:10",
+    "end": "01:21:13",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Lyrics only ('The lightning's not frightening when you are with me'). Nothing happening."
+  }
+]

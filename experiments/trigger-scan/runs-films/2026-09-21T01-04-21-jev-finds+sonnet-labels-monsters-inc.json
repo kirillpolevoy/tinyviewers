@@ -1,0 +1,546 @@
+{
+  "film": "monsters-inc",
+  "arm": "jev-finds+sonnet-labels",
+  "track": "monsters-inc",
+  "model": "claude-sonnet-5",
+  "from": "runs-films/2026-09-21T01-01-38-jev-v3-universal-monsters-inc.json",
+  "startedAt": "2026-09-21T01:03:48.640Z",
+  "wallMs": 32626,
+  "calls": 32,
+  "inputTokens": 155228,
+  "outputTokens": 6870,
+  "costUsd": 0.20206039999999997,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Training simulation scare",
+      "start_cue": "C0011",
+      "end_cue": "C0022",
+      "validCues": true,
+      "startMs": 132807,
+      "endMs": 184484,
+      "categories": [
+        "loud_sudden_sound",
+        "darkness_unknown",
+        "predator_creature"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Training video: child danger warning",
+      "start_cue": "C0053",
+      "end_cue": "C0060",
+      "validCues": true,
+      "startMs": 245490,
+      "endMs": 262503,
+      "categories": [
+        "emotional_distress",
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Randall's Prank Scare",
+      "start_cue": "C0281",
+      "end_cue": "C0291",
+      "validCues": true,
+      "startMs": 656985,
+      "endMs": 673258,
+      "categories": [
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Scream Extraction Floor",
+      "start_cue": "C0352",
+      "end_cue": "C0391",
+      "validCues": true,
+      "startMs": 891829,
+      "endMs": 970669,
+      "categories": [
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Scare Floor Scream",
+      "start_cue": "C0402",
+      "end_cue": "C0405",
+      "validCues": true,
+      "startMs": 994469,
+      "endMs": 1001243,
+      "categories": [
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "2319 Contamination Emergency",
+      "start_cue": "C0440",
+      "end_cue": "C0481",
+      "validCues": true,
+      "startMs": 1061806,
+      "endMs": 1148327,
+      "categories": [
+        "loud_sudden_sound",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Sulley discovers the human child",
+      "start_cue": "C0598",
+      "end_cue": "C0621",
+      "validCues": true,
+      "startMs": 1393451,
+      "endMs": 1450710,
+      "categories": [
+        "loud_sudden_sound",
+        "predator_creature",
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Sulley scared by toddler",
+      "start_cue": "C0631",
+      "end_cue": "C0639",
+      "validCues": true,
+      "startMs": 1485514,
+      "endMs": 1502257,
+      "categories": [
+        "loud_sudden_sound",
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "Human child discovered at party",
+      "start_cue": "C0713",
+      "end_cue": "C0739",
+      "validCues": true,
+      "startMs": 1652381,
+      "endMs": 1706600,
+      "categories": [
+        "loud_sudden_sound",
+        "emotional_distress",
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Boo causes chaos in apartment",
+      "start_cue": "C0755",
+      "end_cue": "C0840",
+      "validCues": true,
+      "startMs": 1743208,
+      "endMs": 1890219,
+      "categories": [
+        "loud_sudden_sound",
+        "imitable_risk",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Boo scared of closet",
+      "start_cue": "C0876",
+      "end_cue": "C0888",
+      "validCues": true,
+      "startMs": 1965473,
+      "endMs": 1991561,
+      "categories": [
+        "emotional_distress",
+        "darkness_unknown"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Sneaking through investigation scene",
+      "start_cue": "C0930",
+      "end_cue": "C0953",
+      "validCues": true,
+      "startMs": 2104585,
+      "endMs": 2138910,
+      "categories": [
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "CDA chase and capture",
+      "start_cue": "C0976",
+      "end_cue": "C0980",
+      "validCues": true,
+      "startMs": 2177060,
+      "endMs": 2183260,
+      "categories": [
+        "peril_chase",
+        "captivity_confinement"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Office door slam and searching for Boo",
+      "start_cue": "C1042",
+      "end_cue": "C1050",
+      "validCues": true,
+      "startMs": 2324880,
+      "endMs": 2342690,
+      "categories": [
+        "injury_pain",
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "They're Dead Threat",
+      "start_cue": "C1073",
+      "end_cue": "C1077",
+      "validCues": true,
+      "startMs": 2404029,
+      "endMs": 2413199,
+      "categories": [
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Hiding and Sneaking Plan",
+      "start_cue": "C1078",
+      "end_cue": "C1104",
+      "validCues": true,
+      "startMs": 2413238,
+      "endMs": 2456809,
+      "categories": [],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Boo goes missing",
+      "start_cue": "C1149",
+      "end_cue": "C1156",
+      "validCues": true,
+      "startMs": 2532963,
+      "endMs": 2543504,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Mike discovers Boo missing, garbage chase",
+      "start_cue": "C1244",
+      "end_cue": "C1279",
+      "validCues": true,
+      "startMs": 2728533,
+      "endMs": 2835639,
+      "categories": [
+        "peril_chase",
+        "loud_sudden_sound",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S19",
+      "title": "Chase to Boo's Door",
+      "start_cue": "C1304",
+      "end_cue": "C1324",
+      "validCues": true,
+      "startMs": 2877556,
+      "endMs": 2906418,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S20",
+      "title": "Boo's fearful whimpers",
+      "start_cue": "C1343",
+      "end_cue": "C1346",
+      "validCues": true,
+      "startMs": 2936650,
+      "endMs": 2962367,
+      "categories": [
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S21",
+      "title": "Randall Kidnaps Mike",
+      "start_cue": "C1375",
+      "end_cue": "C1382",
+      "validCues": true,
+      "startMs": 3095582,
+      "endMs": 3106388,
+      "categories": [
+        "captivity_confinement",
+        "shouting_aggression",
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S22",
+      "title": "Mike threatened by scream extractor",
+      "start_cue": "C1391",
+      "end_cue": "C1436",
+      "validCues": true,
+      "startMs": 3128749,
+      "endMs": 3207954,
+      "categories": [
+        "shouting_aggression",
+        "peril_chase",
+        "emotional_distress",
+        "captivity_confinement"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S23",
+      "title": "Mike captured by machine",
+      "start_cue": "C1437",
+      "end_cue": "C1463",
+      "validCues": true,
+      "startMs": 3218108,
+      "endMs": 3262248,
+      "categories": [
+        "captivity_confinement",
+        "darkness_unknown",
+        "emotional_distress",
+        "peril_chase"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S24",
+      "title": "Escape plan under threat",
+      "start_cue": "C1464",
+      "end_cue": "C1477",
+      "validCues": true,
+      "startMs": 3262288,
+      "endMs": 3288245,
+      "categories": [
+        "shouting_aggression",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S25",
+      "title": "Forced scare demonstration on Boo",
+      "start_cue": "C1494",
+      "end_cue": "C1512",
+      "validCues": true,
+      "startMs": 3313608,
+      "endMs": 3339291,
+      "categories": [
+        "predator_creature",
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S26",
+      "title": "Searching for terrified Boo",
+      "start_cue": "C1515",
+      "end_cue": "C1543",
+      "validCues": true,
+      "startMs": 3342137,
+      "endMs": 3397690,
+      "categories": [
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S27",
+      "title": "Plan to eliminate Boo revealed",
+      "start_cue": "C1544",
+      "end_cue": "C1565",
+      "validCues": true,
+      "startMs": 3397728,
+      "endMs": 3448971,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S28",
+      "title": "Attack and banishment to icy world",
+      "start_cue": "C1566",
+      "end_cue": "C1603",
+      "validCues": true,
+      "startMs": 3449015,
+      "endMs": 3532430,
+      "categories": [
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress",
+        "predator_creature"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S29",
+      "title": "Mike abandons Sulley in the snow",
+      "start_cue": "C1682",
+      "end_cue": "C1706",
+      "validCues": true,
+      "startMs": 3676318,
+      "endMs": 3735168,
+      "categories": [
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S30",
+      "title": "Sullivan attacked by the scream extractor machine",
+      "start_cue": "C1707",
+      "end_cue": "C1780",
+      "validCues": true,
+      "startMs": 3758337,
+      "endMs": 3934648,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "shouting_aggression",
+        "captivity_confinement",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S31",
+      "title": "Chase through doors to escape Randall",
+      "start_cue": "C1806",
+      "end_cue": "C1990",
+      "validCues": true,
+      "startMs": 3973294,
+      "endMs": 4384553,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "shouting_aggression",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S32",
+      "title": "Confronted by CDA and Waternoose's kidnapping plot revealed",
+      "start_cue": "C2021",
+      "end_cue": "C2136",
+      "validCues": true,
+      "startMs": 4429435,
+      "endMs": 4665605,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment",
+        "captivity_confinement",
+        "emotional_distress",
+        "death_loss"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S33",
+      "title": "Boo taken to memory machine",
+      "start_cue": "C2172",
+      "end_cue": "C2175",
+      "validCues": true,
+      "startMs": 4798719,
+      "endMs": 4808760,
+      "categories": [
+        "separation_abandonment",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S34",
+      "title": "Boy gasps at door",
+      "start_cue": "C2201",
+      "end_cue": "C2202",
+      "validCues": true,
+      "startMs": 4887712,
+      "endMs": 4901252,
+      "categories": [
+        "loud_sudden_sound",
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    }
+  ]
+}

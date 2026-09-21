@@ -1,0 +1,431 @@
+{
+  "film": "frankenweenie",
+  "arm": "jev-finds+sonnet-labels",
+  "track": "frankenweenie",
+  "model": "claude-sonnet-5",
+  "from": "runs-films/2026-09-21T01-01-16-jev-v3-universal-frankenweenie.json",
+  "startedAt": "2026-09-21T01:03:20.981Z",
+  "wallMs": 27529,
+  "calls": 26,
+  "inputTokens": 116834,
+  "outputTokens": 5072,
+  "costUsd": 0.14688479999999998,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Lightning strikes the man",
+      "start_cue": "C0096",
+      "end_cue": "C0103",
+      "validCues": true,
+      "startMs": 387360,
+      "endMs": 406601,
+      "categories": [
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Sparky hit by car",
+      "start_cue": "C0219",
+      "end_cue": "C0230",
+      "validCues": true,
+      "startMs": 859400,
+      "endMs": 934729,
+      "categories": [
+        "peril_chase",
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Grieving for Sparky",
+      "start_cue": "C0231",
+      "end_cue": "C0241",
+      "validCues": true,
+      "startMs": 972520,
+      "endMs": 1033207,
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Classroom electricity experiment on dead frog",
+      "start_cue": "C0245",
+      "end_cue": "C0248",
+      "validCues": true,
+      "startMs": 1089840,
+      "endMs": 1108686,
+      "categories": [
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Victor's secret attic experiment",
+      "start_cue": "C0249",
+      "end_cue": "C0269",
+      "validCues": true,
+      "startMs": 1117520,
+      "endMs": 1384406,
+      "categories": [
+        "darkness_unknown",
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "Sparky Comes Back to Life",
+      "start_cue": "C0275",
+      "end_cue": "C0283",
+      "validCues": true,
+      "startMs": 1620760,
+      "endMs": 1640361,
+      "categories": [
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Sparky left alone; cat chase scare",
+      "start_cue": "C0308",
+      "end_cue": "C0334",
+      "validCues": true,
+      "startMs": 1746480,
+      "endMs": 1870086,
+      "categories": [
+        "separation_abandonment",
+        "peril_chase",
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Invisible goldfish experiment",
+      "start_cue": "C0402",
+      "end_cue": "C0413",
+      "validCues": true,
+      "startMs": 2157680,
+      "endMs": 2208681,
+      "categories": [
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "Invisible goldfish bite",
+      "start_cue": "C0421",
+      "end_cue": "C0425",
+      "validCues": true,
+      "startMs": 2246440,
+      "endMs": 2267841,
+      "categories": [
+        "imitable_risk",
+        "loud_sudden_sound"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Hiding Sparky Away",
+      "start_cue": "C0437",
+      "end_cue": "C0444",
+      "validCues": true,
+      "startMs": 2319400,
+      "endMs": 2342081,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Fish disappears, Sparky startles Weird Girl",
+      "start_cue": "C0461",
+      "end_cue": "C0481",
+      "validCues": true,
+      "startMs": 2401960,
+      "endMs": 2467361,
+      "categories": [
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Rooftop Experiment Gone Wrong",
+      "start_cue": "C0491",
+      "end_cue": "C0511",
+      "validCues": true,
+      "startMs": 2514240,
+      "endMs": 2580000,
+      "categories": [
+        "imitable_risk",
+        "peril_chase",
+        "injury_pain",
+        "loud_sudden_sound",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "Teacher's unsettling speech",
+      "start_cue": "C0540",
+      "end_cue": "C0547",
+      "validCues": true,
+      "startMs": 2686840,
+      "endMs": 2710289,
+      "categories": [
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Secret revealed: reanimation talk",
+      "start_cue": "C0618",
+      "end_cue": "C0633",
+      "validCues": true,
+      "startMs": 2943720,
+      "endMs": 2992365,
+      "categories": [
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "Sparky Revealed Alive",
+      "start_cue": "C0642",
+      "end_cue": "C0658",
+      "validCues": true,
+      "startMs": 3058640,
+      "endMs": 3099802,
+      "categories": [
+        "predator_creature",
+        "imitable_risk",
+        "peril_chase",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Searching for missing Sparky",
+      "start_cue": "C0680",
+      "end_cue": "C0698",
+      "validCues": true,
+      "startMs": 3175040,
+      "endMs": 3292001,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Mr. Whiskers Transforms",
+      "start_cue": "C0741",
+      "end_cue": "C0743",
+      "validCues": true,
+      "startMs": 3635440,
+      "endMs": 3642441,
+      "categories": [
+        "predator_creature",
+        "darkness_unknown"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Colossus Rises",
+      "start_cue": "C0750",
+      "end_cue": "C0762",
+      "validCues": true,
+      "startMs": 3730000,
+      "endMs": 3796403,
+      "categories": [
+        "predator_creature",
+        "emotional_distress",
+        "loud_sudden_sound"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S19",
+      "title": "Searching for Sparky",
+      "start_cue": "C0765",
+      "end_cue": "C0779",
+      "validCues": true,
+      "startMs": 3817040,
+      "endMs": 3903086,
+      "categories": [
+        "separation_abandonment",
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S20",
+      "title": "Creatures Roar and Chase",
+      "start_cue": "C0783",
+      "end_cue": "C0791",
+      "validCues": true,
+      "startMs": 3947920,
+      "endMs": 3969526,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "darkness_unknown"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S21",
+      "title": "Monster Rampage at Fair",
+      "start_cue": "C0795",
+      "end_cue": "C0845",
+      "validCues": true,
+      "startMs": 3987520,
+      "endMs": 4162921,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "emotional_distress",
+        "shouting_aggression"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S22",
+      "title": "Giant creature attacks fair",
+      "start_cue": "C0853",
+      "end_cue": "C0865",
+      "validCues": true,
+      "startMs": 4216440,
+      "endMs": 4274446,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S23",
+      "title": "Bat-cat attacks and takes pet",
+      "start_cue": "C0866",
+      "end_cue": "C0880",
+      "validCues": true,
+      "startMs": 4283120,
+      "endMs": 4334804,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S24",
+      "title": "Mob chases Sparky, accused of killing girl",
+      "start_cue": "C0886",
+      "end_cue": "C0902",
+      "validCues": true,
+      "startMs": 4351360,
+      "endMs": 4425685,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "separation_abandonment",
+        "predator_creature"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S25",
+      "title": "Windmill fire rescue",
+      "start_cue": "C0903",
+      "end_cue": "C0930",
+      "validCues": true,
+      "startMs": 4427480,
+      "endMs": 4512761,
+      "categories": [
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S26",
+      "title": "Believing Victor is lost",
+      "start_cue": "C0931",
+      "end_cue": "C0946",
+      "validCues": true,
+      "startMs": 4537440,
+      "endMs": 4597700,
+      "categories": [
+        "death_loss",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S27",
+      "title": "Letting Sparky go",
+      "start_cue": "C0955",
+      "end_cue": "C0960",
+      "validCues": true,
+      "startMs": 4710440,
+      "endMs": 4764645,
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    }
+  ]
+}

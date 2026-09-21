@@ -1,0 +1,315 @@
+{
+  "film": "iron-giant",
+  "arm": "jev-finds+sonnet-labels",
+  "track": "iron-giant",
+  "model": "claude-sonnet-5",
+  "from": "runs-films/2026-09-21T01-01-32-jev-v3-universal-iron-giant.json",
+  "startedAt": "2026-09-21T01:03:00.077Z",
+  "wallMs": 20828,
+  "calls": 25,
+  "inputTokens": 109408,
+  "outputTokens": 3921,
+  "costUsd": 0.1271054,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Fishing boat in trouble",
+      "start_cue": "C0002",
+      "end_cue": "C0008",
+      "validCues": true,
+      "startMs": 77160,
+      "endMs": 101558,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Something in the storm",
+      "start_cue": "C0092",
+      "end_cue": "C0098",
+      "validCues": true,
+      "startMs": 437562,
+      "endMs": 511259,
+      "categories": [
+        "darkness_unknown",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Mom finds Hogarth",
+      "start_cue": "C0105",
+      "end_cue": "C0113",
+      "validCues": true,
+      "startMs": 817900,
+      "endMs": 842799,
+      "categories": [
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Train Track Rescue",
+      "start_cue": "C0277",
+      "end_cue": "C0291",
+      "validCues": true,
+      "startMs": 1487199,
+      "endMs": 1551429,
+      "categories": [
+        "peril_chase",
+        "imitable_risk"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Giant nearly seen, hiding",
+      "start_cue": "C0446",
+      "end_cue": "C0467",
+      "validCues": true,
+      "startMs": 2146495,
+      "endMs": 2275498,
+      "categories": [
+        "imitable_risk",
+        "captivity_confinement"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "Giant appears at the scrapyard",
+      "start_cue": "C0508",
+      "end_cue": "C0519",
+      "validCues": true,
+      "startMs": 2381104,
+      "endMs": 2419600,
+      "categories": [
+        "loud_sudden_sound",
+        "predator_creature",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Suspicious Man Questions Hogarth",
+      "start_cue": "C0561",
+      "end_cue": "C0568",
+      "validCues": true,
+      "startMs": 2578802,
+      "endMs": 2601115,
+      "categories": [
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Kent's paranoid rant",
+      "start_cue": "C0606",
+      "end_cue": "C0615",
+      "validCues": true,
+      "startMs": 2712435,
+      "endMs": 2739920,
+      "categories": [
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "The deer is dead",
+      "start_cue": "C0671",
+      "end_cue": "C0681",
+      "validCues": true,
+      "startMs": 3082347,
+      "endMs": 3143407,
+      "categories": [
+        "predator_creature",
+        "peril_chase",
+        "death_loss"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Talking about death and the deer",
+      "start_cue": "C0683",
+      "end_cue": "C0696",
+      "validCues": true,
+      "startMs": 3172061,
+      "endMs": 3211766,
+      "categories": [
+        "death_loss"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Interrogation and threat to take Hogarth away",
+      "start_cue": "C0701",
+      "end_cue": "C0729",
+      "validCues": true,
+      "startMs": 3254686,
+      "endMs": 3329552,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Something happens off-screen, hiding",
+      "start_cue": "C0807",
+      "end_cue": "C0811",
+      "validCues": true,
+      "startMs": 3749639,
+      "endMs": 3763861,
+      "categories": [
+        "darkness_unknown",
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "Boys stranded, giant rescue",
+      "start_cue": "C0834",
+      "end_cue": "C0841",
+      "validCues": true,
+      "startMs": 3852283,
+      "endMs": 3880602,
+      "categories": [
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Giant blamed and shot at in town",
+      "start_cue": "C0844",
+      "end_cue": "C0863",
+      "validCues": true,
+      "startMs": 3903001,
+      "endMs": 4005686,
+      "categories": [
+        "peril_chase",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "Hogarth falls, giant flies to save him",
+      "start_cue": "C0864",
+      "end_cue": "C0876",
+      "validCues": true,
+      "startMs": 4018074,
+      "endMs": 4128642,
+      "categories": [
+        "peril_chase",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Army attacks the giant",
+      "start_cue": "C0877",
+      "end_cue": "C0879",
+      "validCues": true,
+      "startMs": 4143699,
+      "endMs": 4173937,
+      "categories": [
+        "peril_chase"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Unconscious Hogarth, car chase",
+      "start_cue": "C0880",
+      "end_cue": "C0887",
+      "validCues": true,
+      "startMs": 4175857,
+      "endMs": 4215228,
+      "categories": [
+        "injury_pain",
+        "peril_chase"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Hogarth runs into danger zone",
+      "start_cue": "C0905",
+      "end_cue": "C0913",
+      "validCues": true,
+      "startMs": 4276707,
+      "endMs": 4321084,
+      "categories": [
+        "separation_abandonment",
+        "imitable_risk",
+        "emotional_distress",
+        "peril_chase"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S19",
+      "title": "Missile launched, no escape",
+      "start_cue": "C0929",
+      "end_cue": "C0949",
+      "validCues": true,
+      "startMs": 4378351,
+      "endMs": 4450338,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S20",
+      "title": "Hogarth grieves the Giant",
+      "start_cue": "C0972",
+      "end_cue": "C0975",
+      "validCues": true,
+      "startMs": 4664345,
+      "endMs": 4723403,
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    }
+  ]
+}

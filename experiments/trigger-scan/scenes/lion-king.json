@@ -1,0 +1,1046 @@
+{
+  "movie": {
+    "title": "The Lion King",
+    "year": 1994,
+    "imdb_id": "tt0110357",
+    "track": "data/lion-king.srt"
+  },
+  "release": {
+    "subtitle_track": "track stored in the app database"
+  },
+  "analysis_run": {
+    "started_at": "2026-09-21T01:04:27.771Z",
+    "detector": "jev-1.13.0",
+    "detector_run": "2026-09-21T01-01-34-jev-v3-universal-lion-king.json",
+    "labeller": "claude-sonnet-5",
+    "taxonomy": "taxonomy-v2",
+    "candidates": 23,
+    "context": "flagged stretch only",
+    "rejected_candidates": [
+      "K02 00:06:11",
+      "K03 00:07:59",
+      "K04 00:10:42",
+      "K05 00:11:54",
+      "K06 00:15:10",
+      "K09 00:23:51",
+      "K10 00:26:07",
+      "K11 00:27:28",
+      "K15 00:45:11",
+      "K16 00:49:18",
+      "K17 00:52:40",
+      "K21 01:08:14"
+    ],
+    "scenes_the_screener_missed": [],
+    "cost_usd": {
+      "detector": 0.027935670000000003,
+      "labeller": 0.13682699999999998
+    },
+    "wall_s": 22.988
+  },
+  "scenes": [
+    {
+      "title": "Scar toys with Zazu",
+      "start_ms": 295361,
+      "end_ms": 343158,
+      "start": "00:04:55",
+      "end": "00:05:43",
+      "start_cue": "C0055",
+      "end_cue": "C0072",
+      "description": "Scar the lion menacingly threatens a small bird, Zazu, mock-eating him and holding him captive, before Mufasa arrives to rescue him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.11,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "lion",
+        "bird",
+        "threat",
+        "zazu",
+        "scar"
+      ],
+      "text_visibility": "high",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Elephant Graveyard arrival",
+      "start_ms": 1104733,
+      "end_ms": 1134513,
+      "start": "00:18:24",
+      "end": "00:18:54",
+      "start_cue": "C0323",
+      "end_cue": "C0331",
+      "description": "Simba and Nala sneak into the eerie elephant graveyard, looking at bones and discussing checking out a skull, before Zazu scolds them for the danger.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "corpses_undead",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dangerous_act",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "uncanny_figures",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.5,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "elephant graveyard",
+        "skull",
+        "bones",
+        "creepy"
+      ],
+      "text_visibility": "high",
+      "candidate": "K07",
+      "id": "S02"
+    },
+    {
+      "title": "Hyena chase and threat",
+      "start_ms": 1170935,
+      "end_ms": 1340803,
+      "start": "00:19:30",
+      "end": "00:22:20",
+      "start_cue": "C0343",
+      "end_cue": "C0388",
+      "description": "Simba, Nala, and Zazu are cornered by three menacing hyenas who threaten to eat them, then chase the cubs through a graveyard of bones until Mufasa arrives to save them.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.14,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.23,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "hyenas",
+        "chase",
+        "threat",
+        "elephant graveyard",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K08",
+      "id": "S03"
+    },
+    {
+      "title": "Scar's Plot to Kill the King",
+      "start_ms": 1710776,
+      "end_ms": 1735443,
+      "start": "00:28:30",
+      "end": "00:28:55",
+      "start_cue": "C0497",
+      "end_cue": "C0507",
+      "description": "Scar reveals to the hyenas his plan to murder his brother the king and the young cub Simba, then declares himself king.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scar",
+        "hyenas",
+        "plot",
+        "murder plan",
+        "kill the king"
+      ],
+      "text_visibility": "high",
+      "candidate": "K12",
+      "id": "S04"
+    },
+    {
+      "title": "Scar's Sinister Trap",
+      "start_ms": 1825465,
+      "end_ms": 1893510,
+      "start": "00:30:25",
+      "end": "00:31:33",
+      "start_cue": "C0535",
+      "end_cue": "C0558",
+      "description": "Uncle Scar tells young Simba to wait alone on a rock for a 'surprise,' hinting darkly that it's 'to die for' while secretly planning danger for him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.09,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scar",
+        "trap",
+        "surprise",
+        "uncle",
+        "lion cub"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S05"
+    },
+    {
+      "title": "Stampede in the Gorge",
+      "start_ms": 1996985,
+      "end_ms": 2054874,
+      "start": "00:33:16",
+      "end": "00:34:14",
+      "start_cue": "C0566",
+      "end_cue": "C0577",
+      "description": "A wildebeest stampede sweeps through a gorge where young Simba is trapped, and his father Mufasa races to save him while others watch in panic.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "stampede",
+        "wildebeest",
+        "gorge",
+        "rescue"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S06"
+    },
+    {
+      "title": "Mufasa's Death",
+      "start_ms": 2090305,
+      "end_ms": 2238978,
+      "start": "00:34:50",
+      "end": "00:37:18",
+      "start_cue": "C0578",
+      "end_cue": "C0593",
+      "description": "Simba's father falls to his death during the stampede, and the young cub desperately tries to wake him, calling out for help alone in the gorge.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.47,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "parent_dies",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "mufasa",
+        "death",
+        "fall",
+        "cliff",
+        "grief"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S07"
+    },
+    {
+      "title": "Scar's Cruel Blame",
+      "start_ms": 2269964,
+      "end_ms": 2323263,
+      "start": "00:37:49",
+      "end": "00:38:43",
+      "start_cue": "C0594",
+      "end_cue": "C0606",
+      "description": "Scar finds grieving Simba beside his father's body, cruelly convinces him the death was his fault, and tells him to run away forever while secretly ordering hyenas to kill him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.68,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "caregiver_cruelty",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scar",
+        "blame",
+        "guilt",
+        "run away",
+        "murder plot"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S08"
+    },
+    {
+      "title": "Hyenas' Death Threat",
+      "start_ms": 2376367,
+      "end_ms": 2399923,
+      "start": "00:39:36",
+      "end": "00:39:59",
+      "start_cue": "C0607",
+      "end_cue": "C0615",
+      "description": "Hyenas chase off young Simba and shout that they will kill him if he ever returns, a frightening threat aimed at a lone child.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "hyenas",
+        "chase",
+        "threat",
+        "banished"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S09"
+    },
+    {
+      "title": "Pumbaa Attacked by Nala",
+      "start_ms": 3262812,
+      "end_ms": 3294731,
+      "start": "00:54:22",
+      "end": "00:54:54",
+      "start_cue": "C0862",
+      "end_cue": "C0870",
+      "description": "Pumbaa the warthog is pounced on by a lion (Nala) who seems about to eat him, and he cries out for help before Timon intervenes.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "warthog",
+        "lion",
+        "attack",
+        "pounce",
+        "chase"
+      ],
+      "text_visibility": "high",
+      "candidate": "K18",
+      "id": "S10"
+    },
+    {
+      "title": "Simba Reveals He's Alive",
+      "start_ms": 3369336,
+      "end_ms": 3382723,
+      "start": "00:56:09",
+      "end": "00:56:22",
+      "start_cue": "C0900",
+      "end_cue": "C0904",
+      "description": "Nala and friends realize Simba's family and pride believe he died in the stampede, a brief emotional mention with no visuals of danger.",
+      "severity": {
+        "5-7": 0,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.74,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "dead",
+        "stampede",
+        "alive",
+        "reunion"
+      ],
+      "text_visibility": "high",
+      "candidate": "K18",
+      "id": "S11"
+    },
+    {
+      "title": "Simba's guilt over Mufasa",
+      "start_ms": 3743612,
+      "end_ms": 3771399,
+      "start": "01:02:23",
+      "end": "01:02:51",
+      "start_cue": "C1028",
+      "end_cue": "C1036",
+      "description": "Simba blames himself for his father's death, saying it's his fault and that his father isn't there for him anymore.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.21,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.81,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "guilt",
+        "father",
+        "death",
+        "blame"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S12"
+    },
+    {
+      "title": "Mufasa's ghost vision fades",
+      "start_ms": 4032960,
+      "end_ms": 4042851,
+      "start": "01:07:12",
+      "end": "01:07:22",
+      "start_cue": "C1097",
+      "end_cue": "C1101",
+      "description": "Simba sees a vision of his dead father telling him to remember who he is, then desperately begs the fading vision not to leave, echoing the grief of losing his father.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "ghost_supernatural",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.59,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "ghost",
+        "father",
+        "vision",
+        "memory",
+        "sky"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S13"
+    },
+    {
+      "title": "Scar's cruel confrontation with lionesses",
+      "start_ms": 4367263,
+      "end_ms": 4398992,
+      "start": "01:12:47",
+      "end": "01:13:18",
+      "start_cue": "C1180",
+      "end_cue": "C1193",
+      "description": "Scar coldly dismisses the starving pride's pleas and declares he can do whatever he wants, threatening them with death if they oppose him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.07,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "starvation",
+        "tyrant king",
+        "argument",
+        "threat"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S14"
+    },
+    {
+      "title": "Simba's return shocks Scar",
+      "start_ms": 4402322,
+      "end_ms": 4452674,
+      "start": "01:13:22",
+      "end": "01:14:12",
+      "start_cue": "C1194",
+      "end_cue": "C1210",
+      "description": "Scar briefly mistakes Simba for his dead father Mufasa, then confronts the grown Simba, who threatens to hurt him before Scar tries to manipulate his way out of stepping down.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.97,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.46,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "confrontation",
+        "ghost of father",
+        "threat",
+        "power struggle"
+      ],
+      "text_visibility": "high",
+      "candidate": "K22",
+      "id": "S15"
+    },
+    {
+      "title": "Scar forces Simba's confession",
+      "start_ms": 4473760,
+      "end_ms": 4593928,
+      "start": "01:14:33",
+      "end": "01:16:33",
+      "start_cue": "C1219",
+      "end_cue": "C1257",
+      "description": "Scar publicly accuses Simba of killing his father Mufasa, backing him toward a cliff edge and taunting him until Simba admits guilt in front of everyone.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "believed_dead",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.93,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.33,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "adult_rages_at_child",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.14,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "accusation",
+        "murderer",
+        "father's death",
+        "confession",
+        "cliff"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S16"
+    },
+    {
+      "title": "Timon and Pumbaa's comic fight",
+      "start_ms": 4605779,
+      "end_ms": 4672501,
+      "start": "01:16:45",
+      "end": "01:17:52",
+      "start_cue": "C1258",
+      "end_cue": "C1270",
+      "description": "Timon and Pumbaa comically battle hyenas as a distraction, with silly threats and slapstick violence played for laughs.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.68,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "timon",
+        "pumbaa",
+        "hyenas",
+        "comic fight"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S17"
+    },
+    {
+      "title": "Simba confronts Scar amid fire",
+      "start_ms": 4691935,
+      "end_ms": 4827163,
+      "start": "01:18:11",
+      "end": "01:20:27",
+      "start_cue": "C1271",
+      "end_cue": "C1298",
+      "description": "Surrounded by flames, Simba confronts Scar, who begs for mercy and betrays the hyenas, before Simba spares him and the hyenas turn on Scar in the fire.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 3
+      },
+      "attributes": [
+        {
+          "id": "fire_disaster",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.86,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.11,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "dies_now",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.13,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "fire",
+        "betrayal",
+        "hyenas",
+        "cliff",
+        "confrontation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S18"
+    }
+  ]
+}

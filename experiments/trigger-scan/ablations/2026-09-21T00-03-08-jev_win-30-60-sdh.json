@@ -1,0 +1,3643 @@
+{
+  "arm": "jev:win-30-60",
+  "track": "sdh",
+  "model": "jev-1.13.0",
+  "startedAt": "2026-09-21T00:03:05.192Z",
+  "wallMs": 3260,
+  "calls": 110,
+  "inputTokens": 327608,
+  "outputTokens": 47731,
+  "costUsd": 0.013759536000000001,
+  "windows": [
+    {
+      "windowId": "W001",
+      "startMs": 53554,
+      "endMs": 92968,
+      "cueIds": [
+        "C0001",
+        "C0013"
+      ],
+      "categories": {
+        "peril_chase": 0.03,
+        "predator_creature": 0.04,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.03,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.02,
+        "emotional_distress": 0.03,
+        "imitable_risk": 0.05,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.03,
+      "severityConfidence": 0.97,
+      "peakCue": "none",
+      "peakConfidence": 0.74,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2742,
+        "output_tokens": 416
+      },
+      "latencyMs": 422
+    },
+    {
+      "windowId": "W002",
+      "startMs": 100726,
+      "endMs": 157907,
+      "cueIds": [
+        "C0014",
+        "C0032"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.02,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.03,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.04,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.17,
+      "severityConfidence": 0.83,
+      "peakCue": "C0020",
+      "peakConfidence": 0.64,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3203,
+        "output_tokens": 486
+      },
+      "latencyMs": 293
+    },
+    {
+      "windowId": "W003",
+      "startMs": 159076,
+      "endMs": 197030,
+      "cueIds": [
+        "C0033",
+        "C0043"
+      ],
+      "categories": {
+        "peril_chase": 0.48,
+        "predator_creature": 0.58,
+        "death_loss": 0.33,
+        "separation_abandonment": 0.11,
+        "injury_pain": 0.46,
+        "captivity_confinement": 0.33,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.31,
+        "emotional_distress": 0.28,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.07,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.58,
+      "severityConfidence": 0.3,
+      "peakCue": "C0039",
+      "peakConfidence": 0.41,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2879,
+        "output_tokens": 398
+      },
+      "latencyMs": 400
+    },
+    {
+      "windowId": "W004",
+      "startMs": 199325,
+      "endMs": 235610,
+      "cueIds": [
+        "C0044",
+        "C0049"
+      ],
+      "categories": {
+        "peril_chase": 0.75,
+        "predator_creature": 0.54,
+        "death_loss": 0.74,
+        "separation_abandonment": 0.41,
+        "injury_pain": 0.5,
+        "captivity_confinement": 0.29,
+        "darkness_unknown": 0.26,
+        "shouting_aggression": 0.51,
+        "emotional_distress": 0.82,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.14,
+        "flashing_light_inferred": 0.06
+      },
+      "severity": 2.52,
+      "severityConfidence": 0.52,
+      "peakCue": "C0048",
+      "peakConfidence": 0.45,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2652,
+        "output_tokens": 343
+      },
+      "latencyMs": 409
+    },
+    {
+      "windowId": "W005",
+      "startMs": 237988,
+      "endMs": 288872,
+      "cueIds": [
+        "C0050",
+        "C0057"
+      ],
+      "categories": {
+        "peril_chase": 0.24,
+        "predator_creature": 0.11,
+        "death_loss": 0.54,
+        "separation_abandonment": 0.34,
+        "injury_pain": 0.3,
+        "captivity_confinement": 0.18,
+        "darkness_unknown": 0.23,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.75,
+        "imitable_risk": 0.11,
+        "loud_sudden_sound": 0.18,
+        "flashing_light_inferred": 0.05
+      },
+      "severity": 1.83,
+      "severityConfidence": 0.39,
+      "peakCue": "C0051",
+      "peakConfidence": 0.76,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2622,
+        "output_tokens": 365
+      },
+      "latencyMs": 396
+    },
+    {
+      "windowId": "W006",
+      "startMs": 291959,
+      "endMs": 350767,
+      "cueIds": [
+        "C0058",
+        "C0064"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.04,
+        "death_loss": 0.1,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.09,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.06,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.34,
+      "severityConfidence": 0.66,
+      "peakCue": "C0058",
+      "peakConfidence": 0.44,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2675,
+        "output_tokens": 354
+      },
+      "latencyMs": 289
+    },
+    {
+      "windowId": "W007",
+      "startMs": 350851,
+      "endMs": 400316,
+      "cueIds": [
+        "C0065",
+        "C0083"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.06,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.17,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.17,
+        "emotional_distress": 0.11,
+        "imitable_risk": 0.45,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.52,
+      "severityConfidence": 0.48,
+      "peakCue": "C0079",
+      "peakConfidence": 0.4,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3154,
+        "output_tokens": 486
+      },
+      "latencyMs": 397
+    },
+    {
+      "windowId": "W008",
+      "startMs": 409576,
+      "endMs": 467925,
+      "cueIds": [
+        "C0084",
+        "C0101"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.05,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.03,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.04,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.08,
+        "imitable_risk": 0.14,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.62,
+      "severityConfidence": 0.51,
+      "peakCue": "C0092",
+      "peakConfidence": 0.28,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3185,
+        "output_tokens": 475
+      },
+      "latencyMs": 395
+    },
+    {
+      "windowId": "W009",
+      "startMs": 468010,
+      "endMs": 526818,
+      "cueIds": [
+        "C0102",
+        "C0121"
+      ],
+      "categories": {
+        "peril_chase": 0.11,
+        "predator_creature": 0.27,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.06,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.08,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.31,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.44,
+      "severityConfidence": 0.56,
+      "peakCue": "C0102",
+      "peakConfidence": 0.69,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3250,
+        "output_tokens": 497
+      },
+      "latencyMs": 510
+    },
+    {
+      "windowId": "W010",
+      "startMs": 526902,
+      "endMs": 584500,
+      "cueIds": [
+        "C0122",
+        "C0141"
+      ],
+      "categories": {
+        "peril_chase": 0.18,
+        "predator_creature": 0.09,
+        "death_loss": 0.14,
+        "separation_abandonment": 0.09,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.08,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.39,
+        "emotional_distress": 0.33,
+        "imitable_risk": 0.22,
+        "loud_sudden_sound": 0.29,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.25,
+      "severityConfidence": 0.66,
+      "peakCue": "C0128",
+      "peakConfidence": 0.9,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3236,
+        "output_tokens": 497
+      },
+      "latencyMs": 154
+    },
+    {
+      "windowId": "W011",
+      "startMs": 584585,
+      "endMs": 642433,
+      "cueIds": [
+        "C0142",
+        "C0161"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.05,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.18,
+        "injury_pain": 0.09,
+        "captivity_confinement": 0.17,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.16,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.14,
+      "severityConfidence": 0.86,
+      "peakCue": "none",
+      "peakConfidence": 0.29,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3245,
+        "output_tokens": 493
+      },
+      "latencyMs": 179
+    },
+    {
+      "windowId": "W012",
+      "startMs": 643685,
+      "endMs": 677552,
+      "cueIds": [
+        "C0162",
+        "C0175"
+      ],
+      "categories": {
+        "peril_chase": 0.1,
+        "predator_creature": 0.53,
+        "death_loss": 0.14,
+        "separation_abandonment": 0.22,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.16,
+        "darkness_unknown": 0.26,
+        "shouting_aggression": 0.79,
+        "emotional_distress": 0.53,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.98,
+      "severityConfidence": 0.51,
+      "peakCue": "C0170",
+      "peakConfidence": 0.9,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2981,
+        "output_tokens": 431
+      },
+      "latencyMs": 343
+    },
+    {
+      "windowId": "W013",
+      "startMs": 680055,
+      "endMs": 710960,
+      "cueIds": [
+        "C0176",
+        "C0182"
+      ],
+      "categories": {
+        "peril_chase": 0.06,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.07,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.05,
+        "imitable_risk": 0.05,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.07,
+      "severityConfidence": 0.93,
+      "peakCue": "none",
+      "peakConfidence": 0.91,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2720,
+        "output_tokens": 350
+      },
+      "latencyMs": 306
+    },
+    {
+      "windowId": "W014",
+      "startMs": 713672,
+      "endMs": 746329,
+      "cueIds": [
+        "C0183",
+        "C0194"
+      ],
+      "categories": {
+        "peril_chase": 0.09,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.07,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.34,
+      "severityConfidence": 0.66,
+      "peakCue": "none",
+      "peakConfidence": 0.41,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2891,
+        "output_tokens": 405
+      },
+      "latencyMs": 351
+    },
+    {
+      "windowId": "W015",
+      "startMs": 748498,
+      "endMs": 806889,
+      "cueIds": [
+        "C0195",
+        "C0216"
+      ],
+      "categories": {
+        "peril_chase": 0.1,
+        "predator_creature": 0.14,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.08,
+        "injury_pain": 0.1,
+        "captivity_confinement": 0.07,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.72,
+        "emotional_distress": 0.17,
+        "imitable_risk": 0.73,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.98,
+      "severityConfidence": 0.62,
+      "peakCue": "C0207",
+      "peakConfidence": 0.2,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3258,
+        "output_tokens": 519
+      },
+      "latencyMs": 206
+    },
+    {
+      "windowId": "W016",
+      "startMs": 807224,
+      "endMs": 848431,
+      "cueIds": [
+        "C0217",
+        "C0231"
+      ],
+      "categories": {
+        "peril_chase": 0.4,
+        "predator_creature": 0.07,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.14,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.73,
+        "emotional_distress": 0.63,
+        "imitable_risk": 0.54,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.05
+      },
+      "severity": 1.42,
+      "severityConfidence": 0.57,
+      "peakCue": "C0221",
+      "peakConfidence": 0.7,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3039,
+        "output_tokens": 442
+      },
+      "latencyMs": 160
+    },
+    {
+      "windowId": "W017",
+      "startMs": 850434,
+      "endMs": 889638,
+      "cueIds": [
+        "C0232",
+        "C0247"
+      ],
+      "categories": {
+        "peril_chase": 0.32,
+        "predator_creature": 0.11,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.14,
+        "injury_pain": 0.25,
+        "captivity_confinement": 0.09,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.72,
+        "emotional_distress": 0.5,
+        "imitable_risk": 0.84,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.47,
+      "severityConfidence": 0.48,
+      "peakCue": "C0235",
+      "peakConfidence": 0.22,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3040,
+        "output_tokens": 453
+      },
+      "latencyMs": 229
+    },
+    {
+      "windowId": "W018",
+      "startMs": 895228,
+      "endMs": 927384,
+      "cueIds": [
+        "C0248",
+        "C0257"
+      ],
+      "categories": {
+        "peril_chase": 0.91,
+        "predator_creature": 0.59,
+        "death_loss": 0.48,
+        "separation_abandonment": 0.85,
+        "injury_pain": 0.48,
+        "captivity_confinement": 0.6,
+        "darkness_unknown": 0.15,
+        "shouting_aggression": 0.27,
+        "emotional_distress": 0.96,
+        "imitable_risk": 0.67,
+        "loud_sudden_sound": 0.8,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 2.67,
+      "severityConfidence": 0.67,
+      "peakCue": "C0249",
+      "peakConfidence": 0.43,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2764,
+        "output_tokens": 387
+      },
+      "latencyMs": 363
+    },
+    {
+      "windowId": "W019",
+      "startMs": 929679,
+      "endMs": 961877,
+      "cueIds": [
+        "C0258",
+        "C0262"
+      ],
+      "categories": {
+        "peril_chase": 0.76,
+        "predator_creature": 0.36,
+        "death_loss": 0.48,
+        "separation_abandonment": 0.71,
+        "injury_pain": 0.24,
+        "captivity_confinement": 0.31,
+        "darkness_unknown": 0.23,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.91,
+        "imitable_risk": 0.27,
+        "loud_sudden_sound": 0.19,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 2.26,
+      "severityConfidence": 0.5,
+      "peakCue": "C0260",
+      "peakConfidence": 0.41,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2580,
+        "output_tokens": 332
+      },
+      "latencyMs": 245
+    },
+    {
+      "windowId": "W020",
+      "startMs": 966842,
+      "endMs": 1000583,
+      "cueIds": [
+        "C0263",
+        "C0277"
+      ],
+      "categories": {
+        "peril_chase": 0.32,
+        "predator_creature": 0.16,
+        "death_loss": 0.61,
+        "separation_abandonment": 0.79,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.2,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.97,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.11,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 2.53,
+      "severityConfidence": 0.53,
+      "peakCue": "C0264",
+      "peakConfidence": 0.28,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2846,
+        "output_tokens": 442
+      },
+      "latencyMs": 308
+    },
+    {
+      "windowId": "W021",
+      "startMs": 1005380,
+      "endMs": 1061226,
+      "cueIds": [
+        "C0278",
+        "C0291"
+      ],
+      "categories": {
+        "peril_chase": 0.09,
+        "predator_creature": 0.07,
+        "death_loss": 0.11,
+        "separation_abandonment": 0.53,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.13,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.64,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.2,
+      "severityConfidence": 0.73,
+      "peakCue": "C0282",
+      "peakConfidence": 0.87,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2929,
+        "output_tokens": 431
+      },
+      "latencyMs": 254
+    },
+    {
+      "windowId": "W022",
+      "startMs": 1068234,
+      "endMs": 1124373,
+      "cueIds": [
+        "C0292",
+        "C0311"
+      ],
+      "categories": {
+        "peril_chase": 0.22,
+        "predator_creature": 0.38,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.75,
+        "emotional_distress": 0.46,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1,
+      "severityConfidence": 0.65,
+      "peakCue": "C0295",
+      "peakConfidence": 0.43,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3209,
+        "output_tokens": 497
+      },
+      "latencyMs": 268
+    },
+    {
+      "windowId": "W023",
+      "startMs": 1129004,
+      "endMs": 1188604,
+      "cueIds": [
+        "C0312",
+        "C0330"
+      ],
+      "categories": {
+        "peril_chase": 0.22,
+        "predator_creature": 0.53,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.2,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.12,
+        "shouting_aggression": 0.41,
+        "emotional_distress": 0.08,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.49,
+      "severityConfidence": 0.37,
+      "peakCue": "C0322",
+      "peakConfidence": 0.63,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3154,
+        "output_tokens": 486
+      },
+      "latencyMs": 191
+    },
+    {
+      "windowId": "W024",
+      "startMs": 1192067,
+      "endMs": 1251416,
+      "cueIds": [
+        "C0331",
+        "C0347"
+      ],
+      "categories": {
+        "peril_chase": 0.06,
+        "predator_creature": 0.14,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.09,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.09,
+        "emotional_distress": 0.04,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.53,
+        "flashing_light_inferred": 0.11
+      },
+      "severity": 0.72,
+      "severityConfidence": 0.5,
+      "peakCue": "C0338",
+      "peakConfidence": 0.59,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3093,
+        "output_tokens": 464
+      },
+      "latencyMs": 176
+    },
+    {
+      "windowId": "W025",
+      "startMs": 1251501,
+      "endMs": 1309183,
+      "cueIds": [
+        "C0348",
+        "C0367"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.26,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.12,
+        "emotional_distress": 0.05,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.78,
+      "severityConfidence": 0.44,
+      "peakCue": "C0361",
+      "peakConfidence": 0.89,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3209,
+        "output_tokens": 497
+      },
+      "latencyMs": 211
+    },
+    {
+      "windowId": "W026",
+      "startMs": 1309267,
+      "endMs": 1355145,
+      "cueIds": [
+        "C0368",
+        "C0382"
+      ],
+      "categories": {
+        "peril_chase": 0.03,
+        "predator_creature": 0.06,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.14,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.04,
+        "imitable_risk": 0.05,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.2,
+      "severityConfidence": 0.8,
+      "peakCue": "none",
+      "peakConfidence": 0.58,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3037,
+        "output_tokens": 438
+      },
+      "latencyMs": 188
+    },
+    {
+      "windowId": "W027",
+      "startMs": 1357690,
+      "endMs": 1417249,
+      "cueIds": [
+        "C0383",
+        "C0403"
+      ],
+      "categories": {
+        "peril_chase": 0.25,
+        "predator_creature": 0.19,
+        "death_loss": 0.1,
+        "separation_abandonment": 0.56,
+        "injury_pain": 0.73,
+        "captivity_confinement": 0.14,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.4,
+        "emotional_distress": 0.88,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.57,
+      "severityConfidence": 0.49,
+      "peakCue": "C0387",
+      "peakConfidence": 0.28,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3260,
+        "output_tokens": 508
+      },
+      "latencyMs": 170
+    },
+    {
+      "windowId": "W028",
+      "startMs": 1417333,
+      "endMs": 1472679,
+      "cueIds": [
+        "C0404",
+        "C0418"
+      ],
+      "categories": {
+        "peril_chase": 0.56,
+        "predator_creature": 0.78,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.2,
+        "injury_pain": 0.15,
+        "captivity_confinement": 0.9,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.51,
+        "emotional_distress": 0.49,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.76,
+      "severityConfidence": 0.59,
+      "peakCue": "C0406",
+      "peakConfidence": 0.62,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3025,
+        "output_tokens": 442
+      },
+      "latencyMs": 206
+    },
+    {
+      "windowId": "W029",
+      "startMs": 1474724,
+      "endMs": 1512427,
+      "cueIds": [
+        "C0419",
+        "C0430"
+      ],
+      "categories": {
+        "peril_chase": 0.67,
+        "predator_creature": 0.48,
+        "death_loss": 0.29,
+        "separation_abandonment": 0.22,
+        "injury_pain": 0.16,
+        "captivity_confinement": 0.48,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.25,
+        "emotional_distress": 0.7,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.61,
+      "severityConfidence": 0.46,
+      "peakCue": "C0422",
+      "peakConfidence": 0.6,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2899,
+        "output_tokens": 409
+      },
+      "latencyMs": 166
+    },
+    {
+      "windowId": "W030",
+      "startMs": 1514597,
+      "endMs": 1568608,
+      "cueIds": [
+        "C0431",
+        "C0439"
+      ],
+      "categories": {
+        "peril_chase": 0.45,
+        "predator_creature": 0.19,
+        "death_loss": 0.07,
+        "separation_abandonment": 0.24,
+        "injury_pain": 0.16,
+        "captivity_confinement": 0.28,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.26,
+        "emotional_distress": 0.56,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.82,
+        "flashing_light_inferred": 0.53
+      },
+      "severity": 1.05,
+      "severityConfidence": 0.76,
+      "peakCue": "C0431",
+      "peakConfidence": 0.49,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2728,
+        "output_tokens": 376
+      },
+      "latencyMs": 141
+    },
+    {
+      "windowId": "W031",
+      "startMs": 1571654,
+      "endMs": 1630670,
+      "cueIds": [
+        "C0440",
+        "C0458"
+      ],
+      "categories": {
+        "peril_chase": 0.37,
+        "predator_creature": 0.32,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.71,
+        "injury_pain": 0.22,
+        "captivity_confinement": 0.88,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.22,
+        "emotional_distress": 0.93,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.57,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.63,
+      "severityConfidence": 0.56,
+      "peakCue": "C0446",
+      "peakConfidence": 0.47,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3134,
+        "output_tokens": 486
+      },
+      "latencyMs": 179
+    },
+    {
+      "windowId": "W032",
+      "startMs": 1631088,
+      "endMs": 1690730,
+      "cueIds": [
+        "C0459",
+        "C0480"
+      ],
+      "categories": {
+        "peril_chase": 0.31,
+        "predator_creature": 0.09,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.22,
+        "injury_pain": 0.42,
+        "captivity_confinement": 0.58,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.18,
+        "emotional_distress": 0.51,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.85,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.53,
+      "severityConfidence": 0.44,
+      "peakCue": "C0474",
+      "peakConfidence": 0.43,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3295,
+        "output_tokens": 519
+      },
+      "latencyMs": 343
+    },
+    {
+      "windowId": "W033",
+      "startMs": 1690815,
+      "endMs": 1736192,
+      "cueIds": [
+        "C0481",
+        "C0496"
+      ],
+      "categories": {
+        "peril_chase": 0.17,
+        "predator_creature": 0.19,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.31,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.48,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.52,
+        "emotional_distress": 0.08,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.25,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.11,
+      "severityConfidence": 0.48,
+      "peakCue": "C0489",
+      "peakConfidence": 0.32,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3090,
+        "output_tokens": 453
+      },
+      "latencyMs": 164
+    },
+    {
+      "windowId": "W034",
+      "startMs": 1738946,
+      "endMs": 1784199,
+      "cueIds": [
+        "C0497",
+        "C0511"
+      ],
+      "categories": {
+        "peril_chase": 0.72,
+        "predator_creature": 0.25,
+        "death_loss": 0.7,
+        "separation_abandonment": 0.68,
+        "injury_pain": 0.45,
+        "captivity_confinement": 0.85,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.24,
+        "emotional_distress": 0.77,
+        "imitable_risk": 0.23,
+        "loud_sudden_sound": 0.16,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 2.35,
+      "severityConfidence": 0.53,
+      "peakCue": "C0509",
+      "peakConfidence": 0.42,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3073,
+        "output_tokens": 442
+      },
+      "latencyMs": 196
+    },
+    {
+      "windowId": "W035",
+      "startMs": 1789455,
+      "endMs": 1819734,
+      "cueIds": [
+        "C0512",
+        "C0519"
+      ],
+      "categories": {
+        "peril_chase": 0.48,
+        "predator_creature": 0.07,
+        "death_loss": 0.1,
+        "separation_abandonment": 0.38,
+        "injury_pain": 0.12,
+        "captivity_confinement": 0.86,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.39,
+        "emotional_distress": 0.22,
+        "imitable_risk": 0.11,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 1.05,
+      "severityConfidence": 0.66,
+      "peakCue": "C0514",
+      "peakConfidence": 0.39,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2768,
+        "output_tokens": 365
+      },
+      "latencyMs": 148
+    },
+    {
+      "windowId": "W036",
+      "startMs": 1824156,
+      "endMs": 1858064,
+      "cueIds": [
+        "C0520",
+        "C0530"
+      ],
+      "categories": {
+        "peril_chase": 0.06,
+        "predator_creature": 0.05,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.14,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.49,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.05,
+        "emotional_distress": 0.04,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.09,
+      "severityConfidence": 0.91,
+      "peakCue": "none",
+      "peakConfidence": 0.68,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2837,
+        "output_tokens": 394
+      },
+      "latencyMs": 240
+    },
+    {
+      "windowId": "W037",
+      "startMs": 1862778,
+      "endMs": 1895477,
+      "cueIds": [
+        "C0531",
+        "C0536"
+      ],
+      "categories": {
+        "peril_chase": 0.19,
+        "predator_creature": 0.15,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.14,
+        "captivity_confinement": 0.19,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.37,
+        "emotional_distress": 0.26,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.1,
+      "severityConfidence": 0.71,
+      "peakCue": "C0536",
+      "peakConfidence": 0.96,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2671,
+        "output_tokens": 343
+      },
+      "latencyMs": 139
+    },
+    {
+      "windowId": "W038",
+      "startMs": 1902526,
+      "endMs": 1932555,
+      "cueIds": [
+        "C0537",
+        "C0542"
+      ],
+      "categories": {
+        "peril_chase": 0.45,
+        "predator_creature": 0.1,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.08,
+        "injury_pain": 0.17,
+        "captivity_confinement": 0.28,
+        "darkness_unknown": 0.26,
+        "shouting_aggression": 0.19,
+        "emotional_distress": 0.93,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.97,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.37,
+      "severityConfidence": 0.61,
+      "peakCue": "C0537",
+      "peakConfidence": 0.97,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2614,
+        "output_tokens": 343
+      },
+      "latencyMs": 147
+    },
+    {
+      "windowId": "W039",
+      "startMs": 1934683,
+      "endMs": 1981229,
+      "cueIds": [
+        "C0543",
+        "C0559"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.05,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.2,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.33,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.21,
+        "emotional_distress": 0.64,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.08,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.94,
+      "severityConfidence": 0.8,
+      "peakCue": "C0549",
+      "peakConfidence": 0.96,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3013,
+        "output_tokens": 464
+      },
+      "latencyMs": 141
+    },
+    {
+      "windowId": "W040",
+      "startMs": 1983315,
+      "endMs": 2014345,
+      "cueIds": [
+        "C0560",
+        "C0572"
+      ],
+      "categories": {
+        "peril_chase": 0.15,
+        "predator_creature": 0.18,
+        "death_loss": 0.31,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.18,
+        "captivity_confinement": 0.23,
+        "darkness_unknown": 0.33,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.14,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.32
+      },
+      "severity": 0.69,
+      "severityConfidence": 0.46,
+      "peakCue": "C0571",
+      "peakConfidence": 0.79,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2926,
+        "output_tokens": 420
+      },
+      "latencyMs": 137
+    },
+    {
+      "windowId": "W041",
+      "startMs": 2021896,
+      "endMs": 2052467,
+      "cueIds": [
+        "C0573",
+        "C0584"
+      ],
+      "categories": {
+        "peril_chase": 0.61,
+        "predator_creature": 0.61,
+        "death_loss": 0.25,
+        "separation_abandonment": 0.13,
+        "injury_pain": 0.27,
+        "captivity_confinement": 0.17,
+        "darkness_unknown": 0.2,
+        "shouting_aggression": 0.39,
+        "emotional_distress": 0.23,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.08
+      },
+      "severity": 1.4,
+      "severityConfidence": 0.43,
+      "peakCue": "C0580",
+      "peakConfidence": 0.52,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2856,
+        "output_tokens": 409
+      },
+      "latencyMs": 238
+    },
+    {
+      "windowId": "W042",
+      "startMs": 2057097,
+      "endMs": 2102183,
+      "cueIds": [
+        "C0585",
+        "C0602"
+      ],
+      "categories": {
+        "peril_chase": 0.45,
+        "predator_creature": 0.14,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.11,
+        "injury_pain": 0.09,
+        "captivity_confinement": 0.29,
+        "darkness_unknown": 0.46,
+        "shouting_aggression": 0.23,
+        "emotional_distress": 0.82,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.97,
+        "flashing_light_inferred": 0.09
+      },
+      "severity": 1.17,
+      "severityConfidence": 0.73,
+      "peakCue": "C0585",
+      "peakConfidence": 0.88,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3083,
+        "output_tokens": 475
+      },
+      "latencyMs": 125
+    },
+    {
+      "windowId": "W043",
+      "startMs": 2105062,
+      "endMs": 2164120,
+      "cueIds": [
+        "C0603",
+        "C0620"
+      ],
+      "categories": {
+        "peril_chase": 0.29,
+        "predator_creature": 0.21,
+        "death_loss": 0.27,
+        "separation_abandonment": 0.09,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.12,
+        "darkness_unknown": 0.29,
+        "shouting_aggression": 0.14,
+        "emotional_distress": 0.78,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.1,
+        "flashing_light_inferred": 0.17
+      },
+      "severity": 1,
+      "severityConfidence": 0.77,
+      "peakCue": "C0609",
+      "peakConfidence": 0.52,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3117,
+        "output_tokens": 475
+      },
+      "latencyMs": 216
+    },
+    {
+      "windowId": "W044",
+      "startMs": 2165664,
+      "endMs": 2205995,
+      "cueIds": [
+        "C0621",
+        "C0626"
+      ],
+      "categories": {
+        "peril_chase": 0.12,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.15,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.41,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.05,
+        "emotional_distress": 0.11,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.06,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.52,
+      "severityConfidence": 0.5,
+      "peakCue": "none",
+      "peakConfidence": 0.39,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2678,
+        "output_tokens": 339
+      },
+      "latencyMs": 194
+    },
+    {
+      "windowId": "W045",
+      "startMs": 2208457,
+      "endMs": 2265555,
+      "cueIds": [
+        "C0627",
+        "C0629"
+      ],
+      "categories": {
+        "peril_chase": 0.12,
+        "predator_creature": 0.09,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.1,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.26,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.05,
+        "emotional_distress": 0.08,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.46,
+      "severityConfidence": 0.54,
+      "peakCue": "C0628",
+      "peakConfidence": 0.31,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2478,
+        "output_tokens": 310
+      },
+      "latencyMs": 414
+    },
+    {
+      "windowId": "W046",
+      "startMs": 2267850,
+      "endMs": 2299547,
+      "cueIds": [
+        "C0630",
+        "C0639"
+      ],
+      "categories": {
+        "peril_chase": 0.09,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.18,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.05,
+        "emotional_distress": 0.04,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.08
+      },
+      "severity": 0.41,
+      "severityConfidence": 0.59,
+      "peakCue": "C0639",
+      "peakConfidence": 0.61,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2661,
+        "output_tokens": 387
+      },
+      "latencyMs": 140
+    },
+    {
+      "windowId": "W047",
+      "startMs": 2303635,
+      "endMs": 2363402,
+      "cueIds": [
+        "C0640",
+        "C0656"
+      ],
+      "categories": {
+        "peril_chase": 0.26,
+        "predator_creature": 0.2,
+        "death_loss": 0.14,
+        "separation_abandonment": 0.19,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.76,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.61,
+        "emotional_distress": 0.15,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.1,
+        "flashing_light_inferred": 0.15
+      },
+      "severity": 1.87,
+      "severityConfidence": 0.56,
+      "peakCue": "C0652",
+      "peakConfidence": 0.67,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3090,
+        "output_tokens": 464
+      },
+      "latencyMs": 211
+    },
+    {
+      "windowId": "W048",
+      "startMs": 2363695,
+      "endMs": 2418833,
+      "cueIds": [
+        "C0657",
+        "C0675"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.07,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.18,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.84,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.14,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.17,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.99,
+      "severityConfidence": 0.58,
+      "peakCue": "C0666",
+      "peakConfidence": 0.65,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3210,
+        "output_tokens": 486
+      },
+      "latencyMs": 278
+    },
+    {
+      "windowId": "W049",
+      "startMs": 2423422,
+      "endMs": 2480019,
+      "cueIds": [
+        "C0676",
+        "C0693"
+      ],
+      "categories": {
+        "peril_chase": 0.09,
+        "predator_creature": 0.08,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.67,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.07,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.25,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.45,
+      "severityConfidence": 0.55,
+      "peakCue": "C0693",
+      "peakConfidence": 0.31,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3178,
+        "output_tokens": 475
+      },
+      "latencyMs": 184
+    },
+    {
+      "windowId": "W050",
+      "startMs": 2481772,
+      "endMs": 2541539,
+      "cueIds": [
+        "C0694",
+        "C0715"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.14,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.88,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.12,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.45,
+        "emotional_distress": 0.23,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.9,
+      "severityConfidence": 0.75,
+      "peakCue": "C0697",
+      "peakConfidence": 0.28,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3327,
+        "output_tokens": 519
+      },
+      "latencyMs": 204
+    },
+    {
+      "windowId": "W051",
+      "startMs": 2542082,
+      "endMs": 2600931,
+      "cueIds": [
+        "C0716",
+        "C0740"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.07,
+        "death_loss": 0.08,
+        "separation_abandonment": 0.66,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.16,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.12,
+        "emotional_distress": 0.49,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.01,
+      "severityConfidence": 0.85,
+      "peakCue": "C0731",
+      "peakConfidence": 0.61,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3405,
+        "output_tokens": 552
+      },
+      "latencyMs": 173
+    },
+    {
+      "windowId": "W052",
+      "startMs": 2601016,
+      "endMs": 2651065,
+      "cueIds": [
+        "C0741",
+        "C0759"
+      ],
+      "categories": {
+        "peril_chase": 0.1,
+        "predator_creature": 0.09,
+        "death_loss": 0.08,
+        "separation_abandonment": 0.15,
+        "injury_pain": 0.22,
+        "captivity_confinement": 0.08,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.09,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.13,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.3,
+      "severityConfidence": 0.7,
+      "peakCue": "C0757",
+      "peakConfidence": 0.55,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3179,
+        "output_tokens": 486
+      },
+      "latencyMs": 258
+    },
+    {
+      "windowId": "W053",
+      "startMs": 2653318,
+      "endMs": 2697987,
+      "cueIds": [
+        "C0760",
+        "C0773"
+      ],
+      "categories": {
+        "peril_chase": 0.21,
+        "predator_creature": 0.1,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.68,
+        "shouting_aggression": 0.12,
+        "emotional_distress": 0.14,
+        "imitable_risk": 0.17,
+        "loud_sudden_sound": 0.07,
+        "flashing_light_inferred": 0.06
+      },
+      "severity": 1.12,
+      "severityConfidence": 0.65,
+      "peakCue": "C0767",
+      "peakConfidence": 0.96,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3004,
+        "output_tokens": 431
+      },
+      "latencyMs": 235
+    },
+    {
+      "windowId": "W054",
+      "startMs": 2703118,
+      "endMs": 2750873,
+      "cueIds": [
+        "C0774",
+        "C0791"
+      ],
+      "categories": {
+        "peril_chase": 0.44,
+        "predator_creature": 0.4,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.92,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.11,
+        "emotional_distress": 0.1,
+        "imitable_risk": 0.37,
+        "loud_sudden_sound": 0.12,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.99,
+      "severityConfidence": 0.91,
+      "peakCue": "C0781",
+      "peakConfidence": 0.57,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3160,
+        "output_tokens": 475
+      },
+      "latencyMs": 189
+    },
+    {
+      "windowId": "W055",
+      "startMs": 2754336,
+      "endMs": 2814061,
+      "cueIds": [
+        "C0792",
+        "C0815"
+      ],
+      "categories": {
+        "peril_chase": 0.56,
+        "predator_creature": 0.28,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.09,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.11,
+        "emotional_distress": 0.14,
+        "imitable_risk": 0.34,
+        "loud_sudden_sound": 0.08,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.98,
+      "severityConfidence": 0.58,
+      "peakCue": "C0793",
+      "peakConfidence": 0.31,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3349,
+        "output_tokens": 541
+      },
+      "latencyMs": 224
+    },
+    {
+      "windowId": "W056",
+      "startMs": 2817357,
+      "endMs": 2854977,
+      "cueIds": [
+        "C0816",
+        "C0827"
+      ],
+      "categories": {
+        "peril_chase": 0.79,
+        "predator_creature": 0.6,
+        "death_loss": 0.35,
+        "separation_abandonment": 0.1,
+        "injury_pain": 0.68,
+        "captivity_confinement": 0.35,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.23,
+        "emotional_distress": 0.83,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.89,
+        "flashing_light_inferred": 0.66
+      },
+      "severity": 1.8,
+      "severityConfidence": 0.16,
+      "peakCue": "C0826",
+      "peakConfidence": 0.49,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2873,
+        "output_tokens": 409
+      },
+      "latencyMs": 126
+    },
+    {
+      "windowId": "W057",
+      "startMs": 2857063,
+      "endMs": 2891138,
+      "cueIds": [
+        "C0828",
+        "C0838"
+      ],
+      "categories": {
+        "peril_chase": 0.42,
+        "predator_creature": 0.13,
+        "death_loss": 0.24,
+        "separation_abandonment": 0.16,
+        "injury_pain": 0.59,
+        "captivity_confinement": 0.24,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.1,
+        "emotional_distress": 0.41,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.07,
+        "flashing_light_inferred": 0.08
+      },
+      "severity": 1.54,
+      "severityConfidence": 0.38,
+      "peakCue": "C0838",
+      "peakConfidence": 0.45,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2817,
+        "output_tokens": 398
+      },
+      "latencyMs": 347
+    },
+    {
+      "windowId": "W058",
+      "startMs": 2906446,
+      "endMs": 2963168,
+      "cueIds": [
+        "C0839",
+        "C0858"
+      ],
+      "categories": {
+        "peril_chase": 0.13,
+        "predator_creature": 0.1,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.53,
+        "injury_pain": 0.09,
+        "captivity_confinement": 0.92,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.11,
+        "imitable_risk": 0.15,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.89,
+      "severityConfidence": 0.71,
+      "peakCue": "C0851",
+      "peakConfidence": 0.29,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3218,
+        "output_tokens": 497
+      },
+      "latencyMs": 195
+    },
+    {
+      "windowId": "W059",
+      "startMs": 2971344,
+      "endMs": 3011633,
+      "cueIds": [
+        "C0859",
+        "C0869"
+      ],
+      "categories": {
+        "peril_chase": 0.44,
+        "predator_creature": 0.08,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.13,
+        "injury_pain": 0.09,
+        "captivity_confinement": 0.7,
+        "darkness_unknown": 0.12,
+        "shouting_aggression": 0.08,
+        "emotional_distress": 0.17,
+        "imitable_risk": 0.23,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.11,
+      "severityConfidence": 0.73,
+      "peakCue": "C0865",
+      "peakConfidence": 0.39,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2898,
+        "output_tokens": 398
+      },
+      "latencyMs": 419
+    },
+    {
+      "windowId": "W060",
+      "startMs": 3014178,
+      "endMs": 3052174,
+      "cueIds": [
+        "C0870",
+        "C0876"
+      ],
+      "categories": {
+        "peril_chase": 0.9,
+        "predator_creature": 0.13,
+        "death_loss": 0.11,
+        "separation_abandonment": 0.16,
+        "injury_pain": 0.19,
+        "captivity_confinement": 0.87,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.85,
+        "imitable_risk": 0.15,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.81,
+      "severityConfidence": 0.72,
+      "peakCue": "C0872",
+      "peakConfidence": 0.38,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2722,
+        "output_tokens": 354
+      },
+      "latencyMs": 343
+    },
+    {
+      "windowId": "W061",
+      "startMs": 3055887,
+      "endMs": 3115028,
+      "cueIds": [
+        "C0877",
+        "C0891"
+      ],
+      "categories": {
+        "peril_chase": 0.18,
+        "predator_creature": 0.3,
+        "death_loss": 0.54,
+        "separation_abandonment": 0.2,
+        "injury_pain": 0.56,
+        "captivity_confinement": 0.28,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.23,
+        "emotional_distress": 0.71,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.16,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.62,
+      "severityConfidence": 0.36,
+      "peakCue": "C0883",
+      "peakConfidence": 0.52,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2968,
+        "output_tokens": 442
+      },
+      "latencyMs": 156
+    },
+    {
+      "windowId": "W062",
+      "startMs": 3115113,
+      "endMs": 3153233,
+      "cueIds": [
+        "C0892",
+        "C0905"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.05,
+        "death_loss": 0.08,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.48,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.09,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.06
+      },
+      "severity": 0.24,
+      "severityConfidence": 0.76,
+      "peakCue": "C0895",
+      "peakConfidence": 0.4,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2940,
+        "output_tokens": 431
+      },
+      "latencyMs": 267
+    },
+    {
+      "windowId": "W063",
+      "startMs": 3175214,
+      "endMs": 3210832,
+      "cueIds": [
+        "C0906",
+        "C0914"
+      ],
+      "categories": {
+        "peril_chase": 0.06,
+        "predator_creature": 0.05,
+        "death_loss": 0.12,
+        "separation_abandonment": 0.09,
+        "injury_pain": 0.1,
+        "captivity_confinement": 0.07,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.03,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.46,
+      "severityConfidence": 0.54,
+      "peakCue": "C0914",
+      "peakConfidence": 0.32,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2731,
+        "output_tokens": 376
+      },
+      "latencyMs": 501
+    },
+    {
+      "windowId": "W064",
+      "startMs": 3215088,
+      "endMs": 3248286,
+      "cueIds": [
+        "C0915",
+        "C0923"
+      ],
+      "categories": {
+        "peril_chase": 0.16,
+        "predator_creature": 0.1,
+        "death_loss": 0.07,
+        "separation_abandonment": 0.09,
+        "injury_pain": 0.15,
+        "captivity_confinement": 0.14,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.51,
+        "imitable_risk": 0.11,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.94,
+      "severityConfidence": 0.68,
+      "peakCue": "C0919",
+      "peakConfidence": 0.71,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2757,
+        "output_tokens": 376
+      },
+      "latencyMs": 215
+    },
+    {
+      "windowId": "W065",
+      "startMs": 3250331,
+      "endMs": 3306970,
+      "cueIds": [
+        "C0924",
+        "C0938"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.06,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.55,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.05,
+        "imitable_risk": 0.18,
+        "loud_sudden_sound": 0.06,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.1,
+      "severityConfidence": 0.9,
+      "peakCue": "none",
+      "peakConfidence": 0.54,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2994,
+        "output_tokens": 438
+      },
+      "latencyMs": 194
+    },
+    {
+      "windowId": "W066",
+      "startMs": 3307054,
+      "endMs": 3366696,
+      "cueIds": [
+        "C0939",
+        "C0959"
+      ],
+      "categories": {
+        "peril_chase": 0.47,
+        "predator_creature": 0.08,
+        "death_loss": 0.24,
+        "separation_abandonment": 0.82,
+        "injury_pain": 0.37,
+        "captivity_confinement": 0.26,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.14,
+        "emotional_distress": 0.33,
+        "imitable_risk": 0.26,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.17,
+      "severityConfidence": 0.74,
+      "peakCue": "C0955",
+      "peakConfidence": 0.39,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3255,
+        "output_tokens": 508
+      },
+      "latencyMs": 251
+    },
+    {
+      "windowId": "W067",
+      "startMs": 3367490,
+      "endMs": 3425547,
+      "cueIds": [
+        "C0960",
+        "C0981"
+      ],
+      "categories": {
+        "peril_chase": 0.11,
+        "predator_creature": 0.69,
+        "death_loss": 0.13,
+        "separation_abandonment": 0.9,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.2,
+        "darkness_unknown": 0.33,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.23,
+        "imitable_risk": 0.49,
+        "loud_sudden_sound": 0.62,
+        "flashing_light_inferred": 0.8
+      },
+      "severity": 2.18,
+      "severityConfidence": 0.6,
+      "peakCue": "C0975",
+      "peakConfidence": 0.83,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3296,
+        "output_tokens": 519
+      },
+      "latencyMs": 194
+    },
+    {
+      "windowId": "W068",
+      "startMs": 3425631,
+      "endMs": 3472886,
+      "cueIds": [
+        "C0982",
+        "C0994"
+      ],
+      "categories": {
+        "peril_chase": 0.3,
+        "predator_creature": 0.57,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.67,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.15,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.86,
+        "emotional_distress": 0.13,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.8,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.5,
+      "severityConfidence": 0.44,
+      "peakCue": "C0991",
+      "peakConfidence": 0.87,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2926,
+        "output_tokens": 420
+      },
+      "latencyMs": 176
+    },
+    {
+      "windowId": "W069",
+      "startMs": 3486692,
+      "endMs": 3530944,
+      "cueIds": [
+        "C0995",
+        "C1005"
+      ],
+      "categories": {
+        "peril_chase": 0.1,
+        "predator_creature": 0.12,
+        "death_loss": 0.16,
+        "separation_abandonment": 0.49,
+        "injury_pain": 0.12,
+        "captivity_confinement": 0.63,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.11,
+        "emotional_distress": 0.54,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.06,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.64,
+      "severityConfidence": 0.56,
+      "peakCue": "C1005",
+      "peakConfidence": 0.52,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2868,
+        "output_tokens": 398
+      },
+      "latencyMs": 165
+    },
+    {
+      "windowId": "W070",
+      "startMs": 3535241,
+      "endMs": 3594507,
+      "cueIds": [
+        "C1006",
+        "C1028"
+      ],
+      "categories": {
+        "peril_chase": 0.19,
+        "predator_creature": 0.19,
+        "death_loss": 0.12,
+        "separation_abandonment": 0.65,
+        "injury_pain": 0.4,
+        "captivity_confinement": 0.53,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.2,
+        "emotional_distress": 0.37,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.72,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.8,
+      "severityConfidence": 0.53,
+      "peakCue": "C1024",
+      "peakConfidence": 0.42,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3350,
+        "output_tokens": 530
+      },
+      "latencyMs": 291
+    },
+    {
+      "windowId": "W071",
+      "startMs": 3594592,
+      "endMs": 3625705,
+      "cueIds": [
+        "C1029",
+        "C1037"
+      ],
+      "categories": {
+        "peril_chase": 0.34,
+        "predator_creature": 0.6,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.35,
+        "injury_pain": 0.13,
+        "captivity_confinement": 0.43,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.61,
+        "emotional_distress": 0.15,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.64,
+        "flashing_light_inferred": 0.87
+      },
+      "severity": 1.86,
+      "severityConfidence": 0.52,
+      "peakCue": "C1030",
+      "peakConfidence": 0.68,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2817,
+        "output_tokens": 376
+      },
+      "latencyMs": 320
+    },
+    {
+      "windowId": "W072",
+      "startMs": 3627791,
+      "endMs": 3676339,
+      "cueIds": [
+        "C1038",
+        "C1055"
+      ],
+      "categories": {
+        "peril_chase": 0.26,
+        "predator_creature": 0.13,
+        "death_loss": 0.09,
+        "separation_abandonment": 0.19,
+        "injury_pain": 0.17,
+        "captivity_confinement": 0.66,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.13,
+        "emotional_distress": 0.44,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.49,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.97,
+      "severityConfidence": 0.74,
+      "peakCue": "C1038",
+      "peakConfidence": 0.35,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3148,
+        "output_tokens": 475
+      },
+      "latencyMs": 149
+    },
+    {
+      "windowId": "W073",
+      "startMs": 3684640,
+      "endMs": 3737066,
+      "cueIds": [
+        "C1056",
+        "C1069"
+      ],
+      "categories": {
+        "peril_chase": 0.16,
+        "predator_creature": 0.12,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.32,
+        "darkness_unknown": 0.22,
+        "shouting_aggression": 0.05,
+        "emotional_distress": 0.09,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.25,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.77,
+      "severityConfidence": 0.44,
+      "peakCue": "C1059",
+      "peakConfidence": 0.67,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3045,
+        "output_tokens": 431
+      },
+      "latencyMs": 150
+    },
+    {
+      "windowId": "W074",
+      "startMs": 3744783,
+      "endMs": 3795041,
+      "cueIds": [
+        "C1070",
+        "C1087"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.03,
+        "death_loss": 0.21,
+        "separation_abandonment": 0.06,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.04,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.02,
+        "emotional_distress": 0.08,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.15,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.34,
+      "severityConfidence": 0.66,
+      "peakCue": "C1082",
+      "peakConfidence": 0.46,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3135,
+        "output_tokens": 475
+      },
+      "latencyMs": 248
+    },
+    {
+      "windowId": "W075",
+      "startMs": 3799380,
+      "endMs": 3856894,
+      "cueIds": [
+        "C1088",
+        "C1108"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.05,
+        "death_loss": 0.09,
+        "separation_abandonment": 0.13,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.12,
+      "severityConfidence": 0.88,
+      "peakCue": "none",
+      "peakConfidence": 0.34,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3209,
+        "output_tokens": 504
+      },
+      "latencyMs": 419
+    },
+    {
+      "windowId": "W076",
+      "startMs": 3856979,
+      "endMs": 3909906,
+      "cueIds": [
+        "C1109",
+        "C1126"
+      ],
+      "categories": {
+        "peril_chase": 0.13,
+        "predator_creature": 0.12,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.08,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.23,
+        "darkness_unknown": 0.65,
+        "shouting_aggression": 0.22,
+        "emotional_distress": 0.14,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.07,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.06,
+      "severityConfidence": 0.69,
+      "peakCue": "C1121",
+      "peakConfidence": 0.98,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3143,
+        "output_tokens": 475
+      },
+      "latencyMs": 155
+    },
+    {
+      "windowId": "W077",
+      "startMs": 3919124,
+      "endMs": 3953324,
+      "cueIds": [
+        "C1127",
+        "C1139"
+      ],
+      "categories": {
+        "peril_chase": 0.13,
+        "predator_creature": 0.17,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.5,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.15,
+        "darkness_unknown": 0.13,
+        "shouting_aggression": 0.08,
+        "emotional_distress": 0.07,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.51,
+      "severityConfidence": 0.49,
+      "peakCue": "none",
+      "peakConfidence": 0.37,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2948,
+        "output_tokens": 416
+      },
+      "latencyMs": 258
+    },
+    {
+      "windowId": "W078",
+      "startMs": 3955828,
+      "endMs": 4013718,
+      "cueIds": [
+        "C1140",
+        "C1159"
+      ],
+      "categories": {
+        "peril_chase": 0.14,
+        "predator_creature": 0.24,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.16,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.08,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.16,
+        "emotional_distress": 0.09,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.33,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.68,
+      "severityConfidence": 0.54,
+      "peakCue": "C1157",
+      "peakConfidence": 0.44,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3221,
+        "output_tokens": 497
+      },
+      "latencyMs": 143
+    },
+    {
+      "windowId": "W079",
+      "startMs": 4016638,
+      "endMs": 4075571,
+      "cueIds": [
+        "C1160",
+        "C1177"
+      ],
+      "categories": {
+        "peril_chase": 0.29,
+        "predator_creature": 0.12,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.16,
+        "captivity_confinement": 0.44,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.53,
+        "emotional_distress": 0.52,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.45,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.12,
+      "severityConfidence": 0.68,
+      "peakCue": "C1167",
+      "peakConfidence": 0.88,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3140,
+        "output_tokens": 475
+      },
+      "latencyMs": 245
+    },
+    {
+      "windowId": "W080",
+      "startMs": 4077157,
+      "endMs": 4109855,
+      "cueIds": [
+        "C1178",
+        "C1187"
+      ],
+      "categories": {
+        "peril_chase": 0.07,
+        "predator_creature": 0.06,
+        "death_loss": 0.07,
+        "separation_abandonment": 0.27,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.67,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.05,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.04,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.45,
+      "severityConfidence": 0.55,
+      "peakCue": "none",
+      "peakConfidence": 0.26,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2844,
+        "output_tokens": 383
+      },
+      "latencyMs": 183
+    },
+    {
+      "windowId": "W081",
+      "startMs": 4170751,
+      "endMs": 4213125,
+      "cueIds": [
+        "C1188",
+        "C1197"
+      ],
+      "categories": {
+        "peril_chase": 0.25,
+        "predator_creature": 0.13,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.33,
+        "injury_pain": 0.12,
+        "captivity_confinement": 0.95,
+        "darkness_unknown": 0.25,
+        "shouting_aggression": 0.61,
+        "emotional_distress": 0.63,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.77,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.19,
+      "severityConfidence": 0.69,
+      "peakCue": "C1188",
+      "peakConfidence": 0.51,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2882,
+        "output_tokens": 387
+      },
+      "latencyMs": 361
+    },
+    {
+      "windowId": "W082",
+      "startMs": 4215629,
+      "endMs": 4261340,
+      "cueIds": [
+        "C1198",
+        "C1210"
+      ],
+      "categories": {
+        "peril_chase": 0.11,
+        "predator_creature": 0.05,
+        "death_loss": 0.12,
+        "separation_abandonment": 0.38,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.6,
+        "darkness_unknown": 0.14,
+        "shouting_aggression": 0.06,
+        "emotional_distress": 0.9,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.13,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 1.32,
+      "severityConfidence": 0.6,
+      "peakCue": "C1206",
+      "peakConfidence": 0.72,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2949,
+        "output_tokens": 420
+      },
+      "latencyMs": 233
+    },
+    {
+      "windowId": "W083",
+      "startMs": 4263969,
+      "endMs": 4303716,
+      "cueIds": [
+        "C1211",
+        "C1220"
+      ],
+      "categories": {
+        "peril_chase": 0.29,
+        "predator_creature": 0.28,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.14,
+        "darkness_unknown": 0.33,
+        "shouting_aggression": 0.34,
+        "emotional_distress": 0.12,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.98,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.39,
+      "severityConfidence": 0.54,
+      "peakCue": "C1216",
+      "peakConfidence": 0.9,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2809,
+        "output_tokens": 387
+      },
+      "latencyMs": 138
+    },
+    {
+      "windowId": "W084",
+      "startMs": 4306720,
+      "endMs": 4347259,
+      "cueIds": [
+        "C1221",
+        "C1232"
+      ],
+      "categories": {
+        "peril_chase": 0.85,
+        "predator_creature": 0.89,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.07,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.52,
+        "darkness_unknown": 0.59,
+        "shouting_aggression": 0.45,
+        "emotional_distress": 0.72,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.97,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 2.2,
+      "severityConfidence": 0.61,
+      "peakCue": "C1229",
+      "peakConfidence": 0.59,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2912,
+        "output_tokens": 409
+      },
+      "latencyMs": 285
+    },
+    {
+      "windowId": "W085",
+      "startMs": 4353683,
+      "endMs": 4388217,
+      "cueIds": [
+        "C1233",
+        "C1244"
+      ],
+      "categories": {
+        "peril_chase": 0.44,
+        "predator_creature": 0.54,
+        "death_loss": 0.31,
+        "separation_abandonment": 0.3,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.22,
+        "darkness_unknown": 0.38,
+        "shouting_aggression": 0.44,
+        "emotional_distress": 0.43,
+        "imitable_risk": 0.31,
+        "loud_sudden_sound": 0.97,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.97,
+      "severityConfidence": 0.45,
+      "peakCue": "C1238",
+      "peakConfidence": 0.46,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2898,
+        "output_tokens": 409
+      },
+      "latencyMs": 156
+    },
+    {
+      "windowId": "W086",
+      "startMs": 4401815,
+      "endMs": 4441478,
+      "cueIds": [
+        "C1245",
+        "C1255"
+      ],
+      "categories": {
+        "peril_chase": 0.12,
+        "predator_creature": 0.1,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.26,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.08,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.07,
+        "emotional_distress": 0.55,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.73,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.78,
+      "severityConfidence": 0.73,
+      "peakCue": "C1245",
+      "peakConfidence": 0.9,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2829,
+        "output_tokens": 398
+      },
+      "latencyMs": 246
+    },
+    {
+      "windowId": "W087",
+      "startMs": 4456411,
+      "endMs": 4493655,
+      "cueIds": [
+        "C1256",
+        "C1270"
+      ],
+      "categories": {
+        "peril_chase": 0.08,
+        "predator_creature": 0.04,
+        "death_loss": 0.02,
+        "separation_abandonment": 0.06,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.71,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.44,
+        "emotional_distress": 0.14,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.09,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.5,
+      "severityConfidence": 0.5,
+      "peakCue": "none",
+      "peakConfidence": 0.22,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2998,
+        "output_tokens": 438
+      },
+      "latencyMs": 222
+    },
+    {
+      "windowId": "W088",
+      "startMs": 4498995,
+      "endMs": 4546458,
+      "cueIds": [
+        "C1271",
+        "C1288"
+      ],
+      "categories": {
+        "peril_chase": 0.83,
+        "predator_creature": 0.13,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.24,
+        "injury_pain": 0.14,
+        "captivity_confinement": 0.75,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.43,
+        "emotional_distress": 0.81,
+        "imitable_risk": 0.17,
+        "loud_sudden_sound": 0.17,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.56,
+      "severityConfidence": 0.52,
+      "peakCue": "C1282",
+      "peakConfidence": 0.19,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3126,
+        "output_tokens": 475
+      },
+      "latencyMs": 167
+    },
+    {
+      "windowId": "W089",
+      "startMs": 4551005,
+      "endMs": 4586457,
+      "cueIds": [
+        "C1289",
+        "C1299"
+      ],
+      "categories": {
+        "peril_chase": 0.31,
+        "predator_creature": 0.14,
+        "death_loss": 0.07,
+        "separation_abandonment": 0.17,
+        "injury_pain": 0.1,
+        "captivity_confinement": 0.35,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.13,
+        "emotional_distress": 0.53,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.08,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.04,
+      "severityConfidence": 0.78,
+      "peakCue": "C1290",
+      "peakConfidence": 0.69,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2868,
+        "output_tokens": 398
+      },
+      "latencyMs": 158
+    },
+    {
+      "windowId": "W090",
+      "startMs": 4595842,
+      "endMs": 4648769,
+      "cueIds": [
+        "C1300",
+        "C1317"
+      ],
+      "categories": {
+        "peril_chase": 0.3,
+        "predator_creature": 0.41,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.41,
+        "injury_pain": 0.21,
+        "captivity_confinement": 0.12,
+        "darkness_unknown": 0.06,
+        "shouting_aggression": 0.37,
+        "emotional_distress": 0.41,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.1,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.15,
+      "severityConfidence": 0.63,
+      "peakCue": "C1300",
+      "peakConfidence": 0.46,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3106,
+        "output_tokens": 475
+      },
+      "latencyMs": 129
+    },
+    {
+      "windowId": "W091",
+      "startMs": 4652732,
+      "endMs": 4690811,
+      "cueIds": [
+        "C1318",
+        "C1327"
+      ],
+      "categories": {
+        "peril_chase": 0.5,
+        "predator_creature": 0.8,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.14,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.32,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.64,
+        "emotional_distress": 0.17,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.8,
+      "severityConfidence": 0.45,
+      "peakCue": "C1320",
+      "peakConfidence": 0.92,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2812,
+        "output_tokens": 387
+      },
+      "latencyMs": 232
+    },
+    {
+      "windowId": "W092",
+      "startMs": 4693731,
+      "endMs": 4752456,
+      "cueIds": [
+        "C1328",
+        "C1340"
+      ],
+      "categories": {
+        "peril_chase": 0.48,
+        "predator_creature": 0.27,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.15,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.45,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.19,
+        "emotional_distress": 0.51,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.95,
+        "flashing_light_inferred": 0.05
+      },
+      "severity": 1.48,
+      "severityConfidence": 0.47,
+      "peakCue": "C1331",
+      "peakConfidence": 0.36,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2952,
+        "output_tokens": 420
+      },
+      "latencyMs": 126
+    },
+    {
+      "windowId": "W093",
+      "startMs": 4752540,
+      "endMs": 4788533,
+      "cueIds": [
+        "C1341",
+        "C1354"
+      ],
+      "categories": {
+        "peril_chase": 0.67,
+        "predator_creature": 0.37,
+        "death_loss": 0.89,
+        "separation_abandonment": 0.24,
+        "injury_pain": 0.19,
+        "captivity_confinement": 0.56,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.52,
+        "emotional_distress": 0.78,
+        "imitable_risk": 0.19,
+        "loud_sudden_sound": 0.97,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 2.07,
+      "severityConfidence": 0.43,
+      "peakCue": "C1341",
+      "peakConfidence": 0.53,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2992,
+        "output_tokens": 431
+      },
+      "latencyMs": 186
+    },
+    {
+      "windowId": "W094",
+      "startMs": 4790536,
+      "endMs": 4838166,
+      "cueIds": [
+        "C1355",
+        "C1369"
+      ],
+      "categories": {
+        "peril_chase": 0.6,
+        "predator_creature": 0.19,
+        "death_loss": 0.3,
+        "separation_abandonment": 0.6,
+        "injury_pain": 0.43,
+        "captivity_confinement": 0.67,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.63,
+        "emotional_distress": 0.57,
+        "imitable_risk": 0.15,
+        "loud_sudden_sound": 0.18,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.47,
+      "severityConfidence": 0.51,
+      "peakCue": "C1362",
+      "peakConfidence": 0.32,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2993,
+        "output_tokens": 442
+      },
+      "latencyMs": 144
+    },
+    {
+      "windowId": "W095",
+      "startMs": 4841379,
+      "endMs": 4873410,
+      "cueIds": [
+        "C1370",
+        "C1380"
+      ],
+      "categories": {
+        "peril_chase": 0.74,
+        "predator_creature": 0.2,
+        "death_loss": 0.06,
+        "separation_abandonment": 0.19,
+        "injury_pain": 0.39,
+        "captivity_confinement": 0.29,
+        "darkness_unknown": 0.05,
+        "shouting_aggression": 0.87,
+        "emotional_distress": 0.91,
+        "imitable_risk": 0.14,
+        "loud_sudden_sound": 0.95,
+        "flashing_light_inferred": 0.35
+      },
+      "severity": 1.68,
+      "severityConfidence": 0.53,
+      "peakCue": "C1374",
+      "peakConfidence": 0.55,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2835,
+        "output_tokens": 398
+      },
+      "latencyMs": 150
+    },
+    {
+      "windowId": "W096",
+      "startMs": 4877957,
+      "endMs": 4934721,
+      "cueIds": [
+        "C1381",
+        "C1388"
+      ],
+      "categories": {
+        "peril_chase": 0.4,
+        "predator_creature": 0.14,
+        "death_loss": 0.14,
+        "separation_abandonment": 0.24,
+        "injury_pain": 0.3,
+        "captivity_confinement": 0.25,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.14,
+        "emotional_distress": 0.79,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.5,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 1.37,
+      "severityConfidence": 0.61,
+      "peakCue": "C1385",
+      "peakConfidence": 0.41,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2721,
+        "output_tokens": 365
+      },
+      "latencyMs": 159
+    },
+    {
+      "windowId": "W097",
+      "startMs": 4936432,
+      "endMs": 4985397,
+      "cueIds": [
+        "C1389",
+        "C1399"
+      ],
+      "categories": {
+        "peril_chase": 0.09,
+        "predator_creature": 0.05,
+        "death_loss": 0.86,
+        "separation_abandonment": 0.66,
+        "injury_pain": 0.08,
+        "captivity_confinement": 0.12,
+        "darkness_unknown": 0.07,
+        "shouting_aggression": 0.17,
+        "emotional_distress": 0.82,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.1,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 2.25,
+      "severityConfidence": 0.57,
+      "peakCue": "C1396",
+      "peakConfidence": 0.96,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2808,
+        "output_tokens": 398
+      },
+      "latencyMs": 129
+    },
+    {
+      "windowId": "W098",
+      "startMs": 4988359,
+      "endMs": 5031610,
+      "cueIds": [
+        "C1400",
+        "C1413"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.04,
+        "death_loss": 0.42,
+        "separation_abandonment": 0.86,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.03,
+        "emotional_distress": 0.64,
+        "imitable_risk": 0.05,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 1.78,
+      "severityConfidence": 0.65,
+      "peakCue": "C1413",
+      "peakConfidence": 0.73,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2929,
+        "output_tokens": 431
+      },
+      "latencyMs": 270
+    },
+    {
+      "windowId": "W099",
+      "startMs": 5043497,
+      "endMs": 5077405,
+      "cueIds": [
+        "C1414",
+        "C1426"
+      ],
+      "categories": {
+        "peril_chase": 0.92,
+        "predator_creature": 0.82,
+        "death_loss": 0.08,
+        "separation_abandonment": 0.81,
+        "injury_pain": 0.13,
+        "captivity_confinement": 0.83,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.79,
+        "emotional_distress": 0.83,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.08,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 2.12,
+      "severityConfidence": 0.51,
+      "peakCue": "C1420",
+      "peakConfidence": 0.49,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2893,
+        "output_tokens": 420
+      },
+      "latencyMs": 213
+    },
+    {
+      "windowId": "W100",
+      "startMs": 5081911,
+      "endMs": 5112440,
+      "cueIds": [
+        "C1427",
+        "C1436"
+      ],
+      "categories": {
+        "peril_chase": 0.13,
+        "predator_creature": 0.11,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.35,
+        "injury_pain": 0.24,
+        "captivity_confinement": 0.31,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.1,
+        "emotional_distress": 0.21,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.12,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.73,
+      "severityConfidence": 0.61,
+      "peakCue": "C1427",
+      "peakConfidence": 0.25,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2793,
+        "output_tokens": 387
+      },
+      "latencyMs": 190
+    },
+    {
+      "windowId": "W101",
+      "startMs": 5121742,
+      "endMs": 5171166,
+      "cueIds": [
+        "C1437",
+        "C1458"
+      ],
+      "categories": {
+        "peril_chase": 0.17,
+        "predator_creature": 0.3,
+        "death_loss": 0.92,
+        "separation_abandonment": 0.42,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.22,
+        "darkness_unknown": 0.04,
+        "shouting_aggression": 0.44,
+        "emotional_distress": 0.29,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.05,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.15,
+      "severityConfidence": 0.64,
+      "peakCue": "C1449",
+      "peakConfidence": 0.9,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3250,
+        "output_tokens": 519
+      },
+      "latencyMs": 247
+    },
+    {
+      "windowId": "W102",
+      "startMs": 5173711,
+      "endMs": 5214125,
+      "cueIds": [
+        "C1459",
+        "C1473"
+      ],
+      "categories": {
+        "peril_chase": 0.48,
+        "predator_creature": 0.2,
+        "death_loss": 0.04,
+        "separation_abandonment": 0.4,
+        "injury_pain": 0.11,
+        "captivity_confinement": 0.39,
+        "darkness_unknown": 0.1,
+        "shouting_aggression": 0.23,
+        "emotional_distress": 0.73,
+        "imitable_risk": 0.11,
+        "loud_sudden_sound": 0.95,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.31,
+      "severityConfidence": 0.66,
+      "peakCue": "C1464",
+      "peakConfidence": 0.55,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2994,
+        "output_tokens": 442
+      },
+      "latencyMs": 268
+    },
+    {
+      "windowId": "W103",
+      "startMs": 5217004,
+      "endMs": 5276479,
+      "cueIds": [
+        "C1474",
+        "C1487"
+      ],
+      "categories": {
+        "peril_chase": 0.93,
+        "predator_creature": 0.47,
+        "death_loss": 0.09,
+        "separation_abandonment": 0.44,
+        "injury_pain": 0.21,
+        "captivity_confinement": 0.86,
+        "darkness_unknown": 0.11,
+        "shouting_aggression": 0.19,
+        "emotional_distress": 0.94,
+        "imitable_risk": 0.86,
+        "loud_sudden_sound": 0.96,
+        "flashing_light_inferred": 0.05
+      },
+      "severity": 2.06,
+      "severityConfidence": 0.77,
+      "peakCue": "C1475",
+      "peakConfidence": 0.7,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2980,
+        "output_tokens": 431
+      },
+      "latencyMs": 146
+    },
+    {
+      "windowId": "W104",
+      "startMs": 5276897,
+      "endMs": 5319898,
+      "cueIds": [
+        "C1488",
+        "C1496"
+      ],
+      "categories": {
+        "peril_chase": 0.56,
+        "predator_creature": 0.12,
+        "death_loss": 0.07,
+        "separation_abandonment": 0.26,
+        "injury_pain": 0.07,
+        "captivity_confinement": 0.28,
+        "darkness_unknown": 0.08,
+        "shouting_aggression": 0.12,
+        "emotional_distress": 0.26,
+        "imitable_risk": 0.12,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.41,
+      "severityConfidence": 0.45,
+      "peakCue": "none",
+      "peakConfidence": 0.43,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2788,
+        "output_tokens": 372
+      },
+      "latencyMs": 175
+    },
+    {
+      "windowId": "W105",
+      "startMs": 5324236,
+      "endMs": 5357310,
+      "cueIds": [
+        "C1497",
+        "C1506"
+      ],
+      "categories": {
+        "peril_chase": 0.3,
+        "predator_creature": 0.07,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.09,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.13,
+        "darkness_unknown": 0.09,
+        "shouting_aggression": 0.03,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.51,
+      "severityConfidence": 0.49,
+      "peakCue": "none",
+      "peakConfidence": 0.79,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2790,
+        "output_tokens": 383
+      },
+      "latencyMs": 223
+    },
+    {
+      "windowId": "W106",
+      "startMs": 5364485,
+      "endMs": 5408987,
+      "cueIds": [
+        "C1507",
+        "C1518"
+      ],
+      "categories": {
+        "peril_chase": 0.17,
+        "predator_creature": 0.06,
+        "death_loss": 0.12,
+        "separation_abandonment": 0.2,
+        "injury_pain": 0.16,
+        "captivity_confinement": 0.35,
+        "darkness_unknown": 0.12,
+        "shouting_aggression": 0.04,
+        "emotional_distress": 0.64,
+        "imitable_risk": 0.1,
+        "loud_sudden_sound": 0.12,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 1.32,
+      "severityConfidence": 0.66,
+      "peakCue": "C1511",
+      "peakConfidence": 0.82,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2845,
+        "output_tokens": 409
+      },
+      "latencyMs": 232
+    },
+    {
+      "windowId": "W107",
+      "startMs": 5418539,
+      "endMs": 5450028,
+      "cueIds": [
+        "C1519",
+        "C1529"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.04,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.06,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.18,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.06,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.05,
+      "severityConfidence": 0.95,
+      "peakCue": "none",
+      "peakConfidence": 0.92,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2839,
+        "output_tokens": 394
+      },
+      "latencyMs": 154
+    },
+    {
+      "windowId": "W108",
+      "startMs": 5452364,
+      "endMs": 5511047,
+      "cueIds": [
+        "C1530",
+        "C1550"
+      ],
+      "categories": {
+        "peril_chase": 0.05,
+        "predator_creature": 0.08,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.05,
+        "injury_pain": 0.05,
+        "captivity_confinement": 0.12,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.09,
+        "emotional_distress": 0.06,
+        "imitable_risk": 0.09,
+        "loud_sudden_sound": 0.06,
+        "flashing_light_inferred": 0.03
+      },
+      "severity": 0.49,
+      "severityConfidence": 0.51,
+      "peakCue": "C1540",
+      "peakConfidence": 0.45,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 3253,
+        "output_tokens": 508
+      },
+      "latencyMs": 210
+    },
+    {
+      "windowId": "W109",
+      "startMs": 5512091,
+      "endMs": 5546290,
+      "cueIds": [
+        "C1551",
+        "C1561"
+      ],
+      "categories": {
+        "peril_chase": 0.04,
+        "predator_creature": 0.05,
+        "death_loss": 0.03,
+        "separation_abandonment": 0.04,
+        "injury_pain": 0.04,
+        "captivity_confinement": 0.05,
+        "darkness_unknown": 0.02,
+        "shouting_aggression": 0.02,
+        "emotional_distress": 0.05,
+        "imitable_risk": 0.07,
+        "loud_sudden_sound": 0.03,
+        "flashing_light_inferred": 0.02
+      },
+      "severity": 0.23,
+      "severityConfidence": 0.77,
+      "peakCue": "none",
+      "peakConfidence": 0.61,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2845,
+        "output_tokens": 394
+      },
+      "latencyMs": 179
+    },
+    {
+      "windowId": "W110",
+      "startMs": 5564226,
+      "endMs": 5613350,
+      "cueIds": [
+        "C1562",
+        "C1575"
+      ],
+      "categories": {
+        "peril_chase": 0.28,
+        "predator_creature": 0.07,
+        "death_loss": 0.05,
+        "separation_abandonment": 0.19,
+        "injury_pain": 0.06,
+        "captivity_confinement": 0.42,
+        "darkness_unknown": 0.03,
+        "shouting_aggression": 0.11,
+        "emotional_distress": 0.13,
+        "imitable_risk": 0.08,
+        "loud_sudden_sound": 0.58,
+        "flashing_light_inferred": 0.04
+      },
+      "severity": 0.94,
+      "severityConfidence": 0.71,
+      "peakCue": "C1566",
+      "peakConfidence": 0.82,
+      "model": "jev-1.13.0",
+      "usage": {
+        "input_tokens": 2955,
+        "output_tokens": 431
+      },
+      "latencyMs": 134
+    }
+  ]
+}

@@ -1,0 +1,903 @@
+[
+  {
+    "id": "G01",
+    "title": "Opening: monster creeps up on a boy in his dark bedroom (simulation)",
+    "start_cue": "C0010",
+    "end_cue": "C0017",
+    "start": "00:02:07",
+    "end": "00:02:51",
+    "attributes": [
+      "monster_threatens",
+      "unseen_threat",
+      "jump_scare",
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0010",
+      "C0011",
+      "C0015",
+      "C0016",
+      "C0017"
+    ],
+    "text_visibility": "medium",
+    "note": "Closet door creaks open in a dark bedroom, the boy gasps and scans the shadows, a tentacled monster rises with a snarl and the boy screams. It is revealed at C0025 to be a training simulation with an animatronic child, but a first-time viewer does not know that while it plays. Text is sound captions only. Ends before the slapstick (monster screams back and slips, C0018-C0024)."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL: Mike and Sulley walk to work",
+    "start_cue": "C0154",
+    "end_cue": "C0207",
+    "start": "00:07:28",
+    "end": "00:08:52",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Friendly banter about the car, greetings to neighbours, Tony the grocer. Insults are friendly teasing; 'Ow! Hey!' (C0190) is a trivial sight gag."
+  },
+  {
+    "id": "G02",
+    "title": "Randall materialises and startles Mike",
+    "start_cue": "C0281",
+    "end_cue": "C0292",
+    "start": "00:10:56",
+    "end": "00:11:14",
+    "attributes": [
+      "jump_scare",
+      "bullying"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0284",
+      "C0288"
+    ],
+    "text_visibility": "medium",
+    "note": "Randall un-camouflages in Mike's face; Mike screams, Randall sneers 'It scares little kids and little monsters.' Brief rival intimidation. No threat of harm, so monster_threatens not applied."
+  },
+  {
+    "id": "G03",
+    "title": "Randall threatens to put Fungus through the shredder",
+    "start_cue": "C0426",
+    "end_cue": "C0428",
+    "start": "00:17:18",
+    "end": "00:17:25",
+    "attributes": [
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0427",
+      "C0428"
+    ],
+    "text_visibility": "high",
+    "note": "Direct threat to an underling who screams. Three seconds, comic-villain tone."
+  },
+  {
+    "id": "G04",
+    "title": "'2319' alarm: CDA swarm, tackle and shave George",
+    "start_cue": "C0441",
+    "end_cue": "C0479",
+    "start": "00:17:42",
+    "end": "00:19:04",
+    "attributes": [
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0441",
+      "C0443",
+      "C0449",
+      "C0476",
+      "C0479"
+    ],
+    "text_visibility": "medium",
+    "note": "Red-alert klaxons, hazmat agents tackle George, detonate the sock, then shave him and rip off the cone while he screams. Played for laughs but loud and sudden; no attribute fits the slapstick shaving (not judged copyable). Least sure this belongs on the list."
+  },
+  {
+    "id": "G05",
+    "title": "Boo loose in the restaurant: crowd panic and CDA raid",
+    "start_cue": "C0716",
+    "end_cue": "C0742",
+    "start": "00:27:36",
+    "end": "00:28:32",
+    "attributes": [
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0716",
+      "C0719",
+      "C0728",
+      "C0741"
+    ],
+    "text_visibility": "high",
+    "note": "Diners scream in terror at a harmless toddler, helicopters and agents descend, Celia is hauled away, the restaurant is 'decontaminated' with an explosion. Comic premise, but it is a sustained screaming crowd with sirens."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL (hard): Mike calls sleepy Boo a 'killing machine' and brainstorms plans",
+    "start_cue": "C0833",
+    "end_cue": "C0868",
+    "start": "00:31:18",
+    "end": "00:32:32",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard: 'killing machine', 'easy prey', 'sitting targets', 'wham!' are all Mike's comic, imagined danger while Boo hums and draws. Nobody is in danger or distress."
+  },
+  {
+    "id": "G06",
+    "title": "Boo is afraid of the closet; shows a drawing of Randall",
+    "start_cue": "C0876",
+    "end_cue": "C0891",
+    "start": "00:32:45",
+    "end": "00:33:20",
+    "attributes": [
+      "unseen_threat"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0876",
+      "C0878",
+      "C0883",
+      "C0884"
+    ],
+    "text_visibility": "high",
+    "note": "Boo yelps at the closet door and speaks fearfully; Sulley works out that Randall is 'her monster' and shows her the closet is empty. The fear is of an imagined/absent monster (unseen_threat read generously); quickly reassured. Relevant to 5-7s because it is the closet-monster fear itself."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL: hide-and-seek in the men's room, Mike sweet-talks Roz",
+    "start_cue": "C1009",
+    "end_cue": "C1042",
+    "start": "00:37:35",
+    "end": "00:38:46",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Sulley plays peekaboo with Boo ('Gotcha!' / 'Boo' are play); Mike flatters Roz and is refused. Ends before the shutter slams on Mike's fingers (C1043)."
+  },
+  {
+    "id": "G07",
+    "title": "Hiding in the toilet stall while Randall hunts for the child",
+    "start_cue": "C1054",
+    "end_cue": "C1082",
+    "start": "00:39:07",
+    "end": "00:40:21",
+    "attributes": [
+      "monster_threatens",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1054",
+      "C1063",
+      "C1064",
+      "C1077"
+    ],
+    "text_visibility": "medium",
+    "note": "Boo whines in fear at Randall's voice; the three hide in a stall while Randall slams stall doors open one by one and vows 'when I find whoever let it out, they're dead!'. He does not know they are there, so monster_threatens is a judgement call (dangerous monster searching feet away from the frightened child). The threat in C1077 is aimed at an unknown person who is in fact present."
+  },
+  {
+    "id": "G08",
+    "title": "Randall corners Mike: 'Where's the kid?'",
+    "start_cue": "C1199",
+    "end_cue": "C1222",
+    "start": "00:43:46",
+    "end": "00:44:43",
+    "attributes": [
+      "jump_scare",
+      "monster_threatens"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1199",
+      "C1200",
+      "C1202",
+      "C1221",
+      "C1222"
+    ],
+    "text_visibility": "medium",
+    "note": "Randall appears out of nowhere (Mike: 'Yikes!'), pins Mike against the wall and menaces him into a deal. Intimidation rather than a spoken threat of harm, so threatens_harm not applied."
+  },
+  {
+    "id": "G09",
+    "title": "Sulley thinks Boo is crushed in the trash compactor",
+    "start_cue": "C1244",
+    "end_cue": "C1256",
+    "start": "00:45:28",
+    "end": "00:46:33",
+    "attributes": [
+      "believed_dead",
+      "unconscious"
+    ],
+    "visual_only": [
+      "unconscious"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1244",
+      "C1245",
+      "C1253",
+      "C1254",
+      "C1256"
+    ],
+    "text_visibility": "low",
+    "note": "Sulley watches the bin he believes holds Boo get pounded, ground and chopped into a cube, gasping in horror, then faints. The audience has seen Boo walk away, so it plays as dark comedy; a young child may still find the machinery and Sulley's horror upsetting. Almost wordless. The follow-up gag of Sulley mourning the garbage cube (C1270-C1280) is left out as pure comedy."
+  },
+  {
+    "id": "G10",
+    "title": "Invisible Randall lies in wait and snatches Mike into a box",
+    "start_cue": "C1340",
+    "end_cue": "C1346",
+    "start": "00:48:45",
+    "end": "00:49:22",
+    "attributes": [
+      "unseen_threat",
+      "captured"
+    ],
+    "visual_only": [
+      "unseen_threat",
+      "captured"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1330",
+      "C1343",
+      "C1346"
+    ],
+    "text_visibility": "low",
+    "note": "Sulley warns 'He's after Boo'; Mike bounces on the bed to prove it is safe while Boo whimpers, and a camouflaged Randall bags him in a box. Wordless: bounded by Mike's last line and the 'small cry of surprise'."
+  },
+  {
+    "id": "G11",
+    "title": "Mike strapped in the chair; Randall interrogates him",
+    "start_cue": "C1375",
+    "end_cue": "C1398",
+    "start": "00:51:35",
+    "end": "00:52:19",
+    "attributes": [
+      "captured",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1377",
+      "C1379",
+      "C1381",
+      "C1383",
+      "C1392"
+    ],
+    "text_visibility": "high",
+    "note": "Mike is tied into the extractor chair and Randall demands the child's whereabouts with an evil chuckle. Mike's wisecracks keep it light until the machine starts."
+  },
+  {
+    "id": "G12",
+    "title": "The scream extractor closes in on Mike",
+    "start_cue": "C1399",
+    "end_cue": "C1427",
+    "start": "00:52:20",
+    "end": "00:53:09",
+    "attributes": [
+      "in_hazard",
+      "captured",
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1405",
+      "C1407",
+      "C1410",
+      "C1418",
+      "C1424",
+      "C1426"
+    ],
+    "text_visibility": "high",
+    "note": "A large suction machine advances on Mike's face while he is strapped down; he goes from bargaining to screaming 'Help!'. It fails only because Sulley pulls the plug."
+  },
+  {
+    "id": "G13",
+    "title": "Fungus caught in the scream extractor",
+    "start_cue": "C1449",
+    "end_cue": "C1462",
+    "start": "00:53:59",
+    "end": "00:54:20",
+    "attributes": [
+      "in_hazard",
+      "terrified"
+    ],
+    "visual_only": [
+      "in_hazard"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1450",
+      "C1453",
+      "C1456",
+      "C1460"
+    ],
+    "text_visibility": "low",
+    "note": "Sulley swaps Fungus into the chair; the machine sucks at his face (muffled screams) and he is left limp and puckered, then Randall snarls at him. Brief, mostly comic."
+  },
+  {
+    "id": "G14",
+    "title": "Sulley's roar in the simulator terrifies Boo",
+    "start_cue": "C1504",
+    "end_cue": "C1512",
+    "start": "00:55:26",
+    "end": "00:55:39",
+    "attributes": [
+      "scary_looking",
+      "terrified",
+      "jump_scare",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1506",
+      "C1507",
+      "C1509",
+      "C1511"
+    ],
+    "text_visibility": "medium",
+    "note": "Ordered to demonstrate, Sulley roars ferociously at the dummy; Boo sees it, shrieks in terror and cries. Extreme close-ups of fangs and claws. The emotional core of the film for small children: the trusted 'Kitty' becomes the monster. monster_threatens NOT applied (Sulley is friendly and is not threatening her); transformation also not applied because he does not literally change, though both are arguable."
+  },
+  {
+    "id": "G15",
+    "title": "Boo cowers from Sulley and sobs; he sees himself on the monitors",
+    "start_cue": "C1515",
+    "end_cue": "C1543",
+    "start": "00:55:42",
+    "end": "00:56:37",
+    "attributes": [
+      "scary_looking",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1518",
+      "C1524",
+      "C1535",
+      "C1536",
+      "C1540",
+      "C1542"
+    ],
+    "text_visibility": "medium",
+    "note": "Boo flees and hides from Sulley, whimpering and sobbing as he pleads 'don't be scared'; he sees freeze-frames of his own snarling face. Sustained child distress and rejection of the caregiver."
+  },
+  {
+    "id": "G16",
+    "title": "Waternoose's betrayal: Boo seized, Mike and Sulley banished",
+    "start_cue": "C1566",
+    "end_cue": "C1585",
+    "start": "00:57:29",
+    "end": "00:58:07",
+    "attributes": [
+      "betrayal",
+      "child_taken",
+      "abandoned"
+    ],
+    "visual_only": [
+      "child_taken"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1569",
+      "C1571",
+      "C1577",
+      "C1579",
+      "C1584"
+    ],
+    "text_visibility": "medium",
+    "note": "Waternoose calls a door ('It's yours'), Randall grabs Boo, and Sulley and Mike are shoved through into exile as Sulley screams 'Boo!'. child_taken is visual (Randall takes Boo from her protector). betrayal is a slight stretch of the wording: the trusted mentor turns on Sulley (an adult) and on the child he was just cradling. abandoned = cast out by the boss they depended on."
+  },
+  {
+    "id": "G17",
+    "title": "A huge shape looms out of the blizzard (the Yeti)",
+    "start_cue": "C1594",
+    "end_cue": "C1595",
+    "start": "00:58:29",
+    "end": "00:58:33",
+    "attributes": [
+      "scary_looking",
+      "jump_scare"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C1595"
+    ],
+    "text_visibility": "low",
+    "note": "A growl and a towering silhouette; Mike and Sulley gasp in horror. Immediately defused: he is friendly and offers snow cones."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL (hard): the Abominable Snowman chats about banishment",
+    "start_cue": "C1598",
+    "end_cue": "C1652",
+    "start": "00:58:40",
+    "end": "01:00:15",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "A scary-named, big monster who is entirely friendly; talk of banishment, Bigfoot, yak's milk. Mike grumbles that Sulley 'ruined my life' but nobody is threatened or in distress. Tests that a friendly monster and retold hardship are not flagged."
+  },
+  {
+    "id": "G18",
+    "title": "Mike and Sulley fall out: 'you're on your own'",
+    "start_cue": "C1682",
+    "end_cue": "C1706",
+    "start": "01:01:16",
+    "end": "01:02:15",
+    "attributes": [
+      "abandoned"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1685",
+      "C1688",
+      "C1691",
+      "C1704",
+      "C1706"
+    ],
+    "text_visibility": "high",
+    "note": "Mike, hurt, asks 'Don't I matter?' and refuses to help; Sulley goes into the blizzard alone. Best friends breaking up. 'abandoned' read as Sulley being left to go on alone by the friend he depends on; mild sadness rather than fear."
+  },
+  {
+    "id": "G19",
+    "title": "Sulley's sled crashes in the blizzard",
+    "start_cue": "C1709",
+    "end_cue": "C1714",
+    "start": "01:02:59",
+    "end": "01:03:25",
+    "attributes": [
+      "fire_disaster",
+      "vehicle_crash"
+    ],
+    "visual_only": [
+      "fire_disaster",
+      "vehicle_crash"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1712",
+      "C1713",
+      "C1714"
+    ],
+    "text_visibility": "low",
+    "note": "Sulley sleds down the mountain in a snowstorm by lantern light, hits a rock, is thrown and tumbles, and lies face-down in the snow hearing a distant scream. Wordless apart from yells. serious_injury not applied (he gets up unhurt)."
+  },
+  {
+    "id": "G20",
+    "title": "Boo strapped into the scream extractor; Sulley bursts in",
+    "start_cue": "C1747",
+    "end_cue": "C1754",
+    "start": "01:04:35",
+    "end": "01:04:51",
+    "attributes": [
+      "captured",
+      "in_hazard",
+      "terrified"
+    ],
+    "visual_only": [
+      "captured",
+      "in_hazard"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1747",
+      "C1749",
+      "C1750",
+      "C1752",
+      "C1753"
+    ],
+    "text_visibility": "low",
+    "note": "The extractor descends on a restrained, shrieking toddler calling 'Kitty!' until Sulley roars in and rips the machine away. A child in a frightening machine; text shows only whirring, shrieking and roaring."
+  },
+  {
+    "id": "G21",
+    "title": "Invisible Randall beats Sulley: 'Finish him off!'",
+    "start_cue": "C1760",
+    "end_cue": "C1779",
+    "start": "01:05:00",
+    "end": "01:05:33",
+    "attributes": [
+      "physical_violence",
+      "unseen_threat",
+      "monster_threatens",
+      "threatens_harm"
+    ],
+    "visual_only": [
+      "unseen_threat"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1764",
+      "C1766",
+      "C1770",
+      "C1774",
+      "C1777"
+    ],
+    "text_visibility": "medium",
+    "note": "Camouflaged Randall punches and whips Sulley, who cannot see his attacker, while Waternoose orders 'Finish him off!'. Boo shrieks."
+  },
+  {
+    "id": "G22",
+    "title": "Sulley is strangled while Mike obliviously apologises",
+    "start_cue": "C1780",
+    "end_cue": "C1806",
+    "start": "01:05:33",
+    "end": "01:06:15",
+    "attributes": [
+      "physical_violence",
+      "drowning"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1787",
+      "C1795",
+      "C1802",
+      "C1805"
+    ],
+    "text_visibility": "medium",
+    "note": "Randall coils round Sulley's neck and chokes him (gagging, 'I'm being attacked!') while Mike delivers a heartfelt speech, until Mike's snowball reveals and hits Randall. Comic overlay on a real strangling. drowning applied on its 'unable to breathe' clause."
+  },
+  {
+    "id": "G23",
+    "title": "'There can't be any witnesses': Randall chases them through the factory",
+    "start_cue": "C1810",
+    "end_cue": "C1850",
+    "start": "01:06:19",
+    "end": "01:07:24",
+    "attributes": [
+      "chased",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1811",
+      "C1812",
+      "C1827",
+      "C1839",
+      "C1849"
+    ],
+    "text_visibility": "high",
+    "note": "Waternoose orders no witnesses; Randall pursues Sulley, Mike and Boo across the scare floor. Celia tackling Mike mid-chase is comic. C1827 ('he's trying to kill us') is a statement of the present chase."
+  },
+  {
+    "id": "G24",
+    "title": "Clinging to a door on the rails into the door vault",
+    "start_cue": "C1852",
+    "end_cue": "C1880",
+    "start": "01:07:29",
+    "end": "01:08:45",
+    "attributes": [
+      "fall_from_height",
+      "terrified",
+      "chased"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1854",
+      "C1863",
+      "C1864",
+      "C1868",
+      "C1872",
+      "C1876"
+    ],
+    "text_visibility": "medium",
+    "note": "They hang from a moving door over a vast drop ('Hold on!', 'Don't look down!'), Mike screaming throughout, with Randall riding behind. Roller-coaster tone; Boo enjoys it."
+  },
+  {
+    "id": "G25",
+    "title": "Door-to-door chase in the vault: 'Give me that kid!'",
+    "start_cue": "C1884",
+    "end_cue": "C1926",
+    "start": "01:08:53",
+    "end": "01:10:22",
+    "attributes": [
+      "chased",
+      "fall_from_height",
+      "monster_threatens"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1884",
+      "C1895",
+      "C1896",
+      "C1904",
+      "C1913",
+      "C1922"
+    ],
+    "text_visibility": "medium",
+    "note": "Dead end, Randall closing in and lunging for Boo, leaps between doors hanging high in the vault, in and out of the human world. Ends with Mike slamming a door on Randall. Brief beach interlude (C1897-C1900) is calm."
+  },
+  {
+    "id": "G26",
+    "title": "Randall snatches Boo and drops their door",
+    "start_cue": "C1928",
+    "end_cue": "C1940",
+    "start": "01:10:27",
+    "end": "01:10:53",
+    "attributes": [
+      "child_taken",
+      "monster_threatens",
+      "fall_from_height",
+      "sobbing_despair"
+    ],
+    "visual_only": [
+      "fall_from_height"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1929",
+      "C1931",
+      "C1933",
+      "C1935",
+      "C1937",
+      "C1939"
+    ],
+    "text_visibility": "medium",
+    "note": "Randall grabs Boo ('Ha, ha!'), unhooks the door Sulley and Mike are inside so it plummets to smash ('Get it open!'), and carries off the crying child."
+  },
+  {
+    "id": "G27",
+    "title": "Randall kicks Sulley out over the abyss and stamps on his fingers",
+    "start_cue": "C1953",
+    "end_cue": "C1964",
+    "start": "01:11:35",
+    "end": "01:12:03",
+    "attributes": [
+      "fall_from_height",
+      "physical_violence",
+      "threatens_harm",
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "fall_from_height",
+      "physical_violence"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1955",
+      "C1957",
+      "C1958",
+      "C1961",
+      "C1963",
+      "C1964"
+    ],
+    "text_visibility": "medium",
+    "note": "Sulley dangles from a door sill high in the vault while Randall gloats 'Now your time is up!', stamps on his hands and promises to 'take good care of the kid'. Clear attempt to kill; Boo watches."
+  },
+  {
+    "id": "G28",
+    "title": "Boo attacks Randall; Sulley grabs him by the throat",
+    "start_cue": "C1965",
+    "end_cue": "C1973",
+    "start": "01:12:03",
+    "end": "01:12:32",
+    "attributes": [
+      "physical_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1966",
+      "C1967",
+      "C1969",
+      "C1970"
+    ],
+    "text_visibility": "medium",
+    "note": "Boo yanks Randall's fronds and beats him with a bat, he flashes colours and roars, Sulley seizes him. Triumphant, but it is a child hitting and a character being choked. funny_violence considered and not applied (not really played as a gag)."
+  },
+  {
+    "id": "G29",
+    "title": "Randall begs, is thrown through a door and beaten with a shovel",
+    "start_cue": "C1978",
+    "end_cue": "C1986",
+    "start": "01:12:37",
+    "end": "01:12:51",
+    "attributes": [
+      "sobbing_despair",
+      "physical_violence",
+      "blade_weapon",
+      "funny_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1978",
+      "C1979",
+      "C1984",
+      "C1985",
+      "C1986"
+    ],
+    "text_visibility": "high",
+    "note": "Randall pleads 'Wait, please, don't!' and is hurled into a trailer where a mother batters the 'gator' with a shovel while her son cheers. Played for laughs, mostly in silhouette. blade_weapon applied literally (a non-gun object used as a weapon) and is the least certain tag."
+  },
+  {
+    "id": "G30",
+    "title": "Waternoose chases Sulley and Boo: 'Give me the child!'",
+    "start_cue": "C2053",
+    "end_cue": "C2069",
+    "start": "01:14:55",
+    "end": "01:15:29",
+    "attributes": [
+      "chased",
+      "monster_threatens"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C2054",
+      "C2055",
+      "C2056",
+      "C2060",
+      "C2061",
+      "C2068"
+    ],
+    "text_visibility": "high",
+    "note": "The crab-legged Waternoose scuttles after them down corridors, Boo cries 'Me not go!', he growls and pounds on the door Sulley has barred."
+  },
+  {
+    "id": "G31",
+    "title": "Waternoose: 'I'll kidnap a thousand children' and lunges for the child",
+    "start_cue": "C2073",
+    "end_cue": "C2087",
+    "start": "01:15:36",
+    "end": "01:15:59",
+    "attributes": [
+      "threatens_harm",
+      "monster_threatens"
+    ],
+    "visual_only": [
+      "monster_threatens"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C2076",
+      "C2077",
+      "C2083",
+      "C2085",
+      "C2086",
+      "C2087"
+    ],
+    "text_visibility": "high",
+    "note": "In what looks like Boo's bedroom he says she has 'seen too much', vows to silence anyone in his way, and lunges at the bed (Sulley: 'No!'). It turns out to be the simulator (C2088 onward), which is where the range ends."
+  },
+  {
+    "id": "G32",
+    "title": "Goodbye to Boo; she finds the closet empty and her door is shredded",
+    "start_cue": "C2165",
+    "end_cue": "C2176",
+    "start": "01:19:03",
+    "end": "01:20:13",
+    "attributes": [
+      "abandoned"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C2165",
+      "C2169",
+      "C2171",
+      "C2174",
+      "C2175"
+    ],
+    "text_visibility": "medium",
+    "note": "Sulley tucks Boo in and says goodbye for ever ('Kitty has to go'); Boo opens the closet calling 'Kitty?' to an empty wardrobe, and the door is fed into the shredder. No one cries on screen but it is the film's big sad moment. 'abandoned' read as a child left behind for good by her protector (not an ordinary goodbye); child_lost considered and not applied because she is safe at home. The set-up ('Bring me a door shredder... I can't see her again?') is at C2133-C2135."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL (hard): joking about Waternoose's arrest, then Mike's stand-up act in a child's bedroom",
+    "start_cue": "C2187",
+    "end_cue": "C2232",
+    "start": "01:20:55",
+    "end": "01:22:34",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard: Mike retells and jokes about the earlier danger ('angry mob that'll come after us'), then a closet door creaks open in a dark bedroom and a boy gasps, mirroring the opening, but Mike does a comedy routine and the boy laughs. Sulley is quietly wistful, nothing more."
+  }
+]

@@ -1,0 +1,1751 @@
+{
+  "movie": {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "imdb_id": "tt0198781",
+    "track": "data/monsters-inc.srt"
+  },
+  "release": {
+    "subtitle_track": "track stored in the app database"
+  },
+  "analysis_run": {
+    "started_at": "2026-09-21T01:03:48.640Z",
+    "detector": "jev-1.13.0",
+    "detector_run": "2026-09-21T01-01-38-jev-v3-universal-monsters-inc.json",
+    "labeller": "claude-sonnet-5",
+    "taxonomy": "taxonomy-v2",
+    "candidates": 32,
+    "context": "flagged stretch only",
+    "rejected_candidates": [
+      "K03 00:05:01",
+      "K04 00:08:28",
+      "K09 00:20:58",
+      "K12 00:25:56",
+      "K17 00:37:41",
+      "K21 00:43:01",
+      "K28 01:00:26",
+      "K32 01:22:55"
+    ],
+    "scenes_the_screener_missed": [],
+    "cost_usd": {
+      "detector": 0.041763498,
+      "labeller": 0.20206039999999997
+    },
+    "wall_s": 32.625
+  },
+  "scenes": [
+    {
+      "title": "Training simulation scare",
+      "start_ms": 132807,
+      "end_ms": 184484,
+      "start": "00:02:12",
+      "end": "00:03:04",
+      "start_cue": "C0011",
+      "end_cue": "C0022",
+      "description": "A monster trainee sneaks into a child's bedroom in the dark and something growls and screams, startling everyone, but it turns out to be a training exercise.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "pitch_dark",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.06,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.19,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "scream",
+        "dark",
+        "bedroom",
+        "training"
+      ],
+      "text_visibility": "low",
+      "candidate": "K01",
+      "id": "S01"
+    },
+    {
+      "title": "Training video: child danger warning",
+      "start_ms": 245490,
+      "end_ms": 262503,
+      "start": "00:04:05",
+      "end": "00:04:22",
+      "start_cue": "C0053",
+      "end_cue": "C0060",
+      "description": "A training video warns monsters that human children are toxic and shows a recording of a child screaming, while a reluctant monster refuses to go into a kid's room.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.17,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "training video",
+        "scream",
+        "child",
+        "monster",
+        "warning"
+      ],
+      "text_visibility": "high",
+      "candidate": "K02",
+      "id": "S02"
+    },
+    {
+      "title": "Randall's Prank Scare",
+      "start_ms": 656985,
+      "end_ms": 673258,
+      "start": "00:10:56",
+      "end": "00:11:13",
+      "start_cue": "C0281",
+      "end_cue": "C0291",
+      "description": "A monster co-worker startles another with a sudden scary prank, causing a scream and gasp before it's revealed to be a joke.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.97,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "prank",
+        "scare",
+        "monster",
+        "gasp"
+      ],
+      "text_visibility": "high",
+      "candidate": "K05",
+      "id": "S03"
+    },
+    {
+      "title": "Scream Extraction Floor",
+      "start_ms": 891829,
+      "end_ms": 970669,
+      "start": "00:14:51",
+      "end": "00:16:10",
+      "start_cue": "C0352",
+      "end_cue": "C0391",
+      "description": "Monsters go door-to-door scaring children to collect their screams as fuel, while children are heard screaming and sobbing repeatedly; one monster panics after a child almost touched him.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.32,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.83,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "scream",
+        "monsters",
+        "children",
+        "factory",
+        "doors"
+      ],
+      "text_visibility": "low",
+      "candidate": "K06",
+      "id": "S04"
+    },
+    {
+      "title": "Scare Floor Scream",
+      "start_ms": 994469,
+      "end_ms": 1001243,
+      "start": "00:16:34",
+      "end": "00:16:41",
+      "start_cue": "C0402",
+      "end_cue": "C0405",
+      "description": "A monster scares a child through a closet door, causing the child to scream, which is treated as a normal work event by the monster staff.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.29,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "scream",
+        "closet door",
+        "scare floor"
+      ],
+      "text_visibility": "low",
+      "candidate": "K07",
+      "id": "S05"
+    },
+    {
+      "title": "2319 Contamination Emergency",
+      "start_ms": 1061806,
+      "end_ms": 1148327,
+      "start": "00:17:41",
+      "end": "00:19:08",
+      "start_cue": "C0440",
+      "end_cue": "C0481",
+      "description": "A monster gets a human sock stuck on him, triggering a loud alarm and a frantic decontamination emergency where agents rush in with drills and equipment while a character screams and whimpers.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.82,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "alarm",
+        "decontamination",
+        "sock",
+        "emergency",
+        "agents"
+      ],
+      "text_visibility": "low",
+      "candidate": "K08",
+      "id": "S06"
+    },
+    {
+      "title": "Sulley discovers the human child",
+      "start_ms": 1393451,
+      "end_ms": 1450710,
+      "start": "00:23:13",
+      "end": "00:24:10",
+      "start_cue": "C0598",
+      "end_cue": "C0621",
+      "description": "A monster discovers a human toddler who screams in surprise, then the two chase each other around the room in a chaotic, giggly game.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.17,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.25,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "baby",
+        "chase",
+        "giggling",
+        "scream"
+      ],
+      "text_visibility": "low",
+      "candidate": "K10",
+      "id": "S07"
+    },
+    {
+      "title": "Sulley scared by toddler",
+      "start_ms": 1485514,
+      "end_ms": 1502257,
+      "start": "00:24:45",
+      "end": "00:25:02",
+      "start_cue": "C0631",
+      "end_cue": "C0639",
+      "description": "A giant furry monster is startled and screams when a toddler mistakes him for a cat, then he panics as she reaches for him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.8,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "baby",
+        "scream",
+        "toddler"
+      ],
+      "text_visibility": "low",
+      "candidate": "K11",
+      "id": "S08"
+    },
+    {
+      "title": "Human child discovered at party",
+      "start_ms": 1652381,
+      "end_ms": 1706600,
+      "start": "00:27:32",
+      "end": "00:28:26",
+      "start_cue": "C0713",
+      "end_cue": "C0739",
+      "description": "Monsters scream and panic when they discover a human child (Boo) is in their world, chaos erupts and CDA agents storm the scene.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.88,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "party",
+        "child",
+        "screaming",
+        "panic",
+        "agents"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S09"
+    },
+    {
+      "title": "Boo causes chaos in apartment",
+      "start_ms": 1743208,
+      "end_ms": 1890219,
+      "start": "00:29:03",
+      "end": "00:31:30",
+      "start_cue": "C0755",
+      "end_cue": "C0840",
+      "description": "Sulley and Mike try to calm the toddler Boo, who cries loudly and causes electrical mishaps while they worry about being caught, calling her a 'killing machine' in exaggerated fear.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "funny_violence",
+          "group": "copyable",
+          "label": "Copyable risk",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "toddler",
+        "crying",
+        "electricity",
+        "hiding",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K13",
+      "id": "S10"
+    },
+    {
+      "title": "Boo scared of closet",
+      "start_ms": 1965473,
+      "end_ms": 1991561,
+      "start": "00:32:45",
+      "end": "00:33:11",
+      "start_cue": "C0876",
+      "end_cue": "C0888",
+      "description": "A toddler becomes frightened, believing a monster will come through the closet, and Sulley checks to reassure her it's empty.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.49,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.27,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "closet",
+        "monster",
+        "child fear",
+        "reassurance"
+      ],
+      "text_visibility": "high",
+      "candidate": "K14",
+      "id": "S11"
+    },
+    {
+      "title": "Sneaking through investigation scene",
+      "start_ms": 2104585,
+      "end_ms": 2138910,
+      "start": "00:35:04",
+      "end": "00:35:38",
+      "start_cue": "C0930",
+      "end_cue": "C0953",
+      "description": "Sulley and Mike anxiously sneak past investigators looking into the door incident, trying to stay calm while panicking inside, until a little girl unexpectedly appears and says \"Boo.\"",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.89,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "panic",
+        "investigation",
+        "hiding",
+        "surprise girl"
+      ],
+      "text_visibility": "high",
+      "candidate": "K15",
+      "id": "S12"
+    },
+    {
+      "title": "CDA chase and capture",
+      "start_ms": 2177060,
+      "end_ms": 2183260,
+      "start": "00:36:17",
+      "end": "00:36:23",
+      "start_cue": "C0976",
+      "end_cue": "C0980",
+      "description": "Security agents shout and chase someone, then hold him down, played mostly for comic tension rather than real threat.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.69,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.31,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "capture",
+        "security",
+        "shouting"
+      ],
+      "text_visibility": "low",
+      "candidate": "K16",
+      "id": "S13"
+    },
+    {
+      "title": "Office door slam and searching for Boo",
+      "start_ms": 2324880,
+      "end_ms": 2342690,
+      "start": "00:38:44",
+      "end": "00:39:02",
+      "start_cue": "C1042",
+      "end_cue": "C1050",
+      "description": "A door closes on a character causing a yelp of pain, then someone plays a mock hide-and-seek game while searching worriedly for a missing child character.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "serious_injury",
+          "group": "injury",
+          "label": "Injury & medical",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "door",
+        "pain",
+        "hide and seek",
+        "searching",
+        "missing child"
+      ],
+      "text_visibility": "high",
+      "candidate": "K18",
+      "id": "S14"
+    },
+    {
+      "title": "They're Dead Threat",
+      "start_ms": 2404029,
+      "end_ms": 2413199,
+      "start": "00:40:04",
+      "end": "00:40:13",
+      "start_cue": "C1073",
+      "end_cue": "C1077",
+      "description": "An angry monster boss says he will act like nothing happened and declares that whoever let the child out is 'dead'.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.91,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "threat",
+        "boss",
+        "monster",
+        "angry"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S15"
+    },
+    {
+      "title": "Hiding and Sneaking Plan",
+      "start_ms": 2413238,
+      "end_ms": 2456809,
+      "start": "00:40:13",
+      "end": "00:40:56",
+      "start_cue": "C1078",
+      "end_cue": "C1104",
+      "description": "Sulley and Mike hide from the angry bosses, then nervously try to sneak past coworkers to secretly return the little girl to her room; the mood is tense but played somewhat comically.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [],
+      "keywords": [
+        "hiding",
+        "sneaking",
+        "card key",
+        "plan"
+      ],
+      "text_visibility": "high",
+      "candidate": "K19",
+      "id": "S16"
+    },
+    {
+      "title": "Boo goes missing",
+      "start_ms": 2532963,
+      "end_ms": 2543504,
+      "start": "00:42:12",
+      "end": "00:42:23",
+      "start_cue": "C1149",
+      "end_cue": "C1156",
+      "description": "Sulley and Mike realize the little girl Boo has wandered off and could be lost or in danger, causing tension between the two friends.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.07,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "missing child",
+        "boo",
+        "argument",
+        "worried"
+      ],
+      "text_visibility": "high",
+      "candidate": "K20",
+      "id": "S17"
+    },
+    {
+      "title": "Mike discovers Boo missing, garbage chase",
+      "start_ms": 2728533,
+      "end_ms": 2835639,
+      "start": "00:45:28",
+      "end": "00:47:15",
+      "start_cue": "C1244",
+      "end_cue": "C1279",
+      "description": "Mike gasps in horror upon realizing the human child Boo is loose in the factory, leading to a frantic chase through machinery as a contamination alarm (",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.58,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.7,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "alarm",
+        "machinery",
+        "panic",
+        "missing child"
+      ],
+      "text_visibility": "low",
+      "candidate": "K22",
+      "id": "S18"
+    },
+    {
+      "title": "Chase to Boo's Door",
+      "start_ms": 2877556,
+      "end_ms": 2906418,
+      "start": "00:47:57",
+      "end": "00:48:26",
+      "start_cue": "C1304",
+      "end_cue": "C1324",
+      "description": "Sulley and Mike rush with Boo through chaotic scenes with crying monsters, then desperately search for her door, briefly threatening to send her back home.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.18,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monsters",
+        "chase",
+        "door",
+        "crying",
+        "running"
+      ],
+      "text_visibility": "high",
+      "candidate": "K23",
+      "id": "S19"
+    },
+    {
+      "title": "Boo's fearful whimpers",
+      "start_ms": 2936650,
+      "end_ms": 2962367,
+      "start": "00:48:56",
+      "end": "00:49:22",
+      "start_cue": "C1343",
+      "end_cue": "C1346",
+      "description": "A small child character whimpers and cries out in fear while being hushed, hinting at a scary or tense moment though little is shown.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "whimper",
+        "child",
+        "hiding",
+        "scared"
+      ],
+      "text_visibility": "low",
+      "candidate": "K24",
+      "id": "S20"
+    },
+    {
+      "title": "Randall Kidnaps Mike",
+      "start_ms": 3095582,
+      "end_ms": 3106388,
+      "start": "00:51:35",
+      "end": "00:51:46",
+      "start_cue": "C1375",
+      "end_cue": "C1382",
+      "description": "A scary monster grabs Mike and threatens him while accusing him of kidnapping, and Mike tries to talk his way out with jokes.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.3,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.65,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "monster",
+        "threat",
+        "kidnap",
+        "yelp"
+      ],
+      "text_visibility": "high",
+      "candidate": "K25",
+      "id": "S21"
+    },
+    {
+      "title": "Mike threatened by scream extractor",
+      "start_ms": 3128749,
+      "end_ms": 3207954,
+      "start": "00:52:08",
+      "end": "00:53:27",
+      "start_cue": "C1391",
+      "end_cue": "C1436",
+      "description": "Randall threatens Mike, then a menacing machine advances toward Mike as he panics and screams for help.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.2,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.95,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "machine",
+        "threat",
+        "kidnapping",
+        "scream extractor",
+        "monster"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S22"
+    },
+    {
+      "title": "Mike captured by machine",
+      "start_ms": 3218108,
+      "end_ms": 3262248,
+      "start": "00:53:38",
+      "end": "00:54:22",
+      "start_cue": "C1437",
+      "end_cue": "C1463",
+      "description": "Mike is caught and processed by a frightening machine offscreen while others react in alarm to muffled screams and animal-like sounds.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.38,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.54,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "capture",
+        "machine",
+        "screams",
+        "monster"
+      ],
+      "text_visibility": "low",
+      "candidate": "K26",
+      "id": "S23"
+    },
+    {
+      "title": "Escape plan under threat",
+      "start_ms": 3262288,
+      "end_ms": 3288245,
+      "start": "00:54:22",
+      "end": "00:54:48",
+      "start_cue": "C1464",
+      "end_cue": "C1477",
+      "description": "Characters panic about being killed and scramble to escape, revealed at the end to be part of a training simulation.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.85,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "escape",
+        "danger",
+        "simulation",
+        "panic"
+      ],
+      "text_visibility": "high",
+      "candidate": "K26",
+      "id": "S24"
+    },
+    {
+      "title": "Forced scare demonstration on Boo",
+      "start_ms": 3313608,
+      "end_ms": 3339291,
+      "start": "00:55:13",
+      "end": "00:55:39",
+      "start_cue": "C1494",
+      "end_cue": "C1512",
+      "description": "Sulley is forced to roar ferociously at Boo to demonstrate scaring technique, and Boo screams in terror and cries.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.57,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.92,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.45,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "roar",
+        "monster",
+        "scared child",
+        "classroom demo"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S25"
+    },
+    {
+      "title": "Searching for terrified Boo",
+      "start_ms": 3342137,
+      "end_ms": 3397690,
+      "start": "00:55:42",
+      "end": "00:56:37",
+      "start_cue": "C1515",
+      "end_cue": "C1543",
+      "description": "Sulley searches for Boo, who is hiding and whimpering in fear after being scared, and eventually finds her still crying.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "hiding",
+        "crying child",
+        "searching",
+        "comfort"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S26"
+    },
+    {
+      "title": "Plan to eliminate Boo revealed",
+      "start_ms": 3397728,
+      "end_ms": 3448971,
+      "start": "00:56:37",
+      "end": "00:57:28",
+      "start_cue": "C1544",
+      "end_cue": "C1565",
+      "description": "Waternoose reveals he intends to harm the little girl to protect the company, and Sulley and Mike realize the danger she is in.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "betrayal",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.79,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "family_in_danger",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.16,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "villain reveal",
+        "threat to child",
+        "betrayal",
+        "company secret"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S27"
+    },
+    {
+      "title": "Attack and banishment to icy world",
+      "start_ms": 3449015,
+      "end_ms": 3532430,
+      "start": "00:57:29",
+      "end": "00:58:52",
+      "start_cue": "C1566",
+      "end_cue": "C1603",
+      "description": "Waternoose attacks Sulley and Mike, separating them from Boo and banishing them into a snowy, unfamiliar world where they are confronted by an intimidating yeti-like creature.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.94,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "scary_looking",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.71,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.48,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "banishment",
+        "snow monster",
+        "separation",
+        "yeti",
+        "fight"
+      ],
+      "text_visibility": "high",
+      "candidate": "K27",
+      "id": "S28"
+    },
+    {
+      "title": "Mike abandons Sulley in the snow",
+      "start_ms": 3676318,
+      "end_ms": 3735168,
+      "start": "01:01:16",
+      "end": "01:02:15",
+      "start_cue": "C1682",
+      "end_cue": "C1706",
+      "description": "Mike angrily tells Sulley he's on his own and leaves him stranded outside in the freezing snow.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "sobbing_despair",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "snow",
+        "argument",
+        "abandonment",
+        "friendship"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S29"
+    },
+    {
+      "title": "Sullivan attacked by the scream extractor machine",
+      "start_ms": 3758337,
+      "end_ms": 3934648,
+      "start": "01:02:38",
+      "end": "01:05:34",
+      "start_cue": "C1707",
+      "end_cue": "C1780",
+      "description": "Sulley fights against a frightening mechanical device that Waternoose orders used against a captured child (Boo), with shouting, growling, and a violent struggle.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.64,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.78,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.75,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.42,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.87,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.22,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "machine",
+        "scream extractor",
+        "fight",
+        "kidnapped child",
+        "monster"
+      ],
+      "text_visibility": "low",
+      "candidate": "K29",
+      "id": "S30"
+    },
+    {
+      "title": "Chase through doors to escape Randall",
+      "start_ms": 3973294,
+      "end_ms": 4384553,
+      "start": "01:06:13",
+      "end": "01:13:04",
+      "start_cue": "C1806",
+      "end_cue": "C1990",
+      "description": "Sulley, Mike and Boo are chased across the flying door conveyor system by the monstrous Randall, who threatens to kill them, ending in a wild fall/collision sequence and Randall's defeat.",
+      "severity": {
+        "5-7": 3,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "chased",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.9,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.59,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "fall_from_height",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.76,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.59,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.96,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "in_hazard",
+          "group": "peril",
+          "label": "Peril",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.52,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "physical_violence",
+          "group": "violence",
+          "label": "Violence",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.72,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "chase",
+        "doors",
+        "randall",
+        "monster",
+        "falling",
+        "danger"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S31"
+    },
+    {
+      "title": "Confronted by CDA and Waternoose's kidnapping plot revealed",
+      "start_ms": 4429435,
+      "end_ms": 4665605,
+      "start": "01:13:49",
+      "end": "01:17:45",
+      "start_cue": "C2021",
+      "end_cue": "C2136",
+      "description": "Police-like agents surround the group demanding the child be handed over, Waternoose menacingly declares he will kidnap children and silence anyone in his way, then he is arrested; afterward Boo must be sent home for good, upsetting Sulley.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 2
+      },
+      "attributes": [
+        {
+          "id": "threatens_harm",
+          "group": "hostility",
+          "label": "Hostility & cruelty",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.66,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "child_taken",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.61,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "captured",
+          "group": "captivity",
+          "label": "Captivity",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.77,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "terrified",
+          "group": "distress",
+          "label": "Character distress",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.62,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "grieving",
+          "group": "death",
+          "label": "Death & loss",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.08,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "abandoned",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.59,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "kidnapping",
+        "arrest",
+        "villain",
+        "goodbye",
+        "separation"
+      ],
+      "text_visibility": "high",
+      "candidate": "K29",
+      "id": "S32"
+    },
+    {
+      "title": "Boo taken to memory machine",
+      "start_ms": 4798719,
+      "end_ms": 4808760,
+      "start": "01:19:58",
+      "end": "01:20:08",
+      "start_cue": "C2172",
+      "end_cue": "C2175",
+      "description": "Boo calls out for Sulley (Kitty) while a loud machine buzzes near her, suggesting she is being separated and put in danger by strangers.",
+      "severity": {
+        "5-7": 2,
+        "8-10": 1
+      },
+      "attributes": [
+        {
+          "id": "child_lost",
+          "group": "separation",
+          "label": "Separation & family",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.56,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "unseen_threat",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.63,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "boo",
+        "machine",
+        "separation",
+        "buzzing"
+      ],
+      "text_visibility": "low",
+      "candidate": "K30",
+      "id": "S33"
+    },
+    {
+      "title": "Boy gasps at door",
+      "start_ms": 4887712,
+      "end_ms": 4901252,
+      "start": "01:21:27",
+      "end": "01:21:41",
+      "start_cue": "C2201",
+      "end_cue": "C2202",
+      "description": "A door creaks open at night and a boy gasps, startled by something appearing; a monster then tries to be friendly with him.",
+      "severity": {
+        "5-7": 1,
+        "8-10": 0
+      },
+      "attributes": [
+        {
+          "id": "jump_scare",
+          "group": "eerie",
+          "label": "Dark, eerie & startle",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.84,
+          "confirmed_by_human": false
+        },
+        {
+          "id": "monster_threatens",
+          "group": "creatures",
+          "label": "Scary creatures & imagery",
+          "source": "claude-sonnet-5",
+          "screener_probability": 0.05,
+          "confirmed_by_human": false
+        }
+      ],
+      "keywords": [
+        "door creak",
+        "monster",
+        "night",
+        "startle"
+      ],
+      "text_visibility": "low",
+      "candidate": "K31",
+      "id": "S34"
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "film": "lion-king",
+  "arm": "jev-finds+sonnet-labels",
+  "track": "lion-king",
+  "model": "claude-sonnet-5",
+  "from": "runs-films/2026-09-21T01-01-34-jev-v3-universal-lion-king.json",
+  "startedAt": "2026-09-21T01:04:27.771Z",
+  "wallMs": 22989,
+  "calls": 23,
+  "inputTokens": 104964,
+  "outputTokens": 4459,
+  "costUsd": 0.13682699999999998,
+  "events": [
+    {
+      "id": "S01",
+      "title": "Scar toys with Zazu",
+      "start_cue": "C0055",
+      "end_cue": "C0072",
+      "validCues": true,
+      "startMs": 295361,
+      "endMs": 343158,
+      "categories": [
+        "shouting_aggression",
+        "captivity_confinement",
+        "predator_creature"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S02",
+      "title": "Elephant Graveyard arrival",
+      "start_cue": "C0323",
+      "end_cue": "C0331",
+      "validCues": true,
+      "startMs": 1104733,
+      "endMs": 1134513,
+      "categories": [
+        "predator_creature",
+        "imitable_risk"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S03",
+      "title": "Hyena chase and threat",
+      "start_cue": "C0343",
+      "end_cue": "C0388",
+      "validCues": true,
+      "startMs": 1170935,
+      "endMs": 1340803,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "predator_creature",
+        "emotional_distress",
+        "captivity_confinement"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S04",
+      "title": "Scar's Plot to Kill the King",
+      "start_cue": "C0497",
+      "end_cue": "C0507",
+      "validCues": true,
+      "startMs": 1710776,
+      "endMs": 1735443,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S05",
+      "title": "Scar's Sinister Trap",
+      "start_cue": "C0535",
+      "end_cue": "C0558",
+      "validCues": true,
+      "startMs": 1825465,
+      "endMs": 1893510,
+      "categories": [
+        "shouting_aggression"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S06",
+      "title": "Stampede in the Gorge",
+      "start_cue": "C0566",
+      "end_cue": "C0577",
+      "validCues": true,
+      "startMs": 1996985,
+      "endMs": 2054874,
+      "categories": [
+        "peril_chase",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S07",
+      "title": "Mufasa's Death",
+      "start_cue": "C0578",
+      "end_cue": "C0593",
+      "validCues": true,
+      "startMs": 2090305,
+      "endMs": 2238978,
+      "categories": [
+        "peril_chase",
+        "death_loss",
+        "separation_abandonment",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S08",
+      "title": "Scar's Cruel Blame",
+      "start_cue": "C0594",
+      "end_cue": "C0606",
+      "validCues": true,
+      "startMs": 2269964,
+      "endMs": 2323263,
+      "categories": [
+        "death_loss",
+        "shouting_aggression",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S09",
+      "title": "Hyenas' Death Threat",
+      "start_cue": "C0607",
+      "end_cue": "C0615",
+      "validCues": true,
+      "startMs": 2376367,
+      "endMs": 2399923,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "emotional_distress",
+        "separation_abandonment"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S10",
+      "title": "Pumbaa Attacked by Nala",
+      "start_cue": "C0862",
+      "end_cue": "C0870",
+      "validCues": true,
+      "startMs": 3262812,
+      "endMs": 3294731,
+      "categories": [
+        "peril_chase",
+        "predator_creature",
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S11",
+      "title": "Simba Reveals He's Alive",
+      "start_cue": "C0900",
+      "end_cue": "C0904",
+      "validCues": true,
+      "startMs": 3369336,
+      "endMs": 3382723,
+      "categories": [
+        "death_loss"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S12",
+      "title": "Simba's guilt over Mufasa",
+      "start_cue": "C1028",
+      "end_cue": "C1036",
+      "validCues": true,
+      "startMs": 3743612,
+      "endMs": 3771399,
+      "categories": [
+        "death_loss",
+        "emotional_distress"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S13",
+      "title": "Mufasa's ghost vision fades",
+      "start_cue": "C1097",
+      "end_cue": "C1101",
+      "validCues": true,
+      "startMs": 4032960,
+      "endMs": 4042851,
+      "categories": [
+        "predator_creature",
+        "emotional_distress",
+        "death_loss"
+      ],
+      "severity": 2,
+      "evidence_cues": []
+    },
+    {
+      "id": "S14",
+      "title": "Scar's cruel confrontation with lionesses",
+      "start_cue": "C1180",
+      "end_cue": "C1193",
+      "validCues": true,
+      "startMs": 4367263,
+      "endMs": 4398992,
+      "categories": [
+        "shouting_aggression",
+        "separation_abandonment"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S15",
+      "title": "Simba's return shocks Scar",
+      "start_cue": "C1194",
+      "end_cue": "C1210",
+      "validCues": true,
+      "startMs": 4402322,
+      "endMs": 4452674,
+      "categories": [
+        "shouting_aggression"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S16",
+      "title": "Scar forces Simba's confession",
+      "start_cue": "C1219",
+      "end_cue": "C1257",
+      "validCues": true,
+      "startMs": 4473760,
+      "endMs": 4593928,
+      "categories": [
+        "death_loss",
+        "shouting_aggression",
+        "emotional_distress"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    },
+    {
+      "id": "S17",
+      "title": "Timon and Pumbaa's comic fight",
+      "start_cue": "C1258",
+      "end_cue": "C1270",
+      "validCues": true,
+      "startMs": 4605779,
+      "endMs": 4672501,
+      "categories": [
+        "imitable_risk",
+        "peril_chase"
+      ],
+      "severity": 1,
+      "evidence_cues": []
+    },
+    {
+      "id": "S18",
+      "title": "Simba confronts Scar amid fire",
+      "start_cue": "C1271",
+      "end_cue": "C1298",
+      "validCues": true,
+      "startMs": 4691935,
+      "endMs": 4827163,
+      "categories": [
+        "peril_chase",
+        "shouting_aggression",
+        "emotional_distress",
+        "death_loss",
+        "predator_creature"
+      ],
+      "severity": 3,
+      "evidence_cues": []
+    }
+  ]
+}

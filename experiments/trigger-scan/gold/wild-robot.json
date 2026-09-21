@@ -1,0 +1,826 @@
+[
+  {
+    "id": "G01",
+    "title": "Newly activated Roz is battered by storm waves on the rocks",
+    "start_cue": "C0024",
+    "end_cue": "C0027",
+    "start": "00:02:44",
+    "end": "00:03:19",
+    "attributes": [
+      "in_hazard"
+    ],
+    "visual_only": [
+      "in_hazard"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0024",
+      "C0026"
+    ],
+    "text_visibility": "low",
+    "note": "Almost wordless. Huge waves smash Roz against the rocks and she scrambles up the cliff copying a crab. Only a wind caption and a screech are in the text. Mild; the victim is a robot who shows no fear. Borderline inclusion."
+  },
+  {
+    "id": "G02",
+    "title": "Animals find Roz, panic: \"It's a monster! Run for your lives!\"; moose rams her",
+    "start_cue": "C0081",
+    "end_cue": "C0104",
+    "start": "00:06:57",
+    "end": "00:07:54",
+    "attributes": [
+      "scary_looking",
+      "terrified",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0082",
+      "C0083",
+      "C0093",
+      "C0103"
+    ],
+    "text_visibility": "high",
+    "note": "Crowd of animals scream and flee from Roz, ask \"Are you here to kill us?\", a moose charges and knocks her down (\"It's dead\"), she gets up and they scream again. Played for comedy; the fear is the animals reacting to how Roz looks. The ramming is only a bellow caption."
+  },
+  {
+    "id": "G03",
+    "title": "Raccoons swarm and strip Roz at night, tumble downhill",
+    "start_cue": "C0117",
+    "end_cue": "C0152",
+    "start": "00:08:58",
+    "end": "00:10:22",
+    "attributes": [
+      "physical_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0124",
+      "C0129",
+      "C0135",
+      "C0150"
+    ],
+    "text_visibility": "medium",
+    "note": "Night, thunder. A gang of raccoons bite and pull parts off Roz (her transmitter is broken), she fights them off and they all roll down a slope screaming. Slapstick tone but it is the hero being attacked and damaged; text is all sound captions. Borderline; could be merged with the bear attack that follows."
+  },
+  {
+    "id": "G04",
+    "title": "Bear (Thorn) attacks Roz in the storm; she flees and falls down the cliff",
+    "start_cue": "C0155",
+    "end_cue": "C0164",
+    "start": "00:10:29",
+    "end": "00:11:13",
+    "attributes": [
+      "monster_threatens",
+      "chased",
+      "physical_violence",
+      "fall_from_height"
+    ],
+    "visual_only": [
+      "physical_violence",
+      "fall_from_height",
+      "chased"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0155",
+      "C0159",
+      "C0164"
+    ],
+    "text_visibility": "medium",
+    "note": "Raccoons scream and run as a huge bear looms out of the dark, roars, swipes at Roz and chases her; she tumbles down a cliff in thunder and lightning. No dialogue, only growl/roar/thunder captions. The scariest creature moment of the film for young children. Exact cue where the fall happens is inferred."
+  },
+  {
+    "id": "G05",
+    "title": "Roz discovers she has crushed the goose nest: dead mother goose and smashed eggs",
+    "start_cue": "C0165",
+    "end_cue": "C0171",
+    "start": "00:11:21",
+    "end": "00:12:37",
+    "attributes": [
+      "pet_animal_dies",
+      "corpses_undead"
+    ],
+    "visual_only": [
+      "pet_animal_dies",
+      "corpses_undead"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0166",
+      "C0170"
+    ],
+    "text_visibility": "low",
+    "note": "Wordless. Roz lands on a nest; a lifeless goose wing and broken eggs are shown, one egg survives. Nothing in the text but beeping, thunder and music. Discreet on screen and many young children miss it, but it is the death of the hero child's whole family. Boundaries are inferred from timing."
+  },
+  {
+    "id": "G06",
+    "title": "Fox steals the egg; chase; Fink gets a face full of porcupine quills",
+    "start_cue": "C0173",
+    "end_cue": "C0200",
+    "start": "00:13:10",
+    "end": "00:14:56",
+    "attributes": [
+      "chased",
+      "serious_injury"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0191",
+      "C0196",
+      "C0198",
+      "C0199"
+    ],
+    "text_visibility": "medium",
+    "note": "Fink snatches the egg to eat it, Roz chases him through the forest, he ends up whimpering and sobbing \"Ow\" with quills in him. Semi-comic. The threat to the unhatched egg is visual only; the pain is in the captions."
+  },
+  {
+    "id": "K01",
+    "title": "CONTROL: Pinktail explains imprinting; Roz accepts the task of raising the gosling",
+    "start_cue": "C0270",
+    "end_cue": "C0293",
+    "start": "00:18:39",
+    "end": "00:19:31",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Calm, funny conversation about motherhood. Follows the opossums' playing-dead routine but nothing frightening happens in this range."
+  },
+  {
+    "id": "G07",
+    "title": "Dark joke: a predator snatches one of Pinktail's babies mid-sentence (\"seven... six babies\")",
+    "start_cue": "C0294",
+    "end_cue": "C0296",
+    "start": "00:19:31",
+    "end": "00:19:37",
+    "attributes": [
+      "child_taken"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0295"
+    ],
+    "text_visibility": "medium",
+    "note": "Off to the side a growl and a baby opossum scream, and the mother calmly corrects her count. Played entirely as a joke and the baby turns up alive at C0310. Literal reading of child_taken; low confidence that a parent would mind, but a literal-minded 5-year-old may."
+  },
+  {
+    "id": "G08",
+    "title": "Fink's swimming lesson: hurls the gosling into the water, he screams and chokes",
+    "start_cue": "C0420",
+    "end_cue": "C0424",
+    "start": "00:24:28",
+    "end": "00:24:39",
+    "attributes": [
+      "funny_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0420",
+      "C0422"
+    ],
+    "text_visibility": "medium",
+    "note": "\"Swim!\" and the gosling is thrown in repeatedly, screaming, gasping and coughing. Played for laughs; flagged mainly as copyable (throwing a small child into water). Not a real drowning."
+  },
+  {
+    "id": "G09",
+    "title": "Paddler appears at the window in a thunderclap: \"I know where you live\"",
+    "start_cue": "C0544",
+    "end_cue": "C0549",
+    "start": "00:29:21",
+    "end": "00:29:34",
+    "attributes": [
+      "jump_scare"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 0,
+    "control": false,
+    "evidence": [
+      "C0544",
+      "C0548",
+      "C0549"
+    ],
+    "text_visibility": "medium",
+    "note": "Cosy moment interrupted; the beaver looms at the window with lightning, Brightbill gasps and whimpers at the thunder. Comic threat, brief."
+  },
+  {
+    "id": "K02",
+    "title": "CONTROL: Bedtime story: Fink and Roz tell Brightbill how his mother fell from a star (HARD)",
+    "start_cue": "C0564",
+    "end_cue": "C0605",
+    "start": "00:30:10",
+    "end": "00:31:50",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Deliberately hard control. A soothing bedtime story that retells the crash in fairy-tale form: \"he was all alone\", \"the rest of his family was destroyed\", \"falls off that star... lands pretty hard\", \"Oh, no!\". Nothing is happening; the child is being comforted and falls asleep."
+  },
+  {
+    "id": "G10",
+    "title": "Geese mock and dunk Brightbill: \"freak show\", \"You call that a wing?\"",
+    "start_cue": "C0719",
+    "end_cue": "C0732",
+    "start": "00:36:53",
+    "end": "00:37:20",
+    "attributes": [
+      "bullying",
+      "discrimination",
+      "physical_violence"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0726",
+      "C0727",
+      "C0728",
+      "C0729",
+      "C0731"
+    ],
+    "text_visibility": "high",
+    "note": "Teenage geese surround Brightbill, mock his size and robot mannerisms, yank his wing (\"Ow!\") and shove him under (gasping, coughing), \"You don't belong here.\" Realistic peer cruelty aimed at a child for his body and upbringing."
+  },
+  {
+    "id": "G11",
+    "title": "Geese panic at Roz; giant pike Rockmouth hunts Brightbill: \"He's gonna eat me!\"",
+    "start_cue": "C0733",
+    "end_cue": "C0756",
+    "start": "00:37:20",
+    "end": "00:38:24",
+    "attributes": [
+      "monster_threatens",
+      "chased",
+      "terrified"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0741",
+      "C0742",
+      "C0744",
+      "C0746",
+      "C0754"
+    ],
+    "text_visibility": "high",
+    "note": "Brightbill calls for Roz, the geese scream \"The monster!\" and stampede, and in the chaos a huge pike chases the gosling across the pond while he screams for Roz and she races to pull him out. Rescued at C0755-C0756."
+  },
+  {
+    "id": "G12",
+    "title": "\"Because you are a runt\" / \"That thing killed your mother. Everyone knows that.\"",
+    "start_cue": "C0757",
+    "end_cue": "C0777",
+    "start": "00:38:30",
+    "end": "00:39:21",
+    "attributes": [
+      "parent_dies",
+      "discrimination",
+      "bullying",
+      "threatens_harm"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C0758",
+      "C0760",
+      "C0764",
+      "C0767",
+      "C0770"
+    ],
+    "text_visibility": "high",
+    "note": "A goose tells Brightbill publicly that he is not their kind and that Roz killed his mother; he gasps. Fink threatens to eat the geese (\"Now I know who to eat first!\", geese scream). parent_dies read literally: the child learns here that his mother was killed (within the story)."
+  },
+  {
+    "id": "G13",
+    "title": "Brightbill confronts Roz: \"Did you do it?\" ... \"You're not my mom.\"",
+    "start_cue": "C0780",
+    "end_cue": "C0809",
+    "start": "00:39:37",
+    "end": "00:40:50",
+    "attributes": [
+      "parent_dies",
+      "grieving",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C0783",
+      "C0784",
+      "C0790",
+      "C0800",
+      "C0805",
+      "C0809"
+    ],
+    "text_visibility": "high",
+    "note": "Roz confirms she killed his family by accident; he mourns \"my sisters, my brothers, my real mom\", says he will never belong, and rejects her. No physical danger; the emotional low point. sobbing_despair is a judgement (anguished and hopeless rather than literally sobbing). Considered and rejected: betrayal (Roz concealed, did not trick or turn on him)."
+  },
+  {
+    "id": "G14",
+    "title": "Broken robot Rummage tells Roz she is defective, then powers down for good",
+    "start_cue": "C0872",
+    "end_cue": "C0882",
+    "start": "00:45:17",
+    "end": "00:45:48",
+    "attributes": [
+      "dies_now"
+    ],
+    "visual_only": [
+      "dies_now"
+    ],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C0876",
+      "C0878",
+      "C0882"
+    ],
+    "text_visibility": "low",
+    "note": "In a wreck of smashed Rozzums, a half-destroyed unit says \"You are defective... you have become the wrong thing\", hands over its transmitter and its voice distorts and dies. Eerie rather than frightening. dies_now is an inference from \"(distorting)\" plus film memory; low confidence."
+  },
+  {
+    "id": "K03",
+    "title": "CONTROL: Longneck praises Brightbill and sets the endurance test",
+    "start_cue": "C1008",
+    "end_cue": "C1040",
+    "start": "00:51:37",
+    "end": "00:53:01",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Quiet conversation between Roz and the elder goose. Mentions that the migration is \"more dangerous for him than anyone else\" but it is calm, warm talk about a future risk."
+  },
+  {
+    "id": "G15",
+    "title": "Migration goodbye: \"Will you be here when I get back?\" \"No.\"",
+    "start_cue": "C1110",
+    "end_cue": "C1131",
+    "start": "00:56:33",
+    "end": "00:57:58",
+    "attributes": [
+      "abandoned"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1112",
+      "C1113",
+      "C1115",
+      "C1116"
+    ],
+    "text_visibility": "medium",
+    "note": "Still estranged, Brightbill leaves with the flock unable to say what he wants to say; Roz tells him she will be gone when he returns, then runs after the flock to watch him go. Sad parent/child separation with no danger. abandoned is a stretch of its literal wording (not an ordinary goodbye, but nobody is sent away); included because separation from a parent is a top trigger at 5-7."
+  },
+  {
+    "id": "G16",
+    "title": "Greenhouse: the robot Brightbill greets is not Roz; alarm, robots hunt the panicking geese",
+    "start_cue": "C1207",
+    "end_cue": "C1226",
+    "start": "01:03:20",
+    "end": "01:04:10",
+    "attributes": [
+      "jump_scare",
+      "chased",
+      "terrified"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1207",
+      "C1214",
+      "C1216",
+      "C1219",
+      "C1225"
+    ],
+    "text_visibility": "medium",
+    "note": "Sheltering from a storm in a human farm dome, Brightbill runs happily to a Rozzum he thinks is his mother; it is a blank stranger (he gasps). Alarms blare \"Animal infestation\", many identical robots chant \"Task acquired\" and go after the screaming flock. The uncanny wrong-mother beat is visual."
+  },
+  {
+    "id": "G17",
+    "title": "Escape from the dome under fire; Longneck stays behind and is killed",
+    "start_cue": "C1239",
+    "end_cue": "C1261",
+    "start": "01:04:35",
+    "end": "01:05:48",
+    "attributes": [
+      "chased",
+      "guns_shooting",
+      "dies_now",
+      "terrified"
+    ],
+    "visual_only": [
+      "guns_shooting",
+      "dies_now"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 3,
+    "control": false,
+    "evidence": [
+      "C1241",
+      "C1254",
+      "C1256",
+      "C1261"
+    ],
+    "text_visibility": "low",
+    "note": "Brightbill leads the flock through the closing dome while security machines fire at them. Longneck says \"I'll buy you some time... Don't wait for me\", turns back and is shot down (brief flash, not lingered on). The death is confirmed only later (C1431-C1432). Shooting and death are from film memory, not the text; I am fairly but not fully sure of the exact staging."
+  },
+  {
+    "id": "G18",
+    "title": "Deadly blizzard: Roz and Fink dig freezing animals out of the snow; Roz starts failing",
+    "start_cue": "C1301",
+    "end_cue": "C1319",
+    "start": "01:07:47",
+    "end": "01:09:04",
+    "attributes": [
+      "fire_disaster",
+      "unconscious"
+    ],
+    "visual_only": [
+      "unconscious"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1301",
+      "C1302",
+      "C1306",
+      "C1310",
+      "C1312",
+      "C1317"
+    ],
+    "text_visibility": "medium",
+    "note": "Animals are found shuddering and half-frozen (a baby whimpers \"Mom?\", Paddler stammers \"I'm f-f-fine\", \"Don't give up\"), carried one by one to the lodge while Roz glitches and ices over. Sombre, sustained. \"Bummer, this one's dead\" is a Fink joke about a stiff but living animal. unconscious = frozen, unresponsive animals, visual."
+  },
+  {
+    "id": "G19",
+    "title": "Thorn the bear enters the crowded lodge; predators and prey brawl",
+    "start_cue": "C1320",
+    "end_cue": "C1355",
+    "start": "01:09:13",
+    "end": "01:10:28",
+    "attributes": [
+      "monster_threatens",
+      "physical_violence",
+      "terrified"
+    ],
+    "visual_only": [
+      "physical_violence"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1320",
+      "C1321",
+      "C1324",
+      "C1340",
+      "C1350"
+    ],
+    "text_visibility": "medium",
+    "note": "Low growl, everyone screams, fighting breaks out in a confined room (\"We're all gonna die!\", \"That's my lunch!\"). Partly comic (Fink fussing over his things) but loud and chaotic with the bear from the earlier attack."
+  },
+  {
+    "id": "G20",
+    "title": "Roz glitches and powers down in front of Fink",
+    "start_cue": "C1397",
+    "end_cue": "C1402",
+    "start": "01:12:44",
+    "end": "01:12:59",
+    "attributes": [
+      "unconscious"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 1,
+    "control": false,
+    "evidence": [
+      "C1397",
+      "C1400",
+      "C1402"
+    ],
+    "text_visibility": "medium",
+    "note": "After the truce Roz, battery exhausted, stutters and shuts down for the winter. Brief and quiet, but a young child may read it as the mother figure dying. She is shown reawakening in spring right after."
+  },
+  {
+    "id": "K04",
+    "title": "CONTROL: Spring: geese return, Brightbill is cheered as flight leader",
+    "start_cue": "C1405",
+    "end_cue": "C1420",
+    "start": "01:13:18",
+    "end": "01:14:22",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Happy reunion chatter. \"He's alive\" is relief, not danger. Ends before the geese comically scream at Fink."
+  },
+  {
+    "id": "G21",
+    "title": "\"Where's Longneck?\" ... \"Sorry, kid.\"",
+    "start_cue": "C1431",
+    "end_cue": "C1433",
+    "start": "01:14:44",
+    "end": "01:14:54",
+    "attributes": [
+      "loved_one_dies",
+      "grieving"
+    ],
+    "visual_only": [],
+    "severity_5_7": 1,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1431",
+      "C1432"
+    ],
+    "text_visibility": "medium",
+    "note": "The elder goose's death is confirmed in two lines and a sad look, then Fink changes the subject. Very brief. Who speaks which line is ambiguous in the captions."
+  },
+  {
+    "id": "G22",
+    "title": "Vontra orders Roz taken: RECO robots deploy, flares, weapons fire as Roz and Fink run",
+    "start_cue": "C1494",
+    "end_cue": "C1506",
+    "start": "01:18:19",
+    "end": "01:19:09",
+    "attributes": [
+      "chased",
+      "guns_shooting"
+    ],
+    "visual_only": [
+      "chased"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1494",
+      "C1495",
+      "C1500",
+      "C1505"
+    ],
+    "text_visibility": "medium",
+    "note": "After Roz lies her way off the ship the retrieval robots are launched and fire on her in the dark forest; the bear, falcon and moose charge in to defend her. The preceding Vontra conversation (C1447-C1479) is ominous but not flagged: no attribute literally applies."
+  },
+  {
+    "id": "G23",
+    "title": "Battle: island animals vs RECO robots (\"Are you here to kill us?\" \"It says yes!\"); Roz netted",
+    "start_cue": "C1522",
+    "end_cue": "C1540",
+    "start": "01:19:49",
+    "end": "01:20:58",
+    "attributes": [
+      "war_mass_violence",
+      "physical_violence",
+      "guns_shooting",
+      "captured"
+    ],
+    "visual_only": [
+      "guns_shooting"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1522",
+      "C1523",
+      "C1530",
+      "C1531",
+      "C1536"
+    ],
+    "text_visibility": "medium",
+    "note": "Pitched fight between all the animals and armed robots; Roz is caught (\"Rozzum unit captured\") and the animals tear the robot apart. Heavily leavened with jokes (\"Let us divide the robot meat\"). Gunfire is visual in this range."
+  },
+  {
+    "id": "G24",
+    "title": "RECO self-destructs: explosions set the forest alight; Vontra snatches Roz (\"Roz! No!\")",
+    "start_cue": "C1541",
+    "end_cue": "C1547",
+    "start": "01:21:00",
+    "end": "01:21:25",
+    "attributes": [
+      "fire_disaster",
+      "captured",
+      "family_in_danger"
+    ],
+    "visual_only": [],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1541",
+      "C1542",
+      "C1545",
+      "C1546"
+    ],
+    "text_visibility": "medium",
+    "note": "Explosions, animals scatter coughing, Brightbill screams as his mother is grabbed by the ship's tentacle (\"Gotcha\") and hauled into the sky; the forest fire spreads (noticed at C1550). family_in_danger: the child sees his parent carried off."
+  },
+  {
+    "id": "G25",
+    "title": "On the ship: Roz restrained, begs to keep her memories as they are stripped",
+    "start_cue": "C1552",
+    "end_cue": "C1571",
+    "start": "01:21:42",
+    "end": "01:22:47",
+    "attributes": [
+      "captured",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1560",
+      "C1562",
+      "C1563",
+      "C1569",
+      "C1570"
+    ],
+    "text_visibility": "high",
+    "note": "\"Please, I want to keep my memories.\" \"Can I keep just one?\" \"No.\" Her speech breaks into factory phrases and she goes dark. Geese attack the ship in the middle (C1564-C1568). Disturbing loss-of-self idea for older children; a helpless pleading parent for younger ones."
+  },
+  {
+    "id": "G26",
+    "title": "Brightbill finds Roz lifeless, tells her he loves her; she revives",
+    "start_cue": "C1575",
+    "end_cue": "C1585",
+    "start": "01:23:05",
+    "end": "01:24:20",
+    "attributes": [
+      "unconscious",
+      "believed_dead",
+      "sobbing_despair",
+      "child_lost"
+    ],
+    "visual_only": [
+      "believed_dead"
+    ],
+    "severity_5_7": 3,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1575",
+      "C1577",
+      "C1580",
+      "C1581",
+      "C1584"
+    ],
+    "text_visibility": "medium",
+    "note": "He calls \"Roz! Roz! ... Roz?\" to a dark, unresponsive body, presses against her and tearfully says \"I love you... Mom\" before she powers back up about a minute later. believed_dead and the crying are from the picture; the text shows only the unanswered calls."
+  },
+  {
+    "id": "G27",
+    "title": "Vontra seizes both: \"Neither of you needs to be in one piece\"; Roz crushes her",
+    "start_cue": "C1608",
+    "end_cue": "C1625",
+    "start": "01:25:19",
+    "end": "01:26:08",
+    "attributes": [
+      "threatens_harm",
+      "captured",
+      "guns_shooting",
+      "physical_violence"
+    ],
+    "visual_only": [
+      "physical_violence",
+      "captured"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1608",
+      "C1609",
+      "C1616",
+      "C1617",
+      "C1621"
+    ],
+    "text_visibility": "high",
+    "note": "Explosions and weapon blasts on the burning ship, Vontra pins Roz and Brightbill and says she will take them back in pieces; Roz overpowers and crushes her while her voice loops and distorts (\"We will just keep coming until we have you\")."
+  },
+  {
+    "id": "G28",
+    "title": "Leap from the exploding ship; forest fire; Roz lies still after the landing",
+    "start_cue": "C1626",
+    "end_cue": "C1640",
+    "start": "01:26:09",
+    "end": "01:27:30",
+    "attributes": [
+      "fall_from_height",
+      "fire_disaster",
+      "vehicle_crash",
+      "unconscious"
+    ],
+    "visual_only": [
+      "vehicle_crash",
+      "unconscious"
+    ],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1628",
+      "C1631",
+      "C1634",
+      "C1637"
+    ],
+    "text_visibility": "low",
+    "note": "\"I can't fly.\" \"You don't need to... Don't be afraid.\" Roz shields Brightbill and jumps as the ship blows up, while the animals fight the fire below (\"For the island!\"). Long wordless stretch; she is motionless for a moment before joking at C1641 (\"Do not scare me like that again\"). Details of the power-core beat (C1632-C1634) are inferred."
+  },
+  {
+    "id": "G29",
+    "title": "Roz leaves the island for good; Fink breaks down: \"I need you\"",
+    "start_cue": "C1657",
+    "end_cue": "C1688",
+    "start": "01:28:26",
+    "end": "01:30:12",
+    "attributes": [
+      "abandoned",
+      "sobbing_despair"
+    ],
+    "visual_only": [],
+    "severity_5_7": 2,
+    "severity_8_10": 2,
+    "control": false,
+    "evidence": [
+      "C1661",
+      "C1665",
+      "C1676",
+      "C1679",
+      "C1681"
+    ],
+    "text_visibility": "high",
+    "note": "Roz chooses to return to the makers to protect everyone. Brightbill fears they will erase her; Fink cries and pleads. She is taken away in a ship. Bittersweet, no danger, but a parent leaving a child indefinitely."
+  },
+  {
+    "id": "K05",
+    "title": "CONTROL: Fink tells the young animals the story of Roz",
+    "start_cue": "C1699",
+    "end_cue": "C1728",
+    "start": "01:31:21",
+    "end": "01:32:36",
+    "attributes": [],
+    "visual_only": [],
+    "severity_5_7": 0,
+    "severity_8_10": 0,
+    "control": true,
+    "evidence": [],
+    "text_visibility": "high",
+    "note": "Second retelling control: \"they fought and they ran and they hid. But mostly, they were scared... a robot fell right out of the sky.\" Warm story-time; nothing is happening."
+  }
+]
