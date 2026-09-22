@@ -407,9 +407,11 @@ export function buildFilm(slug, ctx) {
     title: meta.title ?? movie.title ?? slug,
     year: meta.year ?? movie.year ?? null,
     imdb_id: meta.imdb_id ?? movie.imdb_id ?? null,
-    // Filled in by loadAll when TMDB_API_KEY is in the environment; null otherwise, and the UI
-    // draws its labelled placeholder. Never a guessed or constructed URL.
+    // Both filled in by loadAll when TMDB_API_KEY is in the environment; null otherwise, and the
+    // UI draws its labelled placeholder and shows no synopsis. Never a guessed or constructed URL,
+    // and never a synopsis written here: the words are TMDB's or there are none.
     poster_url: null,
+    overview: null,
   };
 
   const anchors = pickAnchors(cues).map((a) => ({ id: `${trackId}:${a.position}`, track_id: trackId, ...a }));
@@ -642,58 +644,77 @@ export function buildFilm(slug, ctx) {
 }
 
 // ------------------------------------------------------------------------------------------------
-// Posters
+// Posters and synopses
 // ------------------------------------------------------------------------------------------------
 
 // TMDB's find endpoint takes an IMDb id directly, so no title guessing is involved: either the id
-// resolves to exactly one film and we store its poster, or we store null.
+// resolves to exactly one film and we store what that one record says, or we store null.
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
-/** One poster lookup may hold the loader up for this long, headers and body together. */
+/** One TMDB lookup may hold the loader up for this long, headers and body together. */
 export const POSTER_TIMEOUT_MS = 6000;
 
+/** Nothing about a film is invented here. Both fields are null unless TMDB said them. */
+const NO_TMDB_META = { poster_url: null, overview: null };
+
 /**
+ * The two things we take from TMDB about a film, in one request: its poster and the synopsis a
+ * parent reads under the title.
+ *
  * @param {string|null} imdbId
  * @param {{ apiKey?: string|null, fetchImpl?: typeof fetch, timeoutMs?: number }} [opts]
- * @returns {Promise<string|null>} an absolute image URL, or null for every failure: no key, no
- *   imdb id, a non-OK response, a film with no poster, a malformed body, a thrown request, or a
- *   server that never finishes answering. A poster is decoration; it never fails a load, and it
- *   never hangs one either.
+ * @returns {Promise<{ poster_url: string|null, overview: string|null }>} both null for every way
+ *   the lookup can fail: no key, no imdb id, a non-OK response, a film with neither, a malformed
+ *   body, a thrown request, or a server that never finishes answering. Either field can also come
+ *   back null on its own when the record has one and not the other. This is decoration and
+ *   context; it never fails a load, and it never hangs one either.
  *
  * The deadline covers the response AND reading its body. `fetch` resolves as soon as the headers
  * arrive, so a signal passed only to the request still leaves `res.json()` free to wait forever on
  * a body that never ends — which is how a six-film load turns into a hang. The AbortController is
  * therefore not cleared until the body has been parsed.
  */
-export async function fetchPosterUrl(
+export async function fetchTmdbMeta(
   imdbId,
   { apiKey = null, fetchImpl = globalThis.fetch, timeoutMs = POSTER_TIMEOUT_MS } = {},
 ) {
-  if (!imdbId || !apiKey || typeof fetchImpl !== 'function') return null;
+  if (!imdbId || !apiKey || typeof fetchImpl !== 'function') return { ...NO_TMDB_META };
   const url = `https://api.themoviedb.org/3/find/${encodeURIComponent(imdbId)}`
     + `?external_source=imdb_id&api_key=${encodeURIComponent(apiKey)}`;
   const controller = new AbortController();
   const deadline = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetchImpl(url, { signal: controller.signal });
-    if (!res?.ok) return null;
+    if (!res?.ok) return { ...NO_TMDB_META };
     // Still inside the deadline: aborting the controller rejects this too.
     const body = await res.json();
     const hit = body?.movie_results?.[0];
     const p = hit?.poster_path;
-    return typeof p === 'string' && p.startsWith('/') ? `${TMDB_IMAGE_BASE}${p}` : null;
+    const o = typeof hit?.overview === 'string' ? hit.overview.trim() : '';
+    return {
+      poster_url: typeof p === 'string' && p.startsWith('/') ? `${TMDB_IMAGE_BASE}${p}` : null,
+      // TMDB returns '' for a film it has no synopsis for. An empty paragraph is not a synopsis.
+      overview: o.length ? o : null,
+    };
   } catch {
     // Includes the AbortError the deadline raises.
-    return null;
+    return { ...NO_TMDB_META };
   } finally {
     clearTimeout(deadline);
   }
 }
 
+/** The poster on its own, for callers (and tests) that only want that one field. */
+export async function fetchPosterUrl(imdbId, opts = {}) {
+  return (await fetchTmdbMeta(imdbId, opts)).poster_url;
+}
+
 // The api key is read from the environment and passed on; it is never logged, and the URL that
 // carries it is never printed.
 export async function attachPoster(film, opts = {}) {
-  film.poster_url = await fetchPosterUrl(film.imdb_id, opts);
+  const meta = await fetchTmdbMeta(film.imdb_id, opts);
+  film.poster_url = meta.poster_url;
+  film.overview = meta.overview;
   return film;
 }
 
@@ -782,17 +803,20 @@ export async function loadAll(db, {
   }
   const reports = [];
   let posters = 0;
+  let overviews = 0;
   for (const slug of slugs) {
     const built = buildFilm(slug, ctx);
     if (tmdbApiKey) {
       await attachPoster(built.film, { apiKey: tmdbApiKey, fetchImpl, timeoutMs });
       if (built.film.poster_url) posters += 1;
       else built.report.notes.push('no poster came back from TMDB for this film');
+      if (built.film.overview) overviews += 1;
+      else built.report.notes.push('no synopsis came back from TMDB for this film');
     }
     if (!dryRun) await writeFilm(db, built);
     reports.push(built.report);
   }
-  return { reports, vocabulary: items.length, posters, postersLookedUp: !!tmdbApiKey };
+  return { reports, vocabulary: items.length, posters, overviews, postersLookedUp: !!tmdbApiKey };
 }
 
 export function formatReport(reports) {
@@ -838,12 +862,12 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     }), 'load'));
   }
   const started = Date.now();
-  const { reports, vocabulary, posters, postersLookedUp } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
+  const { reports, vocabulary, posters, overviews, postersLookedUp } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
   console.log(formatReport(reports));
   console.log(`\nvocabulary items: ${vocabulary}`);
   console.log(postersLookedUp
-    ? `posters from TMDB: ${posters} of ${slugs.length}`
-    : 'posters: TMDB_API_KEY is not set, so every poster_url is null (the UI draws a placeholder)');
+    ? `posters from TMDB: ${posters} of ${slugs.length}\nsynopses from TMDB: ${overviews} of ${slugs.length}`
+    : 'posters and synopses: TMDB_API_KEY is not set, so poster_url and overview are null (the UI draws a placeholder and shows no synopsis)');
   console.log(dryRun ? '\nDRY RUN — nothing was written.' : `\nwritten to DATABASE_URL in ${((Date.now() - started) / 1000).toFixed(1)}s`);
   console.log(`schema: ${path.join(root, 'schema.sql')}`);
   if (db) await db.end();

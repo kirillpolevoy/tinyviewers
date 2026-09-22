@@ -54,7 +54,10 @@ export default async function FilmPage({ params, searchParams }: Props) {
               {film.title}
               {film.year && <span className={styles.year}>{film.year}</span>}
             </h1>
-            <p className={styles.source}>{FILM.sourceAndTiming}</p>
+            {/* The film's own synopsis, from TMDB, so a parent knows they are on the right film
+                before reading a word about its scenes. Null for a film TMDB has no words for, and
+                then the header is the title alone: an empty paragraph is not a synopsis. */}
+            {film.overview && <p className={styles.overview}>{film.overview}</p>}
           </div>
           <Poster
             url={film.posterUrl}
@@ -93,6 +96,21 @@ export default async function FilmPage({ params, searchParams }: Props) {
           </div>
         )}
 
+        {/* Above the list, not under it: a parent narrows the list and then reads it, so the
+            control comes before the thing it changes — and on a long film the panel is no longer
+            a scroll away from the scenes it filters. */}
+        {allScenes.length > 0 && (
+          <FilterPanel
+            slug={film.slug}
+            band={band}
+            presence={presence}
+            events={events}
+            selected={selected}
+            shown={scenes.length}
+            total={allScenes.length}
+          />
+        )}
+
         <h2 className={styles.listHeading}>{FILM.listHeading}</h2>
 
         {allScenes.length === 0 ? (
@@ -110,18 +128,6 @@ export default async function FilmPage({ params, searchParams }: Props) {
           </div>
         ) : (
           <SceneList scenes={scenes} band={band} />
-        )}
-
-        {allScenes.length > 0 && (
-          <FilterPanel
-            slug={film.slug}
-            band={band}
-            presence={presence}
-            events={events}
-            selected={selected}
-            shown={scenes.length}
-            total={allScenes.length}
-          />
         )}
 
         <div className={styles.foot}>

@@ -41,12 +41,14 @@
   color: var(--body);
 }
 
-.source {
+/* The film's synopsis. Body copy, not a footnote: it is the first thing a parent reads under the
+   title, so it takes the reading size the rest of the site gives prose. */
+.overview {
   font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--body);
-  max-width: 48em;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 44em;
 }
 
 /* This page's own wrapper for the poster: the Poster component owns its class, this owns the box

@@ -21,9 +21,11 @@ export async function createDevDb() {
   const started = Date.now();
   const adapter = dbLib.pgliteAdapter(new PGlite());
 
-  // Development is offline by default: no key is read, no request is made, and the UI draws its
-  // designed poster placeholder. TINY_VIEWERS_DEV_POSTERS=1 opts in to the real TMDB lookup for
-  // previewing posters locally. The key is passed straight through and never logged.
+  // Development is offline by default: no key is read, no request is made, the UI draws its
+  // designed poster placeholder and a film page shows no synopsis. TINY_VIEWERS_DEV_POSTERS=1 opts
+  // in to the real TMDB lookup, which fills poster_url and overview together from one request per
+  // film. The key is passed straight through and never logged. The `overview` column itself always
+  // exists here: the loader applies scene-api/schema.sql before it writes a row.
   const tmdbApiKey =
     process.env.TINY_VIEWERS_DEV_POSTERS === '1' ? (process.env.TMDB_API_KEY ?? null) : null;
   await load.loadAll(adapter, { tmdbApiKey });

@@ -1,12 +1,11 @@
-import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
-import { SearchForm } from '@/components/SearchForm';
-import { Poster } from '@/components/Poster';
-import { Strip, StripLegend } from '@/components/Strip';
-import { LIBRARY, SEARCH } from '@/lib/copy';
+import { LibraryShelf } from '@/components/LibraryShelf';
+import { StripLegend } from '@/components/Strip';
+import { LIBRARY } from '@/lib/copy';
 import { listFilms } from '@/lib/queries';
-import { DEFAULT_BAND } from '@/lib/scenes';
+import { soleMatch } from '@/lib/search';
 import styles from './library.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -16,8 +15,18 @@ export const metadata: Metadata = {
   description: LIBRARY.intro,
 };
 
-export default async function LibraryPage() {
-  const films = await listFilms();
+type Props = { searchParams: Promise<{ q?: string | string[] }> };
+
+export default async function LibraryPage({ searchParams }: Props) {
+  const [films, params] = await Promise.all([listFilms(), searchParams]);
+  const raw = Array.isArray(params.q) ? params.q[0] : params.q;
+  const query = (raw ?? '').trim();
+
+  // One answer is not a list: go straight to the scenes. This is what Home's form relies on —
+  // it submits here, and a parent who typed a whole title lands on their film, not on a shelf
+  // with one card on it. `soleMatch` is the same rule the shelf applies to its own Enter key.
+  const one = soleMatch(films, query);
+  if (one) redirect(`/film/${one.slug}`);
 
   return (
     <div className="page">
@@ -32,62 +41,18 @@ export default async function LibraryPage() {
           </div>
           <div className={styles.headAside}>
             <StripLegend />
-            <SearchForm
-              id="library-search"
-              label={SEARCH.fieldLabel}
-              placeholder={SEARCH.placeholder}
-              button={SEARCH.button}
-            />
           </div>
         </div>
 
         {films.length === 0 ? (
+          // The shelf has nothing on it at all, which is not the same as a query matching nothing:
+          // there is no field to correct and nowhere to send the parent.
           <div className={styles.empty}>
             <h2 className={styles.emptyHeadline}>{LIBRARY.emptyHeadline}</h2>
             <p className={styles.emptyBody}>{LIBRARY.emptyBody}</p>
-            <Link href="/search" className="button buttonQuiet">
-              {LIBRARY.emptyAction}
-            </Link>
           </div>
         ) : (
-          <ul className={styles.grid}>
-            {films.map((film) => {
-              const strongest = film.markers.filter((m) => m.severity57 === 3).length;
-              return (
-                <li key={film.slug}>
-                  <Link href={`/film/${film.slug}`} className={styles.card}>
-                    <Poster
-                      url={film.posterUrl}
-                      title={film.title}
-                      width={300}
-                      height={200}
-                      className={styles.cardPoster}
-                    />
-                    <span className={styles.cardTitleRow}>
-                      <span className={styles.cardTitle}>{film.title}</span>
-                      {film.year && <span className={styles.cardYear}>{film.year}</span>}
-                    </span>
-                    <span className={styles.cardFacts}>
-                      <b>{film.sceneCount} scenes flagged</b>
-                      {strongest > 0 && <> · {strongest} at very strong</>}
-                    </span>
-                    {/* Decorative: the counts above it already say this in words, and the card
-                        is one link whose name must stay short. */}
-                    <Strip
-                      markers={film.markers}
-                      durationMs={film.durationMs}
-                      band={DEFAULT_BAND}
-                      decorative
-                    />
-                    <span className={styles.cardFoot}>
-                      <span className={styles.cardMicro}>{LIBRARY.cardMicrocopy}</span>
-                      <span className={styles.cardAction}>{LIBRARY.cardAction} →</span>
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <LibraryShelf films={films} query={query} />
         )}
       </main>
     </div>

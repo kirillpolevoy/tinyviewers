@@ -8,9 +8,9 @@
 }
 
 .head {
-  display: grid;
-  gap: 20px;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .headText {
@@ -42,112 +42,14 @@
   max-width: 40em;
 }
 
+/* Only the strip legend lives here now. The head used to be two columns because the search field
+   sat beside the heading; the field has moved to the top of the list it filters, and a legend of
+   three swatches alone in a second column just drifts away from the sentence explaining it. */
 .headAside {
   display: flex;
   flex-direction: column;
   gap: 14px;
   min-width: 0;
-}
-
-@media (min-width: 1024px) {
-  .head {
-    grid-template-columns: minmax(0, 1fr) 420px;
-    gap: 32px;
-  }
-
-  .headAside {
-    align-items: flex-end;
-  }
-}
-
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 22px;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  background: var(--sheet);
-  border: 2px solid var(--hairline);
-  border-radius: var(--radius-sheet);
-  padding: 18px 20px 20px;
-  text-decoration: none;
-  color: var(--ink);
-}
-
-.card:hover {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-
-.cardPoster {
-  width: 100%;
-  height: 200px;
-  flex: none;
-  object-fit: cover;
-  /* A real poster is portrait and this slot is landscape, as the design drew it. Anchoring the
-     crop to the top keeps the title visible instead of cropping it away. */
-  object-position: top;
-}
-
-.cardTitleRow {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.cardTitle {
-  font-family: var(--display);
-  font-size: 22px;
-  line-height: 1.25;
-  font-weight: 700;
-}
-
-.cardYear {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--body);
-}
-
-.cardFacts {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--body);
-}
-
-.cardFacts b {
-  color: var(--ink);
-}
-
-.cardFoot {
-  margin-top: auto;
-  padding-top: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.cardMicro {
-  font-family: var(--serif);
-  font-size: 13px;
-  color: var(--body);
-}
-
-.cardAction {
-  font-family: var(--display);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--coral-text);
 }
 
 .empty {

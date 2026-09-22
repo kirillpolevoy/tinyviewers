@@ -85,9 +85,11 @@ export function LevelsDisclosure() {
 }
 
 /**
- * The quiet filters, after the list. Built only from labels that occur in this film, each with the
- * number of scenes it occurs in. A GET form: checkboxes, an Apply button, and the selection lives in
- * the URL, so it is shareable and works with JavaScript switched off.
+ * The filters, above the list and open by default: a parent who scrolls past a closed box never
+ * learns it was there. Built only from labels that occur in this film, each with the number of
+ * scenes it occurs in. A GET form: checkboxes, an Apply button, and the selection lives in the URL,
+ * so it is shareable and works with JavaScript switched off. The disclosure stays so the panel can
+ * be folded away once a choice is made.
  */
 export function FilterPanel({
   slug,
@@ -106,9 +108,8 @@ export function FilterPanel({
   shown: number;
   total: number;
 }) {
-  const hasFilters = selected.length > 0;
   return (
-    <details className={styles.filters} open={hasFilters}>
+    <details className={styles.filters} open>
       <summary className={styles.filtersSummary}>
         <span className={styles.filtersTitle}>
           <FilterIcon />
@@ -116,6 +117,7 @@ export function FilterPanel({
         </span>
         <span className={styles.filtersPrompt}>
           {FILM.filterPrompt} {FILM.filterRule}
+          <Chevron />
         </span>
       </summary>
 

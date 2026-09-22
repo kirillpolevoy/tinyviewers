@@ -167,9 +167,21 @@
 }
 
 .filtersPrompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--serif);
   font-size: 15px;
   color: var(--body);
+}
+
+.filtersPrompt svg {
+  flex: none;
+  transition: transform 160ms ease;
+}
+
+.filters[open] .filtersPrompt svg {
+  transform: rotate(180deg);
 }
 
 .filterForm {

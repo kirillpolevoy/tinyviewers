@@ -1,0 +1,198 @@
+/* The shelf: its search field and the film cards. The page around it — heading, intro, legend —
+   is styled by app/library/library.module.css. */
+
+/* --- the search field ---------------------------------------------------------------------------
+   Full width on a phone, and no button: there is nothing to submit to, because the list narrows as
+   the field is typed in. The pill matches the one on Home. */
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  color: var(--body);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: var(--sheet);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 5px 0 var(--hairline);
+  padding-inline: 20px;
+  min-height: 56px;
+}
+
+.icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--body);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-family: var(--display);
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--ink);
+  padding-block: 12px;
+}
+
+/* Two rings, doing different jobs — the same pair the Home field uses. The pill shows which
+   control has focus at a glance, because the input's own box is invisible inside it; the input
+   keeps a real outline so the focused element is unambiguous to anything reading the page,
+   including Windows high contrast. */
+.field:focus-within {
+  border-color: var(--coral-text);
+  box-shadow: 4px 5px 0 var(--hairline), 0 0 0 3px rgba(169, 79, 58, 0.28);
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--coral-text);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.input::placeholder {
+  color: var(--body);
+  opacity: 1;
+}
+
+.count {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+/* --- the cards ---------------------------------------------------------------------------------- */
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 22px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  background: var(--sheet);
+  border: 2px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 18px 20px 20px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.card:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.cardPoster {
+  width: 100%;
+  height: 200px;
+  flex: none;
+  object-fit: cover;
+  /* A real poster is portrait and this slot is landscape, as the design drew it. Anchoring the
+     crop to the top keeps the title visible instead of cropping it away. */
+  object-position: top;
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cardTitle {
+  font-family: var(--display);
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.cardYear {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--body);
+}
+
+.cardFacts {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--body);
+}
+
+.cardFacts b {
+  color: var(--ink);
+}
+
+.cardFoot {
+  margin-top: auto;
+  padding-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cardMicro {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--body);
+}
+
+.cardAction {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--coral-text);
+}
+
+/* --- nothing on the shelf ----------------------------------------------------------------------- */
+
+.nothing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 620px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 24px 26px 28px;
+}
+
+.nothingHeadline {
+  font-size: 26px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.nothingBody {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--body);
+}
+
+.nothingAction {
+  margin-top: 4px;
+}

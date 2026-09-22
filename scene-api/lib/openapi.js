@@ -265,14 +265,14 @@ export function openapi({ serverUrl = '/' } = {}) {
           properties: {
             query: { type: ['string', 'null'] },
             count: { type: 'integer' },
-            films: { type: 'array', items: { type: 'object', properties: { slug: { type: 'string' }, title: { type: 'string' }, year: { type: ['integer', 'null'] }, imdb_id: { type: ['string', 'null'] }, scene_count: { type: 'integer' }, detail: { type: 'string' }, scenes: { type: 'string' } } } },
+            films: { type: 'array', items: { type: 'object', properties: { slug: { type: 'string' }, title: { type: 'string' }, year: { type: ['integer', 'null'] }, imdb_id: { type: ['string', 'null'] }, overview: { type: ['string', 'null'], description: 'The film\'s synopsis from TMDB, or null. It describes the story, and says nothing about the scenes in this database.' }, scene_count: { type: 'integer' }, detail: { type: 'string' }, scenes: { type: 'string' } } } },
             note: { type: 'string' },
           },
         },
         FilmDetail: {
           type: 'object',
           properties: {
-            film: { type: 'object' },
+            film: { type: 'object', description: 'slug, title, year, imdb_id, and overview — the film\'s synopsis from TMDB, or null. The synopsis describes the story; it says nothing about the scenes below.' },
             track: { type: 'object', description: 'The one subtitle file all timestamps belong to: its source, release label if recorded, whether it has sound captions, cue count and sha256.' },
             anchors: { type: 'object', description: 'Three short spoken lines with our time for each. Give one to the parent to calibrate.' },
             calibration_platforms: { type: 'object' },

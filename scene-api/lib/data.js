@@ -9,7 +9,7 @@ import { POSSIBLE_THRESHOLD } from './present.js';
 export async function searchFilms(db, q, limit = 25) {
   if (q) {
     const { rows } = await db.query(
-      `select f.id, f.slug, f.title, f.year, f.imdb_id,
+      `select f.id, f.slug, f.title, f.year, f.imdb_id, f.overview,
               (select count(*)::int from scenes s where s.film_id = f.id) as scene_count
          from films f
         where lower(f.title) like '%' || lower($1) || '%'
@@ -21,7 +21,7 @@ export async function searchFilms(db, q, limit = 25) {
     return rows;
   }
   const { rows } = await db.query(
-    `select f.id, f.slug, f.title, f.year, f.imdb_id,
+    `select f.id, f.slug, f.title, f.year, f.imdb_id, f.overview,
             (select count(*)::int from scenes s where s.film_id = f.id) as scene_count
        from films f order by f.title limit $1`,
     [limit],

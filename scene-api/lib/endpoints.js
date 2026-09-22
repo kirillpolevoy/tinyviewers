@@ -27,6 +27,8 @@ export async function films(db, rawQuery = {}) {
     count: rows.length,
     films: rows.map((r) => ({
       slug: r.slug, title: r.title, year: r.year, imdb_id: r.imdb_id,
+      // TMDB's synopsis, or null. It is the film's own blurb, not anything this analysis produced.
+      overview: r.overview ?? null,
       scene_count: r.scene_count,
       detail: `/api/films/${r.slug}`,
       scenes: `/api/films/${r.slug}/scenes`,
@@ -58,7 +60,7 @@ export async function film(db, slug, rawQuery = {}) {
   ]);
 
   return {
-    film: { slug: f.slug, title: f.title, year: f.year, imdb_id: f.imdb_id },
+    film: { slug: f.slug, title: f.title, year: f.year, imdb_id: f.imdb_id, overview: f.overview ?? null },
     track: {
       id: track.id,
       source: track.source,

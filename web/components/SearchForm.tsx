@@ -12,8 +12,11 @@ type Props = {
 };
 
 /**
- * A plain GET form to /search: it works with the keyboard, with a screen reader, and with no
+ * A plain GET form to /library: it works with the keyboard, with a screen reader, and with no
  * JavaScript at all. Search is by movie name only — there is no IMDb field anywhere.
+ *
+ * The library answers `?q=`: it opens the film when the query names exactly one, and otherwise
+ * shows the shelf filtered down to what matched. So this form needs no page of its own.
  */
 export function SearchForm({
   label,
@@ -25,7 +28,7 @@ export function SearchForm({
 }: Props) {
   return (
     <form
-      action="/search"
+      action="/library"
       method="get"
       role="search"
       className={`${styles.form} ${size === 'hero' ? styles.hero : ''}`}

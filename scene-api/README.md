@@ -104,10 +104,11 @@ curl 'http://localhost:8787/api/openapi.json'
 npm test          # node --test test/
 ```
 
-75 tests, no external database: they run against `@electric-sql/pglite`, which installed cleanly
+87 tests, no external database: they run against `@electric-sql/pglite`, which installed cleanly
 here. They cover the schema applying twice (including over a populated database), loader
 idempotency per film, that no verbatim subtitle text is stored, broad-word and ambiguous-word
-filter matching, the present / possibly_present split, the age bands, the calibration arithmetic
+filter matching, the TMDB lookup that fills `poster_url` and `overview` (against a fake fetch, and
+every way it can fail), the present / possibly_present split, the age bands, the calibration arithmetic
 (including a PAL 25/24 case and the implausible-anchor guard), `only_confirmed`,
 `include_possible`, `min_severity=0`, repeated and misplaced query parameters, GET/HEAD/405,
 cache headers, 400s, 404s, CORS, and the OpenAPI document.
@@ -131,7 +132,7 @@ vercel.json       Rewrites /api/openapi.json and / ; CORS headers.
 
 | Table | Built from |
 |---|---|
-| `films` | `films.json` |
+| `films` | `films.json`, plus `poster_url` and `overview` from one TMDB lookup per film by IMDb id (only when `TMDB_API_KEY` is set; both null otherwise, and never guessed) |
 | `tracks` | `data/<slug>.srt`, parsed with the experiment's own `srt.js` (imported, never copied) |
 | `anchors` | three lines picked from each SRT: 4-12 words, unique in the film, not a caption or a lyric |
 | `scenes` | `runs-v3/sonnet-alone-<slug>.json` (five films) and `scenes.nemo.grounded.json` (Nemo) |
@@ -237,7 +238,8 @@ change.
    cd scene-api
    DATABASE_URL='postgresql://...-pooler.../neondb?sslmode=require' node load.js
    ```
-   `load.js` applies `schema.sql` itself, so there is no separate migration step. Expect 6 films,
+   `load.js` applies `schema.sql` itself, so there is no separate migration step — a new column
+   such as `films.overview` arrives with the load that first writes it. Expect 6 films,
    6 tracks, 18 anchors, 19 analysis runs, 103 scenes, 6,352 scene label rows, 72 vocabulary items.
    Re-run it whenever the experiment outputs change; it replaces each film in a transaction. (The
    exact counts are printed by the loader — see the report line per film.)

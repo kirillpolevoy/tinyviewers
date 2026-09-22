@@ -13,7 +13,6 @@
 import 'server-only';
 import { cache } from 'react';
 import { getDb } from './db';
-import { matchFilms } from './search';
 import type { Scene, SceneTag } from './scenes';
 
 export type FilmSummary = {
@@ -21,6 +20,8 @@ export type FilmSummary = {
   title: string;
   year: number | null;
   posterUrl: string | null;
+  /** The film's synopsis, as TMDB writes it, or null. Nothing here describes our scenes. */
+  overview: string | null;
   sceneCount: number;
   durationMs: number;
   /** Start time and both severities of every scene, for the library card's strip. */
@@ -32,6 +33,8 @@ export type Film = {
   title: string;
   year: number | null;
   posterUrl: string | null;
+  /** The film's synopsis, as TMDB writes it, or null. Nothing here describes our scenes. */
+  overview: string | null;
   durationMs: number;
 };
 
@@ -42,6 +45,7 @@ type FilmRow = {
   title: string;
   year: number | null;
   poster_url: string | null;
+  overview: string | null;
   duration_ms: string | number | null;
   scene_count: number;
   markers?: MarkerRow[] | string | null;
@@ -60,6 +64,7 @@ const toFilm = (row: FilmRow): Film => ({
   title: row.title,
   year: row.year,
   posterUrl: row.poster_url,
+  overview: row.overview,
   durationMs: Number(row.duration_ms ?? 0),
 });
 
@@ -75,7 +80,7 @@ const toSummary = (row: FilmRow): FilmSummary => ({
 
 // A film has one analysed track today; the schema allows more, so take the first deterministically.
 const FILM_SELECT = `
-  select f.slug, f.title, f.year, f.poster_url,
+  select f.slug, f.title, f.year, f.poster_url, f.overview,
          (select t.duration_ms from tracks t where t.film_id = f.id order by t.created_at, t.id limit 1) as duration_ms,
          (select count(*)::int from scenes s where s.film_id = f.id) as scene_count
     from films f`;
@@ -84,7 +89,7 @@ const FILM_SELECT = `
 export const listFilms = cache(async (): Promise<FilmSummary[]> => {
   const db = await getDb();
   const { rows } = await db.query<FilmRow>(
-    `select f.slug, f.title, f.year, f.poster_url,
+    `select f.slug, f.title, f.year, f.poster_url, f.overview,
             (select t.duration_ms from tracks t where t.film_id = f.id order by t.created_at, t.id limit 1) as duration_ms,
             (select count(*)::int from scenes s where s.film_id = f.id) as scene_count,
             (select coalesce(json_agg(json_build_object(
@@ -165,23 +170,12 @@ export const getFilmScenes = cache(async (slug: string): Promise<Scene[]> => {
   });
 });
 
-export type SearchResult = { films: FilmSummary[]; exact: FilmSummary | null };
-
-/**
- * Search by movie name, over the cached film list.
- *
- * There is no SQL here on purpose. Folding accents portably in Postgres needs an extension we
- * cannot assume, and the LIKE-based version had two faults a parent would meet: a query of "???"
- * normalised to an empty string and matched every film, and "The Lion King 2019" matched the 1994
- * film through a reverse-substring test and then redirected straight to it. The rules now live in
- * lib/search.ts, in one place, under test. listFilms is cached, so on a page that has already
- * listed the films this costs no extra round trip.
- */
-export const searchFilmsByName = cache(async (query: string): Promise<SearchResult> => {
-  const q = query.trim();
-  if (!q) return { films: [], exact: null };
-  return matchFilms(await listFilms(), q);
-});
+// Searching by name used to live here, as `searchFilmsByName`. It does not any more: the library
+// page fetches the film list it was going to render anyway and matches against it with
+// lib/search.ts, which is pure, tested and — unlike this file — safe to run in the browser, so the
+// server's redirect and the shelf's own filter cannot drift apart. There is still no SQL for it,
+// for the reason there never was: folding accents portably in Postgres needs an extension Neon may
+// not have, and the LIKE version matched every film on a query that normalised to nothing.
 
 export type Showcase = Film & {
   sceneCount: number;
@@ -233,6 +227,7 @@ export const getShowcase = cache(async (films?: FilmSummary[]): Promise<Showcase
     title: chosen.title,
     year: chosen.year,
     posterUrl: chosen.posterUrl,
+    overview: chosen.overview,
     durationMs: chosen.durationMs,
     sceneCount: chosen.sceneCount,
     markers: chosen.markers,

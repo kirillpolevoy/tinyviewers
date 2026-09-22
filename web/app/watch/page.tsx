@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { WatchPlaceholder } from '@/components/WatchPlaceholder';
-import { searchFilmsByName } from '@/lib/queries';
+import { listFilms } from '@/lib/queries';
+import { soleMatch } from '@/lib/search';
 import { WATCH } from '@/lib/copy';
 
 export const dynamic = 'force-dynamic';
@@ -21,10 +22,9 @@ export default async function WatchPage({ searchParams }: Props) {
   const params = await searchParams;
   const raw = Array.isArray(params.film) ? params.film[0] : params.film;
   const requested = (raw ?? '').trim();
-  const { films, exact } = requested
-    ? await searchFilmsByName(requested)
-    : { films: [], exact: null };
-  const film = exact ?? (films.length === 1 ? films[0] : null);
+  // The same rule the library uses to decide whether a query names one film, so a title that
+  // opens its scene guide from the shelf is recognised here too.
+  const film = requested ? soleMatch(await listFilms(), requested) : null;
 
   return (
     <WatchPlaceholder

@@ -70,6 +70,13 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },
+  // /search was its own page until the library learned to filter as you type; the library now does
+  // the same job with every film already on screen. The URL is kept alive — it has been shared, it
+  // is in browser histories, and Home's form pointed at it — and `?q=` is carried straight over,
+  // because the library reads exactly the same parameter.
+  async redirects() {
+    return [{ source: '/search', destination: '/library', permanent: true }];
+  },
 };
 
 export default nextConfig;

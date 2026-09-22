@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { applySchema } from '../lib/db.js';
-import { loadAll, buildFilm, buildVocabulary, buildV2Map, openExperiment, pickAnchors, isAnchorCandidate, anchorKey, fetchPosterUrl, TMDB_IMAGE_BASE, SLUGS } from '../load.js';
+import { loadAll, buildFilm, buildVocabulary, buildV2Map, openExperiment, pickAnchors, isAnchorCandidate, anchorKey, fetchPosterUrl, fetchTmdbMeta, TMDB_IMAGE_BASE, SLUGS } from '../load.js';
 import { freshDb, loadedDb } from './helper.js';
 
 test('schema.sql applies twice cleanly', async () => {
@@ -355,8 +355,47 @@ test('short_label reaches the database, and the words the design uses are the wo
 });
 
 // ------------------------------------------------------------------------------------------------
-// poster_url: filled from TMDB by IMDb id when a key is present, null in every other case
+// poster_url and overview: filled from TMDB by IMDb id when a key is present, null in every other
+// case. One request carries both.
 // ------------------------------------------------------------------------------------------------
+
+test('fetchTmdbMeta returns the poster and the synopsis from one lookup', async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return {
+      ok: true,
+      json: async () => ({
+        movie_results: [{ id: 12, poster_path: '/abc123.jpg', overview: '  A clownfish searches.  ' }],
+      }),
+    };
+  };
+  const meta = await fetchTmdbMeta('tt0266543', { apiKey: 'k', fetchImpl });
+  assert.deepEqual(meta, {
+    poster_url: `${TMDB_IMAGE_BASE}/abc123.jpg`,
+    overview: 'A clownfish searches.',
+  });
+  assert.equal(calls, 1, 'the poster and the synopsis cost one request, not two');
+});
+
+test('fetchTmdbMeta returns nulls, never an invented synopsis, for every way the lookup can fail', async () => {
+  const ok = (body) => async () => ({ ok: true, json: async () => body });
+  const none = { poster_url: null, overview: null };
+  assert.deepEqual(await fetchTmdbMeta('tt1', { apiKey: null, fetchImpl: ok({}) }), none, 'no api key');
+  assert.deepEqual(await fetchTmdbMeta(null, { apiKey: 'k', fetchImpl: ok({}) }), none, 'no imdb id');
+  assert.deepEqual(await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: async () => ({ ok: false, status: 404 }) }), none, 'http error');
+  assert.deepEqual(await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [] }) }), none, 'no match');
+  assert.deepEqual(await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: async () => { throw new Error('offline'); } }), none, 'request threw');
+
+  // TMDB answers with an empty string for a film it has no synopsis for, and the two fields fail
+  // independently: a record can have a poster and no words, or words and no poster.
+  const empty = await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [{ poster_path: '/p.jpg', overview: '   ' }] }) });
+  assert.deepEqual(empty, { poster_url: `${TMDB_IMAGE_BASE}/p.jpg`, overview: null });
+  const wordsOnly = await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [{ poster_path: null, overview: 'A robot.' }] }) });
+  assert.deepEqual(wordsOnly, { poster_url: null, overview: 'A robot.' });
+  const notAString = await fetchTmdbMeta('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [{ poster_path: '/p.jpg', overview: 42 }] }) });
+  assert.equal(notAString.overview, null, 'a non-string overview is not a synopsis');
+});
 
 test('fetchPosterUrl returns an absolute TMDB URL for a film it finds', async () => {
   let seen = null;
@@ -380,27 +419,33 @@ test('fetchPosterUrl returns null, never a guess, for every way the lookup can f
   assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: async () => { throw new Error('offline'); } }), null, 'request threw');
 });
 
-test('the loader stores a poster when a key is present and leaves null when it is not', async () => {
-  const fetchImpl = async (url) => ({
-    ok: true,
-    json: async () => ({ movie_results: [{ poster_path: `/${/tt\d+/.exec(url)[0]}.jpg` }] }),
-  });
+test('the loader stores a poster and a synopsis when a key is present, and nulls when it is not', async () => {
+  const fetchImpl = async (url) => {
+    const imdb = /tt\d+/.exec(url)[0];
+    return {
+      ok: true,
+      json: async () => ({ movie_results: [{ poster_path: `/${imdb}.jpg`, overview: `About ${imdb}.` }] }),
+    };
+  };
 
   const withKey = await freshDb();
   const res = await loadAll(withKey, { slugs: ['nemo', 'lion-king'], tmdbApiKey: 'test-key', fetchImpl });
   assert.equal(res.posters, 2);
-  const { rows } = await withKey.query('select slug, imdb_id, poster_url from films order by slug');
+  assert.equal(res.overviews, 2);
+  const { rows } = await withKey.query('select slug, imdb_id, poster_url, overview from films order by slug');
   for (const r of rows) {
     assert.equal(r.poster_url, `${TMDB_IMAGE_BASE}/${r.imdb_id}.jpg`, r.slug);
+    assert.equal(r.overview, `About ${r.imdb_id}.`, r.slug);
   }
   await withKey.end();
 
   const noKey = await freshDb();
   const res2 = await loadAll(noKey, { slugs: ['nemo'], tmdbApiKey: null, fetchImpl });
   assert.equal(res2.posters, 0);
+  assert.equal(res2.overviews, 0);
   assert.equal(res2.postersLookedUp, false);
-  const { rows: none } = await noKey.query('select poster_url from films');
-  assert.deepEqual(none, [{ poster_url: null }]);
+  const { rows: none } = await noKey.query('select poster_url, overview from films');
+  assert.deepEqual(none, [{ poster_url: null, overview: null }]);
   await noKey.end();
 });
 

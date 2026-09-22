@@ -13,12 +13,11 @@ export default function NotFound() {
           <Bubbles className={styles.art} />
           <h1 className={styles.headline}>{NOT_FOUND.headline}</h1>
           <p className={styles.body}>{NOT_FOUND.body}</p>
+          {/* One way out, because there is one place to go: the library is both the shelf and the
+              search. A second button to the same page would only be a second name for it. */}
           <div className={styles.actions}>
             <Link href="/library" className="button">
               {NOT_FOUND.library}
-            </Link>
-            <Link href="/search" className="button buttonQuiet">
-              {NOT_FOUND.search}
             </Link>
           </div>
         </div>

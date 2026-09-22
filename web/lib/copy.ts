@@ -10,8 +10,9 @@
 
 export const SITE_NAME = 'Tiny Viewers';
 
+// One way in. The library is the search: it holds every film and filters as a parent types, so a
+// separate Search page would have been the same page with fewer films on it.
 export const NAV = [
-  { href: '/search', label: 'Search' },
   { href: '/library', label: 'Library' },
   { href: '/watch', label: 'Watch it work' },
 ] as const;
@@ -48,28 +49,29 @@ export const LIBRARY = {
   cardAction: 'See scenes',
   emptyHeadline: 'An empty shelf. For now.',
   emptyBody: 'Scene guides land here as soon as they’re saved.',
-  emptyAction: 'Search',
 } as const;
 
-/** Search, by movie name only. */
+/** The library's search field, and what it says when nothing on the shelf matches. */
 export const SEARCH = {
-  title: 'Find tonight’s film',
   fieldLabel: 'Movie title',
   placeholder: 'Tonight’s movie',
-  button: 'Check my movie',
-  emptySubmission: 'Give us a movie title.',
-  resultsHeading: 'Here’s what turned up.',
-  resultsInstruction: 'Pick the title and year you mean.',
   noMatchHeadline: 'Not on our shelf. Yet.',
   noMatchBody: 'Check the spelling, or try the full title.',
-  noMatchAction: 'Watch it work',
-  prompt: 'Type a movie title and we’ll show you its scenes.',
+  noMatchAction: 'Add this movie',
 } as const;
+
+/**
+ * The live count beside the library's search field, read out by a screen reader as the parent
+ * types. One film is a film, not "1 films"; an unfiltered shelf is counted, not "matched".
+ */
+export function libraryCount(shown: number, total: number): string {
+  if (shown === 0) return 'No film matches';
+  if (shown === total) return shown === 1 ? '1 film' : `${shown} films`;
+  return shown === 1 ? '1 film matches' : `${shown} films match`;
+}
 
 /** Film page. */
 export const FILM = {
-  sourceAndTiming:
-    'AI reads subtitles, not images. Times come from one release; your copy may run a few seconds earlier or later, or drift further.',
   ageControlLabel: 'Strength for',
   scaleDisclosure: 'What the levels mean',
   scaleLead: 'A low rating can still include your child’s fear.',
@@ -163,5 +165,4 @@ export const NOT_FOUND = {
   headline: 'This page missed its cue.',
   body: 'We can’t find this page. Head to the library for the films and their scene guides.',
   library: 'Browse the library',
-  search: 'Search',
 } as const;

@@ -101,3 +101,19 @@ export function matchFilms<T extends Matchable>(films: T[], query: string): Matc
   const exactMatches = matched.filter((film) => isExactTitle(film.title, trimmed));
   return { films: matched, exact: exactMatches.length === 1 ? exactMatches[0] : null };
 }
+
+/**
+ * The one film a query may open without asking, or null.
+ *
+ * Two callers depend on this being the same rule in both places: the library page redirects to a
+ * film on load when the query names one (which is what Home's form relies on), and the shelf's own
+ * submit handler pushes to the same film when JavaScript is running. If they disagreed, pressing
+ * Enter would go somewhere different depending on whether the page had hydrated.
+ *
+ * An empty query opens nothing: a parent who has typed nothing has asked for the whole shelf.
+ */
+export function soleMatch<T extends Matchable>(films: T[], query: string): T | null {
+  if (!query.trim()) return null;
+  const { films: matched, exact } = matchFilms(films, query);
+  return exact ?? (matched.length === 1 ? matched[0] : null);
+}

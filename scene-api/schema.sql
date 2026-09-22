@@ -16,11 +16,13 @@ create table if not exists films (
   year        integer,
   imdb_id     text,
   poster_url  text,                          -- TMDB image URL, or null: the UI draws a placeholder
+  overview    text,                          -- TMDB synopsis, or null: the UI shows nothing
   created_at  timestamptz not null default now()
 );
 
--- Added after the first version of this file; a no-op on a fresh database.
+-- Added after the first version of this file; both are no-ops on a fresh database.
 alter table films add column if not exists poster_url text;
+alter table films add column if not exists overview text;
 
 -- One row per subtitle file we analysed. Timestamps in `scenes` belong to exactly one track.
 create table if not exists tracks (
