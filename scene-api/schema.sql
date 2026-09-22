@@ -15,8 +15,12 @@ create table if not exists films (
   title       text not null,
   year        integer,
   imdb_id     text,
+  poster_url  text,                          -- TMDB image URL, or null: the UI draws a placeholder
   created_at  timestamptz not null default now()
 );
+
+-- Added after the first version of this file; a no-op on a fresh database.
+alter table films add column if not exists poster_url text;
 
 -- One row per subtitle file we analysed. Timestamps in `scenes` belong to exactly one track.
 create table if not exists tracks (
@@ -74,12 +78,16 @@ create table if not exists vocabulary (
   id               text primary key,
   layer            text not null check (layer in ('presence', 'event', 'modifier')),
   group_id         text references groups (id) on delete set null,
-  label            text not null,            -- parent-facing
+  label            text not null,            -- parent-facing, a whole phrase
+  short_label      text,                     -- 1-3 plain words for a scene row's tag list
   text_blind       boolean not null default false,
   taxonomy_version text not null,
   aliases          text[] not null default '{}',  -- extra words a parent might use
   created_at       timestamptz not null default now()
 );
+
+-- Added after the first version of this file; a no-op on a fresh database.
+alter table vocabulary add column if not exists short_label text;
 
 -- ---------------------------------------------------------------------------------------------
 -- Provenance

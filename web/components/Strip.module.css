@@ -1,0 +1,113 @@
+.cardWrap {
+  width: 100%;
+}
+
+.cardWrap .track {
+  height: 30px;
+  border-bottom: 2px solid var(--hairline);
+}
+
+.timelineWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.timelineWrap .track {
+  height: 64px;
+  background: var(--page);
+  border-radius: 18px;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+}
+
+.gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--hairline);
+}
+
+/* Markers sit on the baseline, are positioned by start time, and are sized and coloured by the
+   strength for the selected age band. translateX keeps a marker at 100% inside the track.
+   
+   The severity fills are pale by design — butter on a cream track is about 1.1:1 — so each marker
+   carries an ink ring. The ring is 11.6:1 against both light tracks, which is what makes the mark
+   itself perceivable; the fill then only has to tell the levels apart from each other. A ring
+   rather than a border, so it does not eat into a 4px-wide mark. */
+.marker {
+  position: absolute;
+  bottom: 0;
+  width: 5px;
+  min-height: 6px;
+  border-radius: 3px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+
+.timelineWrap .marker {
+  width: 6px;
+  border-radius: 6px;
+}
+
+/* A filter is on and this scene is not one of the matches: still there, quietly. */
+.muted {
+  opacity: 0.25;
+}
+
+.coral {
+  background: var(--coral);
+}
+
+.blush {
+  background: var(--blush);
+}
+
+.butter {
+  background: var(--butter);
+}
+
+.mint {
+  background: var(--mint);
+}
+
+.grey {
+  background: var(--dust);
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--display);
+  font-size: 13px;
+  color: var(--body);
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  color: var(--body);
+}
+
+.legendSwatch {
+  display: inline-block;
+  width: 16px;
+  border-radius: 3px;
+}

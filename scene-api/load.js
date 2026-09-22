@@ -122,6 +122,96 @@ const EXTRA_ALIASES = {
   slapstick_violence: ['funny violence', 'slapstick', 'cartoon violence'],
 };
 
+// One to three plain words per item, for the tag list under a scene title on a parent page. The
+// full `label` is a sentence ("Someone believes a loved one just died"); six of those side by side
+// are unreadable, so every presence and event item also carries the short form a parent scans.
+//
+// Rules: 1-3 words, sentence case, no jargon, no engine words, and no punctuation beyond a hyphen.
+// Every id in taxonomy-v3 PRESENCE and EVENTS must appear here — a missing one is a hard error, so
+// a taxonomy addition cannot quietly reach a scene row with a sentence for a tag. Modifiers have
+// none: they never appear in a row's tag list.
+const SHORT_LABELS = {
+  // presence · creatures and figures
+  monster_creature: 'Monster',
+  ghost_spirit: 'Ghost',
+  reanimated_dead: 'Undead',
+  skeleton_corpse: 'Skeleton',
+  shark: 'Shark',
+  spider_insect: 'Spider or insect',
+  snake_reptile: 'Snake',
+  large_predator: 'Big predator',
+  rodent_bat: 'Rats or bats',
+  clown_doll_puppet: 'Clown or doll',
+  robot_machine_being: 'Robot',
+  witch_magic_villain: 'Witch or magic',
+  alien: 'Alien',
+  scary_appearance: 'Scary-looking character',
+  // presence · objects and hazards
+  gun: 'Gun',
+  blade_weapon: 'Weapon',
+  fire: 'Fire',
+  explosion: 'Explosions',
+  storm_lightning: 'Storm',
+  deep_dark_water: 'Deep water',
+  heights: 'High places',
+  darkness: 'Darkness',
+  needle_medical: 'Needles and medical',
+  hospital_illness: 'Hospital or illness',
+  blood_wound: 'Blood',
+  vehicle_crash: 'Crash',
+  cage_net_trap: 'Cage or trap',
+  graveyard_funeral: 'Graveyard',
+  dangerous_machine: 'Machinery',
+  // events · peril and violence
+  chased: 'Chase',
+  attacked: 'Attack',
+  weapon_used: 'Weapon used',
+  falling: 'A fall',
+  drowning: 'Cannot breathe',
+  caught_in_hazard: 'Caught in danger',
+  vehicle_accident: 'Crash happens',
+  battle: 'Battle',
+  // events · captivity and injury
+  captured: 'Caught',
+  trapped_struggling: 'Trapped',
+  injured: 'Someone hurt',
+  // events · death
+  dies: 'Someone dies',
+  believed_dead: 'Thought dead',
+  parent_death_learned: 'Parent dies',
+  grieving: 'Grief',
+  // events · separation
+  child_taken: 'Child taken',
+  child_lost: 'Child lost',
+  abandoned: 'Left behind',
+  family_in_danger: 'Family in danger',
+  parents_fighting: 'Parents fighting',
+  // events · hostility
+  rages_at_child: 'Adult rages',
+  threatens_harm: 'Threats',
+  bullying: 'Teasing',
+  discrimination: 'Singled out',
+  caregiver_cruelty: 'Cruel caregiver',
+  betrayal: 'Betrayal',
+  // events · eerie
+  transformation: 'Transformation',
+  nightmare: 'Nightmare',
+  unseen_threat: 'Something unseen',
+  jump_scare: 'Sudden scare',
+  // events · distress
+  terrified: 'Panic',
+  sobbing_despair: 'Crying',
+  // events · animals
+  animal_cruelty: 'Animal mistreated',
+  animal_in_danger: 'Animal in danger',
+  // events · copyable
+  dangerous_act: 'Risky act',
+  runs_away: 'Runs away',
+  slapstick_violence: 'Comic violence',
+};
+
+export { SHORT_LABELS };
+
 // ------------------------------------------------------------------------------------------------
 // Reading the experiment
 // ------------------------------------------------------------------------------------------------
@@ -226,18 +316,23 @@ export function buildVocabulary(taxonomy) {
   const items = [];
   for (const item of [...taxonomy.PRESENCE, ...taxonomy.EVENTS]) {
     byGroupLayer.set(item.group, item.layer);
+    const short = SHORT_LABELS[item.id];
+    if (!short) {
+      throw new Error(`no short_label for taxonomy item "${item.id}" — add one to SHORT_LABELS in load.js`);
+    }
     items.push({
       id: item.id,
       layer: item.layer,
       group_id: item.group,
       label: item.label,
+      short_label: short,
       text_blind: !!item.textBlind,
       taxonomy_version: 'v3',
       aliases: EXTRA_ALIASES[item.id] ?? [],
     });
   }
   for (const [id, m] of Object.entries(taxonomy.MODIFIERS)) {
-    items.push({ id: `modifier_${id}`, layer: 'modifier', group_id: 'modifier', label: m.label, text_blind: false, taxonomy_version: 'v3', aliases: [] });
+    items.push({ id: `modifier_${id}`, layer: 'modifier', group_id: 'modifier', label: m.label, short_label: null, text_blind: false, taxonomy_version: 'v3', aliases: [] });
   }
   for (const g of groups) g.layer = byGroupLayer.get(g.id) ?? (g.id === 'modifier' || g.id === 'severity' ? 'other' : 'event');
   return { groups, items };
@@ -312,6 +407,9 @@ export function buildFilm(slug, ctx) {
     title: meta.title ?? movie.title ?? slug,
     year: meta.year ?? movie.year ?? null,
     imdb_id: meta.imdb_id ?? movie.imdb_id ?? null,
+    // Filled in by loadAll when TMDB_API_KEY is in the environment; null otherwise, and the UI
+    // draws its labelled placeholder. Never a guessed or constructed URL.
+    poster_url: null,
   };
 
   const anchors = pickAnchors(cues).map((a) => ({ id: `${trackId}:${a.position}`, track_id: trackId, ...a }));
@@ -544,6 +642,62 @@ export function buildFilm(slug, ctx) {
 }
 
 // ------------------------------------------------------------------------------------------------
+// Posters
+// ------------------------------------------------------------------------------------------------
+
+// TMDB's find endpoint takes an IMDb id directly, so no title guessing is involved: either the id
+// resolves to exactly one film and we store its poster, or we store null.
+export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
+
+/** One poster lookup may hold the loader up for this long, headers and body together. */
+export const POSTER_TIMEOUT_MS = 6000;
+
+/**
+ * @param {string|null} imdbId
+ * @param {{ apiKey?: string|null, fetchImpl?: typeof fetch, timeoutMs?: number }} [opts]
+ * @returns {Promise<string|null>} an absolute image URL, or null for every failure: no key, no
+ *   imdb id, a non-OK response, a film with no poster, a malformed body, a thrown request, or a
+ *   server that never finishes answering. A poster is decoration; it never fails a load, and it
+ *   never hangs one either.
+ *
+ * The deadline covers the response AND reading its body. `fetch` resolves as soon as the headers
+ * arrive, so a signal passed only to the request still leaves `res.json()` free to wait forever on
+ * a body that never ends — which is how a six-film load turns into a hang. The AbortController is
+ * therefore not cleared until the body has been parsed.
+ */
+export async function fetchPosterUrl(
+  imdbId,
+  { apiKey = null, fetchImpl = globalThis.fetch, timeoutMs = POSTER_TIMEOUT_MS } = {},
+) {
+  if (!imdbId || !apiKey || typeof fetchImpl !== 'function') return null;
+  const url = `https://api.themoviedb.org/3/find/${encodeURIComponent(imdbId)}`
+    + `?external_source=imdb_id&api_key=${encodeURIComponent(apiKey)}`;
+  const controller = new AbortController();
+  const deadline = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetchImpl(url, { signal: controller.signal });
+    if (!res?.ok) return null;
+    // Still inside the deadline: aborting the controller rejects this too.
+    const body = await res.json();
+    const hit = body?.movie_results?.[0];
+    const p = hit?.poster_path;
+    return typeof p === 'string' && p.startsWith('/') ? `${TMDB_IMAGE_BASE}${p}` : null;
+  } catch {
+    // Includes the AbortError the deadline raises.
+    return null;
+  } finally {
+    clearTimeout(deadline);
+  }
+}
+
+// The api key is read from the environment and passed on; it is never logged, and the URL that
+// carries it is never printed.
+export async function attachPoster(film, opts = {}) {
+  film.poster_url = await fetchPosterUrl(film.imdb_id, opts);
+  return film;
+}
+
+// ------------------------------------------------------------------------------------------------
 // Writing
 // ------------------------------------------------------------------------------------------------
 
@@ -578,12 +732,13 @@ export async function writeVocabulary(db, taxonomy) {
     }
     for (const v of items) {
       await tx.query(
-        `insert into vocabulary (id, layer, group_id, label, text_blind, taxonomy_version, aliases)
-         values ($1,$2,$3,$4,$5,$6,$7)
+        `insert into vocabulary (id, layer, group_id, label, short_label, text_blind, taxonomy_version, aliases)
+         values ($1,$2,$3,$4,$5,$6,$7,$8)
          on conflict (id) do update set layer = excluded.layer, group_id = excluded.group_id,
-           label = excluded.label, text_blind = excluded.text_blind,
+           label = excluded.label, short_label = excluded.short_label,
+           text_blind = excluded.text_blind,
            taxonomy_version = excluded.taxonomy_version, aliases = excluded.aliases`,
-        [v.id, v.layer, v.group_id, v.label, v.text_blind, v.taxonomy_version, v.aliases],
+        [v.id, v.layer, v.group_id, v.label, v.short_label, v.text_blind, v.taxonomy_version, v.aliases],
       );
     }
   });
@@ -603,7 +758,14 @@ export async function writeFilm(db, built) {
   });
 }
 
-export async function loadAll(db, { slugs = SLUGS, experimentDir = DEFAULT_EXPERIMENT_DIR, dryRun = false } = {}) {
+export async function loadAll(db, {
+  slugs = SLUGS,
+  experimentDir = DEFAULT_EXPERIMENT_DIR,
+  dryRun = false,
+  tmdbApiKey = process.env.TMDB_API_KEY ?? null,
+  fetchImpl = globalThis.fetch,
+  timeoutMs = POSTER_TIMEOUT_MS,
+} = {}) {
   const exp = await openExperiment(experimentDir);
   const { items } = buildVocabulary(exp.taxonomy);
   const ctx = {
@@ -619,12 +781,18 @@ export async function loadAll(db, { slugs = SLUGS, experimentDir = DEFAULT_EXPER
     await writeVocabulary(db, exp.taxonomy);
   }
   const reports = [];
+  let posters = 0;
   for (const slug of slugs) {
     const built = buildFilm(slug, ctx);
+    if (tmdbApiKey) {
+      await attachPoster(built.film, { apiKey: tmdbApiKey, fetchImpl, timeoutMs });
+      if (built.film.poster_url) posters += 1;
+      else built.report.notes.push('no poster came back from TMDB for this film');
+    }
     if (!dryRun) await writeFilm(db, built);
     reports.push(built.report);
   }
-  return { reports, vocabulary: items.length };
+  return { reports, vocabulary: items.length, posters, postersLookedUp: !!tmdbApiKey };
 }
 
 export function formatReport(reports) {
@@ -670,9 +838,12 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     }), 'load'));
   }
   const started = Date.now();
-  const { reports, vocabulary } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
+  const { reports, vocabulary, posters, postersLookedUp } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
   console.log(formatReport(reports));
   console.log(`\nvocabulary items: ${vocabulary}`);
+  console.log(postersLookedUp
+    ? `posters from TMDB: ${posters} of ${slugs.length}`
+    : 'posters: TMDB_API_KEY is not set, so every poster_url is null (the UI draws a placeholder)');
   console.log(dryRun ? '\nDRY RUN — nothing was written.' : `\nwritten to DATABASE_URL in ${((Date.now() - started) / 1000).toFixed(1)}s`);
   console.log(`schema: ${path.join(root, 'schema.sql')}`);
   if (db) await db.end();

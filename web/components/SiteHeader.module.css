@@ -1,0 +1,108 @@
+.header {
+  position: relative;
+  z-index: 2;
+  padding-block: 18px 8px;
+  color: var(--ink);
+}
+
+.dark {
+  color: var(--dark-text);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* The global a:hover colour is coral, which is 1.8:1 on the dark analysis pages. The wordmark
+   keeps the header's own colour on every background and shows the hover with an underline. */
+.wordmark:hover,
+.wordmark:hover .name {
+  color: inherit;
+}
+
+.wordmark:hover .name {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.fish {
+  width: 38px;
+  height: 25px;
+  flex: none;
+}
+
+.name {
+  font-family: var(--display);
+  font-size: 23px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: inherit;
+}
+
+@media (min-width: 720px) {
+  .fish {
+    width: 46px;
+    height: 30px;
+  }
+
+  .name {
+    font-size: 27px;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px 18px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 4px;
+  font-family: var(--display);
+  font-size: 16px;
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.link:hover {
+  color: inherit;
+  border-bottom-color: var(--hairline);
+}
+
+.dark .link:hover {
+  border-bottom-color: var(--dark-line);
+}
+
+.currentLink,
+.currentLink:hover {
+  font-weight: 700;
+  border-bottom-color: var(--coral);
+}
+
+@media (min-width: 720px) {
+  .link {
+    font-size: 17px;
+  }
+}

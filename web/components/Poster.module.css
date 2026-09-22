@@ -1,0 +1,12 @@
+.poster {
+  display: flex;
+  width: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.image {
+  border: 1.5px solid var(--hairline);
+  object-fit: cover;
+  background: var(--placeholder);
+}

@@ -1,0 +1,231 @@
+/* The film page is the opposite register to Home: no tilts, no stickers, no decoration on rows.
+   Generous spacing, big tabular time ranges, everything aligned. */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+}
+
+/* The open row is the one with the ink outline; no JavaScript decides this. */
+.row:has(.details[open]) {
+  border: 2px solid var(--ink);
+}
+
+.details {
+  width: 100%;
+}
+
+/* The row itself is the disclosure control: the browser gives it the button role and the expanded
+   state, so nothing here has to reimplement either. */
+.summary {
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'range chevron'
+    'middle middle'
+    'strength strength';
+  gap: 6px 16px;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 14px 18px 16px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-card);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary::marker {
+  content: '';
+}
+
+.details[open] .chevron svg {
+  transform: rotate(180deg);
+}
+
+.range {
+  grid-area: range;
+  font-family: var(--display);
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.middle {
+  grid-area: middle;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--display);
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tags {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.strength {
+  grid-area: strength;
+  display: flex;
+  align-items: center;
+}
+
+.chevron {
+  grid-area: chevron;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--body);
+}
+
+.details[open] .chevron {
+  color: var(--ink);
+}
+
+/* From tablet up the row becomes the design's four columns: time, what it is, how strong, chevron. */
+@media (min-width: 860px) {
+  .summary {
+    grid-template-columns: 210px minmax(0, 1fr) 200px 40px;
+    grid-template-areas: 'range middle strength chevron';
+    gap: 22px;
+    padding: 15px 22px 16px;
+  }
+
+  .range {
+    font-size: 25px;
+  }
+
+  .title {
+    font-size: 21px;
+  }
+
+  .tags {
+    font-size: 16px;
+  }
+}
+
+/* --- the expanded panel ----------------------------------------------------------------------- */
+
+.panelInner {
+  display: grid;
+  gap: 18px;
+  margin: 0 14px 16px;
+  background: var(--page);
+  border-radius: 20px;
+  padding: 18px 20px 20px;
+}
+
+.panelText {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.description {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.panelFacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.times {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeRow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.timeRow dt {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 150px;
+}
+
+.timeRow dd {
+  margin: 0;
+}
+
+.timeValue {
+  font-family: var(--display);
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rule {
+  height: 1px;
+  width: 100%;
+  border: none;
+  background: var(--hairline);
+  margin: 0;
+}
+
+.bands {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+@media (min-width: 860px) {
+  .panelInner {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 32px;
+    margin: 0 20px 18px;
+    padding: 20px 24px 22px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+}

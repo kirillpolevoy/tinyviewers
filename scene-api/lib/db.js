@@ -62,6 +62,16 @@ export function pgliteAdapter(pglite) {
   return self;
 }
 
+// Nothing about a serverless request should wait forever. A cold or unreachable Neon has to fail in
+// seconds and return an error the caller can read, rather than hang until the platform kills the
+// function. Every value sits below a typical 10 s function limit.
+export const POOL_TIMEOUTS = {
+  connectionTimeoutMillis: 5000,  // waiting for a socket to a database that may be asleep
+  idleTimeoutMillis: 10_000,      // Neon hangs up on idle connections anyway; let go first
+  statement_timeout: 8000,        // server side: Postgres cancels the statement
+  query_timeout: 8000,            // client side: `pg` gives up even if the server never answers
+};
+
 // Lazily built from DATABASE_URL, and replaceable so tests can inject PGlite.
 let injected = null;
 let lazyPool = null;
@@ -91,6 +101,7 @@ export async function getDb() {
       // Neon's pooled endpoint terminates plain connections; ssl is required there and harmless
       // against a local server that accepts it.
       ssl: /neon\.tech|sslmode=require/.test(url) ? { rejectUnauthorized: false } : undefined,
+      ...POOL_TIMEOUTS,
     }), 'api'));
   }
   return lazyPool;

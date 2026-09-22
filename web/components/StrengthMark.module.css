@@ -1,0 +1,52 @@
+.wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 4px;
+  flex: none;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  box-sizing: border-box;
+}
+
+.empty {
+  background: var(--sheet);
+  border-color: var(--hairline);
+}
+
+.level1 {
+  background: var(--butter);
+}
+
+.level2 {
+  background: var(--blush);
+}
+
+.level3 {
+  background: var(--coral);
+}
+
+.label {
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.notChecked {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--body);
+}

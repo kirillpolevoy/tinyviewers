@@ -1,0 +1,173 @@
+/* The film page is the high-UX register: clear, generous, undecorated. Nothing tilts, nothing has a
+   hard shadow, and every row lines up with the one above it. */
+
+.main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 8px;
+  padding-bottom: 90px;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: clamp(32px, 6vw, 50px);
+  line-height: 1.12;
+  font-weight: 700;
+}
+
+.year {
+  font-family: var(--serif);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 400;
+  color: var(--body);
+}
+
+.source {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--body);
+  max-width: 48em;
+}
+
+/* This page's own wrapper for the poster: the Poster component owns its class, this owns the box
+   it sits in. On a phone the header is the title and the timing line; the poster would only push
+   them down, so it is not rendered at all below this width. */
+.filmPoster {
+  display: none;
+}
+
+@media (min-width: 860px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 28px;
+  }
+
+  .filmPoster {
+    display: flex;
+    width: 92px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 14px;
+    font-size: 10px;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+@media (min-width: 720px) {
+  .controls {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* --- the timeline strip ------------------------------------------------------------------------ */
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 16px 20px 18px;
+}
+
+.timelineNote {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.timelineNote b {
+  color: var(--ink);
+}
+
+.listHeading {
+  font-size: clamp(22px, 3.4vw, 28px);
+  line-height: 1.25;
+  font-weight: 700;
+  padding-top: 4px;
+}
+
+/* --- the three kinds of nothing ---------------------------------------------------------------- */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 26px 26px 28px;
+}
+
+.stateHeadline {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.stateBody {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--body);
+}
+
+/* --- foot ------------------------------------------------------------------------------------- */
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+.footLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 17px;
+  color: var(--coral-text);
+  text-decoration: underline;
+}
+
+.footNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--body);
+}

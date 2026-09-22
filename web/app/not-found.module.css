@@ -1,0 +1,48 @@
+.main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 40px;
+  padding-bottom: 120px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  max-width: 660px;
+  background: var(--sheet);
+  border: 3px solid var(--ink);
+  border-radius: 34px;
+  box-shadow: 8px 10px 0 var(--hairline);
+  padding: 28px 28px 32px;
+  rotate: -1deg;
+}
+
+.art {
+  width: 120px;
+  height: 96px;
+}
+
+.headline {
+  font-size: clamp(28px, 6vw, 42px);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.body {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--body-strong);
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+}

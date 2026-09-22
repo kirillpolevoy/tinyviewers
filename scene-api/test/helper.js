@@ -17,7 +17,11 @@ let loaded = null;
 export async function loadedDb() {
   if (!loaded) {
     loaded = await freshDb();
-    await loadAll(loaded, {});
+    // tmdbApiKey: null explicitly. Without it the loader reads TMDB_API_KEY from the environment,
+    // so a developer with a key in their shell would have the whole suite making network calls —
+    // slow, flaky, and a different database from the one CI tests. A test that wants posters mocks
+    // the fetch and passes its own key.
+    await loadAll(loaded, { tmdbApiKey: null });
     setDb(loaded); // so the handlers under api/ use it too
   }
   return loaded;

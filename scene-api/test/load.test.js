@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { applySchema } from '../lib/db.js';
-import { loadAll, buildFilm, buildVocabulary, buildV2Map, openExperiment, pickAnchors, isAnchorCandidate, anchorKey, SLUGS } from '../load.js';
-import { freshDb } from './helper.js';
+import { loadAll, buildFilm, buildVocabulary, buildV2Map, openExperiment, pickAnchors, isAnchorCandidate, anchorKey, fetchPosterUrl, TMDB_IMAGE_BASE, SLUGS } from '../load.js';
+import { freshDb, loadedDb } from './helper.js';
 
 test('schema.sql applies twice cleanly', async () => {
   const db = await freshDb();
@@ -22,7 +22,7 @@ test('applying schema.sql to a POPULATED database leaves the 4-column unique key
   // database — so on a second apply it has to be added by the explicit do-block, or the table is
   // left with no unique key at all and the loader can double-insert.
   const db = await freshDb();
-  await loadAll(db, {});                         // creates and fills
+  await loadAll(db, { tmdbApiKey: null });                         // creates and fills
   await applySchema(db);                         // the upgrade path over real rows
   await applySchema(db);                         // and again
 
@@ -80,9 +80,9 @@ test('the loader is idempotent: loading twice leaves exactly the same rows', asy
     return out;
   };
 
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
   const first = await snapshot();
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
   const second = await snapshot();
   assert.deepEqual(second, first);
   assert.equal(first.films, SLUGS.length);
@@ -93,7 +93,7 @@ test('the loader is idempotent: loading twice leaves exactly the same rows', asy
 
 test('reloading one film replaces only that film, leaving the other five byte-identical', async () => {
   const db = await freshDb();
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
 
   // A total row count would not notice one film's rows being swapped for another's, so digest
   // each film separately.
@@ -162,7 +162,7 @@ test('anchor candidate rules reject captions, lyrics, speaker labels and repeate
 
 test('the two v2 ids with no v3 successor fold into `dies` and keep their detail', async () => {
   const db = await freshDb();
-  const { reports } = await loadAll(db, {});
+  const { reports } = await loadAll(db, { tmdbApiKey: null });
   const temporary = new Set(reports.flatMap((r) => Object.keys(r.temporary_v2_mapping)));
   assert.deepEqual([...temporary].sort(), ['loved_one_dies', 'pet_animal_dies']);
 
@@ -184,7 +184,7 @@ test('the two v2 ids with no v3 successor fold into `dies` and keep their detail
 
 test('presence is asserted only by the per-scene run; the per-beat screener never asserts', async () => {
   const db = await freshDb();
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
   const { rows } = await db.query(
     `select source, channel, asserted, count(*)::int as n from scene_labels
       where channel in ('presence','mention') group by 1,2,3 order by 1,2,3`,
@@ -210,7 +210,7 @@ test('presence is asserted only by the per-scene run; the per-beat screener neve
 
 test('nemo has no second run, so confirmed_by_second_run is null there and set elsewhere', async () => {
   const db = await freshDb();
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
   const nemo = await db.query('select distinct confirmed_by_second_run as c from scenes where film_id = $1', ['nemo']);
   assert.deepEqual(nemo.rows.map((r) => r.c), [null]);
   const lk = await db.query('select count(*)::int as n from scenes where film_id = $1 and confirmed_by_second_run is not null', ['lion-king']);
@@ -231,7 +231,7 @@ const shingles = (list, n) => {
 test('no verbatim subtitle text reaches the database beyond the anchor quotes', async () => {
   const RUN = 8; // a run of 8 consecutive words in common is a quotation, not a coincidence
   const db = await freshDb();
-  await loadAll(db, {});
+  await loadAll(db, { tmdbApiKey: null });
   const exp = await openExperiment();
 
   for (const slug of SLUGS) {
@@ -276,5 +276,188 @@ test('no verbatim subtitle text reaches the database beyond the anchor quotes', 
     const verbatimWords = anchors.reduce((n, a) => n + words(a.quote).length, 0);
     assert.ok(verbatimWords <= 36, `${slug} stores ${verbatimWords} verbatim words`);
   }
+  await db.end();
+});
+
+// ------------------------------------------------------------------------------------------------
+// short_label: the 1-3 plain words a scene row shows instead of the full sentence label
+// ------------------------------------------------------------------------------------------------
+
+test('every presence and event item has a short_label, and modifiers have none', async () => {
+  const exp = await openExperiment();
+  const { items } = buildVocabulary(exp.taxonomy);
+
+  const scannable = items.filter((i) => i.layer === 'presence' || i.layer === 'event');
+  assert.equal(scannable.length, exp.taxonomy.PRESENCE.length + exp.taxonomy.EVENTS.length);
+  for (const i of scannable) {
+    assert.ok(i.short_label, `${i.id} has no short_label`);
+    const wordCount = i.short_label.trim().split(/\s+/).length;
+    assert.ok(wordCount >= 1 && wordCount <= 3, `${i.id} short_label "${i.short_label}" is ${wordCount} words`);
+    // Sentence case: a capital first letter and no ALL-CAPS shouting.
+    assert.match(i.short_label, /^[A-Z]/, `${i.id} short_label is not sentence case`);
+    assert.doesNotMatch(i.short_label, /[.,;:!?()]/, `${i.id} short_label carries punctuation`);
+    assert.notEqual(i.short_label, i.short_label.toUpperCase());
+  }
+  for (const i of items.filter((x) => x.layer === 'modifier')) {
+    assert.equal(i.short_label, null, `${i.id} is a modifier and should have no short_label`);
+  }
+});
+
+test('a taxonomy item with no short_label is a hard error, not a silent sentence in a scene row', async () => {
+  const exp = await openExperiment();
+  const taxonomy = {
+    ...exp.taxonomy,
+    PRESENCE: [...exp.taxonomy.PRESENCE, { id: 'brand_new_thing', layer: 'presence', group: 'objects_hazards', label: 'A brand new thing nobody has named yet' }],
+  };
+  assert.throws(() => buildVocabulary(taxonomy), /no short_label for taxonomy item "brand_new_thing"/);
+});
+
+test('short_label reaches the database, and the words the design uses are the words stored', async () => {
+  const db = await loadedDb();
+  const { rows } = await db.query(
+    "select id, short_label from vocabulary where layer in ('presence','event') and short_label is null",
+  );
+  assert.deepEqual(rows, []);
+
+  // The exact tags read off the film page in the design canvas.
+  const expected = {
+    shark: 'Shark',
+    large_predator: 'Big predator',
+    deep_dark_water: 'Deep water',
+    believed_dead: 'Thought dead',
+    jump_scare: 'Sudden scare',
+    chased: 'Chase',
+    terrified: 'Panic',
+    darkness: 'Darkness',
+    blood_wound: 'Blood',
+    scary_appearance: 'Scary-looking character',
+    child_taken: 'Child taken',
+    family_in_danger: 'Family in danger',
+    dangerous_machine: 'Machinery',
+    needle_medical: 'Needles and medical',
+  };
+  const { rows: stored } = await db.query(
+    'select id, short_label from vocabulary where id = any($1) order by id',
+    [Object.keys(expected)],
+  );
+  assert.equal(stored.length, Object.keys(expected).length);
+  for (const r of stored) assert.equal(r.short_label, expected[r.id], `${r.id}`);
+
+  // A real scene's tag list is scannable: presence first, then events, all short.
+  const { rows: tags } = await db.query(
+    `select v.layer, v.short_label
+       from scene_labels l join vocabulary v on v.id = l.vocabulary_id
+      where l.scene_id = 'nemo:S01' and l.asserted and l.channel in ('presence','event')
+      order by case v.layer when 'presence' then 0 else 1 end, v.short_label`,
+  );
+  assert.ok(tags.length > 0);
+  for (const t of tags) assert.ok(t.short_label.split(/\s+/).length <= 3, t.short_label);
+});
+
+// ------------------------------------------------------------------------------------------------
+// poster_url: filled from TMDB by IMDb id when a key is present, null in every other case
+// ------------------------------------------------------------------------------------------------
+
+test('fetchPosterUrl returns an absolute TMDB URL for a film it finds', async () => {
+  let seen = null;
+  const fetchImpl = async (url) => {
+    seen = url;
+    return { ok: true, json: async () => ({ movie_results: [{ id: 12, poster_path: '/abc123.jpg' }] }) };
+  };
+  const got = await fetchPosterUrl('tt0266543', { apiKey: 'k', fetchImpl });
+  assert.equal(got, `${TMDB_IMAGE_BASE}/abc123.jpg`);
+  assert.match(seen, /find\/tt0266543\?external_source=imdb_id/);
+});
+
+test('fetchPosterUrl returns null, never a guess, for every way the lookup can fail', async () => {
+  const ok = (body) => async () => ({ ok: true, json: async () => body });
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: null, fetchImpl: ok({}) }), null, 'no api key');
+  assert.equal(await fetchPosterUrl(null, { apiKey: 'k', fetchImpl: ok({}) }), null, 'no imdb id');
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: async () => ({ ok: false, status: 404 }) }), null, 'http error');
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [] }) }), null, 'no match');
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [{ poster_path: null }] }) }), null, 'match with no poster');
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: ok({ movie_results: [{ poster_path: 'not-a-path' }] }) }), null, 'malformed path');
+  assert.equal(await fetchPosterUrl('tt1', { apiKey: 'k', fetchImpl: async () => { throw new Error('offline'); } }), null, 'request threw');
+});
+
+test('the loader stores a poster when a key is present and leaves null when it is not', async () => {
+  const fetchImpl = async (url) => ({
+    ok: true,
+    json: async () => ({ movie_results: [{ poster_path: `/${/tt\d+/.exec(url)[0]}.jpg` }] }),
+  });
+
+  const withKey = await freshDb();
+  const res = await loadAll(withKey, { slugs: ['nemo', 'lion-king'], tmdbApiKey: 'test-key', fetchImpl });
+  assert.equal(res.posters, 2);
+  const { rows } = await withKey.query('select slug, imdb_id, poster_url from films order by slug');
+  for (const r of rows) {
+    assert.equal(r.poster_url, `${TMDB_IMAGE_BASE}/${r.imdb_id}.jpg`, r.slug);
+  }
+  await withKey.end();
+
+  const noKey = await freshDb();
+  const res2 = await loadAll(noKey, { slugs: ['nemo'], tmdbApiKey: null, fetchImpl });
+  assert.equal(res2.posters, 0);
+  assert.equal(res2.postersLookedUp, false);
+  const { rows: none } = await noKey.query('select poster_url from films');
+  assert.deepEqual(none, [{ poster_url: null }]);
+  await noKey.end();
+});
+
+test('a failed poster lookup is a note, not a failed load', async () => {
+  const db = await freshDb();
+  const res = await loadAll(db, {
+    slugs: ['nemo'],
+    tmdbApiKey: 'test-key',
+    fetchImpl: async () => { throw new Error('TMDB is down'); },
+  });
+  assert.equal(res.posters, 0);
+  assert.ok(res.reports[0].notes.some((n) => /no poster came back/.test(n)));
+  const { rows } = await db.query('select title, poster_url from films');
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].poster_url, null);
+  await db.end();
+});
+
+test('a poster lookup that never finishes is abandoned, not waited on', async () => {
+  // The failure this guards against: fetch resolves as soon as the headers arrive, so a deadline
+  // on the request alone still leaves a body that never ends free to hang the whole load.
+  let aborted = false;
+  const fetchImpl = async (_url, { signal } = {}) => ({
+    ok: true,
+    json: () =>
+      new Promise((_resolve, reject) => {
+        // A body that never settles, exactly as a stalled connection behaves.
+        signal?.addEventListener('abort', () => {
+          aborted = true;
+          reject(new Error('aborted'));
+        });
+      }),
+  });
+
+  const started = Date.now();
+  const got = await fetchPosterUrl('tt0266543', { apiKey: 'k', fetchImpl, timeoutMs: 50 });
+  const elapsed = Date.now() - started;
+
+  assert.equal(got, null, 'an abandoned lookup is a null poster, never a thrown load');
+  assert.ok(aborted, 'the body read was aborted, not just the request');
+  assert.ok(elapsed < 2000, `gave up in ${elapsed}ms`);
+});
+
+test('a slow lookup does not fail the film it belongs to', async () => {
+  const db = await freshDb();
+  const res = await loadAll(db, {
+    slugs: ['nemo'],
+    tmdbApiKey: 'test-key',
+    timeoutMs: 40,
+    fetchImpl: async (_url, { signal } = {}) => ({
+      ok: true,
+      json: () => new Promise((_r, reject) => signal?.addEventListener('abort', () => reject(new Error('aborted')))),
+    }),
+  });
+  assert.equal(res.posters, 0);
+  const { rows } = await db.query('select title, poster_url from films');
+  assert.equal(rows.length, 1, 'the film still loaded');
+  assert.equal(rows[0].poster_url, null);
   await db.end();
 });

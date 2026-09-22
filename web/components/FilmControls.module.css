@@ -1,0 +1,293 @@
+/* --- age band ---------------------------------------------------------------------------------- */
+
+.ageWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ageLabel {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.ageGroup {
+  display: flex;
+  background: var(--sheet);
+  border: 1.5px solid var(--hairline);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.ageOption {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--body);
+  text-decoration: none;
+}
+
+.ageOption:hover {
+  color: var(--ink);
+}
+
+.ageOptionOn,
+.ageOptionOn:hover {
+  background: var(--butter);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* --- what the levels mean ---------------------------------------------------------------------- */
+
+.levels {
+  width: 100%;
+}
+
+.levelsSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--coral-text);
+  text-decoration: underline;
+  cursor: pointer;
+  list-style: none;
+}
+
+.levelsSummary::-webkit-details-marker {
+  display: none;
+}
+
+.levels[open] .levelsSummary svg {
+  transform: rotate(180deg);
+}
+
+.levelsBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--sheet);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sheet);
+  padding: 20px 22px 22px;
+  margin-top: 8px;
+}
+
+.levelsLead {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 8px 12px 8px 0;
+  vertical-align: top;
+}
+
+.table thead th {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--body);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.table tbody tr + tr th,
+.table tbody tr + tr td {
+  border-top: 1px solid var(--hairline);
+}
+
+.mark {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+  padding-right: 20px;
+}
+
+.levelsNote {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+/* --- filters ----------------------------------------------------------------------------------- */
+
+.filters {
+  background: var(--sheet);
+  border: 1px dashed var(--dust);
+  border-radius: var(--radius-card);
+  padding: 14px 20px 18px;
+}
+
+.filtersSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 44px;
+  justify-content: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.filtersSummary::-webkit-details-marker {
+  display: none;
+}
+
+.filtersTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.filtersPrompt {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.filterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 14px;
+}
+
+.groups {
+  display: grid;
+  gap: 18px;
+}
+
+.group {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.groupLegend {
+  padding: 0;
+  color: var(--body);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  background: var(--page);
+  border: 1.5px solid var(--hairline);
+  border-radius: 999px;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--ink);
+}
+
+.chip:focus-within {
+  outline: 3px solid var(--coral-text);
+  outline-offset: 3px;
+}
+
+/* The one source of a chip's selected look: the checkbox. It follows a tick or an untick
+   immediately, before the form is submitted, and it cannot disagree with the control. */
+.chip:has(.checkbox:checked) {
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  font-weight: 700;
+}
+
+.chipCount {
+  color: var(--body);
+  font-weight: 700;
+}
+
+.chip:has(.checkbox:checked) .chipCount {
+  color: var(--ink);
+}
+
+/* The checkbox stays in the accessibility tree and keeps the label operable by keyboard; the chip
+   is its visible state. */
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.filterActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.clear {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--coral-text);
+}
+
+.count {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--body);
+}
+
+@media (min-width: 860px) {
+  .filtersSummary {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+}

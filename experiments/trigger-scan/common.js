@@ -52,11 +52,15 @@ export async function pool(items, concurrency, worker) {
 }
 
 // POST JSON with backoff on rate-limit / overload responses.
+// Resolves to { json, latencyMs, status, retries, attempts } — the last three are there so a caller
+// that records a run can say what really happened, including the failed attempts.
 export async function postJson(url, headers, body, { retries = 5 } = {}) {
+  const attempts = [];
   for (let attempt = 0; ; attempt++) {
     const started = Date.now();
     const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body) });
-    if (res.ok) return { json: await res.json(), latencyMs: Date.now() - started };
+    attempts.push({ status: res.status, ms: Date.now() - started });
+    if (res.ok) return { json: await res.json(), latencyMs: Date.now() - started, status: res.status, retries: attempt, attempts };
     const text = await res.text();
     if (![429, 500, 502, 503, 529].includes(res.status) || attempt >= retries) {
       throw new Error(`${url} -> ${res.status}: ${text.slice(0, 500)}`);
