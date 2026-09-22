@@ -4,12 +4,16 @@
     { "source": "/api/openapi.json", "destination": "/api/openapi" },
     { "source": "/", "destination": "/api/openapi" }
   ],
+  "functions": {
+    "api/add/jobs.js": { "maxDuration": 300 }
+  },
+  "crons": [{ "path": "/api/add/status", "schedule": "0 3 * * *" }],
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, OPTIONS" }
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
       ]
     }
   ]

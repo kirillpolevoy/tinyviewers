@@ -13,6 +13,8 @@
 import 'server-only';
 import { cache } from 'react';
 import { getDb } from './db';
+import { buildReplayPayload } from './replay';
+import type { RawExcerpts, RawRecording, ReplayPayload } from './replay';
 import type { Scene, SceneTag } from './scenes';
 
 export type FilmSummary = {
@@ -234,6 +236,95 @@ export const getShowcase = cache(async (films?: FilmSummary[]): Promise<Showcase
     hasShark: sharkIndex >= 0,
     scenes: [...picked.values()].sort((a, b) => a.startMs - b.startMs),
   };
+});
+
+// ---------------------------------------------------------------------------------------------
+// Recordings — the one place machinery is allowed out, and only onto /watch
+// ---------------------------------------------------------------------------------------------
+//
+// Everything above this line is bound by the rule at the top of the file: no engine, no model, no
+// probability reaches a page. "Watch it work" is the deliberate exception — it is the page about
+// the machinery, it names Jev and Sonnet out loud, and a parent only reaches it by asking to. The
+// separation is kept by route rather than by column: these two readers are used by /watch and by
+// nothing else, and no query above them touches the `recordings` table.
+
+export type RecordedFilm = {
+  slug: string;
+  title: string;
+  year: number | null;
+  posterUrl: string | null;
+  sceneCount: number;
+  /** Straight out of the recording's own meta: the run's wall clock and what it cost. */
+  wallMs: number;
+  costUsd: number;
+  beats: number;
+};
+
+/**
+ * The films with a recording to play, for the /watch index.
+ *
+ * `wall_ms` and `cost_usd` are pulled out of the jsonb in SQL rather than by loading the document:
+ * a recording is about a megabyte, and the index shows two numbers from each of six of them. Postgres
+ * reads the two fields and sends twenty bytes.
+ */
+export const listRecordedFilms = cache(async (): Promise<RecordedFilm[]> => {
+  const db = await getDb();
+  const { rows } = await db.query<{
+    slug: string;
+    title: string;
+    year: number | null;
+    poster_url: string | null;
+    scene_count: number;
+    wall_ms: string | number | null;
+    cost_usd: string | number | null;
+    beats: string | number | null;
+  }>(
+    `select f.slug, f.title, f.year, f.poster_url,
+            (select count(*)::int from scenes s where s.film_id = f.id) as scene_count,
+            (r.recording -> 'meta' ->> 'wall_ms') as wall_ms,
+            (r.recording -> 'meta' ->> 'cost_usd') as cost_usd,
+            (r.recording -> 'meta' ->> 'beats') as beats
+       from recordings r
+       join films f on f.id = r.film_id
+      order by f.title`,
+  );
+  return rows.map((row) => ({
+    slug: row.slug,
+    title: row.title,
+    year: row.year,
+    posterUrl: row.poster_url,
+    sceneCount: row.scene_count,
+    wallMs: Number(row.wall_ms ?? 0),
+    costUsd: Number(row.cost_usd ?? 0),
+    beats: Number(row.beats ?? 0),
+  }));
+});
+
+/**
+ * One film's recorded run, already reduced to what the browser replays.
+ *
+ * The reduction happens here, on the server, and not in the component: the row is a megabyte of
+ * probabilities and the page needs about a seventh of it. `excerpts` is null for a film whose
+ * excerpt file was never loaded — the recordings are in git and the excerpt files are not — and the
+ * payload is built without lines rather than refused.
+ */
+export const getReplay = cache(async (slug: string): Promise<ReplayPayload | null> => {
+  const db = await getDb();
+  const { rows } = await db.query<{ recording: RawRecording | string; excerpts: RawExcerpts | string | null }>(
+    `select r.recording, r.excerpts
+       from recordings r
+       join films f on f.id = r.film_id
+      where lower(f.slug) = lower($1)`,
+    [slug],
+  );
+  const row = rows[0];
+  if (!row) return null;
+  // jsonb comes back parsed by `pg` and by PGlite; a string would mean a driver that does not.
+  const recording = (typeof row.recording === 'string' ? JSON.parse(row.recording) : row.recording) as RawRecording;
+  const excerpts = (
+    typeof row.excerpts === 'string' ? JSON.parse(row.excerpts) : row.excerpts
+  ) as RawExcerpts | null;
+  return buildReplayPayload(recording, excerpts);
 });
 
 /** Real numbers for the Home band. Counts, nothing invented. */

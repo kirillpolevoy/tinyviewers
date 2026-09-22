@@ -12,7 +12,8 @@ test('schema.sql applies twice cleanly', async () => {
     "select table_name from information_schema.tables where table_schema = 'public' order by table_name",
   );
   assert.deepEqual(rows.map((r) => r.table_name), [
-    'analysis_runs', 'anchors', 'films', 'groups', 'scene_labels', 'scenes', 'time_mappings', 'tracks', 'vocabulary',
+    'analysis_runs', 'anchors', 'films', 'groups', 'job_blobs', 'jobs', 'recordings', 'scene_labels',
+    'scenes', 'time_mappings', 'tracks', 'vocabulary',
   ]);
   await db.end();
 });

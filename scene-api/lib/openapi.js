@@ -1,7 +1,7 @@
 // An OpenAPI 3.1 description written for an assistant that has never seen this API and will read
 // it once, cold, before answering a worried parent. Prose over jargon on purpose.
 
-export const ROUTES = ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/vocabulary', '/api/openapi.json'];
+export const ROUTES = ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/films/{slug}/recording', '/api/vocabulary', '/api/openapi.json'];
 
 const HONESTY = `
 WHAT THIS DATA IS, AND WHAT IT IS NOT — say this to the parent, do not skip it:
@@ -141,7 +141,105 @@ three- or four-year-old, and you must pass that warning on. age only chooses whi
 min_severity is compared against; it never hides scenes on its own.
 `.trim();
 
-export function openapi({ serverUrl = '/' } = {}) {
+// The "Add a movie" endpoints. They are for the owner's own web page, behind a passcode, and two
+// of them spend real money; an assistant has no business calling them.
+//
+// They are NOT in the document served at /api/openapi.json. `x-internal: true` is an annotation,
+// and an importer that walks `paths` — which is most of them — got two POST operations it was
+// perfectly willing to offer a parent as buttons. So the public document omits them entirely and
+// the complete one, which is still worth having as an account of what this deployment answers,
+// is at /api/openapi.json?internal=1.
+const INTERNAL = {
+  tags: ['internal'],
+  'x-internal': true,
+};
+
+function internalPaths() {
+  const passcode = { type: 'string', description: 'The shared passcode. Compared in constant time against ADD_FILM_PASSCODE; 503 when none is configured.' };
+  return {
+    '/api/add/status': {
+      get: {
+        ...INTERNAL,
+        operationId: 'addStatus',
+        summary: 'INTERNAL. Whether a run is going, what today has cost, and whether a passcode is set.',
+        description: 'Public and passcode-free, so the page can decide what to draw before anyone types anything. No-store.',
+        responses: { 200: { description: '{ running: {id}|null, spent_today_usd, cap_usd, passcode_configured, and reserve_usd while a run is live: how much of spent_today_usd is set aside for it rather than billed }', content: { 'application/json': { schema: { type: 'object' } } } } },
+      },
+    },
+    '/api/add/resolve': {
+      post: {
+        ...INTERNAL,
+        operationId: 'addResolve',
+        summary: 'INTERNAL. Turn a title or an IMDb link into at most three films to choose from.',
+        requestBody: {
+          required: true,
+          content: { 'application/json': { schema: { type: 'object', required: ['query', 'passcode'], properties: { query: { type: 'string', description: 'A title, an IMDb id, or any URL with one in it.' }, passcode } } } },
+        },
+        responses: {
+          200: { description: 'candidates[]: tmdb_id, imdb_id, title, year, poster_url, overview, slug, exists.', content: { 'application/json': { schema: { type: 'object' } } } },
+          400: { description: 'Empty query.' },
+          401: { description: 'Wrong passcode.' },
+          502: { description: 'TMDB did not answer.' },
+          503: { description: 'No passcode is configured on this deployment.' },
+        },
+      },
+    },
+    '/api/add/jobs': {
+      post: {
+        ...INTERNAL,
+        operationId: 'addJob',
+        summary: 'INTERNAL. Start the real analysis pipeline for one film. Costs money.',
+        description: 'Returns 202 and an id immediately; the run continues in the background of the same invocation. Poll GET /api/add/jobs/{id}. One run at a time, and a daily spend cap.',
+        requestBody: {
+          required: true,
+          content: { 'application/json': { schema: { type: 'object', required: ['imdb_id', 'passcode'], properties: { imdb_id: { type: 'string', description: 'The only thing taken from the body. Title, year, slug, poster and synopsis are looked up from TMDB by this id, so a caller cannot choose the slug a run writes to.' }, tmdb_id: { type: 'integer', description: 'A hint only: which TMDB record to use when the IMDb id resolves to more than one.' }, passcode } } } },
+        },
+        responses: {
+          202: { description: '{ id }', content: { 'application/json': { schema: { type: 'object', properties: { id: { type: 'string' } } } } } },
+          400: { description: 'error_code "no_imdb_id".' },
+          401: { description: 'Wrong passcode.' },
+          409: { description: 'error_code "exists" (with slug) or "busy" (with the running job id).' },
+          429: { description: 'error_code "daily_cap", with spent_usd, cap_usd and reserve_usd; or "too_many_attempts" after ten wrong passcodes from one address.' },
+          502: { description: 'error_code "tmdb_failed": TMDB did not answer, or has no film with that IMDb id.' },
+          503: { description: 'No passcode is configured on this deployment.' },
+        },
+      },
+    },
+    '/api/add/jobs/{id}': {
+      get: {
+        ...INTERNAL,
+        operationId: 'addJobStatus',
+        summary: 'INTERNAL. One job: its steps, its cost, and whether its recording is ready.',
+        description: 'Public — the 22-character id is the secret. No-store. Never returns subtitle text, and never the recording: it is about a megabyte and this is polled every 1.5 s. Fetch GET /api/add/jobs/{id}/recording once `recording_ready` turns true.',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: {
+          200: { description: 'status, step, film, steps[], cost_usd, error_code, error, recording_ready, scene_count, created_at, updated_at, elapsed_ms.', content: { 'application/json': { schema: { type: 'object' } } } },
+          404: { description: 'No job with that id.' },
+        },
+      },
+    },
+    '/api/add/jobs/{id}/recording': {
+      get: {
+        ...INTERNAL,
+        operationId: 'addJobRecording',
+        summary: 'INTERNAL. The replay for one run, once its screening pass has finished.',
+        description: 'Same shape as GET /api/films/{slug}/recording. `no-store` while the job is still running, cacheable once it is not. `excerpts` is null after the job ends: they live on the film from then on.',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: {
+          200: { description: '{ recording, excerpts }.', content: { 'application/json': { schema: { $ref: '#/components/schemas/Recording' } } } },
+          404: { description: 'error_code "no_job", or "no_recording" until the jev step has finished.' },
+        },
+      },
+    },
+  };
+}
+
+/**
+ * @param {object} opts
+ * @param {boolean} [opts.internal] include the owner's own `/api/add` operations. Off by default:
+ *   what is served at /api/openapi.json is the connector surface, and nothing on it spends money.
+ */
+export function openapi({ serverUrl = '/', internal = false } = {}) {
   const vocabHint = 'A vocabulary id, a parent-facing label, or an everyday word. Case and plurals do not matter. See GET /api/vocabulary.';
   return {
     openapi: '3.1.0',
@@ -222,6 +320,38 @@ export function openapi({ serverUrl = '/' } = {}) {
           },
         },
       },
+      '/api/films/{slug}/recording': {
+        get: {
+          operationId: 'getRecording',
+          summary: 'The recorded screening run for a film, replayable at the speed it really happened.',
+          description: [
+            'This is for a page that shows the analysis working, not for answering a question about a film.',
+            'An assistant deciding what to tell a parent does not need it; a browser drawing a live replay does.',
+            '',
+            'It returns one real run of the per-beat screener over the whole subtitle track: every request that',
+            'went out, when it went out on the monotonic clock, when it came back, the token counts, and all 103',
+            'probabilities for each beat. `recording.timeline[]` is the list to iterate — one entry per response,',
+            'sorted by arrival, each a snapshot of the whole run at that instant with running totals.',
+            '',
+            'Iterate it against a REAL clock and never stretch or compress it: if the run took 5.2 seconds the',
+            'replay takes 5.2 seconds, or the page is showing a run that did not happen. Beats do not arrive in film',
+            'order — requests go out eight at a time and come back when they come back — so do not sort the timeline',
+            'by film time to make it tidy. Drive counters off each entry\'s running totals, not your own accumulator.',
+            '',
+            '`excerpts` maps a flagged beat id to at most two short subtitle lines with the keywords that earned',
+            'them, so a beat can show its evidence. It is null for a film whose excerpt file was never loaded, and',
+            'a page must work without it. The recording itself contains no subtitle text at all.',
+            '',
+            'The body is a few hundred kilobytes. That is the point: it is a whole run, not a summary.',
+          ].join('\n'),
+          parameters: [{ $ref: '#/components/parameters/Slug' }],
+          responses: {
+            200: { description: 'The run, and the beat excerpts if there are any.', content: { 'application/json': { schema: { $ref: '#/components/schemas/Recording' } } } },
+            400: { $ref: '#/components/responses/BadRequest' },
+            404: { description: 'That film exists but no run was recorded for it, or there is no such film.', content: { 'application/json': { schema: { $ref: '#/components/schemas/Error' } } } },
+          },
+        },
+      },
       '/api/vocabulary': {
         get: {
           operationId: 'getVocabulary',
@@ -240,6 +370,7 @@ export function openapi({ serverUrl = '/' } = {}) {
           responses: { 200: { description: 'The OpenAPI 3.1 description of this API.', content: { 'application/json': { schema: { type: 'object' } } } } },
         },
       },
+      ...(internal ? internalPaths() : {}),
     },
     components: {
       parameters: {
@@ -254,7 +385,7 @@ export function openapi({ serverUrl = '/' } = {}) {
           type: 'object',
           required: ['error', 'message'],
           properties: {
-            error: { type: 'string', enum: ['bad_request', 'not_found', 'method_not_allowed', 'internal_error'], description: 'method_not_allowed (405) comes back for anything other than GET, HEAD or OPTIONS: this API is read-only.' },
+            error: { type: 'string', enum: ['bad_request', 'not_found', 'method_not_allowed', 'internal_error'], description: 'method_not_allowed (405) comes back for anything other than GET, HEAD or OPTIONS. Every endpoint an assistant should call is read-only; the POST routes under /api/add are the owner\'s own and are not described here at all.' },
             message: { type: 'string', description: 'Plain English; safe to paraphrase to the user.' },
             did_you_mean: { type: 'array', items: { type: 'string' } },
             available: { type: 'array', items: { type: 'string' } },
@@ -367,6 +498,20 @@ export function openapi({ serverUrl = '/' } = {}) {
             detail: { type: 'string', description: 'Something the vocabulary has no id for yet, e.g. a `dies` label whose detail is "a pet or animal".' },
             source: { type: 'string', description: 'The model that produced the label.' },
             review_status: { type: 'string' },
+          },
+        },
+        Recording: {
+          type: 'object',
+          properties: {
+            film: { type: 'object', properties: { slug: { type: 'string' }, title: { type: 'string' }, year: { type: ['integer', 'null'] } } },
+            recording: {
+              type: 'object',
+              description: 'meta (counts, wall_ms, tokens, cost), thresholds (the flag rule and every flagged beat), requests[] in send order, beats[] in film order with all 103 answers each, and timeline[] — the replay list.',
+            },
+            excerpts: {
+              type: ['object', 'null'],
+              description: 'Beat id -> at most two { cue, line, score, why } entries. Flagged beats only, at most 12 words a line. Null when no excerpt file was loaded for this film.',
+            },
           },
         },
         Vocabulary: {

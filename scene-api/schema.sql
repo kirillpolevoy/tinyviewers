@@ -1,9 +1,25 @@
 -- scene-api schema. Plain Postgres, idempotent: safe to apply any number of times.
 -- Target: Neon (also runs on plain Postgres 14+ and on @electric-sql/pglite for the tests).
 --
--- NO SUBTITLE TEXT IS STORED ANYWHERE in here. The only verbatim words from a subtitle track are
--- the anchor quotes (anchors.quote), which are capped at 12 words and exist so a parent can find
--- the same line on their own player and tell us where it lands on their clock.
+-- NO SUBTITLE TEXT IS STORED ANYWHERE in here, with four named exceptions, and nothing else may be
+-- added to that list without the owner saying so:
+--
+--   1. anchors.quote — three lines per track, capped at 12 words, so a parent can find the same line
+--      on their own player and tell us where it lands on their clock.
+--   2. recordings.excerpts — the owner-approved beat excerpts: at most two lines of at most 12 words
+--      each, for FLAGGED beats only, 12-20% of a film's subtitle words. The policy is stated in
+--      experiments/trigger-scan/RECORDINGS.md, enforced by verify-excerpts.js, and enforced again on
+--      every live run by verifyExcerpts() in pipeline/excerpts.js.
+--      recordings.recording itself contains no text at all: ids, offsets and numbers only.
+--   3. jobs.excerpts — the SAME excerpts, on the job row, for the minutes one live analysis is
+--      running. The replay page shows the evidence lines while the run is still going, before there
+--      is a film to hang them off. Nulled out the moment the job reaches done or failed: by the
+--      run itself, by the stale sweep in lib/jobs.js when a run died without getting that far, and
+--      by the migration below on an older database. The recording endpoint refuses to serve them
+--      for a job that is not live regardless, so the column going stale cannot become an answer.
+--   4. job_blobs.srt — a whole subtitle file, for the minutes one live analysis is running, and
+--      deleted the moment the job ends. See the comment on that table; it is the only place a whole
+--      track ever sits, and it is never served by any endpoint.
 
 -- ---------------------------------------------------------------------------------------------
 -- Films and tracks
@@ -174,6 +190,82 @@ exception
 end $$;
 
 -- ---------------------------------------------------------------------------------------------
+-- Recordings: one real Jev run per film, replayable at the speed it happened
+-- ---------------------------------------------------------------------------------------------
+
+-- `recording` is the exact content of experiments/trigger-scan/recordings/<slug>.jev.json: every
+-- request that went out, when it went out, when it came back, and the 103 probabilities per beat.
+-- It is served whole so a "Watch it work" page can iterate its `timeline[]` against a real clock.
+-- It contains NO subtitle text; verify-recording.js asserts that every string in it matches
+-- ^[\w.:+-]+$ (ids, model names, ISO dates — dialogue has spaces).
+--
+-- `excerpts` is the optional file beside it: two lines of at most 12 words for flagged beats only.
+-- This one DOES hold subtitle text, deliberately and within the policy in RECORDINGS.md, so a beat
+-- can show the evidence behind its flag. Null is a normal value; the page must work without it.
+--
+-- `recorded_at` is the run's own meta.started_at, not when the row was written, so re-loading the
+-- same file does not move the date.
+create table if not exists recordings (
+  film_id     text primary key references films (id) on delete cascade,
+  recording   jsonb not null,
+  excerpts    jsonb,
+  recorded_at timestamptz,
+  created_at  timestamptz not null default now()
+);
+
+-- ---------------------------------------------------------------------------------------------
+-- Jobs: one live run of the analysis pipeline for a film nobody has analysed yet
+-- ---------------------------------------------------------------------------------------------
+
+-- A job is the whole state of one "Add a movie" run, and it is polled by id over a public endpoint:
+-- the 22-character id IS the secret, so nothing sensitive may ever be put in a column here.
+--
+-- `steps` is the array the progress UI renders, one entry per stage:
+--   { id, label, status: 'pending'|'running'|'done'|'failed', started_ms, ended_ms, detail }
+-- The two times are OFFSETS IN MILLISECONDS from the job's own start, not wall-clock timestamps, so
+-- the browser can show elapsed time without knowing anything about the server's clock or timezone.
+--
+-- `recording` is written the moment the jev stage ends, before Sonnet has started, because the
+-- replay is the most interesting thing on the page and there is no reason to make anyone wait two
+-- more minutes for it. It is served by GET /api/add/jobs/{id}/recording, not by the polling
+-- endpoint: a recording is about a megabyte and the page polls every 1.5 s.
+--
+-- `excerpts` is the fourth exception in the header of this file, and the only one with a retention
+-- rule: it is nulled out when the job reaches done or failed.
+create table if not exists jobs (
+  id          text primary key,             -- 22 chars, base64url of 16 random bytes
+  status      text not null check (status in ('queued', 'running', 'done', 'failed')),
+  step        text,                         -- the stage id currently running, or the one that failed
+  film        jsonb not null,               -- { tmdb_id, imdb_id, title, year, poster_url, overview, slug }
+  steps       jsonb not null default '[]'::jsonb,
+  cost_usd    numeric(10, 6) not null default 0,
+  error_code  text,                         -- machine-readable: the web branches on this
+  error       text,                         -- one sentence, safe to show a person
+  recording   jsonb,
+  excerpts    jsonb,
+  scene_count integer,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+-- THE ONLY PLACE A WHOLE SUBTITLE TRACK EVER SITS. A stage hands the text to the next stage through
+-- this table rather than through memory, because the pipeline has to survive being resumed and
+-- because holding a megabyte of dialogue in a function's heap for five minutes is worse, not better.
+--
+-- It is deleted the moment its job reaches done or failed. A function that is killed between two
+-- stages reaches neither, and its blob is then swept by whichever comes first: the next call to any
+-- /api/add route or any /api/films route (once per instance per ten minutes, see maybeSweepBlobs),
+-- or the daily cron on /api/add/status. So: minutes on a deployment anybody is using, and within a
+-- day on one nobody is. Thirty minutes is the age at which a blob becomes eligible to be swept, not
+-- a promise about when it will be. Vercel's Hobby plan refuses any cron more frequent than daily.
+-- No endpoint returns this column.
+create table if not exists job_blobs (
+  job_id     text primary key references jobs (id) on delete cascade,
+  srt        text not null,
+  created_at timestamptz not null default now()
+);
+
+-- ---------------------------------------------------------------------------------------------
 -- Indexes
 -- ---------------------------------------------------------------------------------------------
 
@@ -190,3 +282,33 @@ create index if not exists scenes_track_idx           on scenes (track_id);
 create index if not exists scene_labels_scene_idx     on scene_labels (scene_id);
 create index if not exists scene_labels_vocab_idx     on scene_labels (vocabulary_id, channel, asserted);
 create index if not exists scene_labels_possible_idx  on scene_labels (vocabulary_id, channel, probability);
+-- "is another run already going?" and "what has today cost?" are the two questions the add
+-- endpoints ask on every request, so both have an index.
+create index if not exists jobs_live_idx              on jobs (status, updated_at);
+create index if not exists jobs_created_idx           on jobs (created_at);
+create index if not exists job_blobs_created_idx      on job_blobs (created_at);
+
+-- ---------------------------------------------------------------------------------------------
+-- One live run at a time, enforced by the database rather than by a read-then-write
+-- ---------------------------------------------------------------------------------------------
+
+-- "Is another run going?" used to be a SELECT followed by an INSERT, which is not a lock: two
+-- requests a millisecond apart both saw no live job, both were admitted, both spent money, and the
+-- second one's `writeFilm` deleted the first one's film. The INSERT is the gate now — the index
+-- below makes a second live row impossible, and lib/add.js turns the resulting 23505 into the same
+-- 409 `busy` the SELECT used to produce.
+--
+-- `((true))` is the whole trick: every live row indexes the same key, so at most one may exist.
+
+-- An older database may already hold more than one live row, in which case the index cannot be
+-- created. Those rows are stale by definition (nothing has been writing to them), so fail all but
+-- the newest first. A no-op on a fresh database and on a healthy one.
+-- `excerpts` goes with them, for the same reason lib/jobs.js nulls it when it fails a stale run:
+-- it is subtitle text kept only for the minutes a run is live, and these runs are not live.
+update jobs set status = 'failed', error_code = coalesce(error_code, 'timed_out'),
+       error = coalesce(error, 'This run stopped part-way through and did not finish.'),
+       excerpts = null, updated_at = now()
+ where status in ('queued', 'running')
+   and id <> (select id from jobs where status in ('queued', 'running') order by created_at desc limit 1);
+
+create unique index if not exists jobs_one_live on jobs ((true)) where status in ('queued', 'running');

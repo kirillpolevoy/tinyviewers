@@ -1,6 +1,8 @@
 # scene-api
 
-A read-only HTTP API over the scene database built from `experiments/trigger-scan`.
+An HTTP API over the scene database built from `experiments/trigger-scan`. Everything an assistant
+or a parent reads is a plain, public GET. There is one small write surface — the owner's own
+passcode-protected "Add a movie" flow under `/api/add` — and it is described at the bottom.
 
 It exists for one shape of question: *"my kid is 4, which scenes in Finding Nemo have monsters, and
 exactly when?"* An AI assistant can already write good prose about a film from the open web. What it
@@ -15,7 +17,13 @@ cannot get anywhere is what this serves:
 - a way to move our timestamps onto the clock of whatever copy the parent is actually playing,
 - and an explicit account of what was *not* assessed, so a missing label is never read as "safe".
 
-Nothing here calls a model. The whole database is built from files already on disk.
+It also serves one thing that is not an answer about a film at all: a **recording** of the screening
+run for each film — every request that went out, when it came back, and all 103 probabilities per
+beat — so a page can replay the analysis at exactly the speed it really happened.
+
+The loader calls no model: the six films already in the database are built from files on disk. The
+one code path that does call models is the live pipeline behind `/api/add`, which analyses a film
+nobody has looked at yet. It is behind a passcode and a daily spend cap.
 
 ## Deployment
 
@@ -39,7 +47,11 @@ are not acceptable for anything with real users behind it.
 | Risk | Why it is accepted for now | What would change it |
 |---|---|---|
 | **No rate limiting** on a public, unauthenticated API. Anyone can call it as fast as they like, which costs Neon compute and could exhaust the connection pool. | Traffic is one connector belonging to one household; the data is read-only and public; Neon's free tier suspends rather than bills. | Any real distribution, any paid tier, or the first sign of scripted traffic. Add Vercel firewall rate limits or an API key. |
+| **The failed-passcode limiter is per instance, not per deployment.** Ten wrong guesses from one identity get a 429 for ten minutes, but the counter lives in one function instance's memory: it is lost on a cold start and not shared between concurrent instances, so a guesser who spreads their attempts is not slowed at all. | It costs nothing, it stops the one-script-one-connection case, and the money is bounded by the daily cap whatever happens to the passcode. `ADD_FILM_PROXY_SECRET` at least makes the identity the visitor rather than the web app's egress address, so one guesser no longer locks out everyone else on that instance. | It is not a substitute for a Vercel firewall rate-limit rule on `/api/add/*`, which is the real answer and is not configured yet. |
 | **Machine-written, unreviewed `description` fields are exposed.** No human has read them, and `AUDIT.md` documents descriptions that name the wrong creature and one that invented an event. | The OpenAPI text and every response tell the assistant that descriptions are machine-written and may be wrong about who or what is on screen, and `review_status` is `unreviewed` on every row. | Before showing this to parents who are not the owner: review the descriptions, or stop returning `description` until a scene's `review_status` says a person has read it. |
+| **`/api/add` spends real money and is defended by one shared passcode.** Anyone who has it can start runs; each costs about $0.25. There is no per-caller identity and no audit trail beyond the `jobs` table. | It is one household's page, the passcode is compared in constant time, only one run may be in flight (enforced by a unique index, not by a read-then-write), every stage has a cost cap, and a daily cap (`ADD_FILM_DAILY_CAP_USD`, default $5) bounds the loss to a day's worth even if the passcode leaks. | Any second user, or any sign of a run nobody started: rotate the passcode, drop the cap, and put the endpoints behind real auth. |
+| **A job's progress is readable by anyone who has its 22-character id**, with no passcode. | The id is 128 bits of randomness handed only to whoever started the run, and nothing on the row is a secret — it is a film title, a list of step timings and a recording. | If anything private ever needs to live on a job, this stops being acceptable and the endpoint needs the passcode too. |
+| **`recordings.excerpts`, `jobs.excerpts` and `job_blobs.srt` hold subtitle text**, which the rest of this schema goes out of its way not to. | Excerpts are the owner-approved policy in `RECORDINGS.md`: two lines of at most 12 words, flagged beats only, 12-20% of a film's words, so a beat can show its evidence — and every live run now checks its own output against that policy (`verifyExcerpts` in `pipeline/excerpts.js`) before anything is written. `jobs.excerpts` is the same data while the run is going, so the replay can show evidence lines before there is a film, and it is nulled out at `done` or `failed`. A blob is a whole track, but only for the minutes one job runs, deleted at `done` or `failed`, swept once it is 30 minutes old by any `/api/add` call, by `/api/films*` (once per instance per ten minutes) or by the daily cron, and returned by no endpoint. | A rights holder objecting to the excerpt share, or any need to keep a track after a run — at which point it is storage of a subtitle file and needs a different conversation. |
 
 Also true and stated in the API itself, not risks so much as the nature of the data: everything is
 derived from subtitles, so visual-only frights are missed; severities are one model's judgement;
@@ -72,13 +84,30 @@ node load.js            # applies schema.sql, then loads all six films
 node server.js
 ```
 
-`DATABASE_URL` is the only environment variable this project reads. Nothing here loads a `.env`
-file by itself; if you keep the URL in `scene-api/.env.local`, use Node's own flag:
+### Environment
+
+`DATABASE_URL` is the only variable the read-only half needs. Nothing here loads a `.env` file by
+itself; if you keep values in `scene-api/.env.local` (and the four API keys in the repository root's
+`.env.local`), use Node's own flag and pass both:
 
 ```bash
 node --env-file=.env.local load.js
-node --env-file=.env.local server.js
+node --env-file=.env.local --env-file=../.env.local server.js
 ```
+
+| variable | needed by | what happens without it |
+|---|---|---|
+| `DATABASE_URL` | everything except `--pglite` | every data route returns 500 |
+| `TMDB_API_KEY` | the loader's poster/synopsis lookup; `/api/add/resolve` | loader leaves `poster_url` and `overview` null; resolve returns 502 |
+| `ADD_FILM_PASSCODE` | every `/api/add` write | resolve and jobs return **503**, and `/api/add/status` reports `passcode_configured: false` so the web hides the form |
+| `ADD_FILM_DAILY_CAP_USD` | the daily spend cap | defaults to **5** |
+| `ADD_FILM_PROXY_SECRET` | letting the failed-passcode counter see the visitor rather than the proxy | the counter keys on the proxy's own address, so one guesser can use up everybody's ten tries on that instance |
+| `OPENSUBTITLES_API_KEY` | the live pipeline's `subtitles` stage | the job fails with `no_subtitle_key` |
+| `TYPESAFE_API_KEY` | the live pipeline's `jev` stage | the job fails in that stage |
+| `CLAUDE_API_KEY` | the live pipeline's `scenes` and `presence` stages | the job fails in those stages |
+
+Nothing logs a key or the passcode, and the `.env.local` files are untracked. The Neon connection
+string contains an `&`: never `echo`, `cat` or `source` these files.
 
 `load.js --dry-run` builds every
 row and prints the report without touching a database, and `load.js --film nemo` reloads one film.
@@ -94,8 +123,10 @@ curl 'http://localhost:8787/api/films/nemo/scenes?presence=shark&include_possibl
 curl 'http://localhost:8787/api/films/nemo/scenes?presence=shark&anchor_cue=C0056&observed_at=0:05:12'
 curl 'http://localhost:8787/api/films/iron-giant/scenes?presence=shot'     # ambiguous word -> gun AND needle
 curl 'http://localhost:8787/api/films/iron-giant/scenes?presence=shark&presence=gun'  # repeats merge
+curl 'http://localhost:8787/api/films/nemo/recording'      # the replayable screening run
 curl 'http://localhost:8787/api/vocabulary'
 curl 'http://localhost:8787/api/openapi.json'
+curl 'http://localhost:8787/api/add/status'
 ```
 
 ### Tests
@@ -104,14 +135,31 @@ curl 'http://localhost:8787/api/openapi.json'
 npm test          # node --test test/
 ```
 
-87 tests, no external database: they run against `@electric-sql/pglite`, which installed cleanly
-here. They cover the schema applying twice (including over a populated database), loader
-idempotency per film, that no verbatim subtitle text is stored, broad-word and ambiguous-word
-filter matching, the TMDB lookup that fills `poster_url` and `overview` (against a fake fetch, and
-every way it can fail), the present / possibly_present split, the age bands, the calibration arithmetic
-(including a PAL 25/24 case and the implausible-anchor guard), `only_confirmed`,
-`include_possible`, `min_severity=0`, repeated and misplaced query parameters, GET/HEAD/405,
-cache headers, 400s, 404s, CORS, and the OpenAPI document.
+115 tests, no external database and no network: they run against `@electric-sql/pglite`, which
+installed cleanly here. They cover the schema applying twice (including over a populated database),
+loader idempotency per film, that no verbatim subtitle text is stored, broad-word and
+ambiguous-word filter matching, the TMDB lookup that fills `poster_url` and `overview` (against a
+fake fetch, and every way it can fail), the present / possibly_present split, the age bands, the
+calibration arithmetic (including a PAL 25/24 case and the implausible-anchor guard),
+`only_confirmed`, `include_possible`, `min_severity=0`, repeated and misplaced query parameters,
+GET/HEAD/405, cache headers, 400s, 404s, CORS, and the OpenAPI document.
+
+`test/recording.test.js` adds the replay side: a recording per film, `recorded_at` taken from the
+run rather than the load, the timeline invariants a replay depends on, the excerpt policy, and the
+leakage rule — every string in a served recording has to look like an id, because it is served whole
+to a browser.
+
+`test/add.test.js` adds the live pipeline, against stubs shaped like the real APIs (real `Response`
+objects, so the streaming parse runs for real). It covers resolve by title and by IMDb URL, a wrong
+passcode of a different length, a film that already exists, the three refusals (`exists`, `busy`,
+`daily_cap`), the stale-job rule, a full six-stage run ending with rows in the ordinary tables, and
+the subtitle blob — present mid-run, gone after `done` and after `failed`. Five of its cases are
+about the things that cost money or expose text rather than about the happy path: three simultaneous
+starts admitting exactly one, a presence stage that takes a 400 on its fourth call still recording
+the first three calls' cost to the cent, the scene pass refusing a transcript too long for its cap
+*before* sending it, an oversized subtitle download being skipped, and the excerpt policy being
+verified on the run's own output. The subtitles it uses are a slice of a real track read from
+`experiments/trigger-scan/data` at run time; none is committed.
 
 ---
 
@@ -121,10 +169,13 @@ cache headers, 400s, 404s, CORS, and the OpenAPI document.
 schema.sql        Postgres schema, idempotent. Targets Neon; runs anywhere.
 load.js           Builds every row from experiments/trigger-scan and writes it. No model calls.
 server.js         Local node:http router -> the same handlers Vercel would run.
-api/              Vercel-style Node functions, one per route. Thin wrappers over lib/endpoints.js.
-lib/              db, http plumbing, time arithmetic, word matching, response shaping, OpenAPI.
+api/              Vercel-style Node functions, one per route. Thin wrappers over lib/.
+lib/              db, http plumbing, time arithmetic, word matching, response shaping, OpenAPI,
+                  jobs and the add-a-film endpoints.
+pipeline/         The analysis itself, copied from experiments/trigger-scan so it can run in a
+                  request. See pipeline/README.md for what changed and why it is a copy.
 test/             node --test suites.
-vercel.json       Rewrites /api/openapi.json and / ; CORS headers.
+vercel.json       Rewrites /api/openapi.json and / ; CORS headers; maxDuration 300 on the job route.
 .env.local        Untracked. DATABASE_URL for local work against Neon. Never committed.
 ```
 
@@ -143,9 +194,17 @@ vercel.json       Rewrites /api/openapi.json and / ; CORS headers.
 | `vocabulary`, `groups` | `taxonomy-v3.js` |
 | `analysis_runs` | the model, taxonomy, script, start time and cost recorded in each run file |
 | `time_mappings` | nothing yet — empty by design; the API applies one when it exists |
+| `recordings` | `recordings/<slug>.jev.json` verbatim, plus `recordings/<slug>.excerpts.json` when the loading machine has it (it is git-ignored) |
+| `jobs`, `job_blobs` | nothing at load time: written only by a live `/api/add` run |
 
-**No subtitle text is stored.** The only verbatim words from a track are the three anchor quotes per
-film, each capped at 12 words, and they exist so a parent can find the line on their own player.
+**Almost no subtitle text is stored, and the exceptions are named.** The only verbatim words from a
+track are: the three anchor quotes per film, each capped at 12 words, so a parent can find the line
+on their own player; `recordings.excerpts`, which is the owner-approved beat-excerpt policy from
+`RECORDINGS.md` (two lines of at most 12 words, flagged beats only); `jobs.excerpts`, the same
+excerpts while a live run is going, nulled out the moment it reaches `done` or `failed`; and
+`job_blobs.srt`, which holds one whole track for the minutes a live analysis is running and is
+deleted the moment the job ends. The recording itself has no text in it at all — `test/recording.test.js` asserts that every
+string in a served recording matches `^[\w.:+-]+$`.
 
 To rebuild the presence labels (the only step that calls a model — about $0.42 for all six films):
 
@@ -218,6 +277,200 @@ with both `track_time` (ours) and `player_time` (theirs).
 
 ---
 
+## Watch it work: `GET /api/films/{slug}/recording`
+
+One real run of the per-beat screener over the whole film, precise enough to replay:
+
+```json
+{ "film": { "slug": "nemo", "title": "Finding Nemo", "year": 2003 },
+  "recording": { "meta": {...}, "thresholds": {...}, "requests": [...], "beats": [...], "timeline": [...] },
+  "excerpts": { "W014.4": [{ "cue": "C0404", "line": "...", "score": 1.42, "why": {...} }] } }
+```
+
+`recording` is the exact content of `experiments/trigger-scan/recordings/<slug>.jev.json`, and
+**`RECORDINGS.md` in that directory is the contract** — the format and, more importantly, the replay
+rules. The short version: iterate `recording.timeline` against a real clock and never stretch it, so
+a five-second run takes five seconds; drive counters off each entry's running totals rather than
+your own accumulator; do not sort the timeline into film order to make the board look tidy, because
+beats really do arrive out of order.
+
+`excerpts` is `null` for a film whose excerpt file was not on the machine that ran the loader (that
+file is git-ignored), so a page has to work without it. The response is 700 KB to 1 MB, served
+un-indented for that reason and cached like the other GETs.
+
+## Adding a film: `/api/add` (internal)
+
+The owner's own flow, and the only part of this API that spends money or writes rows outside the
+loader. **It is not in `/api/openapi.json`.** It used to be, marked `x-internal` — but that is an
+annotation, and an importer that enumerates `paths`, which is most of them, cheerfully offered a
+parent two POST operations that spend money. The public document now contains the five read-only
+routes and nothing else; the complete account of the deployment is at
+`/api/openapi.json?internal=1`.
+
+```
+GET  /api/add/status                 -> { running: {id}|null, spent_today_usd, cap_usd,
+                                          reserve_usd?, passcode_configured }
+POST /api/add/resolve  { query, passcode }
+                                     -> { candidates: [{ tmdb_id, imdb_id, title, year, poster_url,
+                                                          overview, slug, exists }] }   (at most 3)
+POST /api/add/jobs     { imdb_id, passcode, tmdb_id? }
+                                     -> 202 { id }
+GET  /api/add/jobs/{id}              -> the job's progress, no-store
+GET  /api/add/jobs/{id}/recording    -> { recording, excerpts }
+```
+
+`query` is a title or anything with an IMDb id in it (`tt\d+` anywhere, so a pasted URL works).
+`status`, `jobs/{id}` and `jobs/{id}/recording` are public — the 22-character job id is the secret.
+The two POSTs need the passcode.
+
+**`POST /api/add/jobs` takes the IMDb id and nothing else.** Title, year, slug, poster and synopsis
+are looked up from TMDB by that id, server-side, rather than read out of the request. An earlier
+version took them from the body, which meant the caller chose the title — and the title makes the
+slug, and the slug decides which film's rows a run replaces. `tmdb_id` is accepted as a hint for
+which TMDB record to use when one IMDb id resolves to more than one, and is ignored otherwise.
+
+Ten wrong passcodes from one address inside ten minutes get a 429 (`too_many_attempts`). That
+counter is in one function instance's memory — see the accepted risks above; it is best-effort and
+a Vercel firewall rule is the real answer.
+
+**Who "one address" is.** The web app proxies these calls from its own server, so without help every
+visitor arrives as the same handful of egress addresses and ten anonymous wrong guesses lock out the
+next person to type the right passcode. Set `ADD_FILM_PROXY_SECRET` to the same value on both
+projects and the proxy may send `x-tinyviewers-client: <the visitor's ip>` alongside
+`x-tinyviewers-proxy: <the secret>`; the counter then keys on that. Without the secret header the
+identity header is ignored outright, because anyone can send one. The proxy sends the literal
+`unknown` when it cannot see the visitor, and `unknown` is never used as a key — otherwise every
+unidentifiable visitor would share one counter and ten guesses from any of them would lock out all
+the rest, which is the failure this header exists to fix; those requests fall back to the socket
+address instead, and are not counted at all if there is no socket. With the variable unset nothing
+changes: the counter keys on `x-forwarded-for` and then the socket, as before.
+
+Refusals, all of them deliberate:
+
+| status | body | when |
+|---|---|---|
+| 401 | `error_code: "bad_passcode"` | wrong passcode (compared with `timingSafeEqual` over sha256, so length does not leak) |
+| 503 | `error_code: "no_passcode"` | `ADD_FILM_PASSCODE` is not set on this deployment |
+| 400 | `error_code: "empty_query"` / `"no_imdb_id"` / `"no_title"` | nothing to look up, or a film TMDB has no IMDb id for — OpenSubtitles has nothing else to search by |
+| 409 | `error_code: "exists"`, `slug` | already in the database |
+| 409 | `error_code: "busy"`, `id` | another run is in flight |
+| 429 | `error_code: "daily_cap"`, `spent_usd`, `cap_usd`, `reserve_usd` | today's spend plus a $1.80 reserve for this run would pass the cap |
+| 429 | `error_code: "too_many_attempts"` | ten wrong passcodes from this address in the last ten minutes |
+| 502 | `error_code: "tmdb_failed"` | TMDB did not answer, or has no film with that IMDb id |
+
+The reserve is $1.80 because that is the most one run may cost, not the most one is expected to
+cost: the `jev` cap of $0.20 plus the `scenes` cap of $0.60 plus the `presence` cap of $1.00. All
+three are enforced the same way — **each call reserves its own worst case before it is dispatched**
+(the whole prompt billed as fresh input at 3 characters per token, plus a completely full output
+buffer) and settles that reservation against the real bill when it lands. Checking completed
+spending instead is not a cap when calls run five at a time: five presence workers each read the
+same "still under $1.00" figure, all five dispatched, and the stage finished at $1.176. A stage now
+refuses to dispatch when `spent + in flight + this call` would pass its cap, so the number is a real
+ceiling and `spent + reserve > cap` is a real refusal. A normal film costs about $0.25 and
+reconciles down to its true cost the moment it finishes.
+
+**Busy and the daily cap are one statement, not a check followed by an insert.** `jobs` carries a
+partial unique index (`jobs_one_live`, on `((true)) where status in ('queued','running')`), so the
+INSERT is the lock: two simultaneous POSTs cannot both be admitted, whatever they each read a
+millisecond earlier. The loser's `23505` becomes the same 409 `busy`.
+
+A job that stops writing for six minutes is marked `failed` with `error_code: "timed_out"` by the
+next caller that looks — including whoever is polling that very job — and stops holding the lock.
+Nothing kills a function on time from inside, so the lock has to expire rather than be released. The
+same call sweeps subtitle blobs older than thirty minutes, and so does `/api/films*` — once per
+function instance per ten minutes, one DELETE against an indexed timestamp — because nobody is
+sitting on an `/api/add` page when a run dies but somebody is usually reading about a film.
+`vercel.json` also schedules a daily cron on `/api/add/status` (`0 3 * * *`) for a day nobody opens
+anything. **Daily, not hourly:** Vercel's Hobby plan rejects any cron expression that would run more
+than once a day, and the deployment fails rather than degrades. So thirty minutes is the age at
+which an orphan becomes *eligible* to be swept, not a promise about when it will be: in practice
+minutes on a deployment anybody is using, and within a day on one nobody is. A blob is deleted at
+`done` or `failed` anyway, and a run that died without reaching either also loses its `excerpts`
+when the next caller marks it `timed_out`.
+
+Once admitted, the run continues in the background of the same invocation via `waitUntil` from
+`@vercel/functions`, with `maxDuration: 300` on `api/add/jobs.js` in `vercel.json` (Fluid compute
+allows 300 s on Hobby). Poll `GET /api/add/jobs/{id}`:
+
+```json
+{ "id": "…", "status": "running", "step": "presence", "film": {...},
+  "steps": [{ "id": "jev", "label": "Screening every beat", "status": "done",
+              "started_ms": 1840, "ended_ms": 7051, "detail": "247 beats x 103 questions in 5.2s, 106 flagged" }],
+  "cost_usd": 0.0847, "recording_ready": true,
+  "scene_count": 30, "error_code": null, "error": null,
+  "created_at": "...", "updated_at": "...", "elapsed_ms": 74213 }
+```
+
+`started_ms` and `ended_ms` are offsets from the job's own start, in milliseconds, so the page never
+has to reason about our clock. `scene_count` appears after `scenes`, and `film.slug` is the page to
+send someone to when `status` is `done`. A failed run keeps every step it finished and whatever it
+had already spent.
+
+**The recording is not in this body.** It is 0.7-1.3 MB, it never changes once the `jev` step has
+finished, and this endpoint is polled every 1.5 s — so `recording_ready` turns true about five
+seconds in, and the page fetches `GET /api/add/jobs/{id}/recording` once:
+
+```json
+{ "recording": { "meta": {...}, "thresholds": {...}, "requests": [...], "beats": [...], "timeline": [...] },
+  "excerpts": { "W014.4": [{ "cue": "C0404", "line": "...", "score": 1.42, "why": {...} }] } }
+```
+
+Same shape as `GET /api/films/{slug}/recording`, and served un-indented for the same reason. It is
+404 `no_recording` until the `jev` step finishes, `no-store` while the run is going and cacheable
+once it is not. `excerpts` is null after the job ends: the evidence lines live on the film from then
+on, and the job row does not keep subtitle text it no longer needs.
+
+One consequence worth knowing before you draw a budget bar: `spent_today_usd` on
+`/api/add/status` includes the $1.80 reserve of a run that is still going, and drops to that run's
+real cost (about $0.25) when it finishes. That is the conservative direction — the cap must not
+admit a second run on the strength of a first one that has not been billed yet — but it means the
+number moves down at the end of a run, not only up. **`reserve_usd` says how much of it is the
+reserve**, so a page can show "$1.92 of $5.00 today, including $1.80 set aside for the run in
+progress" rather than a bar that jumps and then falls back with no explanation. The field is
+present only while a run is live; its absence means there is no reserve in the figure.
+
+**Money is written to the row as it is spent, not when a stage ends.** `cost_usd` starts at the
+$1.80 reserve the moment the job is created, rises as each priced call returns — the moment a
+response arrives, before it is parsed or its `stop_reason` is looked at, because a truncated or
+unparseable answer costs exactly what a good one costs — and is replaced by
+the run's real total exactly once, at `done` or `failed`. A run the platform kills at 300 s never
+reaches either, so its row keeps the reserve rather than reading as free — which is what let the
+daily cap admit run after run after a crash.
+
+The six stages, and what each costs:
+
+| stage | what it does | typical |
+|---|---|---|
+| `subtitles` | OpenSubtitles: hearing-impaired English first (sound captions are the only proxy for a wordless fright), then any English; downloads candidates until one parses to ≥ 300 cues | free, ~2 s |
+| `jev` | the recorded screening run: 103 questions per beat, concurrency 8, `jev-1.13.0`, capped at $0.20 | ~$0.08, ~5 s |
+| `scenes` | one Sonnet pass over the whole transcript, 16k output ceiling, capped at $0.60 | ~$0.10, ~60 s |
+| `presence` | one Sonnet call per scene, concurrency 5, capped at $1.00 | ~$0.07, ~60 s |
+| `excerpts` | the lexical rule in `pipeline/excerpts.js`, then `verifyExcerpts` over its own output; no model call | free |
+| `ingest` | the same `buildFilmFrom` the loader uses, plus the recording | free |
+
+Failures are named rather than generic: `subtitle_quota` ("OpenSubtitles download limit reached for
+today", from a 406 or a 429), `no_subtitles`, `no_subtitle_key`, `subtitle_search_failed`,
+`no_scenes`, `scenes_cap` (this film's transcript will not fit inside the scene pass's cost cap),
+`jev_cap` (the screening pass would pass its own cap), `excerpts_policy` (the evidence lines came
+out outside the policy, so the film was not written in), `exists` (another film took this slug, or
+this IMDb id, while the run was going — a live run only ever inserts, so it stops rather than
+replacing somebody else's film), `vocabulary_mismatch` (the database is labelled with a different
+taxonomy version than this pipeline writes), `timed_out`, and `internal` for anything unexpected.
+An upstream failure never passes its message through, and is not logged either: an error body from
+Jev or Anthropic quotes the request back, and the request is subtitle lines. Only the service name,
+the HTTP status, the upstream request id and a short code of our own survive.
+
+**Two films can be called the same thing.** The slug is decided at admission, and another run can
+commit onto it in the minutes a run takes, so the slug is re-derived inside the transaction that
+writes the film: a free slug is used, a taken one is suffixed (`same-title-1994`), and the same
+IMDb id already being present fails the run as `exists`. The loader still replaces — running it
+over the experiment outputs is meant to — but a live run never deletes a row it did not write.
+Adding a film likewise only *inserts* missing vocabulary rows; it will not rewrite a label somebody
+has corrected by hand.
+
+The analysis code lives in `pipeline/`, copied from `experiments/trigger-scan` at commit `5fe8fb5`.
+`pipeline/README.md` says what changed and why it is a copy rather than an import.
+
 ## Neon and Vercel: how this is set up, and how to redo it
 
 Steps 1 and 3 have been done: the Neon project `tinyviewers-scenes` and the Vercel project behind
@@ -240,15 +493,25 @@ change.
    ```
    `load.js` applies `schema.sql` itself, so there is no separate migration step — a new column
    such as `films.overview` arrives with the load that first writes it. Expect 6 films,
-   6 tracks, 18 anchors, 19 analysis runs, 103 scenes, 6,352 scene label rows, 72 vocabulary items.
+   6 tracks, 18 anchors, 19 analysis runs, 103 scenes, 6,352 scene label rows, 72 vocabulary items,
+   and 6 recordings (about 5 MB of jsonb, printed as a line per film in the report).
    Re-run it whenever the experiment outputs change; it replaces each film in a transaction. (The
    exact counts are printed by the loader — see the report line per film.)
 
 3. **The Vercel project.** It builds from the GitHub **`main`** branch with **root directory
    `scene-api`**, and holds `DATABASE_URL` as an environment variable (production and preview).
    There is no build step and no framework: Vercel picks up `api/*.js` as Node functions and
-   `vercel.json` adds the `/api/openapi.json` rewrite. `server.js`, `load.js` and `test/` are not
-   part of the deployment.
+   `vercel.json` adds the `/api/openapi.json` rewrite, `maxDuration: 300` on `api/add/jobs.js`, and
+   a daily cron on `/api/add/status` (Hobby allows one run a day per cron and refuses anything more
+   frequent at deploy time).
+   `server.js`, `load.js` and `test/` are not part of the deployment; `pipeline/` is, because the
+   add-a-film route imports it.
+
+   **Still to be set by hand before `/api/add` works in production**, none of them in this
+   repository: `ADD_FILM_PASSCODE`, `TMDB_API_KEY`, `OPENSUBTITLES_API_KEY`, `TYPESAFE_API_KEY`,
+   `CLAUDE_API_KEY`, and optionally `ADD_FILM_DAILY_CAP_USD`. Until `ADD_FILM_PASSCODE` exists the
+   flow is simply off: `/api/add/status` says `passcode_configured: false` and the two POSTs answer
+   503, which is the right behaviour for a deployment nobody has armed yet.
 
    This is a project of its own. Confirm the target before any manual deploy: this directory must
    not be deployed into the Next.js app's project.

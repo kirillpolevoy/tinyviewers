@@ -126,12 +126,22 @@ test('openapi.json is valid JSON and describes every route', () => {
   const round = JSON.parse(JSON.stringify(doc));
   assert.deepEqual(round, doc);
   assert.equal(doc.openapi, '3.1.0');
-  assert.deepEqual(Object.keys(doc.paths).sort(), [...ROUTES].sort());
-  for (const [path, item] of Object.entries(doc.paths)) {
-    assert.ok(item.get.operationId, `${path} needs an operationId`);
-    assert.ok(item.get.summary, `${path} needs a summary`);
+  // ROUTES is the PUBLIC surface, and by default it is the WHOLE document. `x-internal` used to be
+  // the only thing keeping the two money-spending POSTs out of a connector, and an importer that
+  // enumerates `paths` — which is most of them — never looked at it.
+  const publicPaths = Object.entries(doc.paths);
+  assert.deepEqual(publicPaths.map(([p]) => p).sort(), [...ROUTES].sort());
+  for (const [path, item] of publicPaths) {
+    for (const [method, op] of Object.entries(item)) {
+      assert.ok(op.operationId, `${method} ${path} needs an operationId`);
+      assert.ok(op.summary, `${method} ${path} needs a summary`);
+      assert.ok(op.responses, `${method} ${path} needs responses`);
+      assert.equal(method, 'get', `${path} offers ${method}: no public operation may write or spend`);
+    }
     assert.ok(item.get.responses['200'], `${path} needs a 200`);
   }
+  assert.ok(!Object.keys(doc.paths).some((p) => p.startsWith('/api/add')), 'an importer walking `paths` must not find the add routes');
+  assert.ok(!JSON.stringify(doc.paths).includes('x-internal'), 'nothing in the public document needs an internal marker any more');
   // Every $ref resolves.
   const refs = [...JSON.stringify(doc).matchAll(/"\$ref":"(#\/[^"]+)"/g)].map((m) => m[1]);
   assert.ok(refs.length > 5);
@@ -262,6 +272,126 @@ test('matchTerm returns every item a word is an alias of', () => {
   assert.equal(matchTerm('gun', vocab, { layer: 'presence' }).how, 'exact');
 });
 
+test('the internal document is a separate ask, and it is the one with the add operations on it', () => {
+  const doc = openapi({ serverUrl: 'https://example.test', internal: true });
+  assert.ok(doc.paths['/api/add/jobs'].post, 'the owner still gets a complete account of the API');
+  for (const [path, item] of Object.entries(doc.paths)) {
+    if (!path.startsWith('/api/add')) continue;
+    for (const op of Object.values(item)) {
+      assert.ok(op['x-internal'] && op.tags?.includes('internal'), `${path} must still be marked internal`);
+      assert.match(op.summary, /^INTERNAL\./, `${path}'s summary must start by saying so`);
+    }
+  }
+});
+
+// ------------------------------------------------------------------------------------------------
+// The pool's cancellation, the quotation rule and the budget ledger: the three pieces of the
+// pipeline that can be exercised without a database or a stubbed service.
+// ------------------------------------------------------------------------------------------------
+
+test('a failed worker stops the pool dispatching, aborts the rest, and settles before it throws', async () => {
+  // The bug: `Promise.all` rejected on the first failure while the surviving workers carried on
+  // taking items. The pipeline then marked the job failed and released the one-live-run lock with
+  // eight paid calls still in flight, and the next run was admitted on top of them.
+  const { pool } = await import('../pipeline/net.js');
+  const dispatched = [];
+  let settled = 0;
+  let sawAbort = 0;
+
+  await assert.rejects(
+    () => pool(Array.from({ length: 20 }, (_, i) => i), 4, async (item, i, signal) => {
+      dispatched.push(i);
+      try {
+        if (i === 1) throw new Error('call 2 failed');
+        // The three siblings already in flight are cancelled where they wait, not left to finish.
+        await new Promise((resolve, reject) => {
+          const timer = setTimeout(resolve, 5000);
+          signal.addEventListener('abort', () => { clearTimeout(timer); sawAbort += 1; reject(new Error('aborted')); });
+        });
+      } finally {
+        settled += 1;
+      }
+    }),
+    (e) => e.message === 'call 2 failed',
+  );
+
+  assert.deepEqual(dispatched, [0, 1, 2, 3], 'nothing beyond the in-flight set was dispatched');
+  assert.equal(sawAbort, 3, 'the three still in flight were told to stop');
+  assert.equal(settled, 4, 'the pool did not throw until every worker had settled');
+});
+
+test('the quotation rule catches eight words of subtitle in a model-written sentence', async () => {
+  const { transcriptShingles, quotedRun } = await import('../pipeline/quotes.js');
+  const cues = [
+    { id: 'C0001', text: 'I cannot swim any faster than this, and I am really frightened now!' },
+    { id: 'C0002', text: 'Elsewhere, calmly.' },
+  ];
+  const fromFilm = transcriptShingles(cues);
+  // Punctuation and case are not what makes a quotation.
+  assert.equal(quotedRun('i cannot swim any faster than this and i am', fromFilm), 'i cannot swim any faster than this and');
+  // Seven words in common is a coincidence; a paraphrase is not a quotation at all.
+  assert.equal(quotedRun('I cannot swim any faster than this', fromFilm), null);
+  assert.equal(quotedRun('A fish is frightened and cannot swim fast enough to get away', fromFilm), null);
+});
+
+test('the budget ledger counts the calls that are still out, not only the ones that are paid for', async () => {
+  const { budget } = await import('../pipeline/budget.js');
+  const ledger = budget(1);
+  // Five workers reserving $0.30 each: the fourth is refused, because the three before it have not
+  // been billed yet. Checking completed spending is how a $1.00 cap finished a film at $1.176.
+  assert.equal(ledger.reserve(0.3), true);
+  assert.equal(ledger.reserve(0.3), true);
+  assert.equal(ledger.reserve(0.3), true);
+  assert.equal(ledger.reserve(0.3), false);
+  assert.equal(ledger.spent, 0);
+  // Each one really cost a tenth of its reservation, and the headroom comes back.
+  ledger.settle(0.3, 0.03);
+  assert.equal(ledger.reserve(0.3), true);
+  assert.ok(Math.abs(ledger.spent - 0.03) < 1e-12);
+});
+
+test('a client identity is trusted only when the request proves it came from our own proxy', async () => {
+  const { clientIp } = await import('../lib/http.js');
+  const req = (headers) => ({ headers, socket: { remoteAddress: '10.0.0.1' } });
+  const was = process.env.ADD_FILM_PROXY_SECRET;
+  try {
+    // Unset: the header is just a header, and the old behaviour is what happens.
+    delete process.env.ADD_FILM_PROXY_SECRET;
+    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9, 10.0.0.2' })), '203.0.113.9');
+
+    process.env.ADD_FILM_PROXY_SECRET = 'shared-secret';
+    assert.equal(
+      clientIp(req({ 'x-tinyviewers-proxy': 'shared-secret', 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' })),
+      'visitor-1',
+    );
+    // A stranger sending the identity header without the secret gets nothing for it — otherwise
+    // anyone could spend somebody else's ten guesses, or dodge their own.
+    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' })), '203.0.113.9');
+    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'wrong', 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' })), '203.0.113.9');
+    // A secret of a different length must not throw out of timingSafeEqual.
+    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'x', 'x-tinyviewers-client': 'visitor-1' })), '10.0.0.1');
+
+    // The proxy says `unknown` when it cannot see the visitor, and that must never become a bucket:
+    // every unidentifiable visitor would share one counter and lock each other out — the exact
+    // failure this header exists to fix. It falls back to the socket, not to the proxy's own
+    // `x-forwarded-for`, and counts nothing at all when there is no socket either.
+    assert.equal(
+      clientIp(req({ 'x-tinyviewers-proxy': 'shared-secret', 'x-tinyviewers-client': 'unknown', 'x-forwarded-for': '203.0.113.9' })),
+      '10.0.0.1',
+    );
+    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'shared-secret', 'x-tinyviewers-client': 'UNKNOWN' })), '10.0.0.1');
+    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'shared-secret' })), '10.0.0.1', 'a missing identity is the same as an unknown one');
+    assert.equal(
+      clientIp({ headers: { 'x-tinyviewers-proxy': 'shared-secret', 'x-tinyviewers-client': 'unknown' } }),
+      null,
+      'nothing to attribute a guess to means no counter, not a shared one',
+    );
+  } finally {
+    if (was === undefined) delete process.env.ADD_FILM_PROXY_SECRET;
+    else process.env.ADD_FILM_PROXY_SECRET = was;
+  }
+});
+
 test('guardPool attaches an error listener so an idle-client error cannot kill the process', async () => {
   const { guardPool } = await import('../lib/db.js');
   const { EventEmitter } = await import('node:events');
@@ -280,4 +410,24 @@ test('guardPool attaches an error listener so an idle-client error cannot kill t
   }
   assert.match(logged[0], /idle client error/);
   assert.match(logged[0], /Connection terminated unexpectedly/);
+});
+
+test('the taxonomy copies under pipeline/ are byte-identical to the experiment originals', async () => {
+  // pipeline/README.md names the cost of copying rather than importing: the two can drift, and a
+  // drift in the taxonomy is the silent kind — a live film would be labelled against a different
+  // vocabulary from the six films the database was built with, and nothing in either file or in any
+  // response would say so. The copies carry a two-line banner and are identical below it.
+  const fs = await import('node:fs');
+  const path = await import('node:path');
+  const { root } = await import('../lib/db.js');
+  const { DEFAULT_EXPERIMENT_DIR } = await import('../load.js');
+
+  for (const name of ['taxonomy-v2.js', 'taxonomy-v3.js']) {
+    const copy = fs.readFileSync(path.join(root, 'pipeline', name), 'utf8');
+    const original = fs.readFileSync(path.join(DEFAULT_EXPERIMENT_DIR, name), 'utf8');
+    const lines = copy.split('\n');
+    assert.match(lines[0], /^\/\/ COPY of experiments\/trigger-scan\//, `${name}: no banner`);
+    assert.match(lines[1], /^\/\/ /, `${name}: the banner is two lines`);
+    assert.equal(lines.slice(2).join('\n'), original, `${name} has drifted from the experiment's copy`);
+  }
 });

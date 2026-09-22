@@ -16,6 +16,9 @@ import crypto from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { applySchema, pgAdapter, guardPool, root } from './lib/db.js';
 import { invalidateVocabularyCache } from './lib/data.js';
+// The one thing the loader borrows from the pipeline: its error type, so that `ensureVocabulary`
+// below can refuse a live run with a code the job row can carry. errors.js imports nothing.
+import { fail } from './pipeline/errors.js';
 
 export const SLUGS = ['nemo', 'lion-king', 'iron-giant', 'monsters-inc', 'frankenweenie', 'wild-robot'];
 
@@ -247,6 +250,19 @@ export function findPresenceRun(dir, slug) {
   return fs.existsSync(file) ? file : null;
 }
 
+// The recorded Jev run a "Watch it work" replay plays back (record-jev-run.js), and the excerpt file
+// beside it. The excerpts are git-ignored, so they are optional: a film can have a recording and no
+// excerpts, and the page has to work without them.
+export function findRecording(dir, slug) {
+  const file = path.join(dir, 'recordings', `${slug}.jev.json`);
+  if (!fs.existsSync(file)) return null;
+  const excerptFile = path.join(dir, 'recordings', `${slug}.excerpts.json`);
+  return {
+    recording: readJson(file),
+    excerpts: fs.existsSync(excerptFile) ? readJson(excerptFile) : null,
+  };
+}
+
 export function sceneSourceFor(dir, slug) {
   if (slug === 'nemo') {
     return { file: path.join(dir, 'scenes.nemo.grounded.json'), second: null, script: 'build-scenes.js --synopsis data/nemo.context.json' };
@@ -356,8 +372,67 @@ export function buildV2Map(taxonomy) {
 
 const overlapMs = (aStart, aEnd, bStart, bEnd) => Math.max(0, Math.min(aEnd, bEnd) - Math.max(aStart, bStart));
 
+/**
+ * Everything one film's rows are built from, gathered off disk.
+ *
+ * It exists so `buildFilmFrom` never touches the file system. The loader reads the experiment's
+ * outputs; the live pipeline (scene-api/pipeline) hands the same five things over in memory, having
+ * just produced them. Both then go through exactly one piece of mapping code, which is the point:
+ * a film added live must land in the database the same shape as a film loaded from a file, or the
+ * API is answering two different questions depending on where a row came from.
+ *
+ * @returns {{
+ *   slug: string, meta: object, srtText: string, releaseLabel: string|null,
+ *   sceneRun: object, sceneScript: string, sceneSourceFile: string|null,
+ *   r2Scenes: Array|null,
+ *   presenceRun: object|null, presenceScript: string, presenceSourceFile: string|null,
+ *   jevRun: object|null, jevScript: string, jevSourceFile: string|null,
+ * }}
+ */
+export function readFilmInputs(slug, { dir, films, tracksMeta }) {
+  const meta = films[slug];
+  if (!meta) throw new Error(`${slug} is not in films.json`);
+
+  const srtPath = path.join(dir, 'data', `${slug}.srt`);
+  if (!fs.existsSync(srtPath)) throw new Error(`missing ${srtPath}`);
+
+  const sceneSrc = sceneSourceFor(dir, slug);
+  if (!fs.existsSync(sceneSrc.file)) throw new Error(`missing scene file ${sceneSrc.file}`);
+  const sceneRun = readJson(sceneSrc.file);
+
+  const presencePath = findPresenceRun(dir, slug);
+  const jevPath = findJevRun(dir, slug);
+
+  return {
+    slug,
+    meta,
+    srtText: fs.readFileSync(srtPath, 'utf8'),
+    releaseLabel: slug === 'nemo'
+      ? (sceneRun.release?.subtitle_track ?? tracksMeta.sdh?.release ?? null)
+      : null,
+    sceneRun,
+    sceneScript: sceneSrc.script,
+    sceneSourceFile: path.relative(dir, sceneSrc.file),
+    r2Scenes: sceneSrc.second ? readJson(sceneSrc.second).scenes ?? [] : null,
+    presenceRun: presencePath ? readJson(presencePath) : null,
+    presenceScript: 'run-sonnet-presence.js',
+    presenceSourceFile: presencePath ? path.relative(dir, presencePath) : null,
+    jevRun: jevPath ? readJson(jevPath) : null,
+    jevScript: 'run-jev-v3.js',
+    jevSourceFile: jevPath ? path.relative(dir, jevPath) : null,
+  };
+}
+
 export function buildFilm(slug, ctx) {
-  const { dir, srt, films, tracksMeta, v2map, vocabIds } = ctx;
+  return buildFilmFrom(readFilmInputs(slug, ctx), ctx);
+}
+
+export function buildFilmFrom(inputs, ctx) {
+  const { srt, v2map, vocabIds } = ctx;
+  const {
+    slug, meta, srtText, releaseLabel, sceneRun, sceneScript, sceneSourceFile, r2Scenes,
+    presenceRun, presenceScript, presenceSourceFile, jevRun, jevScript, jevSourceFile,
+  } = inputs;
   const report = {
     slug,
     temporary_v2_mapping: {},
@@ -367,26 +442,13 @@ export function buildFilm(slug, ctx) {
     notes: [],
   };
 
-  const meta = films[slug];
-  if (!meta) throw new Error(`${slug} is not in films.json`);
-
   // --- track ---
-  const srtPath = path.join(dir, 'data', `${slug}.srt`);
-  if (!fs.existsSync(srtPath)) throw new Error(`missing ${srtPath}`);
-  const raw = fs.readFileSync(srtPath, 'utf8');
-  const cues = srt.parseSrt(raw);
-  const sha256 = crypto.createHash('sha256').update(raw).digest('hex');
+  const cues = srt.parseSrt(srtText);
+  const sha256 = crypto.createHash('sha256').update(srtText).digest('hex');
   const soundCaptionCount = cues.filter((c) => SOUND_CAPTION.test(c.text)).length;
 
-  const sceneSrc = sceneSourceFor(dir, slug);
-  if (!fs.existsSync(sceneSrc.file)) throw new Error(`missing scene file ${sceneSrc.file}`);
-  const sceneRun = readJson(sceneSrc.file);
   const movie = sceneRun.movie ?? {};
-
   const trackId = `${slug}:opensubtitles`;
-  const releaseLabel = slug === 'nemo'
-    ? (sceneRun.release?.subtitle_track ?? tracksMeta.sdh?.release ?? null)
-    : null;
   if (!releaseLabel) report.notes.push('release label not recorded for this subtitle file; only the sha256 identifies it');
 
   const track = {
@@ -427,10 +489,10 @@ export function buildFilm(slug, ctx) {
     role: 'labeller',
     model: sceneRun.model ?? sceneRun.analysis_run?.labeller ?? 'claude-sonnet-5',
     taxonomy_version: sceneRun.taxonomy ?? sceneRun.analysis_run?.taxonomy ?? 'taxonomy-v2',
-    script: sceneSrc.script,
+    script: sceneScript,
     started_at: sceneRun.started_at ?? sceneRun.analysis_run?.started_at ?? null,
     cost_usd: sceneRun.cost_usd ?? sceneRun.analysis_run?.cost_usd?.labeller ?? null,
-    source_file: path.relative(dir, sceneSrc.file),
+    source_file: sceneSourceFile,
   });
   if (sceneRun.analysis_run?.detector) {
     runs.push({
@@ -448,53 +510,49 @@ export function buildFilm(slug, ctx) {
   }
 
   // --- presence, from Claude, one call per scene: the authority for what is in a scene ---
-  const presencePath = findPresenceRun(dir, slug);
   let presenceByScene = new Map();
   let presenceModel = null;
-  if (!presencePath) {
+  if (!presenceRun) {
     report.notes.push('no sonnet-presence run found: nothing in this film is asserted present; run experiments/trigger-scan/run-sonnet-presence.js --film ' + slug);
   } else {
-    const run = readJson(presencePath);
-    presenceModel = run.model ?? 'claude-sonnet-5';
-    presenceByScene = new Map((run.scenes ?? []).map((s) => [s.id, s]));
+    presenceModel = presenceRun.model ?? 'claude-sonnet-5';
+    presenceByScene = new Map((presenceRun.scenes ?? []).map((s) => [s.id, s]));
     runs.push({
       id: `${slug}:presence`,
       film_id: slug,
       track_id: trackId,
       role: 'presence',
       model: presenceModel,
-      taxonomy_version: run.taxonomy ?? 'v3',
-      script: 'run-sonnet-presence.js',
-      started_at: run.startedAt ?? null,
-      cost_usd: run.cost_usd ?? null,
-      source_file: path.relative(dir, presencePath),
+      taxonomy_version: presenceRun.taxonomy ?? 'v3',
+      script: presenceScript,
+      started_at: presenceRun.startedAt ?? null,
+      cost_usd: presenceRun.cost_usd ?? null,
+      source_file: presenceSourceFile,
     });
   }
 
   // --- the Jev v3 beat run: kept as a second opinion, never as an assertion ---
-  const jevPath = findJevRun(dir, slug);
   let beats = [];
-  if (!jevPath) {
+  if (!jevRun) {
     report.notes.push('no jev-v3 v3b run found: no second opinion on presence for this film');
   } else {
-    const jev = readJson(jevPath);
-    beats = jev.beats ?? [];
+    beats = jevRun.beats ?? [];
     runs.push({
       id: `${slug}:presence-screen`,
       film_id: slug,
       track_id: trackId,
       role: 'presence',
-      model: jev.model ?? 'jev-1.13.0',
-      taxonomy_version: jev.taxonomy ?? 'v3',
-      script: 'run-jev-v3.js',
-      started_at: jev.startedAt ?? null,
-      cost_usd: jev.costUsd ?? null,
-      source_file: path.relative(dir, jevPath),
+      model: jevRun.model ?? 'jev-1.13.0',
+      taxonomy_version: jevRun.taxonomy ?? 'v3',
+      script: jevScript,
+      started_at: jevRun.startedAt ?? null,
+      cost_usd: jevRun.costUsd ?? null,
+      source_file: jevSourceFile,
     });
   }
 
   // --- second run, for confirmation ---
-  const r2 = sceneSrc.second ? readJson(sceneSrc.second).scenes ?? [] : null;
+  const r2 = r2Scenes;
 
   // --- scenes and labels ---
   const cueById = new Map(cues.map((c) => [c.id, c]));
@@ -606,7 +664,13 @@ export function buildFilm(slug, ctx) {
         asserted.mention.add(itemId);
         pushLabel(id, itemId, 'mention', presenceModel, 'scene', { asserted: true, confidence_kind: 'stated_in_lines' });
       }
-    } else if (presencePath) {
+    } else if (presenceRun) {
+      // There IS a presence run and this scene is not in it. That is not an error: the presence
+      // stage's cost cap can stop part-way through a film, and the line above used to name a
+      // variable that has not existed since this function took its inputs as values — so the first
+      // film to hit the cap crashed here with a ReferenceError instead of recording the gap. A
+      // scene with no presence result simply asserts nothing; the API already reads that as
+      // "not assessed" rather than "not there".
       report.scenes_without_presence_run.push(sc.id);
     }
 
@@ -738,6 +802,15 @@ async function insertRows(tx, table, rows, { chunk = 400 } = {}) {
   }
 }
 
+/**
+ * Replace the site-wide vocabulary from a taxonomy snapshot. LOADER ONLY.
+ *
+ * Every existing label, short label, alias, grouping and taxonomy version is overwritten from the
+ * snapshot passed in. That is the right behaviour for the loader — the whole point of running it is
+ * that the files on disk are the truth — and exactly the wrong behaviour for a film being added
+ * live, which used to call this on its way past and quietly reverted every hand-corrected label on
+ * the site to whatever pipeline/taxonomy-v3.js says. See `ensureVocabulary` for that path.
+ */
 export async function writeVocabulary(db, taxonomy) {
   const { groups, items } = buildVocabulary(taxonomy);
   // The API caches these rows in module scope; if the loader runs in the same process (server.js
@@ -766,17 +839,99 @@ export async function writeVocabulary(db, taxonomy) {
   return { groups: groups.length, items: items.length };
 }
 
-// Replaces one film's rows. Deleting the film cascades to tracks, anchors, runs, scenes, labels.
+/**
+ * Make sure every vocabulary row a live film's labels point at exists, and change nothing else.
+ *
+ * Adding a film needs the foreign keys to resolve on a database the loader has never run against;
+ * it does not need, and must not have, the right to rewrite the vocabulary the whole site filters
+ * by. So: insert what is missing, leave what is there, and refuse outright if the rows that are
+ * there came from a different taxonomy version than the one this pipeline is labelling with —
+ * because then the ids mean something else and a silent insert would be the real damage.
+ *
+ * Takes a transaction rather than a db: it runs inside the caller's, so a film that fails to write
+ * does not leave half a vocabulary behind. The cache in lib/data.js is keyed on the db object, so
+ * the CALLER invalidates it after the commit — `tx` is a different object and would not match.
+ *
+ * @returns {Promise<{ inserted: number, taxonomyVersion: string }>}
+ * @throws {PipelineError} `vocabulary_mismatch`
+ */
+export async function ensureVocabulary(tx, taxonomy) {
+  const { groups, items } = buildVocabulary(taxonomy);
+  const version = items[0]?.taxonomy_version ?? null;
+
+  const { rows: stored } = await tx.query(
+    'select distinct taxonomy_version from vocabulary where taxonomy_version is not null',
+  );
+  const other = stored.map((r) => r.taxonomy_version).filter((v) => v !== version);
+  if (other.length) {
+    throw fail(
+      'vocabulary_mismatch',
+      `This database's scene vocabulary is ${other.join(', ')} and this pipeline labels with ${version}, so the labels would not mean the same thing. Reload the vocabulary before adding films.`,
+    );
+  }
+
+  let inserted = 0;
+  for (const g of groups) {
+    await tx.query('insert into groups (id, label, layer) values ($1,$2,$3) on conflict (id) do nothing', [g.id, g.label, g.layer]);
+  }
+  for (const v of items) {
+    const res = await tx.query(
+      `insert into vocabulary (id, layer, group_id, label, short_label, text_blind, taxonomy_version, aliases)
+       values ($1,$2,$3,$4,$5,$6,$7,$8) on conflict (id) do nothing`,
+      [v.id, v.layer, v.group_id, v.label, v.short_label, v.text_blind, v.taxonomy_version, v.aliases],
+    );
+    inserted += res?.rowCount ?? res?.affectedRows ?? 0;
+  }
+  return { inserted, taxonomyVersion: version };
+}
+
+/**
+ * The recorded Jev run for one film, for the "Watch it work" replay.
+ *
+ * It is written separately from `writeFilm` and AFTER it, because deleting the film cascades to
+ * `recordings` — a rewrite that put the recording first would delete it again a moment later.
+ *
+ * `recorded_at` comes from the recording's own `meta.started_at`, not from now(): the row records
+ * when the run happened, and re-loading the same file must not move that date.
+ */
+export async function writeRecordingRows(tx, filmId, { recording, excerpts = null } = {}) {
+  await tx.query(
+    `insert into recordings (film_id, recording, excerpts, recorded_at) values ($1, $2, $3, $4)
+     on conflict (film_id) do update set recording = excluded.recording,
+       excerpts = excluded.excerpts, recorded_at = excluded.recorded_at`,
+    [
+      filmId,
+      JSON.stringify(recording),
+      excerpts === null || excerpts === undefined ? null : JSON.stringify(excerpts),
+      recording?.meta?.started_at ?? null,
+    ],
+  );
+}
+
+export const writeRecording = (db, filmId, payload) => writeRecordingRows(db, filmId, payload);
+
+/**
+ * One film's rows, inside somebody else's transaction.
+ *
+ * `replace: true` deletes the film first, which cascades to tracks, anchors, runs, scenes and
+ * labels. That is the LOADER's contract — re-running it over the experiment outputs is meant to
+ * rewrite what is there — and it is the wrong contract for a live run, where the film that happens
+ * to be sitting on this slug belongs to somebody else. Live ingestion passes `replace: false` and
+ * takes the unique-violation instead.
+ */
+export async function writeFilmRows(tx, built, { replace = true } = {}) {
+  if (replace) await tx.query('delete from films where id = $1', [built.film.id]);
+  await insertRows(tx, 'films', [built.film]);
+  await insertRows(tx, 'tracks', [built.track]);
+  await insertRows(tx, 'anchors', built.anchors);
+  await insertRows(tx, 'analysis_runs', built.runs);
+  await insertRows(tx, 'scenes', built.scenes);
+  await insertRows(tx, 'scene_labels', built.labels);
+}
+
+/** Replaces one film's rows. The loader's path; see `writeFilmRows`. */
 export async function writeFilm(db, built) {
-  await db.withTransaction(async (tx) => {
-    await tx.query('delete from films where id = $1', [built.film.id]);
-    await insertRows(tx, 'films', [built.film]);
-    await insertRows(tx, 'tracks', [built.track]);
-    await insertRows(tx, 'anchors', built.anchors);
-    await insertRows(tx, 'analysis_runs', built.runs);
-    await insertRows(tx, 'scenes', built.scenes);
-    await insertRows(tx, 'scene_labels', built.labels);
-  });
+  await db.withTransaction((tx) => writeFilmRows(tx, built, { replace: true }));
 }
 
 export async function loadAll(db, {
@@ -804,6 +959,8 @@ export async function loadAll(db, {
   const reports = [];
   let posters = 0;
   let overviews = 0;
+  let recordings = 0;
+  let excerptFiles = 0;
   for (const slug of slugs) {
     const built = buildFilm(slug, ctx);
     if (tmdbApiKey) {
@@ -814,9 +971,24 @@ export async function loadAll(db, {
       else built.report.notes.push('no synopsis came back from TMDB for this film');
     }
     if (!dryRun) await writeFilm(db, built);
+    // The recording is optional: a film without one simply has no "Watch it work" page.
+    const rec = findRecording(exp.dir, slug);
+    if (rec) {
+      recordings += 1;
+      if (rec.excerpts) excerptFiles += 1;
+      else built.report.notes.push('recording has no excerpt file beside it (recordings/<slug>.excerpts.json is git-ignored); the replay works, the beat lines do not');
+      built.report.counts_recording = {
+        beats: rec.recording?.beats?.length ?? 0,
+        flagged: rec.recording?.thresholds?.flagged_beats ?? 0,
+        excerpt_beats: rec.excerpts ? Object.keys(rec.excerpts).length : 0,
+      };
+      if (!dryRun) await writeRecording(db, built.film.id, rec);
+    } else {
+      built.report.notes.push('no recording found: this film has no "Watch it work" replay; run experiments/trigger-scan/record-jev-run.js --film ' + slug);
+    }
     reports.push(built.report);
   }
-  return { reports, vocabulary: items.length, posters, overviews, postersLookedUp: !!tmdbApiKey };
+  return { reports, vocabulary: items.length, posters, overviews, postersLookedUp: !!tmdbApiKey, recordings, excerptFiles };
 }
 
 export function formatReport(reports) {
@@ -825,6 +997,10 @@ export function formatReport(reports) {
   for (const r of reports) {
     const c = r.counts;
     lines.push(`${r.slug.padEnd(14)} scenes ${String(c.scenes).padStart(3)}  present ${String(c.asserted_presence).padStart(3)} (${c.known_from_film} known_from_film)  talked-about ${String(c.asserted_mentions).padStart(2)}  events ${String(c.events).padStart(3)}  rows ${String(c.labels).padStart(5)}  anchors ${c.anchors}  cues ${c.cues}`);
+    if (r.counts_recording) {
+      const cr = r.counts_recording;
+      lines.push(`${pad}recording: ${cr.beats} beats, ${cr.flagged} flagged, excerpts for ${cr.excerpt_beats}`);
+    }
     for (const n of r.notes) lines.push(`${pad}note: ${n}`);
     for (const [id, n] of Object.entries(r.temporary_v2_mapping)) {
       const t = TEMPORARY_V2_MAPPING[id];
@@ -862,9 +1038,10 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     }), 'load'));
   }
   const started = Date.now();
-  const { reports, vocabulary, posters, overviews, postersLookedUp } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
+  const { reports, vocabulary, posters, overviews, postersLookedUp, recordings, excerptFiles } = await loadAll(db ?? { withTransaction: async () => {}, exec: async () => {}, query: async () => ({ rows: [] }) }, { slugs, experimentDir, dryRun });
   console.log(formatReport(reports));
   console.log(`\nvocabulary items: ${vocabulary}`);
+  console.log(`recordings: ${recordings} of ${slugs.length} films (${excerptFiles} with excerpts)`);
   console.log(postersLookedUp
     ? `posters from TMDB: ${posters} of ${slugs.length}\nsynopses from TMDB: ${overviews} of ${slugs.length}`
     : 'posters and synopses: TMDB_API_KEY is not set, so poster_url and overview are null (the UI draws a placeholder and shows no synopsis)');

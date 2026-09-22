@@ -104,6 +104,35 @@ export async function film(db, slug, rawQuery = {}) {
 }
 
 // ------------------------------------------------------------------------------------------------
+// GET /api/films/{slug}/recording
+// ------------------------------------------------------------------------------------------------
+
+/**
+ * One real Jev run, recorded precisely enough to replay at the speed it happened.
+ *
+ * The body is large (a few hundred KB) and it is returned whole, because a replay that fetched its
+ * timeline in pages would not be a replay. `excerpts` is null for a film whose excerpt file was not
+ * on the machine that loaded it; a page must work without them.
+ *
+ * The replay contract — iterate `recording.timeline` against a real clock, never stretch it, drive
+ * the counters off the running totals — is documented in experiments/trigger-scan/RECORDINGS.md.
+ */
+export async function recording(db, slug, rawQuery = {}) {
+  checkParams(rawQuery, 'recording');
+  if (!slug) throw badRequest('A film slug is required, e.g. /api/films/nemo/recording.');
+  const f = await q.requireFilm(db, slug);
+  const row = await q.getRecording(db, f.id);
+  if (!row) {
+    throw notFound(`"${f.slug}" has no recorded analysis run, so there is nothing to replay for it.`);
+  }
+  return {
+    film: { slug: f.slug, title: f.title, year: f.year },
+    recording: row.recording,
+    excerpts: row.excerpts ?? null,
+  };
+}
+
+// ------------------------------------------------------------------------------------------------
 // Calibration
 // ------------------------------------------------------------------------------------------------
 

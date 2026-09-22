@@ -1,0 +1,190 @@
+.job {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.film {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.poster {
+  width: 92px;
+  height: 130px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.filmText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.filmTitle {
+  font-family: var(--display);
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--dark-text);
+}
+
+.filmYear {
+  font-size: 0.6em;
+  color: var(--dark-muted);
+  padding-left: 0.5em;
+}
+
+.filmState {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--dark-body);
+}
+
+.filmFacts {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--butter);
+}
+
+.failure {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--butter);
+  background: var(--dark-panel);
+  border: 1px solid var(--coral);
+  border-radius: 20px;
+  padding: 16px 18px;
+  max-width: 62ch;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 22px;
+  padding: 16px 18px 18px;
+}
+
+.stepsHeading {
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dark-muted);
+}
+
+.stepList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 16px minmax(0, auto) minmax(0, 1fr) 72px;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--dark-line);
+  font-size: 15px;
+}
+
+.step:last-child {
+  border-bottom: none;
+}
+
+.stepDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid var(--dark-line);
+  align-self: center;
+}
+
+.stepLabel {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--dark-muted);
+}
+
+.stepDetail {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--dark-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stepTime {
+  text-align: right;
+  font-family: var(--display);
+  font-size: 13px;
+  color: var(--dark-muted);
+}
+
+/* The four states, told apart by colour AND by the screen-reader word beside each row, never by
+   colour alone. */
+.step_running .stepDot {
+  background: var(--butter);
+  border-color: var(--butter);
+}
+
+.step_running .stepLabel {
+  color: var(--butter);
+}
+
+.step_done .stepDot {
+  background: var(--mint);
+  border-color: var(--mint);
+}
+
+.step_done .stepLabel {
+  color: var(--dark-text);
+}
+
+.step_failed .stepDot {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.step_failed .stepLabel {
+  color: var(--coral);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.button {
+  --button-bg: var(--butter);
+  --button-shadow: #1f1d1c;
+  border-color: var(--dark-text);
+}
+
+.quietLink {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--butter);
+}
+
+.quietLink:hover {
+  color: var(--dark-text);
+}

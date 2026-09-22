@@ -85,11 +85,10 @@ export function LevelsDisclosure() {
 }
 
 /**
- * The filters, above the list and open by default: a parent who scrolls past a closed box never
- * learns it was there. Built only from labels that occur in this film, each with the number of
- * scenes it occurs in. A GET form: checkboxes, an Apply button, and the selection lives in the URL,
- * so it is shareable and works with JavaScript switched off. The disclosure stays so the panel can
- * be folded away once a choice is made.
+ * The filters, above the list, folded until asked for (open when a filter is already applied, so
+ * the choice stays visible). Built only from labels that occur in this film, each with the number
+ * of scenes it occurs in. A GET form: checkboxes, an Apply button, and the selection lives in the
+ * URL, so it is shareable and works with JavaScript switched off.
  */
 export function FilterPanel({
   slug,
@@ -109,7 +108,7 @@ export function FilterPanel({
   total: number;
 }) {
   return (
-    <details className={styles.filters} open>
+    <details className={styles.filters} open={selected.length > 0}>
       <summary className={styles.filtersSummary}>
         <span className={styles.filtersTitle}>
           <FilterIcon />

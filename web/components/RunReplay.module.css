@@ -1,0 +1,402 @@
+.run {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.runHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.runHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.runHeadline {
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.15;
+  font-weight: 700;
+  color: var(--dark-text);
+}
+
+.engines {
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--dark-muted);
+}
+
+.replay {
+  --button-bg: var(--butter);
+  --button-shadow: #1f1d1c;
+  min-height: 44px;
+  padding: 10px 22px;
+  font-size: 16px;
+  border-color: var(--dark-text);
+}
+
+/* --- counters --------------------------------------------------------------------------------- */
+
+.counters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: 2px;
+  margin: 0;
+  background: var(--dark-line);
+  border: 1px solid var(--dark-line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  background: var(--dark-panel);
+}
+
+.counterLoud {
+  background: var(--dark-raise);
+}
+
+.counterLabel {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dark-muted);
+}
+
+.counterValue {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--dark-text);
+  margin: 0;
+}
+
+.counterLoud .counterValue {
+  color: var(--butter);
+}
+
+/* --- the board -------------------------------------------------------------------------------- */
+
+.board {
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .board {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.strip,
+.log,
+.detail {
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 22px;
+  padding: 16px 18px 18px;
+}
+
+.panelHeading {
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dark-muted);
+}
+
+.panelNote {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark-body);
+  padding-top: 4px;
+}
+
+/* 12px of gap, not 4px: the flagged squares are buttons with a 24px hit area (below), and 12 + 12
+   is the pitch at which those hit areas meet without overlapping. Two neighbours that both answer
+   to the same thumb would be worse than a small target. */
+.squares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+}
+
+/* A square is 12px and square; the grid is 250-odd of them, so the whole film fits above the fold. */
+.square {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--dark-line);
+  background: transparent;
+  padding: 0;
+  /* Deliberately short: this is the one motion on the page, and it must not outlast the gap
+     between two responses or the board would lag behind the run it is showing. */
+  transition: background-color 90ms linear, border-color 90ms linear;
+}
+
+/* A flagged beat is a button, and a 12px button is not something a thumb can hit. The square stays
+   12px because the board is a picture of the film and 250 bigger squares would not be one; the
+   target around it is 24px and invisible. Only the buttons get one — the plain squares are
+   aria-hidden and answer to nothing. */
+button.square::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+.squareKnown {
+  background: var(--dark-raise);
+  border-color: var(--dark-raise);
+}
+
+.squareFlagged {
+  background: var(--coral);
+  border-color: var(--coral);
+  cursor: pointer;
+}
+
+.squareShown {
+  outline: 2px solid var(--butter);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .square {
+    transition: none;
+  }
+}
+
+.detail {
+  min-height: 260px;
+}
+
+.detailPrompt {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--dark-muted);
+}
+
+/* --- one beat --------------------------------------------------------------------------------- */
+
+.beat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.beatWhere {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.beatTime {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark-text);
+}
+
+.beatId {
+  font-size: 12px;
+  font-family: var(--display);
+  letter-spacing: 0.04em;
+  color: var(--dark-muted);
+}
+
+.beatHeading {
+  font-family: var(--display);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dark-muted);
+  padding-top: 4px;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 84px 42px;
+  align-items: center;
+  gap: 8px;
+}
+
+.barLabel {
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--dark-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barTrack {
+  display: block;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--dark-raise);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  background: var(--sky);
+}
+
+/* At or above the flag threshold. The bar says which rule fired, rather than the page asserting it. */
+.barFillHot {
+  background: var(--coral);
+}
+
+.barValue {
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark-text);
+  text-align: right;
+}
+
+.scores {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--dark-body);
+}
+
+.scoreValue {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--dark-text);
+  white-space: nowrap;
+}
+
+.scoreConfidence {
+  font-weight: 400;
+  color: var(--dark-muted);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.line {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark-text);
+}
+
+.lineWhy {
+  color: var(--dark-muted);
+  font-style: italic;
+}
+
+/* --- the request log -------------------------------------------------------------------------- */
+
+.logList {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  /* Seventy-odd rows: tall enough to see the run breathe, short enough not to own the page. */
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) 54px 92px;
+  align-items: baseline;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.logRowOpen {
+  background: var(--dark-raise);
+  color: var(--butter);
+}
+
+.logRowDone {
+  color: var(--dark-body);
+}
+
+.logId {
+  font-family: var(--display);
+  font-weight: 700;
+}
+
+.logWhat {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logQuestions,
+.logTime {
+  text-align: right;
+  color: var(--dark-muted);
+}
+
+.logRowOpen .logQuestions,
+.logRowOpen .logTime {
+  color: var(--butter);
+}
+
+/* --- the finish line -------------------------------------------------------------------------- */
+
+.finish {
+  font-family: var(--display);
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 700;
+  color: var(--butter);
+  padding-bottom: 18px;
+}

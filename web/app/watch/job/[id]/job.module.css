@@ -1,0 +1,25 @@
+/* The one state this route renders itself: the analysis service is unreachable, so there is no job
+   to hand to JobRun and no reason to claim the run does not exist. */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.button {
+  --button-bg: var(--butter);
+  --button-shadow: #1f1d1c;
+  border-color: var(--dark-text);
+}
+
+.quietLink {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--butter);
+}
+
+.quietLink:hover {
+  color: var(--dark-text);
+}

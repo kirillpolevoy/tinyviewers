@@ -48,6 +48,16 @@ export async function requireFilm(db, slug) {
   return film;
 }
 
+// The recorded Jev run for a film, if one was loaded. `excerpts` is null for a film whose excerpt
+// file was not on the loading machine, and the replay has to work without it.
+export async function getRecording(db, filmId) {
+  const { rows } = await db.query(
+    'select recording, excerpts, recorded_at from recordings where film_id = $1',
+    [filmId],
+  );
+  return rows[0] ?? null;
+}
+
 // A film has exactly one analysed track today; the schema allows more.
 export async function getTrack(db, filmId) {
   const { rows } = await db.query(

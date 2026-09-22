@@ -11,13 +11,21 @@
 import http from 'node:http';
 import { pathToFileURL } from 'node:url';
 
+// Order matters exactly as it does in Vercel's own file routing: the longer, more specific path
+// has to be tried first, or /api/add/jobs/<id> is swallowed by the /api/add/jobs rule.
 const ROUTES = [
-  { method: 'GET', pattern: /^\/api\/films\/([^/]+)\/scenes\/?$/, module: './api/films/[slug]/scenes.js', params: ['slug'] },
-  { method: 'GET', pattern: /^\/api\/films\/([^/]+)\/?$/, module: './api/films/[slug].js', params: ['slug'] },
-  { method: 'GET', pattern: /^\/api\/films\/?$/, module: './api/films.js', params: [] },
-  { method: 'GET', pattern: /^\/api\/vocabulary\/?$/, module: './api/vocabulary.js', params: [] },
-  { method: 'GET', pattern: /^\/api\/openapi(?:\.json)?\/?$/, module: './api/openapi.js', params: [] },
-  { method: 'GET', pattern: /^\/$/, module: './api/openapi.js', params: [] },
+  { pattern: /^\/api\/add\/resolve\/?$/, module: './api/add/resolve.js', params: [] },
+  { pattern: /^\/api\/add\/jobs\/([^/]+)\/recording\/?$/, module: './api/add/jobs/[id]/recording.js', params: ['id'] },
+  { pattern: /^\/api\/add\/jobs\/([^/]+)\/?$/, module: './api/add/jobs/[id].js', params: ['id'] },
+  { pattern: /^\/api\/add\/jobs\/?$/, module: './api/add/jobs.js', params: [] },
+  { pattern: /^\/api\/add\/status\/?$/, module: './api/add/status.js', params: [] },
+  { pattern: /^\/api\/films\/([^/]+)\/scenes\/?$/, module: './api/films/[slug]/scenes.js', params: ['slug'] },
+  { pattern: /^\/api\/films\/([^/]+)\/recording\/?$/, module: './api/films/[slug]/recording.js', params: ['slug'] },
+  { pattern: /^\/api\/films\/([^/]+)\/?$/, module: './api/films/[slug].js', params: ['slug'] },
+  { pattern: /^\/api\/films\/?$/, module: './api/films.js', params: [] },
+  { pattern: /^\/api\/vocabulary\/?$/, module: './api/vocabulary.js', params: [] },
+  { pattern: /^\/api\/openapi(?:\.json)?\/?$/, module: './api/openapi.js', params: [] },
+  { pattern: /^\/$/, module: './api/openapi.js', params: [] },
 ];
 
 const cache = new Map();
@@ -33,7 +41,7 @@ export async function route(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
-    res.end(`${JSON.stringify({ error: 'not_found', message: `No route for ${url.pathname}.`, routes: ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/vocabulary', '/api/openapi.json'] }, null, 2)}\n`);
+    res.end(`${JSON.stringify({ error: 'not_found', message: `No route for ${url.pathname}.`, routes: ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/films/{slug}/recording', '/api/vocabulary', '/api/openapi.json', '/api/add/status', '/api/add/resolve', '/api/add/jobs', '/api/add/jobs/{id}', '/api/add/jobs/{id}/recording'] }, null, 2)}\n`);
     return;
   }
   const match = url.pathname.match(hit.pattern);
@@ -79,8 +87,10 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     console.log('  /api/films?q=nemo');
     console.log('  /api/films/nemo');
     console.log('  /api/films/nemo/scenes?presence=shark&age=6');
+    console.log('  /api/films/nemo/recording');
     console.log('  /api/vocabulary');
     console.log('  /api/openapi.json');
+    console.log('  /api/add/status   (POST /api/add/resolve, POST /api/add/jobs, GET /api/add/jobs/{id}[/recording])');
     if (!process.env.DATABASE_URL && !process.argv.includes('--pglite')) {
       console.log('\nDATABASE_URL is not set — every data route will return 500. Add --pglite to serve an in-memory copy instead.');
     }

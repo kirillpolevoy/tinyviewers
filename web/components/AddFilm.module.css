@@ -1,0 +1,177 @@
+.add {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 260px;
+}
+
+/* The passcode is short; it does not need the width a title needs. */
+.field:nth-child(2) {
+  flex: 0 1 200px;
+}
+
+.label {
+  color: var(--dark-muted);
+}
+
+.input {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 2px solid var(--dark-line);
+  border-radius: 16px;
+  background: var(--dark-raise);
+  color: var(--dark-text);
+  font-family: var(--serif);
+  font-size: 17px;
+}
+
+.input::placeholder {
+  color: var(--dark-muted);
+}
+
+.passcode {
+  letter-spacing: 0.2em;
+}
+
+.submit {
+  --button-bg: var(--butter);
+  --button-shadow: #1f1d1c;
+  border-color: var(--dark-text);
+  flex: 0 0 auto;
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+.refusal {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--butter);
+  max-width: 62ch;
+}
+
+.refusalLink {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--dark-text);
+  text-decoration: underline;
+}
+
+.candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidatesHeading {
+  font-family: var(--display);
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--dark-muted);
+}
+
+.candidateList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidate {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 20px;
+}
+
+@media (min-width: 700px) {
+  .candidate {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+  }
+}
+
+.candidatePoster {
+  width: 64px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.candidateText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.candidateTitle {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--dark-text);
+}
+
+.candidateYear {
+  font-size: 15px;
+  color: var(--dark-muted);
+  padding-left: 0.5em;
+}
+
+.candidateOverview {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark-body);
+}
+
+.candidateAction {
+  --button-bg: var(--dark-raise);
+  --button-shadow: #1f1d1c;
+  grid-column: 1 / -1;
+  border-color: var(--dark-text);
+  color: var(--dark-text);
+}
+
+@media (min-width: 700px) {
+  .candidateAction {
+    grid-column: auto;
+  }
+}
+
+.candidateExisting {
+  grid-column: 1 / -1;
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--butter);
+}
+
+@media (min-width: 700px) {
+  .candidateExisting {
+    grid-column: auto;
+  }
+}
