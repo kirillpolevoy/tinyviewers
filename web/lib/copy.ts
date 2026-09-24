@@ -14,7 +14,14 @@ export const SITE_NAME = 'Tiny Viewers';
 // separate Search page would have been the same page with fewer films on it.
 export const NAV = [
   { href: '/library', label: 'Library' },
-  { href: '/watch', label: 'Watch it work' },
+  // No "Add a movie" entry: adding lives inside the library, where a search that misses turns into
+  // the ask. /add redirects there.
+  //
+  // No "Watch it work" entry either, for now. What /watch runs live is the subtitle fetch and Jev's
+  // beat screening, and Jev's answers do not reach a scene guide (Sonnet reads the subtitles on its
+  // own; the Jev labels are stored unasserted and never shown). A page that shows off a pass the
+  // product does not use is the thing the owner asked not to have. The route still exists; it comes
+  // back into the navigation when the stages it shows are the ones that build the film page.
 ] as const;
 
 /** Home. The headline is two lines; "that" is the emphasised word inside the pen circle. */
@@ -24,40 +31,44 @@ export const HOME = {
   headlineEmphasis: 'that',
   headlineLine1After: ' scene.',
   headlineLine2: 'We’ll tell you when.',
-  subhead:
-    'Look up a movie. See every scary or sad scene, when it happens, and what’s in it.',
   searchLabel: 'Movie title',
   searchPlaceholder: 'Tonight’s movie',
   searchButton: 'Check my movie',
-  peekCaption: 'the shark shows up here',
-  libraryInvitationLead: 'Still choosing?',
-  libraryInvitationLink: 'Browse the library.',
-  shelfSignOff: 'Skip the scares. Keep the joy.',
-  bandHeadline: 'Fast answers. Then the big picture.',
-  bandBody:
-    'Watch the questions zip across a film, then see the scenes take shape — a real run, replayed at the speed it happened.',
-  bandButton: 'Watch it work',
+  /** The one value line, directly under the field. */
+  valueLine: 'Every scary or sad scene, when it happens, and what’s in it.',
+  browseLink: 'Browse the library →',
+  /** The peek card's marks are for one age band; it names it rather than leave the numbers bare. */
+  peekBand: 'ages 5–7',
 } as const;
 
 /** Library. */
 export const LIBRARY = {
   title: 'Film library',
-  intro: 'The films are lined up. Pick one for a heads-up on the tricky bits.',
-  stripNote:
-    'The strip under each title shows where the strongest scenes sit; taller means stronger for ages 5–7.',
-  cardMicrocopy: 'Scene notes inside.',
-  cardAction: 'See scenes',
-  emptyHeadline: 'An empty shelf. For now.',
+  intro: 'Pick one for a heads-up on the tricky bits.',
+  rowAction: 'See scenes →',
+  justAdded: 'Just added',
+  emptyHeadline: 'The library is empty. For now.',
   emptyBody: 'Scene guides land here as soon as they’re saved.',
+  /** The legend above the rows says which age band the marks are drawn for. */
+  legendBand: 'Ages 5–7',
+  /** Read after the count on a row, so the strengths are not only a picture. */
+  rowBreakdown: (parts: string[]) => (parts.length ? `: ${parts.join(', ')}` : ''),
+  /** Announced (and, if the row is slow to arrive, shown) when an add run finishes. */
+  added: (title: string) => `${title} is in the library now.`,
+  addedLink: 'See its scene guide →',
 } as const;
 
-/** The library's search field, and what it says when nothing on the shelf matches. */
+/** "18 scenes" on a library row. One scene is a scene. */
+export function sceneCountLabel(n: number): string {
+  return n === 1 ? '1 scene' : `${n} scenes`;
+}
+
+/** The library's search field, and what it says when nothing in the library matches. */
 export const SEARCH = {
   fieldLabel: 'Movie title',
   placeholder: 'Tonight’s movie',
-  noMatchHeadline: 'Not on our shelf. Yet.',
+  noMatchHeadline: 'Not in the library. Yet.',
   noMatchBody: 'Check the spelling, or try the full title.',
-  noMatchAction: 'Add this movie',
 } as const;
 
 /**
@@ -76,29 +87,67 @@ export const FILM = {
   scaleDisclosure: 'What the levels mean',
   scaleLead: 'A low rating can still include your child’s fear.',
   ageFourNote: 'For a 4-year-old, use 5–7; expect some scenes to feel stronger.',
-  listHeading: 'Here’s what’s coming up.',
-  showDetails: 'Show details',
-  hideDetails: 'Hide details',
-  beReadyAt: 'Be ready at',
-  sceneEndsAround: 'Scene ends around',
+  // The rail beside the poster.
+  factYear: 'Year',
+  // No "Runtime" fact: the only length we store is where the subtitles end, which is not the film's
+  // running time (credits and silent scenes come after it). It returns when the true runtime is
+  // stored separately.
+  factImdb: 'IMDb',
+  // We store the film's IMDb id, not its rating, so the rail links to the page rather than quote a
+  // number we do not have.
+  imdbLink: 'Open →',
+  // The findings card. The count is the big number; this is the words beside it.
+  verdictWords: 'scenes parents should know about',
+  verdictWordsOne: 'scene parents should know about',
+  timelineHint: 'Tap a marker to jump to that scene.',
+  showingScene: (time: string) => `Showing the scene at ${time}.`,
+  showAll: 'Show all →',
+  /** With a filter on, the way back from one scene is to the filtered list, and it says so. */
+  showMatching: 'Back to matching scenes →',
+  allClear: (time: string) => `Nothing flagged after ${time}.`,
+  // The filter: one chip group, applied the moment a chip is pressed.
+  filterTitle: 'Filter scenes',
+  filterOn: (n: number) => ` · ${n} on`,
+  filterLegend: 'Show scenes with any of these',
+  filterShowing: (shown: number, total: number) =>
+    shown === total ? `Showing all ${total} scenes.` : `Showing ${shown} of ${total} scenes.`,
+  clearFilters: 'Clear filters',
+  /** On a phone the list is a long way below the chips: a jump to it, once a filter is on. */
+  viewMatching: (n: number) => (n === 1 ? 'View the matching scene ↓' : `View ${n} matching scenes ↓`),
+  /** On a phone the synopsis shows its first sentence; the rest is one tap away. */
+  overviewMore: 'Read the rest',
+  /** Only ever seen with JavaScript off, where the chips cannot apply themselves. */
+  filterApplyNoScript: 'Show these scenes',
+  // One scene row, opened.
+  readyLine: (readyAt: string, endsAround: string) => `Be ready at ${readyAt} · ends around ${endsAround}`,
   // TODO(phase 4): the feedback controls are not rendered in this phase — there is nowhere to send
   // an answer yet, and a control that silently discards one is worse than none. The wording stays
   // here so wiring it up is a component change, not a copy decision.
   feedbackPrompt: 'Was this right?',
   feedbackYes: 'Yes',
   feedbackOff: 'Something is off',
-  filterDisclosure: 'Narrow the list',
-  filterPrompt: 'Got something in mind? Find those scenes.',
-  filterRule: 'Show scenes with any of these.',
-  groupPresence: 'What is in it',
-  groupEvents: 'What happens',
-  applyFilters: 'Apply filters',
-  clearFilters: 'Clear filters',
-  crossLink: 'See how this was worked out',
-  crossLinkNote: 'Opens this film’s recorded analysis.',
-  timelineStart: '0:00:00',
+  // "How this guide was made": what the guide is built from and what that cannot see, under the
+  // scene list. It replaces a link to the Watch page, which showed a pass that does not build it.
+  aboutTitle: 'How this guide was made',
+  aboutSource:
+    'We read the film’s subtitles and list each scene in them that could scare or upset a child: when it happens, what happens, and how strong it is for ages 5–7 and 8–10.',
+  aboutLimitSpeechOnly:
+    'Subtitles cannot see, and these ones only carry speech. A scare that is only shown, or only heard, can be missed.',
+  aboutLimitCaptions:
+    'These subtitles caption sounds as well as speech, so many sound-only moments are covered. A scare that is only shown can still be missed.',
+  aboutTiming: (release: string | null) =>
+    release
+      ? `Times follow one subtitle release (${release}). Another edition or streaming version can run a little earlier or later.`
+      : 'Times follow one subtitle release. Another edition or streaming version can run a little earlier or later.',
+  aboutAges:
+    'Children under 5 are not rated. If you use the 5–7 marks for a younger child, expect some scenes to feel stronger.',
   posterPlaceholder: 'poster — to come',
+  posterPlaceholderShort: 'to come',
 } as const;
+
+/** The breakdown under the verdict: "3 very strong". Lower case, because it follows a number. */
+export const STRENGTH_WORDS_LOWER = ['low', 'mild', 'strong', 'very strong'] as const;
+export const NOT_CHECKED_LOWER = 'not checked';
 
 /** The three kinds of nothing, kept apart on purpose. */
 export const EMPTY = {
@@ -147,20 +196,20 @@ export const STRENGTH_TABLE = [
  * that is what a visitor came here to see. Everything it claims is read off a recording or a job.
  */
 export const WATCH = {
-  headline: 'First the clues. Then the scenes.',
-  // Two passes, not one handing off to the other. Jev screens every beat; Sonnet reads the whole
-  // transcript itself and writes the scene list without seeing an answer of Jev's. The page shows
-  // one against the other, which is the interesting part and also the true one.
+  headline: 'Watch Jev read a film, live.',
+  // Every run on /watch is live: the visitor picks a film and the first steps of the real analysis
+  // run on it there and then — which steps is the scene API's decision (pipeline/stages.js), so
+  // nothing here names them. It changes nothing about the film's own page, which a parent reads.
   intro:
-    'Jev puts 103 questions to every beat of a film and answers them at System One speed. Sonnet reads the whole transcript on its own and writes the scene list. Below: real runs, replayed at the speed they happened, with Jev’s flags beside Sonnet’s scenes.',
-  shelfHeading: 'Runs on the shelf',
-  shelfNote: 'Every number on these pages came out of the run. Nothing here is animated from a guess.',
-  play: 'Watch this run',
+    'Pick any film and two steps run on it, live: fetching its subtitles, then Jev screening every beat. Jev’s answers are an experiment — the scene guides do not use them yet; Sonnet writes those from the subtitles on its own. What you see is the run that just happened, at the speed it happened. It changes nothing on the film’s page.',
+  shelfHeading: 'Films in the library',
+  shelfNote: 'Their subtitles are already stored, so a run starts straight away.',
+  play: 'Run it live',
   replay: 'Replay',
   replaying: 'Replaying…',
-  // The replay page. What finishes here is Jev's pass and only Jev's pass — Sonnet's reading of the
-  // transcript is not in this recording, and its seconds and cents are not in these counters. The
-  // headline says so rather than calling this the whole run.
+  // What finishes here is Jev's pass and only Jev's pass — Sonnet's reading of the transcript is
+  // not in this run, and its seconds and cents are not in these counters. The headline says so
+  // rather than calling this the whole analysis.
   runningHeadline: 'Jev is reading the film.',
   finishedHeadline: 'Jev has read the film.',
   requestLogHeading: 'Requests',
@@ -176,9 +225,14 @@ export const WATCH = {
     'The same scene list the film page shows. Sonnet wrote it from the whole transcript, not from the answers above — the two passes are independent, which is why it is worth watching them agree.',
   noScenesYet: 'No scenes are saved for this film yet.',
   toFilmList: 'See the finished scene list',
-  backToRuns: 'All recorded runs',
+  backToRuns: 'Pick another film',
   backToLibrary: 'Browse the library',
   noRecording: 'No run is recorded for this film yet.',
+  // The recorded run, which is now only the fallback for a day whose live budget is spent. It has
+  // to say plainly that it is a recording: the rest of this page's claim is "this just happened".
+  recordedEyebrow: 'A recording, not a live run',
+  recordedLead: (date: string) =>
+    `This is a recording of Jev’s run from ${date}, replayed at the speed it happened.`,
   // Counter labels. Short, because they sit under a number that is changing.
   elapsed: 'Elapsed',
   inFlight: 'In flight',
@@ -189,6 +243,68 @@ export const WATCH = {
   tokensOut: 'Tokens out',
   cost: 'Cost',
   confidence: 'confidence',
+} as const;
+
+/**
+ * The live run on /watch: the picker, the run page it leads to, and every refusal on the way. One
+ * plain sentence each, as everywhere else. None of it names a stage: which part of the analysis is
+ * public is the scene API's decision, and the steps themselves come labelled from its job.
+ */
+export const DEMO = {
+  pickHeading: 'Pick a film',
+  pickLead: 'One from the library, or any film at all — a title or an IMDb link.',
+  searchLabel: 'Any film: a title or IMDb link',
+  searchPlaceholder: 'Room on the Broom',
+  find: 'Find it',
+  finding: 'Looking it up…',
+  candidatesHeading: 'Which one?',
+  choose: 'Run it live',
+  starting: 'Starting the run…',
+  noCandidates: 'Nothing came back for that. Try the full title, or paste the IMDb link.',
+  onShelf: 'In the library',
+  budgetLine: (spent: number, cap: number) =>
+    `$${spent.toFixed(2)} of $${cap.toFixed(2)} of live runs spent today.`,
+  // Refusals.
+  capHeadline: 'Today’s live runs are used up.',
+  capBody:
+    'Live runs have a daily budget, and today’s is spent. It resets tomorrow. Every film in the library has a recorded run you can watch instead — it is labelled as a recording.',
+  watchRecording: 'Watch its recorded run instead',
+  offHeadline: 'Live runs are switched off',
+  offBody: 'This deployment is missing a key the analysis needs, so nothing can run live right now.',
+  unknownBody: 'The analysis service is not answering, so live runs are put away until it does.',
+  busy: 'Two live runs are already going. Try again in a moment.',
+  tooManyRuns: 'That is a lot of runs from here. Give it ten minutes.',
+  tooManyNewFilms:
+    'Films we have not fetched subtitles for are limited to a couple every ten minutes. Pick one from the library, or give it ten minutes.',
+  newFilmLimit:
+    'Today’s allowance of new films is used up — each one costs a subtitle download. Films in the library still work.',
+  tooManyLookups: 'That is a lot of lookups from here. Give it ten minutes.',
+  badRequest: 'That did not look like a title or an IMDb link.',
+  unreachable: 'The analyser is not answering. Try again in a minute.',
+  // The run page.
+  runQueued: 'Starting the run',
+  runRunning: 'Running it now',
+  runDone: 'That was a live run.',
+  runFailed: 'That run did not finish.',
+  stateQueued: 'Waiting to start.',
+  /** The step that is running, as the API labels it. */
+  stateRunning: (step: string) => `${step}…`,
+  stateStarting: 'Starting…',
+  stateDone: 'Done. Everything below is what it produced, at the speed it ran.',
+  unchanged: 'Nothing about this film’s page changed: a live run is only ever shown, never saved over it.',
+  notSaved: 'Nothing was saved: a live run is only ever shown. To put this film in the library, finish the analysis below.',
+  toFilm: 'See the film’s scene list',
+  runAgain: 'Run it again',
+  another: 'Pick another film',
+  // Carrying a run on into the library.
+  finishHeading: 'This one is not in the library yet',
+  finishBody:
+    'Finish the analysis and it goes in the library. It carries on from this run — nothing it did is done again — through the steps still to go. A few minutes, tens of cents. It needs the passcode.',
+  finishStillToGo: 'Still to go:',
+  finishButton: 'Finish the analysis and add it to the library',
+  finishing: 'Starting…',
+  finishNotDone: 'That run has not finished yet, so there is nothing to carry on from.',
+  finishNoSubtitles: 'The subtitles that run used are no longer stored. Start a new run.',
 } as const;
 
 /** The header line: what ran, how hard it was asked, how many at once. Every number from `meta`. */
@@ -218,23 +334,27 @@ export function finishLine(wall: string, requests: number, beats: number, cost: 
   return `That was Jev’s pass: ${wall} · ${requests} requests · ${beats} beats · ${cost}`;
 }
 
-/** "Adding a movie": the passcoded flow on /watch, and the live job page it leads to. */
+/**
+ * "Adding a movie": the passcoded flow, which lives inside the library. A search that misses becomes
+ * the ask; the ask becomes the live card; the live card becomes a row with a "Just added" chip.
+ */
 export const ADD = {
-  heading: 'Add a movie',
-  // The two live runs so far took 25–50 s and 9–13¢ on a 26-minute film. A feature is several times
-  // the subtitles and several times the beats, so it is minutes and tens of cents. "About a minute
-  // and a few cents" was the short film's figure quoted as everybody's.
-  lead: 'Give it a title or an IMDb link. A short film takes under a minute; a feature a few minutes. Tens of cents.',
+  // The ask.
+  askHeadline: 'Not in the library. Yet.',
+  askBody:
+    'We can check it for you. We read the film’s subtitles and map every scary or sad scene. A feature takes a few minutes.',
   filmLabel: 'Title or IMDb link',
-  filmPlaceholder: 'The one you could not find',
   passcodeLabel: 'Passcode',
-  submit: 'Find it',
+  passcodeHelp: 'Adding is passcode-locked while the library is small. Ask us for yours.',
+  submit: 'Check this movie',
   finding: 'Looking it up…',
   starting: 'Starting the run…',
   candidatesHeading: 'Which one?',
-  choose: 'Analyse this one',
-  openExisting: 'Already on the shelf → open it',
+  choose: 'Check this one',
+  openExisting: 'Already in the library → open it',
   noCandidates: 'Nothing came back for that. Try the full title, or paste the IMDb link.',
+  /** A match with no IMDb id: subtitles are found by IMDb id, so this one cannot be checked. */
+  noImdb: 'Can’t check this one: it has no IMDb record to find its subtitles by.',
   offHeadline: 'Adding is switched off',
   offBody: 'No passcode is configured, so nothing new can be started right now.',
   // Not the same thing, and the page used to say the first when it meant the second: a status read
@@ -242,47 +362,94 @@ export const ADD = {
   // this is a fact about right now.
   unknownHeadline: 'Can’t tell right now',
   unknownBody: 'The analysis service is not answering, so the form is put away until it does.',
-  runningNow: 'A film is being analysed right now',
+  unknownRetry: 'Check again',
+  runningNow: 'A film is being read right now',
   runningLink: 'watch it',
   // Refusals. One plain sentence each, and a way onward where there is one.
   wrongPasscode: 'That passcode is not right.',
-  busy: 'A film is already being analysed. One at a time, so the timings stay honest.',
-  exists: 'That one is already on the shelf.',
+  busy: 'A film is already being read. One at a time, so the timings stay honest.',
+  exists: 'That one is already in the library.',
   unreachable: 'The analyser is not answering. Try again in a minute.',
   badRequest: 'That did not look like a title or an IMDb link.',
   // A 429 is two different refusals wearing one status code, and telling a fumbled passcode that
   // the day's budget is spent sends the reader to wait until tomorrow for a ten-minute problem.
   tooManyAttempts: 'Too many wrong passcodes from here. Give it ten minutes.',
   tooLong: 'That is far more text than a title or a link. Trim it down.',
-  // The live job page. The headline is whichever of these the job is doing right now, so it keeps
-  // up with the poll instead of still saying "Analysing" over a finished run.
-  jobHeading: 'Analysing',
-  jobQueued: 'Waiting its turn',
+  // The live card.
+  readingHeadline: (title: string) => `We’re reading ${title} now.`,
+  readingBody: (title: string) =>
+    `We’re building ${title}’s scene guide from its subtitles. It takes a few minutes, and you don’t have to wait here.`,
+  // Before the API reports a step, nothing is being read yet, and the card does not say otherwise.
+  queuedHeadline: (title: string) => `${title} is next.`,
+  queuedBody: (title: string) =>
+    `We’ll build ${title}’s scene guide from its subtitles as soon as the run starts. It takes a few minutes, and you don’t have to wait here.`,
+  queued: 'Waiting to start.',
+  /**
+   * The steps a parent sees, by the API's step id, in their words. Only the steps whose output
+   * reaches the film page are listed (see `parentSteps` in lib/job.ts); the others still run.
+   */
+  stepLabels: {
+    subtitles: 'Finding the subtitles',
+    scenes: 'Reading the subtitles for scenes',
+    presence: 'Labelling what is in each scene',
+    ingest: 'Saving the scene guide',
+  } as Record<string, string>,
+  /** The step that is running, as the API labels it — plain words, never an engine's name. */
+  stepLine: (label: string) => `${label}…`,
+  /**
+   * Each step's state, in words beside it: the marker's colour is never the only way to tell a
+   * finished step from one that has not started.
+   */
+  stepState: { pending: 'Not yet', running: 'Now', done: 'Done', failed: 'Failed' },
+  /** How long the run has been going, as the API measured it on the last poll. */
+  elapsedLine: (ms: number) => `${formatElapsed(ms)} so far`,
+  /** The same figure once polls have stopped answering: it is the last one we heard, not a clock. */
+  elapsedAtLastUpdate: (ms: number) => `${formatElapsed(ms)} at the last update`,
+  // When the polls stop answering. The run may be fine; we just cannot hear about it.
+  interruptedHeadline: 'Updates interrupted.',
+  interruptedBody: 'The analysis may still be running — we just can’t reach it right now. Asking again does not start it twice.',
+  lastUpdate: (time: string) => `Last update at ${time}.`,
+  retryNow: 'Ask again now',
+  jobMissing: 'We can’t find this run any more, so there is no news to show.',
+  // A finish carries on a run whose beats were read on the Watch page: the reading is already done.
+  finishingHeadline: (title: string) => `We’re finishing ${title} now.`,
+  finishingBody:
+    'Its subtitles were fetched in the run you watched. Now we build the scene guide from them. It takes a few minutes, and you don’t have to wait here.',
+  checkingAdd: 'Checking whether adding is open…',
+  meanwhile: 'Browse the library meanwhile →',
   jobDone: 'That one is done.',
   jobFailed: 'That run did not finish.',
-  // A reload while the API is down used to land on "this page missed its cue", which tells the
-  // reader their run never existed. It exists; we cannot ask about it. Different news, and only one
-  // of the two is worth pressing a button over.
+  openFilm: 'See the scene list',
+  // A reload while the API is down must not tell the reader their run never existed. It exists; we
+  // cannot ask about it. Different news, and only one of the two is worth pressing a button over.
   jobUnreachableHeadline: 'Can’t reach the analysis service',
   jobUnreachableBody:
     'The run may well still be going — we just can’t ask about it right now. Try again in a minute.',
   jobUnreachableRetry: 'Try again',
+  // Kept for the /watch run pages, which still show a job's steps and its money.
+  jobHeading: 'Analysing',
   stepsHeading: 'Steps',
-  // A job that has not made a single model call already carries $1.70, because that is what the
-  // budget has put aside for it — a ceiling, not a bill. Calling it "170¢ so far" was money
-  // presented as spent, and the figure then *dropped* when the run reconciled, which is not a thing
-  // spending does. While it is live the page names the reserve; only a finished run has a total.
   costReserved: (usd: number) => `up to $${usd.toFixed(2)} set aside`,
   costTotal: 'in total',
-  queued: 'Waiting to start.',
-  scenesFound: (n: number) => (n === 1 ? '1 scene found' : `${n} scenes found`),
-  openFilm: 'See the scene list',
-  failedHeadline: 'That run did not finish.',
   failNoSubtitles: 'No subtitles could be found for that film, and subtitles are all this reads.',
+  // The scene pass finished and listed nothing. That is a result about these subtitles, not a
+  // verdict that the film is gentle — and nothing was saved, so there is no guide to read.
+  failNoScenes:
+    'We read the subtitles and found no scenes to list, so nothing was added. That doesn’t mean the film has nothing scary in it — only that its subtitles gave us nothing to point to.',
   failSubtitleQuota: 'The subtitle service has had enough of us for today. Try again tomorrow.',
   failTimedOut: 'The run took longer than it is allowed to and was stopped.',
   failGeneric: 'Something went wrong on our side.',
+  failedHeadline: 'That run did not finish.',
+  tryAnother: 'Try another movie',
 } as const;
+
+/** "42 s", "3 min 05 s": whole seconds, because the figure only moves when the job is polled. */
+export function formatElapsed(ms: number): string {
+  const total = Math.floor(Math.max(0, ms) / 1000);
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return m ? `${m} min ${String(s).padStart(2, '0')} s` : `${s} s`;
+}
 
 /**
  * The spending line under the add form. Real money, two decimals, no rounding up to a dollar.

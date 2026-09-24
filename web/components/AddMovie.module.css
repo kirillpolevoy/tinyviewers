@@ -1,0 +1,391 @@
+/* The add flow, inside the library: sticker cards on the light page, and one dark inset where the
+   run is shown. The `sticker` global class gives the ink outline and the hard hairline shadow. */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 560px;
+  padding: 22px 20px 24px;
+}
+
+.live {
+  max-width: 620px;
+}
+
+@media (min-width: 720px) {
+  .card {
+    padding: 26px 28px 28px;
+  }
+}
+
+.headline {
+  font-size: 26px;
+  line-height: 1.55;
+  font-weight: 800;
+}
+
+/* Focused by script when the live card replaces the ask, so a screen reader lands on the news. It
+   is not a control, so it draws no ring. */
+.headline:focus {
+  outline: none;
+}
+
+.body {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--body-strong);
+}
+
+/* --- the ask ----------------------------------------------------------------------------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  line-height: normal;
+  background: var(--sheet);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 5px 0 var(--hairline);
+  padding: 12px 20px;
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--coral-text);
+  box-shadow: 4px 5px 0 var(--hairline), 0 0 0 3px rgba(169, 79, 58, 0.28);
+}
+
+.input::placeholder {
+  color: var(--body);
+  opacity: 1;
+}
+
+.passcode {
+  max-width: 200px;
+  letter-spacing: 0.2em;
+}
+
+.help {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.submitRow {
+  align-self: flex-start;
+  padding-top: 4px;
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.85;
+}
+
+.refusal {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--coral-text);
+}
+
+.refusalLink {
+  font-family: var(--display);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.checking {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.runningNow {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+/* --- which one? -------------------------------------------------------------------------------- */
+
+.candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.candidatesHeading {
+  color: var(--body);
+}
+
+.candidateList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.candidate {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 14px;
+  padding: 12px 14px;
+  background: var(--page);
+  border-radius: 20px;
+}
+
+.candidatePoster {
+  width: 48px;
+  height: 68px;
+  border-radius: 10px;
+  object-fit: cover;
+  padding: 0;
+}
+
+.candidateText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.candidateTitle {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.candidateYear {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--body);
+  padding-left: 0.5em;
+}
+
+.candidateOverview {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.candidateAction,
+.candidateExisting,
+.candidateNote {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+/* A match that cannot be checked says why, where the button would be. */
+.candidateNote {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body-strong);
+  max-width: 26ch;
+}
+
+.candidateExisting {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+@media (min-width: 620px) {
+  .candidate {
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+  }
+
+  .candidateAction,
+  .candidateExisting,
+  .candidateNote {
+    grid-column: auto;
+  }
+}
+
+/* --- live -------------------------------------------------------------------------------------- */
+
+.inset {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--dark);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  padding: 16px 18px 18px;
+}
+
+/* The run's steps, as the API reports them. Each row: a marker, the label with the step's own
+   detail under it, and the state in words — so colour is never the only way to tell them apart. */
+.stepList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.step:first-child {
+  padding-top: 2px;
+}
+
+.stepMark {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  border: 2px solid var(--dark-line);
+  align-self: start;
+  margin-top: 5px;
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stepLabel {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--dark-muted);
+}
+
+.stepDetail {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--dark-body);
+  overflow-wrap: anywhere;
+}
+
+.stepState {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+  white-space: nowrap;
+}
+
+.step_running .stepMark {
+  background: var(--butter);
+  border-color: var(--butter);
+}
+
+.step_running .stepLabel,
+.step_running .stepState {
+  color: var(--butter);
+}
+
+.step_done .stepMark {
+  background: var(--dark-text);
+  border-color: var(--dark-text);
+}
+
+.step_done .stepLabel {
+  color: var(--dark-text);
+}
+
+.step_failed .stepMark {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.step_failed .stepLabel,
+.step_failed .stepState {
+  color: var(--coral);
+}
+
+.progress {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--dark-body);
+}
+
+.meanwhile {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* --- when adding is not possible ---------------------------------------------------------------- */
+
+.state {
+  max-width: 620px;
+}
+
+.stateNote {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+/* Polls have stopped answering (or the run is gone): the card's last answer is not current, and
+   this says so under the inset, with a way to ask again. */
+.stale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: var(--butter);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+}

@@ -167,7 +167,7 @@ export function SeaFloor({ className }: ArtProps) {
   );
 }
 
-/** A few free-floating bubbles, for the shelf end. */
+/** A few free-floating bubbles, for the 404 card. */
 export function Bubbles({ className }: ArtProps) {
   return (
     <svg

@@ -1,5 +1,4 @@
-/* The one state this route renders itself: the analysis service is unreachable, so there is no job
-   to hand to JobRun and no reason to claim the run does not exist. */
+/* The one state a job page renders without a job: the analysis service is unreachable. */
 
 .actions {
   display: flex;

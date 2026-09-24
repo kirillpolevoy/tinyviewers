@@ -1,0 +1,255 @@
+/* The findings card: the verdict, its strength breakdown, the age toggle, the tappable timeline and
+   the hint under it. Calm register — a sheet with a hairline, nothing tilted. */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 20px 18px;
+}
+
+@media (min-width: 720px) {
+  .card {
+    padding: 22px 24px;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+
+.verdict {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.verdictLine {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  line-height: 1;
+  font-weight: 800;
+  text-wrap: wrap;
+}
+
+.count {
+  font-size: 46px;
+  font-weight: 800;
+}
+
+.words {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--body-strong);
+}
+
+.breakdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+}
+
+.breakdownItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+}
+
+/* --- the timeline ------------------------------------------------------------------------------ */
+
+.timeline {
+  position: relative;
+  height: 96px;
+  cursor: pointer;
+  background: var(--page);
+  border-radius: 20px;
+}
+
+.baseline {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  border-bottom: 2px solid var(--hairline);
+}
+
+.markers {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 0;
+  bottom: 0;
+}
+
+/* Each scene is a button, sat on the baseline at its start time, taller where stronger. The ink
+   border is what makes the pale fills perceivable against the cream inset. */
+.marker {
+  position: absolute;
+  bottom: 20px;
+  width: 16px;
+  padding: 0;
+  transform: translateX(-50%);
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* A bigger finger target than the mark itself, without moving anything. Not the full 44px: scenes
+   can sit a few pixels apart, and a target that reached over a neighbour's visible mark would take
+   the tap meant for it — worse than a small target. */
+.marker::after {
+  content: '';
+  position: absolute;
+  inset: -10px -4px -6px;
+}
+
+/* Selected is the coral ring (the design's). Keyboard focus is an ink ring, so the two can be told
+   apart when focus moves off the selected scene; on the selected scene itself, the ink ring sits
+   outside the coral one. */
+.markerSelected {
+  outline: 3px solid var(--coral-text);
+  outline-offset: 3px;
+  z-index: 1;
+}
+
+.marker:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  z-index: 2;
+}
+
+.markerSelected:focus-visible {
+  outline-color: var(--coral-text);
+  box-shadow: 0 0 0 9px var(--page), 0 0 0 12px var(--ink);
+}
+
+/* Every other scene steps back while one is selected. No transition: the change is the answer.
+   A dimmed scene is still a button, so it comes back to full strength under a pointer or focus. */
+.markerDimmed {
+  opacity: 0.25;
+}
+
+.markerDimmed:hover,
+.markerDimmed:focus-visible {
+  opacity: 1;
+}
+
+.tick {
+  position: absolute;
+  bottom: 0;
+  font-family: var(--display);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--body); /* dust on page is ~1.9:1; the times are needed to read the timeline */
+}
+
+.tickStart {
+  left: 16px;
+}
+
+.tickMid {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tickEnd {
+  right: 16px;
+}
+
+/* --- under the timeline ------------------------------------------------------------------------ */
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  flex-wrap: wrap;
+}
+
+.hint {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+.showAll {
+  position: relative;
+  display: inline;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--coral-text);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* A 44px-tall target around an inline link-sized button, without changing the line it sits in. */
+.showAll::after {
+  content: '';
+  position: absolute;
+  inset: -15px -6px;
+}
+
+.showAll:hover {
+  color: var(--coral-ink-hover);
+}
+
+.list {
+  scroll-margin-top: 16px;
+}
+
+/* --- severity fills: 0 mint, 1 butter, 2 blush, 3 coral; not checked is dust, never a zero ------ */
+
+.mint {
+  background: var(--mint);
+}
+
+.butter {
+  background: var(--butter);
+}
+
+.blush {
+  background: var(--blush);
+}
+
+.coral {
+  background: var(--coral);
+}
+
+.dust {
+  background: var(--dust);
+}

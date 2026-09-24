@@ -6,7 +6,7 @@
 //   2. "Scene ends around" is the scene end plus 15 s.
 //   3. Filters are built only from the labels that actually occur in the film being shown.
 
-import { STRENGTH_WORDS } from './copy';
+import { STRENGTH_WORDS, STRENGTH_WORDS_LOWER, NOT_CHECKED_LOWER, EMPTY } from './copy';
 
 export type AgeBand = '5-7' | '8-10';
 
@@ -236,4 +236,121 @@ export function filmPageModel(
     strongest: countAtStrongest(allScenes, band),
     lastEnd,
   };
+}
+
+// ---------------------------------------------------------------------------------------------
+// The film page's findings card, timeline and rows
+// ---------------------------------------------------------------------------------------------
+
+/** The severity fill for a level: 0 mint, 1 butter, 2 blush, 3 coral; not checked is dust — never zero. */
+export type SeverityTone = 'mint' | 'butter' | 'blush' | 'coral' | 'dust';
+
+export function severityTone(value: number | null): SeverityTone {
+  switch (value) {
+    case 0:
+      return 'mint';
+    case 1:
+      return 'butter';
+    case 2:
+      return 'blush';
+    case 3:
+      return 'coral';
+    default:
+      return 'dust';
+  }
+}
+
+/** A tappable timeline marker's height in px: taller where stronger. Not checked is the shortest. */
+export function markerHeightPx(value: number | null): number {
+  if (value === null || value === undefined) return 12;
+  return [12, 20, 32, 46][Math.min(3, Math.max(0, value))];
+}
+
+/** The word a scene row leads with: "Very strong", or "Not checked" — never a zero. */
+export function strengthWord(value: number | null): string {
+  if (value === null || value === undefined) return EMPTY.notCheckedHeadline;
+  return STRENGTH_WORDS[value] ?? EMPTY.notCheckedHeadline;
+}
+
+export type BreakdownEntry = { value: number | null; count: number; word: string; tone: SeverityTone };
+
+/**
+ * "3 very strong · 8 strong · 6 mild · 1 low" for one age band, strongest first, empty levels left
+ * out. Scenes the subtitles could not judge are their own entry, "not checked", and are never
+ * counted as low.
+ */
+export function strengthBreakdown(scenes: Scene[], band: AgeBand): BreakdownEntry[] {
+  const out: BreakdownEntry[] = [];
+  for (const value of [3, 2, 1, 0] as const) {
+    const count = scenes.filter((s) => severityFor(s, band) === value).length;
+    if (count) out.push({ value, count, word: STRENGTH_WORDS_LOWER[value], tone: severityTone(value) });
+  }
+  const unknown = scenes.filter((s) => severityFor(s, band) === null).length;
+  if (unknown) out.push({ value: null, count: unknown, word: NOT_CHECKED_LOWER, tone: 'dust' });
+  return out;
+}
+
+/**
+ * The filter chips as one group: what is in a scene and what happens in it, merged, most common
+ * first. A label that is somehow in both channels is one chip, counted once per scene.
+ */
+export function mergedFacets(scenes: Scene[]): Facet[] {
+  const counts = new Map<string, Facet>();
+  for (const scene of scenes) {
+    const seen = new Set<string>();
+    for (const tag of scene.tags) {
+      if (seen.has(tag.id)) continue;
+      seen.add(tag.id);
+      const hit = counts.get(tag.id);
+      if (hit) hit.count += 1;
+      else counts.set(tag.id, { id: tag.id, label: tag.label, count: 1 });
+    }
+  }
+  return [...counts.values()].sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+/** When the last scene ends: "Nothing flagged after" this. Zero for a film with no scenes. */
+export function lastSceneEndMs(scenes: Scene[]): number {
+  return scenes.reduce((max, s) => Math.max(max, s.endMs), 0);
+}
+
+/**
+ * The rows the list shows. A tapped marker wins — the list is that one scene — and otherwise the
+ * chips filter it. The age band is not an input: it changes the marks, never the list.
+ */
+export function visibleScenes(
+  scenes: Scene[],
+  { selectedSceneId, tags }: { selectedSceneId: string | null; tags: string[] },
+): Scene[] {
+  if (selectedSceneId) {
+    const one = scenes.find((s) => s.id === selectedSceneId);
+    if (one) return [one];
+  }
+  return applyFilters(scenes, tags);
+}
+
+/** "1 h 28 min", from milliseconds. Under an hour it is minutes alone. */
+export function formatRuntime(ms: number): string {
+  const minutes = Math.round(Math.max(0, ms) / 60_000);
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return h ? `${h} h ${m} min` : `${m} min`;
+}
+
+/**
+ * A synopsis split after its first sentence: `[first, rest]`, with `rest` empty when there is only
+ * one. A full stop inside "Mr." or "Dr." is not an ending, nor is an ellipsis mid-sentence.
+ */
+export function splitFirstSentence(text: string): [string, string] {
+  const trimmed = text.trim();
+  // An ending is punctuation, space, then a capital (or a quote or digit): "sharks... and more"
+  // carries on, "taken. Marlin follows" does not.
+  const re = /[.!?](?=\s+["“‘'(]?[A-Z0-9])/g;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(trimmed))) {
+    const before = trimmed.slice(0, match.index);
+    if (/\b(Mr|Mrs|Ms|Dr|St|Jr|Sr|vs)$/i.test(before)) continue;
+    return [trimmed.slice(0, match.index + 1), trimmed.slice(match.index + 1).trim()];
+  }
+  return [trimmed, ''];
 }

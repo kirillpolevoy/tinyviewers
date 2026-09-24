@@ -39,8 +39,8 @@ Two optional development switches:
 | Variable | Where | Required |
 | --- | --- | --- |
 | `DATABASE_URL` | the deployed app | **yes** (see below) |
-| `SCENE_API_URL` | the deployed app | only for the add flow on `/watch` — without it the app looks for `http://localhost:8787`, the status read fails, and the form is replaced by "Can't tell right now". Everything else on `/watch` comes from the database and is unaffected |
-| `ADD_FILM_PROXY_SECRET` | the deployed app **and** the scene API, same value | no — without it the add flow works and the API simply cannot tell one visitor from another. See "Who is asking" below |
+| `SCENE_API_URL` | the deployed app | for the live runs on `/watch` and the add flow on `/add` — without it the app looks for `http://localhost:8787`, the status reads fail, `/watch` offers each film's recorded run instead, and `/add` says "Can't tell right now". Everything else comes from the database and is unaffected |
+| `ADD_FILM_PROXY_SECRET` | the deployed app **and** the scene API, same value | no, but set it — without it the add flow and the demo work and the API simply cannot tell one visitor from another, so its per-client demo limit (five runs per ten minutes) is shared by every visitor. See "Who is asking" below |
 | `TMDB_API_KEY` | the scene-api loader only | no — without it `poster_url` and `overview` are null: the UI draws its placeholder and the film page shows no synopsis |
 | `TINY_VIEWERS_DB=pglite` | local development only | no — ignored when `NODE_ENV=production` |
 
@@ -94,7 +94,7 @@ The CSP allows `'self'` plus `https://image.tmdb.org` for images. Two notes on w
   bootstrap through inline `<script>` tags. Removing it needs a per-request nonce from middleware,
   which would make every page dynamic; that is the upgrade path, not a quick change.
 - **`style-src` includes `'unsafe-inline'`.** A handful of real inline styles remain — marker
-  positions on the timeline, the shelf's tilts — all computed from database values, never from
+  positions on the timeline — all computed from database values, never from
   anything a visitor supplies.
 
 Fonts are self-hosted by `next/font`, so nothing is fetched from Google at runtime and `font-src`
@@ -104,7 +104,7 @@ needs no external host.
 
 | Path | What lives there |
 | --- | --- |
-| `app/` | Routes: `/`, `/library`, `/film/[slug]`, `/watch`, `/watch/[slug]`, `/watch/job/[id]`, the `/api/add/*` handlers, `/api/films/[slug]/recording`, plus `not-found`, `error` and `global-error`. `/search` is gone; `next.config.mjs` redirects it to `/library`, `?q=` and all |
+| `app/` | Routes: `/`, `/library`, `/film/[slug]`, `/watch`, `/watch/run/[id]`, `/watch/[slug]`, the `/api/add/*` and `/api/demo/*` handlers, `/api/films/[slug]/recording`, plus `not-found`, `error` and `global-error`. Redirects: `/search` → `/library` (`?q=` and all); `/add?film=X` → `/library?add=1&q=X`; `/add/job/[id]` and `/watch/job/[id]` → `/library?job=[id]` |
 | `components/` | Presentation, including the inline hand-drawn SVG in `Art.tsx` |
 | `lib/copy.ts` | Every parent-facing string, in one place |
 | `lib/queries.ts` | Every SQL statement, each wrapped in React `cache()` |
@@ -113,21 +113,62 @@ needs no external host.
 | `lib/search.ts` | Name matching: case, punctuation, accents, and the "open this one film" rule — pure, tested, and safe to bundle into the browser |
 | `lib/replay.ts` | A recorded Jev run reduced to what a browser replays, and the clock that reads it — pure, and tested |
 | `lib/taxonomy-labels.ts` | Taxonomy v3 ids → the words a person reads. A copy, on purpose; see the file |
-| `lib/scene-api.ts` | The forwarder the `/api/add/*` handlers are made of — pure enough to test with a fake fetch |
+| `lib/scene-api.ts` | The forwarder the `/api/add/*` and `/api/demo/*` handlers are made of — pure enough to test with a fake fetch |
+| `lib/job.ts`, `lib/job-lookup.ts` | Job types, the sentence every refusal gets (`addRefusal`, `demoRefusal`, `finishRefusal`), and the server-side read of one job |
 
-### One page for the shelf and the search
+### One page for the library, the search and adding a film
 
 There is no search page. `/library` holds every film, and `components/LibraryShelf.tsx` filters the
-cards as a parent types, using the same `lib/search.ts` rules the server uses. Three behaviours
+rows as a parent types, using the same `lib/search.ts` rules the server uses. Three behaviours
 follow from one place:
 
 - **`?q=` naming exactly one film redirects to it**, which is what Home's form relies on: a parent
-  who types a whole title lands on the scene guide, not on a shelf with one card on it.
-- **Anything else renders the shelf pre-filtered**, so the page works with no JavaScript at all —
+  who types a whole title lands on the scene guide, not on a list with one row in it.
+- **Anything else renders the library pre-filtered**, so the page works with no JavaScript at all —
   the form is a plain GET back to `/library`.
 - **With JavaScript, nothing is fetched.** Six films are already on the page; the filter is an
   array filter, the URL is kept in step with `history.replaceState`, and Enter opens the one film
   when the query names one.
+
+**Adding a film happens here too.** A search that matches nothing turns into the passcoded ask
+(`components/AddMovie.tsx`), prefilled with what was typed. Submitting starts the real add run and
+the card becomes live: it polls the job (`usePolledJob`, with the loop in `lib/poll.ts`) and lists the
+run's steps with the elapsed time the API measured on the last poll. Before a step is reported the card
+says the film is next and waiting — it does not claim to be reading it.
+
+**Only the steps that build the film page are listed** (`parentSteps` in `lib/job.ts`): finding the
+subtitles, reading them for scenes, labelling what is in each scene, saving the scene guide. Jev's beat
+screening and the evidence lines still run in the API, but their output reaches only the Watch page's
+replay, so a parent's progress list does not show them. A step id this app does not know is hidden
+until someone decides it belongs there.
+
+**The poll never pretends.** One request at a time, the next scheduled when the last settles (an
+interval let a slow answer land after a newer one). Failed polls back off (1.5 s doubling to 15 s);
+after three misses in a row the card says "Updates interrupted", shows when the last answer came, and
+offers "Ask again now" — which only polls, it never restarts the run. A 404 means the run is gone.
+When the job is done the page refreshes its film list and the new row leads it with a "Just added"
+chip, remembered in `sessionStorage` for the session. `?job=<id>` keeps the card across a reload. A
+reload that finds the run already done goes through the same arrival as a live finish
+(`lib/add-flow.ts`): the list is refreshed until the film is in it, and if it still is not after three
+tries, a visible "See its scene guide →" link stays. The finish is announced in a status region outside
+the card, and if focus was in the card it moves to the new row.
+
+Three details that are easy to undo by accident:
+
+- **A run starts on the parent's say-so.** A title is a search: even one match comes back as a
+  "Which one?" row with "Check this one". Only an IMDb link or id (`namesOneFilm` in `lib/job.ts`)
+  starts straight away, because only that names one film for certain.
+- **The refresh is not in the same tick as `history.replaceState`.** Next patches `replaceState` to
+  dispatch a router "restore", and a restore dispatched alongside `router.refresh()` discards the
+  refresh — the request goes out, the answer has the new film, and the list never changes. The
+  library refreshes from an effect after the commit, and asks again (at most three times) if the
+  film is still missing.
+- **The ask's inputs have no `name`.** Submitted before hydration, the form falls back to a plain
+  browser submit, and a named passcode would land in the address bar. The same holds for the finish
+  form on `/watch/run/[id]`, which is also `method="post"`.
+- **`LibraryShelf` is not keyed by `?job=`.** Finishing a run replaces the URL with `/library` and
+  refreshes; a key that changed with it remounted the list mid-arrival and forgot the film it was
+  waiting for. A link to another run arrives as a new `initialJob` prop instead.
 
 Two rules the code enforces rather than trusts:
 
@@ -138,26 +179,49 @@ Two rules the code enforces rather than trusts:
 
 ## Watch it work
 
-Three pages in the dark instrument register, and the only corner of the site where the engines are
-named. Parent pages say "scenes"; these say Jev, Sonnet, tokens and cents.
+The dark instrument register, and the only corner of the site where the engines are named. Parent
+pages say "scenes"; these say Jev, Sonnet, tokens and cents.
+
+**Not linked from any parent page right now.** What a live run shows is the subtitle fetch and Jev's
+beat screening, and Jev's answers are not used by the scene guides (Sonnet reads the subtitles on its
+own; the Jev labels are stored unasserted). The nav entry, Home's "Watch it work →" and the film page's
+"See how this was worked out →" are removed until the public stages are ones that build the film page
+(`PUBLIC_STAGE_COUNT` in `scene-api/pipeline/stages.js`). The routes still work by URL, and the copy
+on them says plainly that Jev's pass is an experiment. The film page instead ends on "How this guide was
+made": subtitles as the source, what that cannot see, which subtitle release the times follow, and
+that under-5s are not rated.
 
 | Route | What it is |
 | --- | --- |
-| `/watch` | The add form, the spend for today, and the films that have a recording |
-| `/watch/[slug]` | One recorded run, replayed, then that film's scene list |
-| `/watch/job/[id]` | One live run: six steps, then the replay as soon as Jev is done |
+| `/watch` | Pick any film — one from the shelf, or anything by title or IMDb link — for a live run |
+| `/watch/run/[id]` | One live public run: its steps, then — when a step produced a recording — the run itself played back at the speed it ran |
+| `/watch/[slug]` | A film's **recorded** run, labelled as a recording — only offered when live runs are unavailable today |
 
-The live job page fetches its recording from the scene API the moment Jev's pass ends — which is
-minutes before the excerpts are written, so every flagged beat in it has no lines, and the job's own
-copy of them is nulled out when the run reaches `done`. By then the film is in this app's own
-database with both, so the page asks `/api/films/[slug]/recording` once and merges the lines into
-the payload it is already holding (`withLines`). Merged rather than swapped: the replay may be
-playing, and handing `RunReplay` a new object mid-run is the one thing that page must not do.
+**Every run on `/watch` is live.** Pressing a film starts a real run of the public stages of the
+analysis through the scene API's `/api/demo/runs`. Which stages those are is the scene API's
+decision (`pipeline/stages.js`; today subtitles, stored for every shelf film so nothing is
+downloaded, and Jev's pass, a few seconds) — this app renders whatever steps the job reports and
+names none of them. The page polls the job, and the moment a recording lands it plays back with
+`RunReplay` — the same component, the same clock rule — so what the visitor watches is the run that
+just happened, at the speed it happened. It is played back after it finishes rather than streamed
+while it runs. A live run never changes the film: its rows, its scenes and its recorded run are untouched,
+and the run exists only on its own job. For a shelf film the replay borrows the evidence lines from
+the film's stored excerpts (`withLines`), since a job keeps no subtitle text once it is over.
 
-Neither that fetch nor the recording fetch rides the poll any more. The poll stops when the job
-stops moving, and anything riding it inherited that: a recording that failed to load at the moment
-the run finished was never asked for again. They back off on their own clock and give up on their
-own terms.
+A run of a film that is **not** on the shelf ends on an offer: finish the analysis and add it to the
+library, with the steps still to go listed from the job's `finish_steps`. That posts the passcode
+and the run's id to `/api/add/finish`; the scene API carries that very run on — nothing it did is
+done again — through the remaining stages, and the page moves to `/add/job/[id]`, which ends on the
+new film's scene list.
+
+When live runs cannot start — today's demo budget is spent, the deployment lacks a key the public
+stages need, or the service is not answering — `/watch` says which in one sentence and each shelf card becomes "Watch its
+recorded run instead", which opens `/watch/[slug]`. That page says in its headline and its lead that
+it is a recording and when it was made. A cap refusal from a run that raced the status read carries
+the film's slug, so it gets the same link.
+
+`/add` and its progress page have no replay any more: watching the analysis run is what `/watch` is for. Progress
+polls the job and, when it finishes while the page is watching, replaces itself with the film page.
 
 ### The replay never lies about how fast it was
 
@@ -188,22 +252,23 @@ are `disabled` and the roving tab stop steps over them — otherwise Tab and the
 a reader onto a beat the run did not know about yet, on a page whose entire claim is that nothing is
 shown before it arrived.
 
-### The add flow, and why it goes through this app
+### The add flow and the demo, and why they go through this app
 
 The CSP is `connect-src 'self'`: a page here may only fetch this app. So the browser posts to
-`/api/add/{status,resolve,jobs,jobs/[id]}` and `lib/scene-api.ts` forwards each call to
+`/api/add/{status,resolve,jobs,jobs/[id],finish}` and `/api/demo/{status,resolve,runs}`, and
+`lib/scene-api.ts` forwards each call to
 `SCENE_API_URL` server-side, passing status codes and JSON straight through with a 10 s timeout and
 no caching anywhere. An upstream answer that is not JSON is **not** relayed — a proxy's HTML error
 page would be the one body this app must not pass on — it becomes a 502 with a code.
 
-The passcode travels in the POST body of the two calls that need it, is held in React state while
+The passcode travels in the POST body of the three calls that need it (resolve, jobs, finish), is held in React state while
 the form is on screen, and is written nowhere else: no localStorage, no query string, no log line.
 Nothing in the forwarder reads a body; its error lines name the endpoint and the failure only.
 
 The body is read off the request stream with a **byte** limit (`MAX_BODY_BYTES`, 8 KB) counted as it
 arrives, and the read is abandoned the moment it is passed — a 413, not a fully buffered rejection.
 
-`/api/add/resolve` is the one path with a longer deadline: 30 s rather than 10, because behind it
+`/api/add/resolve` and `/api/demo/resolve` are the paths with a longer deadline: 30 s rather than 10, because behind it
 the API runs a TMDB search plus up to three sequential detail lookups at 8 s each, and four honest
 three-second answers already pass ten. Its route raises `maxDuration` to match.
 
@@ -229,7 +294,13 @@ The address comes from `x-real-ip`, or the first entry of `x-forwarded-for`, and
 (`VERCEL=1`), because those headers are whatever the previous hop wrote and anywhere else the
 previous hop may be the attacker. Off Vercel the address is `unknown`.
 
-`lib/scene-api.ts` also keeps its own counter on POSTs to `/api/add/*`: ten 401s from one address
+The demo POSTs (`forwardDemoPost`) carry no passcode and are forwarded with the same byte limit and
+the same identity headers. `/api/demo/runs` is also counted here: five runs that the API accepted
+(202) from one visitor inside ten minutes, and the next is a 429 `too_many_runs` without touching the
+API — the API's own ceiling, so the two limiters cannot disagree. The API additionally limits runs
+that need a subtitle download, which only it can know about.
+
+`lib/scene-api.ts` also keeps its own counter on the passcoded POSTs to `/api/add/*`: ten 401s from one address
 inside ten minutes and the next request is a 429 `too_many_attempts` without touching the API — the
 same window and ceiling as the API's, so two limiters cannot produce a refusal neither can explain.
 `unknown` is never throttled: it is not an address, it is the absence of one, shared by every caller
@@ -241,10 +312,10 @@ nothing at all, because there is no trustworthy client address to key it on. **T
 Vercel firewall rate-limit rule on `/api/add/*`**, which runs before the function and survives
 scaling; this is the floor under it, not a substitute for it.
 
-### Running the add flow locally
+### Running the live runs and the add flow locally
 
-`npm run dev` alone is enough for `/watch` and `/watch/[slug]` — the recordings are in the in-memory
-database. The add form needs the scene API as well:
+`npm run dev` alone is enough for the shelf and `/watch/[slug]` — the recordings are in the in-memory
+database. Live runs and the add form need the scene API as well, with the keys in its environment:
 
 ```sh
 cd ../scene-api && node server.js --pglite      # http://localhost:8787

@@ -21,6 +21,7 @@ export type FilmSummary = {
   slug: string;
   title: string;
   year: number | null;
+  imdbId: string | null;
   posterUrl: string | null;
   /** The film's synopsis, as TMDB writes it, or null. Nothing here describes our scenes. */
   overview: string | null;
@@ -34,10 +35,21 @@ export type Film = {
   slug: string;
   title: string;
   year: number | null;
+  /** The IMDb id the film was matched on, when the loader recorded one. The rail links to it. */
+  imdbId: string | null;
   posterUrl: string | null;
   /** The film's synopsis, as TMDB writes it, or null. Nothing here describes our scenes. */
   overview: string | null;
+  /** Where the subtitles end — the end of the last cue, NOT the film's runtime. Scales the timeline. */
   durationMs: number;
+};
+
+/** The film page's extra facts about the subtitles its times come from. */
+export type FilmDetail = Film & {
+  /** The subtitle release the times follow, e.g. 'Finding.Nemo.2003.Bluray.Original.SDH', or null. */
+  releaseLabel: string | null;
+  /** Whether that track captions sounds as well as speech (an SDH / hearing-impaired track). */
+  hasSoundCaptions: boolean;
 };
 
 type MarkerRow = { start_ms: string | number; severity_5_7: number | null; severity_8_10: number | null };
@@ -46,11 +58,14 @@ type FilmRow = {
   slug: string;
   title: string;
   year: number | null;
+  imdb_id?: string | null;
   poster_url: string | null;
   overview: string | null;
   duration_ms: string | number | null;
   scene_count: number;
   markers?: MarkerRow[] | string | null;
+  release_label?: string | null;
+  has_sound_captions?: boolean | null;
 };
 
 // json_agg comes back parsed by `pg` and by PGlite; a string would mean a driver that does not, and
@@ -65,6 +80,7 @@ const toFilm = (row: FilmRow): Film => ({
   slug: row.slug,
   title: row.title,
   year: row.year,
+  imdbId: row.imdb_id ?? null,
   posterUrl: row.poster_url,
   overview: row.overview,
   durationMs: Number(row.duration_ms ?? 0),
@@ -81,17 +97,23 @@ const toSummary = (row: FilmRow): FilmSummary => ({
 });
 
 // A film has one analysed track today; the schema allows more, so take the first deterministically.
+// The track's release and whether it captions sounds come along in the same statement: the film page
+// says which subtitles its times follow and what they cannot hear, and its budget is three queries.
 const FILM_SELECT = `
-  select f.slug, f.title, f.year, f.poster_url, f.overview,
-         (select t.duration_ms from tracks t where t.film_id = f.id order by t.created_at, t.id limit 1) as duration_ms,
+  select f.slug, f.title, f.year, f.imdb_id, f.poster_url, f.overview,
+         t.duration_ms, t.release_label, t.has_sound_captions,
          (select count(*)::int from scenes s where s.film_id = f.id) as scene_count
-    from films f`;
+    from films f
+    left join lateral (
+      select tr.duration_ms, tr.release_label, tr.has_sound_captions
+        from tracks tr where tr.film_id = f.id order by tr.created_at, tr.id limit 1
+    ) t on true`;
 
 /** Every film, with the markers its library-card strip draws, in one statement. */
 export const listFilms = cache(async (): Promise<FilmSummary[]> => {
   const db = await getDb();
   const { rows } = await db.query<FilmRow>(
-    `select f.slug, f.title, f.year, f.poster_url, f.overview,
+    `select f.slug, f.title, f.year, f.imdb_id, f.poster_url, f.overview,
             (select t.duration_ms from tracks t where t.film_id = f.id order by t.created_at, t.id limit 1) as duration_ms,
             (select count(*)::int from scenes s where s.film_id = f.id) as scene_count,
             (select coalesce(json_agg(json_build_object(
@@ -105,10 +127,16 @@ export const listFilms = cache(async (): Promise<FilmSummary[]> => {
   return rows.map(toSummary);
 });
 
-export const getFilm = cache(async (slug: string): Promise<Film | null> => {
+export const getFilm = cache(async (slug: string): Promise<FilmDetail | null> => {
   const db = await getDb();
   const { rows } = await db.query<FilmRow>(`${FILM_SELECT} where lower(f.slug) = lower($1)`, [slug]);
-  return rows[0] ? toFilm(rows[0]) : null;
+  const row = rows[0];
+  if (!row) return null;
+  return {
+    ...toFilm(row),
+    releaseLabel: row.release_label?.trim() || null,
+    hasSoundCaptions: row.has_sound_captions === true,
+  };
 });
 
 type SceneRow = {
@@ -228,6 +256,7 @@ export const getShowcase = cache(async (films?: FilmSummary[]): Promise<Showcase
     slug: chosen.slug,
     title: chosen.title,
     year: chosen.year,
+    imdbId: chosen.imdbId,
     posterUrl: chosen.posterUrl,
     overview: chosen.overview,
     durationMs: chosen.durationMs,

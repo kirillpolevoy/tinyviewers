@@ -73,3 +73,14 @@
   font-family: var(--display);
   font-weight: 700;
 }
+
+/* "A recording, not a live run": its own line under the title, so it cannot be missed. */
+.recorded {
+  display: block;
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--butter);
+  padding-top: 8px;
+}

@@ -18,13 +18,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const film = await getFilm(slug);
   return {
-    title: film ? `How ${film.title} was worked out — Tiny Viewers` : 'Watch it work — Tiny Viewers',
+    title: film ? `${film.title}, a recorded run — Tiny Viewers` : 'Watch it work — Tiny Viewers',
     description: WATCH.intro,
   };
 }
 
 /**
- * One film's recorded analysis, replayed.
+ * One film's recorded analysis, replayed — the fallback for a day whose live-run budget is spent.
+ * Every other run on /watch is live, so this page says plainly, twice, that it is a recording: in
+ * the headline and in the lead, with the date the run happened.
  *
  * Three reads, all of them the same rows every other page uses: the film, its recorded run reduced
  * to a replay payload, and its scenes. The scenes go down to the client component as children so
@@ -44,6 +46,7 @@ export default async function WatchFilmPage({ params }: Props) {
     <>
       {film.title}
       {film.year && <span className={styles.year}>{film.year}</span>}
+      <span className={styles.recorded}>{WATCH.recordedEyebrow}</span>
     </>
   );
 
@@ -63,8 +66,15 @@ export default async function WatchFilmPage({ params }: Props) {
     );
   }
 
+  const recordedOn = new Date(payload.meta.startedAt).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+
   return (
-    <WatchShell headline={headline} lead={WATCH.intro}>
+    <WatchShell headline={headline} lead={WATCH.recordedLead(recordedOn)}>
       <RunReplay payload={payload}>
         {/* The scene list is the parent-facing artifact, so it keeps the parent-facing register:
             a light sheet inside the dark instrument, styled by the same component the film page

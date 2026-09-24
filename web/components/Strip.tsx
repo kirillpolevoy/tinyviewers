@@ -1,4 +1,4 @@
-import { formatTime, markerLeftPct, markerShape, severityFor } from '@/lib/scenes';
+import { DEFAULT_BAND, formatTime, markerLeftPct, markerShape, severityFor, strengthWord } from '@/lib/scenes';
 import type { AgeBand, Scene } from '@/lib/scenes';
 import styles from './Strip.module.css';
 
@@ -77,24 +77,38 @@ export function Strip({
   );
 }
 
-/** The legend under the library heading: what a marker's height means. */
-export function StripLegend() {
+/**
+ * The legend above the library rows: which age band the marks are drawn for, and what each colour
+ * and height means, in the strength words the film page uses. Only the levels the rows on screen
+ * actually draw are listed — "Low" and "Not checked" appear when a film has them, and "Not checked"
+ * is never folded into the lowest level.
+ */
+export function StripLegend({ band, scenes }: { band: string; scenes: Scene[] }) {
+  const levels = [
+    { value: 0, tone: 'mint', height: 6 },
+    { value: 1, tone: 'butter', height: 8 },
+    { value: 2, tone: 'blush', height: 13 },
+    { value: 3, tone: 'coral', height: 20 },
+    { value: null, tone: 'grey', height: 6 },
+  ] as const;
+  const present = new Set(scenes.map((s) => severityFor(s, DEFAULT_BAND)));
   return (
-    <ul className={styles.legend}>
-      {[
-        { tone: 'butter', height: 8, label: '1' },
-        { tone: 'blush', height: 13, label: '2' },
-        { tone: 'coral', height: 20, label: '3' },
-      ].map((item) => (
-        <li key={item.label} className={styles.legendItem}>
-          <span
-            className={`${styles.legendSwatch} ${styles[item.tone]}`}
-            style={{ height: `${item.height}px` }}
-            aria-hidden="true"
-          />
-          {item.label}
-        </li>
-      ))}
-    </ul>
+    <div className={styles.legendWrap}>
+      <span className={styles.legendBand}>{band}</span>
+      <ul className={styles.legend}>
+        {levels
+          .filter((level) => present.has(level.value))
+          .map((level) => (
+            <li key={String(level.value)} className={styles.legendItem}>
+              <span
+                className={`${styles.legendSwatch} ${styles[level.tone]}`}
+                style={{ height: `${level.height}px` }}
+                aria-hidden="true"
+              />
+              {strengthWord(level.value)}
+            </li>
+          ))}
+      </ul>
+    </div>
   );
 }

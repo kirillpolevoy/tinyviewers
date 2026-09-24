@@ -144,10 +144,10 @@
 
 .filtersSummary {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
   min-height: 44px;
-  justify-content: center;
   cursor: pointer;
   list-style: none;
 }
@@ -157,43 +157,37 @@
 }
 
 .filtersTitle {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
   font-family: var(--display);
   font-size: 17px;
   font-weight: 700;
   color: var(--ink);
 }
 
-.filtersPrompt {
+.filtersChevron {
   display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--serif);
-  font-size: 15px;
-  color: var(--body);
+  color: var(--ink);
 }
 
-.filtersPrompt svg {
+.filtersChevron svg {
   flex: none;
   transition: transform 160ms ease;
 }
 
-.filters[open] .filtersPrompt svg {
+.filters[open] .filtersChevron svg {
   transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filtersChevron svg {
+    transition: none;
+  }
 }
 
 .filterForm {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-top: 14px;
-}
-
-.groups {
-  display: grid;
-  gap: 18px;
+  padding-top: 10px;
 }
 
 .group {
@@ -208,6 +202,7 @@
 
 .groupLegend {
   padding: 0;
+  margin-bottom: 8px;
   color: var(--body);
 }
 
@@ -218,6 +213,7 @@
 }
 
 .chip {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -241,8 +237,7 @@
   outline-offset: 3px;
 }
 
-/* The one source of a chip's selected look: the checkbox. It follows a tick or an untick
-   immediately, before the form is submitted, and it cannot disagree with the control. */
+/* The one source of a chip's selected look: the checkbox. */
 .chip:has(.checkbox:checked) {
   background: var(--coral);
   border: 2px solid var(--ink);
@@ -279,9 +274,18 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
   font-family: var(--display);
   font-size: 16px;
   color: var(--coral-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clear:hover {
+  color: var(--coral-ink-hover);
 }
 
 .count {
@@ -290,16 +294,20 @@
   color: var(--body);
 }
 
-@media (min-width: 860px) {
-  .filtersSummary {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
+/* Only rendered with JavaScript off (inside <noscript>). */
+.noscriptSubmit {
+  align-self: flex-start;
+  margin-top: 4px;
+}
 
-  .groups {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+/* The jump to the filtered list: only on a phone, where the list is a screen below the chips. */
+.viewMatching {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 720px) {
+  .viewMatching {
+    display: none;
   }
 }

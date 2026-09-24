@@ -1,15 +1,11 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
-import { SceneList } from '@/components/SceneList';
-import { AgeToggle, FilterPanel, LevelsDisclosure } from '@/components/FilmControls';
-import { Strip } from '@/components/Strip';
 import { Poster } from '@/components/Poster';
-import { WaveRule } from '@/components/Art';
-import { EMPTY, FILM } from '@/lib/copy';
+import { FilmFindings } from '@/components/FilmFindings';
+import { FILM } from '@/lib/copy';
 import { getFilm, getFilmScenes } from '@/lib/queries';
-import { filmHref, filmPageModel, formatTime } from '@/lib/scenes';
+import { dedupe, lastSceneEndMs, readBand, readListParam, splitFirstSentence } from '@/lib/scenes';
 import styles from './film.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -29,115 +25,111 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** An IMDb id the loader recorded, as a link. Anything not shaped like one is not linked. */
+function imdbHref(id: string | null): string | null {
+  return id && /^tt\d{5,10}$/.test(id) ? `https://www.imdb.com/title/${id}/` : null;
+}
+
+/**
+ * The synopsis. On a wide screen it is shown whole, as designed. On a phone the findings are what the
+ * parent came for, so only the first sentence sits above them and the rest is one tap away — the
+ * two renderings are swapped by CSS, and the hidden one is `display: none`, so it is never read twice.
+ */
+function Overview({ text }: { text: string }) {
+  const [first, rest] = splitFirstSentence(text);
+  return (
+    <>
+      <p className={`${styles.overview} ${rest ? styles.overviewWide : ''}`}>{text}</p>
+      {rest && (
+        <details className={styles.overviewPhone}>
+          <summary className={styles.overviewSummary}>
+            <span className={styles.overview}>{first}</span>{' '}
+            <span className={styles.overviewMore}>{FILM.overviewMore}</span>
+          </summary>
+          <p className={styles.overview}>{rest}</p>
+        </details>
+      )}
+    </>
+  );
+}
+
+/**
+ * Lead with the verdict; let the timeline be the navigation. A poster-and-facts rail, and one
+ * content column: title and synopsis, the findings card, the filter, the scene rows.
+ */
 export default async function FilmPage({ params, searchParams }: Props) {
   const { slug } = await params;
-  const [film, allScenes, query] = await Promise.all([
-    getFilm(slug),
-    getFilmScenes(slug),
-    searchParams,
-  ]);
+  const [film, scenes, query] = await Promise.all([getFilm(slug), getFilmScenes(slug), searchParams]);
   if (!film) notFound();
 
-  // Every derivation the page makes from its scenes and its query string, in one tested function.
-  const { band, presence, events, selected, scenes, matching, strongest, lastEnd } =
-    filmPageModel(allScenes, query);
-  const durationMs = Math.max(film.durationMs, lastEnd);
+  const durationMs = Math.max(film.durationMs, lastSceneEndMs(scenes));
+  const imdb = imdbHref(film.imdbId);
 
   return (
     <div className="page">
       <SiteHeader />
 
       <main className={`frame ${styles.main}`}>
-        <div className={styles.head}>
-          <div className={styles.headText}>
-            <h1 className={styles.title}>
-              {film.title}
-              {film.year && <span className={styles.year}>{film.year}</span>}
-            </h1>
-            {/* The film's own synopsis, from TMDB, so a parent knows they are on the right film
-                before reading a word about its scenes. Null for a film TMDB has no words for, and
-                then the header is the title alone: an empty paragraph is not a synopsis. */}
-            {film.overview && <p className={styles.overview}>{film.overview}</p>}
-          </div>
+        <aside className={styles.rail} aria-label="About the film">
           <Poster
             url={film.posterUrl}
             title={film.title}
-            width={92}
-            height={130}
+            width={280}
+            height={400}
             priority
-            className={styles.filmPoster}
+            className={styles.poster}
           />
+          <dl className={styles.facts}>
+            {film.year && (
+              <div className={styles.fact}>
+                <dt className="eyebrow">{FILM.factYear}</dt>
+                <dd>{film.year}</dd>
+              </div>
+            )}
+            {/* No runtime: the only length stored is where the subtitles end, and that is not how
+                long the film runs. See FILM.factImdb's neighbour in lib/copy.ts. */}
+            {imdb && (
+              <div className={styles.fact}>
+                <dt className="eyebrow">{FILM.factImdb}</dt>
+                <dd>
+                  <a href={imdb} target="_blank" rel="noopener noreferrer" className={styles.factLink}>
+                    {FILM.imdbLink}
+                  </a>
+                </dd>
+              </div>
+            )}
+          </dl>
+        </aside>
+
+        <div className={styles.head}>
+          <h1 className={styles.title}>{film.title}</h1>
+          {/* The film's own synopsis, from TMDB, so a parent knows they are on the right film
+              before reading a word about its scenes. Null for a film TMDB has no words for, and
+              then the header is the title alone: an empty paragraph is not a synopsis. */}
+          {film.overview && <Overview text={film.overview} />}
         </div>
 
-        <div className={styles.controls}>
-          <AgeToggle slug={film.slug} band={band} selected={selected} />
-          <LevelsDisclosure />
-        </div>
-
-        {allScenes.length > 0 && (
-          <div className={styles.timeline}>
-            <Strip
-              variant="timeline"
-              markers={allScenes.map((s) => ({
-                startMs: s.startMs,
-                severity57: s.severity57,
-                severity810: s.severity810,
-                matches: matching.has(s.id),
-              }))}
-              durationMs={durationMs}
-              band={band}
-              summary={`Where the ${allScenes.length} scenes sit across ${film.title}, tallest where strongest for ages ${band === '8-10' ? '8 to 10' : '5 to 7'}.`}
-            />
-            <p className={styles.timelineNote}>
-              <b>{allScenes.length} scenes</b>
-              {strongest > 0 && <> · {strongest} at very strong</>} · up to {formatTime(lastEnd)}
-              {selected.length > 0 && <> · {scenes.length} match your filters</>}
-            </p>
-          </div>
-        )}
-
-        {/* Above the list, not under it: a parent narrows the list and then reads it, so the
-            control comes before the thing it changes — and on a long film the panel is no longer
-            a scroll away from the scenes it filters. */}
-        {allScenes.length > 0 && (
-          <FilterPanel
+        <div className={styles.content}>
+          <FilmFindings
             slug={film.slug}
-            band={band}
-            presence={presence}
-            events={events}
-            selected={selected}
-            shown={scenes.length}
-            total={allScenes.length}
+            title={film.title}
+            scenes={scenes}
+            durationMs={durationMs}
+            initialBand={readBand(query.age)}
+            initialTags={dedupe(readListParam(query.tag))}
           />
-        )}
 
-        <h2 className={styles.listHeading}>{FILM.listHeading}</h2>
-
-        {allScenes.length === 0 ? (
-          <div className={styles.state}>
-            <h3 className={styles.stateHeadline}>{EMPTY.noScenesHeadline}</h3>
-            <p className={styles.stateBody}>{EMPTY.noScenesBody}</p>
-          </div>
-        ) : scenes.length === 0 ? (
-          <div className={styles.state}>
-            <h3 className={styles.stateHeadline}>{EMPTY.noMatchesHeadline}</h3>
-            <p className={styles.stateBody}>{EMPTY.noMatchesBody}</p>
-            <Link href={filmHref(film.slug, { band, selected: [] })} className="button buttonQuiet">
-              {FILM.clearFilters}
-            </Link>
-          </div>
-        ) : (
-          <SceneList scenes={scenes} band={band} />
-        )}
-
-        <div className={styles.foot}>
-          <Link href={`/watch/${film.slug}`} className={styles.footLink}>
-            {FILM.crossLink}
-          </Link>
-          <span className={styles.footNote}>
-            <WaveRule />
-            {FILM.crossLinkNote}
-          </span>
+          {/* What the guide is made from and what that cannot see. Plain text, under the list:
+              the scenes come first, and this is what a careful parent reads next. */}
+          <section className={styles.about} aria-labelledby="about-guide">
+            <h2 id="about-guide" className={styles.aboutTitle}>
+              {FILM.aboutTitle}
+            </h2>
+            <p>{FILM.aboutSource}</p>
+            <p>{film.hasSoundCaptions ? FILM.aboutLimitCaptions : FILM.aboutLimitSpeechOnly}</p>
+            <p>{FILM.aboutTiming(film.releaseLabel)}</p>
+            <p>{FILM.aboutAges}</p>
+          </section>
         </div>
       </main>
     </div>

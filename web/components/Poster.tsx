@@ -8,9 +8,13 @@ type Props = {
   /** The box this poster fills, in CSS pixels, so the optimizer is asked for the right size. */
   width: number;
   height: number;
-  /** Home's shelf and the film-page header are above the fold; the library grid is not. */
+  /** The film page's poster is above the fold; the library's row posters are not. */
   priority?: boolean;
   className?: string;
+  /** The placeholder's words. A 56px row poster has room for "to come", not the whole sentence. */
+  placeholder?: string;
+  /** Inside a link or row that already names the film: the image adds nothing to its name. */
+  decorative?: boolean;
 };
 
 /**
@@ -22,11 +26,20 @@ type Props = {
  * being fetched by the browser. The declared width/height give the box its aspect ratio; the CSS
  * for each use decides the real size.
  */
-export function Poster({ url, title, width, height, priority = false, className = '' }: Props) {
+export function Poster({
+  url,
+  title,
+  width,
+  height,
+  priority = false,
+  className = '',
+  placeholder = FILM.posterPlaceholder,
+  decorative = false,
+}: Props) {
   if (!url) {
     return (
       <span className={`posterPlaceholder ${styles.poster} ${className}`} aria-hidden="true">
-        {FILM.posterPlaceholder}
+        {placeholder}
       </span>
     );
   }
@@ -34,7 +47,7 @@ export function Poster({ url, title, width, height, priority = false, className 
     <Image
       className={`${styles.poster} ${styles.image} ${className}`}
       src={url}
-      alt={`${title} poster`}
+      alt={decorative ? '' : `${title} poster`}
       width={width}
       height={height}
       priority={priority}

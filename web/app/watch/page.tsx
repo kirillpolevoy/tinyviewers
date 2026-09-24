@@ -1,13 +1,10 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
 import { WatchShell } from '@/components/WatchShell';
-import { AddFilm } from '@/components/AddFilm';
-import { Poster } from '@/components/Poster';
-import { listRecordedFilms } from '@/lib/queries';
+import { DemoPicker } from '@/components/DemoPicker';
+import { listFilms } from '@/lib/queries';
 import { forwardToSceneApi } from '@/lib/scene-api';
-import { formatCents, formatSeconds } from '@/lib/replay';
-import { ADD, spentLine, WATCH } from '@/lib/copy';
-import type { AddStatus } from '@/lib/job';
+import { DEMO, WATCH } from '@/lib/copy';
+import type { DemoStatus } from '@/lib/job';
 import styles from './watch.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -20,119 +17,59 @@ export const metadata: Metadata = {
 type Props = { searchParams: Promise<{ film?: string | string[] }> };
 
 /**
- * Whether anything can be added right now, read fresh on every request.
+ * Whether a live run can start right now, read fresh on every request.
  *
- * `forwardToSceneApi` rather than fetching this app's own /api/add/status: the handler is a thin
- * forwarder, and a server component calling its own HTTP endpoint would be a round trip through the
- * network stack to run the same function. The handler exists for the browser, which cannot call the
- * scene API at all under this app's CSP.
- *
- * A scene API that is down is not an error page. The runs on the shelf are in the database and have
- * nothing to do with it; only the form goes away, and it says so.
+ * A scene API that is down is not an error page: the shelf is in the database, and each film's
+ * recorded run with it. Only the live runs go away, and the page says so.
  */
-async function readStatus(): Promise<AddStatus | null> {
+async function readStatus(): Promise<DemoStatus | null> {
   try {
-    const response = await forwardToSceneApi('/api/add/status');
+    const response = await forwardToSceneApi('/api/demo/status');
     if (!response.ok) return null;
-    return (await response.json()) as AddStatus;
+    return (await response.json()) as DemoStatus;
   } catch {
     return null;
   }
 }
 
+/**
+ * Pick any film, and watch the public part of the analysis run on it live.
+ *
+ * Three states, not two, and each says what it is: live runs are on; they are off for today (the
+ * budget is spent) or for this deployment (a key the public stages need is missing); or we cannot tell (the service is not
+ * answering). In every state but the first, each film on the shelf offers its recorded run
+ * instead, labelled as a recording.
+ */
 export default async function WatchPage({ searchParams }: Props) {
-  const [params, films, status] = await Promise.all([
-    searchParams,
-    listRecordedFilms(),
-    readStatus(),
-  ]);
+  const [params, films, status] = await Promise.all([searchParams, listFilms(), readStatus()]);
   const raw = Array.isArray(params.film) ? params.film[0] : params.film;
-  // Three states, not two. "No passcode is configured" is something the API told us; a status read
-  // that failed told us nothing at all, and saying the first when we mean the second sends the
-  // owner looking for a missing environment variable while the real answer is that the service is
-  // down. Same missing form either way, different sentence under it.
-  const canAdd = status?.passcode_configured === true;
-  const unknown = status === null;
+  const live = status !== null && status.configured && status.available;
 
   return (
     <WatchShell headline={WATCH.headline} lead={WATCH.intro}>
-      <section className={styles.addPanel} aria-labelledby="add-heading">
-        <h2 id="add-heading" className={styles.sectionHeading}>
-          {ADD.heading}
+      <section className={styles.panel} aria-labelledby="pick-heading">
+        <h2 id="pick-heading" className={styles.sectionHeading}>
+          {DEMO.pickHeading}
         </h2>
-
-        {canAdd ? (
-          <>
-            <p className={styles.sectionLead}>{ADD.lead}</p>
-            <AddFilm initialQuery={(raw ?? '').trim()} />
-          </>
+        {live ? (
+          <p className={styles.sectionLead}>{DEMO.pickLead}</p>
         ) : (
           <p className={styles.sectionLead}>
-            <b className={styles.off}>{unknown ? ADD.unknownHeadline : ADD.offHeadline}</b> —{' '}
-            {unknown ? ADD.unknownBody : ADD.offBody}
+            <b className={styles.off}>
+              {status === null ? DEMO.unreachable : !status.configured ? DEMO.offHeadline : DEMO.capHeadline}
+            </b>{' '}
+            {status === null ? DEMO.unknownBody : !status.configured ? DEMO.offBody : DEMO.capBody}
           </p>
         )}
 
-        {/* The three things a visitor is owed before pressing anything: what is running, what it
-            has cost today, and what the ceiling is. All three come from the API, never from here. */}
-        {status && (
-          <p className={styles.statusLine}>
-            {status.running ? (
-              <>
-                {ADD.runningNow} —{' '}
-                <Link href={`/watch/job/${status.running.id}`} className={styles.statusLink}>
-                  {ADD.runningLink}
-                </Link>
-                {' · '}
-              </>
-            ) : null}
-            {/* The reserve clause only where there is a run to attribute it to, and only when the
-                API sent the figure: today's total already contains that run's whole ceiling. */}
-            {spentLine(
-              status.spent_today_usd,
-              status.cap_usd,
-              status.running ? (status.reserve_usd ?? null) : null,
-            )}
-          </p>
-        )}
-      </section>
+        {/* What today's live runs have cost, and the ceiling: both from the API, never from here. */}
+        {status && <p className={styles.statusLine}>{DEMO.budgetLine(status.spent_today_usd, status.cap_usd)}</p>}
 
-      <section className={styles.shelf} aria-labelledby="runs-heading">
-        <h2 id="runs-heading" className={styles.sectionHeading}>
-          {WATCH.shelfHeading}
-        </h2>
-        <p className={styles.sectionLead}>{WATCH.shelfNote}</p>
-
-        {films.length === 0 ? (
-          <p className={styles.sectionLead}>{WATCH.noRecording}</p>
-        ) : (
-          <ul className={styles.grid}>
-            {films.map((film) => (
-              <li key={film.slug}>
-                <Link href={`/watch/${film.slug}`} className={styles.card}>
-                  <Poster
-                    url={film.posterUrl}
-                    title={film.title}
-                    width={92}
-                    height={130}
-                    className={styles.cardPoster}
-                  />
-                  <span className={styles.cardText}>
-                    <span className={styles.cardTitle}>
-                      {film.title}
-                      {film.year && <span className={styles.cardYear}>{film.year}</span>}
-                    </span>
-                    {/* Both numbers are read off that film's own recording. */}
-                    <span className={`tabular ${styles.cardFacts}`}>
-                      {formatSeconds(film.wallMs)} · {formatCents(film.costUsd)} · {film.beats} beats
-                    </span>
-                    <span className={styles.cardAction}>{WATCH.play} →</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+        <DemoPicker
+          films={films.map(({ slug, title, year, posterUrl }) => ({ slug, title, year, posterUrl }))}
+          initialSlug={(raw ?? '').trim()}
+          live={live}
+        />
       </section>
     </WatchShell>
   );

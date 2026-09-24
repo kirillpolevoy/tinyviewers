@@ -1,11 +1,7 @@
-.addPanel,
-.shelf {
+.panel {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.addPanel {
   background: var(--dark-panel);
   border: 1px solid var(--dark-line);
   border-radius: var(--radius-sheet);
@@ -13,7 +9,7 @@
 }
 
 @media (min-width: 720px) {
-  .addPanel {
+  .panel {
     padding: 28px 30px 32px;
   }
 }
@@ -44,91 +40,4 @@
   letter-spacing: 0.02em;
   color: var(--dark-muted);
   padding-top: 4px;
-}
-
-.statusLink {
-  color: var(--butter);
-  font-weight: 700;
-}
-
-.statusLink:hover {
-  color: var(--dark-text);
-}
-
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 8px 0 0;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-.card {
-  display: grid;
-  grid-template-columns: 92px minmax(0, 1fr);
-  gap: 14px;
-  height: 100%;
-  padding: 14px;
-  background: var(--dark-panel);
-  border: 1px solid var(--dark-line);
-  border-radius: 22px;
-  text-decoration: none;
-  color: var(--dark-text);
-  transition: border-color 120ms ease, background-color 120ms ease;
-}
-
-.card:hover {
-  border-color: var(--coral);
-  background: var(--dark-raise);
-  color: var(--dark-text);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-}
-
-.cardPoster {
-  width: 92px;
-  height: 130px;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-.cardText {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-
-.cardTitle {
-  font-family: var(--display);
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.cardYear {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--dark-muted);
-  padding-left: 0.5em;
-}
-
-.cardFacts {
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--coral);
-}
-
-.cardAction {
-  margin-top: auto;
-  font-family: var(--display);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--butter);
 }

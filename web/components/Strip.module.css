@@ -111,3 +111,26 @@
   width: 16px;
   border-radius: 3px;
 }
+
+/* The band the marks are drawn for, then the levels. Wraps on a phone rather than overflowing. */
+.legendWrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.legendBand {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+.legend {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}

@@ -29,9 +29,14 @@ export const SCENE_API_TIMEOUT_MS = 10_000;
  */
 export const RESOLVE_TIMEOUT_MS = 30_000;
 
-/** How long this proxy waits on one path. Pure, so the two numbers above are testable facts. */
+/**
+ * How long this proxy waits on one path. Pure, so the two numbers above are testable facts. The
+ * demo's title lookup is the same TMDB work as the add flow's, so it gets the same allowance.
+ */
 export function timeoutMsFor(path: string): number {
-  return path.startsWith('/api/add/resolve') ? RESOLVE_TIMEOUT_MS : SCENE_API_TIMEOUT_MS;
+  return path.startsWith('/api/add/resolve') || path.startsWith('/api/demo/resolve')
+    ? RESOLVE_TIMEOUT_MS
+    : SCENE_API_TIMEOUT_MS;
 }
 
 /** Local `node server.js --pglite` in scene-api. Production sets SCENE_API_URL. */
@@ -99,16 +104,33 @@ export const ATTEMPT_MAX_FAILURES = 10;
 /** A bound on the map, so the counter cannot itself become the leak. */
 const MAX_TRACKED_IPS = 1000;
 
-const attempts = new Map<string, { n: number; until: number }>();
+type Counter = Map<string, { n: number; until: number }>;
+
+const attempts: Counter = new Map();
 
 /** Tests, and a dev server that outlives a fumbled passcode. */
 export const resetAttempts = () => attempts.clear();
 
-function record(ip: string, now: number) {
-  const rec = attempts.get(ip);
+function record(counter: Counter, ip: string, now: number) {
+  const rec = counter.get(ip);
   if (rec && rec.until > now) return rec;
-  attempts.delete(ip);
+  counter.delete(ip);
   return null;
+}
+
+function bump(counter: Counter, ip: string, now: number) {
+  const rec = record(counter, ip, now);
+  if (rec) {
+    rec.n += 1;
+    return;
+  }
+  // Prune only on a miss, and only once the map has actually grown: an expired entry nobody asks
+  // about again is harmless until then.
+  if (counter.size >= MAX_TRACKED_IPS) {
+    for (const [key, value] of counter) if (value.until <= now) counter.delete(key);
+    if (counter.size >= MAX_TRACKED_IPS) counter.clear();
+  }
+  counter.set(ip, { n: 1, until: now + ATTEMPT_WINDOW_MS });
 }
 
 /**
@@ -120,23 +142,39 @@ function record(ip: string, now: number) {
  */
 export function isThrottled(ip: string, now: number = Date.now()): boolean {
   if (ip === 'unknown') return false;
-  return (record(ip, now)?.n ?? 0) >= ATTEMPT_MAX_FAILURES;
+  return (record(attempts, ip, now)?.n ?? 0) >= ATTEMPT_MAX_FAILURES;
 }
 
 export function noteFailure(ip: string, now: number = Date.now()): void {
   if (ip === 'unknown') return;
-  const rec = record(ip, now);
-  if (rec) {
-    rec.n += 1;
-    return;
-  }
-  // Prune only on a miss, and only once the map has actually grown: an expired entry nobody asks
-  // about again is harmless until then.
-  if (attempts.size >= MAX_TRACKED_IPS) {
-    for (const [key, value] of attempts) if (value.until <= now) attempts.delete(key);
-    if (attempts.size >= MAX_TRACKED_IPS) attempts.clear();
-  }
-  attempts.set(ip, { n: 1, until: now + ATTEMPT_WINDOW_MS });
+  bump(attempts, ip, now);
+}
+
+// ------------------------------------------------------------------------------------------------
+// Live demo runs, counted at the ingress
+// ------------------------------------------------------------------------------------------------
+//
+// A demo run needs no passcode and costs real money (a few cents of Jev each), so the scene API
+// limits how many one client may start: five in ten minutes, two of them on films whose subtitles
+// have to be downloaded. As with passcodes, by the time a request reaches the API every visitor
+// looks like this proxy unless ADD_FILM_PROXY_SECRET is set — so the same count is kept here, keyed
+// on the visitor, with the same window and the same ceiling. Only the overall one: whether a film
+// needs a download is the API's knowledge, and it enforces the tighter limit itself.
+
+export const DEMO_RUNS_PER_VISITOR = 5;
+
+const demoRuns: Counter = new Map();
+
+export const resetDemoRuns = () => demoRuns.clear();
+
+export function isDemoThrottled(ip: string, now: number = Date.now()): boolean {
+  if (ip === 'unknown') return false;
+  return (record(demoRuns, ip, now)?.n ?? 0) >= DEMO_RUNS_PER_VISITOR;
+}
+
+export function noteDemoRun(ip: string, now: number = Date.now()): void {
+  if (ip === 'unknown') return;
+  bump(demoRuns, ip, now);
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -290,6 +328,31 @@ export async function readBody(request: Request): Promise<string | null> {
   }
   return new TextDecoder().decode(joined);
 }
+
+/**
+ * One passcode-free POST for the public demo, forwarded: size-limited and attributed like the add
+ * POSTs, and — for `/api/demo/runs` — counted per visitor. The count goes up only on a 202, which
+ * is the API's word for "a run was started and is costing money".
+ */
+export async function forwardDemoPost(request: Request, path: string, { countRuns = false } = {}): Promise<Response> {
+  const ip = clientIp(request.headers);
+  if (countRuns && isDemoThrottled(ip)) return TOO_MANY_RUNS();
+
+  const body = await readBody(request);
+  if (body === null) return TOO_LARGE();
+
+  const response = await forwardToSceneApi(path, {
+    method: 'POST',
+    body,
+    signal: request.signal,
+    clientIp: ip,
+  });
+  if (countRuns && response.status === 202) noteDemoRun(ip);
+  return response;
+}
+
+/** The API's own refusal for too many demo runs, from the side that can tell visitors apart. */
+export const TOO_MANY_RUNS = () => json({ error_code: 'too_many_runs' }, 429);
 
 /** 413, because that is what happened: nothing about the request was malformed, only long. */
 export const TOO_LARGE = () => json({ error_code: 'too_large' }, 413);

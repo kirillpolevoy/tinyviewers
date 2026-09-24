@@ -7,19 +7,22 @@ type Props = {
   headline: ReactNode;
   /** A line under the rule: what this particular page is. */
   lead?: ReactNode;
+  /** Which navigation entry to mark as the page you are on. */
+  current?: '/watch';
   children: ReactNode;
 };
 
 /**
- * The frame all three "Watch it work" pages sit in: dark surface, wordmark, headline, coral rule.
+ * The frame the "Watch it work" pages and the add pages sit in: dark surface, wordmark, headline,
+ * coral rule.
  *
  * It is a shell and not a layout so each page keeps its own metadata and its own data fetching —
  * and so the rule, which is the one decorative stroke this register allows itself, is drawn once.
  */
-export function WatchShell({ headline, lead, children }: Props) {
+export function WatchShell({ headline, lead, current = '/watch', children }: Props) {
   return (
     <div className={`page darkPage ${styles.page}`}>
-      <SiteHeader current="/watch" tone="dark" />
+      <SiteHeader current={current} tone="dark" />
 
       <main className={`frame ${styles.main}`}>
         <div className={styles.head}>

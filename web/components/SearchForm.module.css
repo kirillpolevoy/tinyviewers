@@ -50,19 +50,19 @@
   padding-block: 12px;
 }
 
-/* Two rings, doing different jobs. The field shows which control has focus at a glance, because
-   the input's own box is invisible inside the pill; the input keeps a real outline of its own so
-   the focused element is unambiguous to anything reading the page, including Windows high
-   contrast. Both use the text-weight coral, which clears 4.5:1 on the page and on a sheet. */
+/* One ring, on the pill: the input's own box is invisible inside it, so the field is what shows
+   focus. The text-weight coral clears 4.5:1 on the page and on a sheet. The input's outline is
+   transparent rather than removed, so forced-colours modes (Windows high contrast), which drop box
+   shadows and repaint outlines in the system colour, still draw a ring around the focused field. */
 .field:focus-within {
   border-color: var(--coral-text);
   box-shadow: 4px 5px 0 var(--hairline), 0 0 0 3px rgba(169, 79, 58, 0.28);
 }
 
+.input:focus,
 .input:focus-visible {
-  outline: 3px solid var(--coral-text);
+  outline: 2px solid transparent;
   outline-offset: 2px;
-  border-radius: 999px;
 }
 
 .input::placeholder {
@@ -111,4 +111,15 @@
     flex: 0 0 auto;
     width: 100%;
   }
+}
+
+/* The library's field: no button, a tighter gap to the label, and the count line under it. */
+.bare {
+  gap: 8px;
+}
+
+.count {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
 }

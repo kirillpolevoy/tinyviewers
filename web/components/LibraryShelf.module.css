@@ -1,198 +1,245 @@
-/* The shelf: its search field and the film cards. The page around it — heading, intro, legend —
-   is styled by app/library/library.module.css. */
+/* The library: a header row (title left, search right), then comparison rows — one film per line,
+   so "which movie tonight?" is answered by scanning down. */
 
-/* --- the search field ---------------------------------------------------------------------------
-   Full width on a phone, and no button: there is nothing to submit to, because the list narrows as
-   the field is typed in. The pill matches the one on Home. */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-.search {
+.headText {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 100%;
-}
-
-.label {
-  color: var(--body);
-}
-
-.field {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  background: var(--sheet);
-  border: 3px solid var(--ink);
-  border-radius: 999px;
-  box-shadow: 4px 5px 0 var(--hairline);
-  padding-inline: 20px;
-  min-height: 56px;
-}
-
-.icon {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  color: var(--body);
-}
-
-.input {
-  flex: 1 1 auto;
   min-width: 0;
-  border: none;
-  background: transparent;
-  font-family: var(--display);
-  font-size: 18px;
-  line-height: 1.4;
+}
+
+.title {
+  font-size: clamp(34px, 5vw, 44px);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.intro {
+  font-family: var(--serif);
+  font-size: clamp(17px, 2vw, 18px);
+  line-height: 1.6;
+  color: var(--body-strong);
+}
+
+.search {
+  width: 100%;
+}
+
+@media (min-width: 860px) {
+  .head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .search {
+    width: 380px;
+    flex: none;
+  }
+}
+
+.notice {
+  max-width: 620px;
+}
+
+.listWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  scroll-margin-top: 16px;
+}
+
+.legend {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* --- one row ----------------------------------------------------------------------------------- */
+
+/* On a phone: poster on the left, and beside it the title, the strip, and the count with the link. */
+.row {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-areas:
+    'poster name'
+    'poster strip'
+    'poster meta';
+  column-gap: 16px;
+  row-gap: 6px;
+  align-items: center;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 14px 18px;
+  text-decoration: none;
   color: var(--ink);
-  padding-block: 12px;
 }
 
-/* Two rings, doing different jobs — the same pair the Home field uses. The pill shows which
-   control has focus at a glance, because the input's own box is invisible inside it; the input
-   keeps a real outline so the focused element is unambiguous to anything reading the page,
-   including Windows high contrast. */
-.field:focus-within {
-  border-color: var(--coral-text);
-  box-shadow: 4px 5px 0 var(--hairline), 0 0 0 3px rgba(169, 79, 58, 0.28);
+.row:hover {
+  color: var(--ink);
+  border-color: var(--ink);
 }
 
-.input:focus-visible {
-  outline: 3px solid var(--coral-text);
-  outline-offset: 2px;
-  border-radius: 999px;
+.poster {
+  grid-area: poster;
+  width: 56px;
+  height: 78px;
+  border-radius: 12px;
+  object-fit: cover;
+  font-size: 8px;
+  align-self: start;
 }
 
-.input::placeholder {
-  color: var(--body);
-  opacity: 1;
+/* The placeholder's words need a little room at 56px; a real poster fills its box. */
+span.poster {
+  padding: 4px;
 }
 
-.count {
+.name {
+  grid-area: name;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.filmTitle {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.year {
   font-family: var(--serif);
   font-size: 15px;
   color: var(--body);
 }
 
-/* --- the cards ---------------------------------------------------------------------------------- */
-
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 22px;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  background: var(--sheet);
-  border: 2px solid var(--hairline);
-  border-radius: var(--radius-sheet);
-  padding: 18px 20px 20px;
-  text-decoration: none;
-  color: var(--ink);
-}
-
-.card:hover {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-
-.cardPoster {
-  width: 100%;
-  height: 200px;
-  flex: none;
-  object-fit: cover;
-  /* A real poster is portrait and this slot is landscape, as the design drew it. Anchoring the
-     crop to the top keeps the title visible instead of cropping it away. */
-  object-position: top;
-}
-
-.cardTitleRow {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.cardTitle {
+.chip {
+  margin-top: 4px;
+  background: var(--butter);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 2px 12px;
   font-family: var(--display);
-  font-size: 22px;
-  line-height: 1.25;
+  font-size: 13px;
   font-weight: 700;
+  line-height: 1.55;
+  white-space: nowrap;
 }
 
-.cardYear {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--body);
+.strip {
+  grid-area: strip;
+  min-width: 0;
 }
 
-.cardFacts {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--body);
-}
-
-.cardFacts b {
-  color: var(--ink);
-}
-
-.cardFoot {
-  margin-top: auto;
-  padding-top: 6px;
+.meta {
+  grid-area: meta;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 16px;
 }
 
-.cardMicro {
-  font-family: var(--serif);
-  font-size: 13px;
-  color: var(--body);
-}
-
-.cardAction {
+.count {
   font-family: var(--display);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 600;
   color: var(--coral-text);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
 }
 
-/* --- nothing on the shelf ----------------------------------------------------------------------- */
-
-.nothing {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  max-width: 620px;
-  background: var(--sheet);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sheet);
-  padding: 24px 26px 28px;
+.row:hover .action {
+  color: var(--coral-ink-hover);
 }
 
-.nothingHeadline {
-  font-size: 26px;
-  line-height: 1.25;
-  font-weight: 700;
+/* The design's row: poster, a 230px title block, the strip filling the middle, the count in a 90px
+   right-aligned column, then the link. */
+@media (min-width: 860px) {
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 24px;
+  }
+
+  .poster {
+    flex: none;
+    align-self: center;
+  }
+
+  .name {
+    width: 230px;
+    flex: none;
+  }
+
+  .strip {
+    flex: 1 1 auto;
+  }
+
+  .meta {
+    display: contents;
+  }
+
+  .count {
+    width: 90px;
+    flex: none;
+    text-align: right;
+  }
+
+  .action {
+    flex: none;
+  }
 }
 
-.nothingBody {
+/* "Coco is in the library now. See its scene guide →" — only visible when the new row is slow to
+   arrive; otherwise the same sentence is read out and not shown. */
+.added {
   font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body-strong);
 }
 
-.nothingAction {
-  margin-top: 4px;
+.addedLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 600;
+  color: var(--coral-text);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }

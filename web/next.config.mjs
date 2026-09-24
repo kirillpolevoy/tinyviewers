@@ -74,8 +74,16 @@ const nextConfig = {
   // the same job with every film already on screen. The URL is kept alive — it has been shared, it
   // is in browser histories, and Home's form pointed at it — and `?q=` is carried straight over,
   // because the library reads exactly the same parameter.
+  //
+  // /watch/job/[id] was the add flow's progress page while it lived on /watch. Adding now happens
+  // inside the library, which shows a run live at /library?job=[id]; a link to a run already handed
+  // out still arrives there. Temporary (307), not permanent: browsers cache a 308 indefinitely, and
+  // where a run is shown has already moved twice.
   async redirects() {
-    return [{ source: '/search', destination: '/library', permanent: true }];
+    return [
+      { source: '/search', destination: '/library', permanent: true },
+      { source: '/watch/job/:id', destination: '/library?job=:id', permanent: false },
+    ];
   },
 };
 

@@ -2,8 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   clientIp,
+  forwardDemoPost,
   forwardToSceneApi,
+  isDemoThrottled,
   isThrottled,
+  noteDemoRun,
+  resetDemoRuns,
+  DEMO_RUNS_PER_VISITOR,
   noteFailure,
   readBody,
   resetAttempts,
@@ -169,6 +174,10 @@ test('the title lookup gets a longer deadline than everything else', () => {
   assert.equal(timeoutMsFor('/api/add/status'), SCENE_API_TIMEOUT_MS);
   assert.equal(timeoutMsFor('/api/add/jobs'), SCENE_API_TIMEOUT_MS);
   assert.equal(timeoutMsFor('/api/add/jobs/abc/recording'), SCENE_API_TIMEOUT_MS);
+  // The demo's lookup is the same TMDB work, so it gets the same allowance; starting a run does not.
+  assert.equal(timeoutMsFor('/api/demo/resolve'), RESOLVE_TIMEOUT_MS);
+  assert.equal(timeoutMsFor('/api/demo/runs'), SCENE_API_TIMEOUT_MS);
+  assert.equal(timeoutMsFor('/api/add/finish'), SCENE_API_TIMEOUT_MS);
 });
 
 test('an oversized body is refused by the byte, while it is still arriving', async () => {
@@ -306,4 +315,63 @@ test('the throttle refusal carries the code the client has a sentence for', asyn
   // Not `daily_cap`: the client branches on this code, and reading a fumbled passcode as budget is
   // how "$0.00 of $0.00 spent today" ended up on screen.
   assert.deepEqual(await many.json(), { error_code: 'too_many_attempts' });
+});
+
+// --- live demo runs, counted at the ingress -------------------------------------------------------
+
+test('five demo runs from one visitor, then ten minutes of nothing; unknown is never throttled', () => {
+  resetDemoRuns();
+  const now = 2_000_000;
+  for (let i = 0; i < DEMO_RUNS_PER_VISITOR - 1; i += 1) noteDemoRun('203.0.113.8', now);
+  assert.equal(isDemoThrottled('203.0.113.8', now), false);
+  noteDemoRun('203.0.113.8', now);
+  assert.equal(isDemoThrottled('203.0.113.8', now), true);
+  assert.equal(isDemoThrottled('198.51.100.9', now), false);
+  assert.equal(isDemoThrottled('203.0.113.8', now + ATTEMPT_WINDOW_MS + 1), false);
+  for (let i = 0; i < DEMO_RUNS_PER_VISITOR * 3; i += 1) noteDemoRun('unknown', now);
+  assert.equal(isDemoThrottled('unknown', now), false);
+  resetDemoRuns();
+});
+
+test('a demo POST is counted only when a run started, and refused here once the visitor is over', async () => {
+  resetDemoRuns();
+  const before = process.env.VERCEL;
+  process.env.VERCEL = '1';
+  const originalFetch = globalThis.fetch;
+  let upstreamCalls = 0;
+  let answer = 202;
+  globalThis.fetch = (async () => {
+    upstreamCalls += 1;
+    return jsonResponse(answer === 202 ? { id: 'abc', cached_subtitles: true } : { error_code: 'busy' }, answer);
+  }) as typeof fetch;
+  const request = () =>
+    new Request('http://localhost/api/demo/runs', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-real-ip': '203.0.113.20' },
+      body: JSON.stringify({ slug: 'nemo' }),
+    });
+  try {
+    // A refusal from upstream costs the visitor nothing.
+    answer = 409;
+    assert.equal((await forwardDemoPost(request(), '/api/demo/runs', { countRuns: true })).status, 409);
+    assert.equal(isDemoThrottled('203.0.113.20'), false);
+
+    answer = 202;
+    for (let i = 0; i < DEMO_RUNS_PER_VISITOR; i += 1) {
+      assert.equal((await forwardDemoPost(request(), '/api/demo/runs', { countRuns: true })).status, 202);
+    }
+    const calls = upstreamCalls;
+    const refused = await forwardDemoPost(request(), '/api/demo/runs', { countRuns: true });
+    assert.equal(refused.status, 429);
+    assert.deepEqual(await refused.json(), { error_code: 'too_many_runs' });
+    assert.equal(upstreamCalls, calls, 'a throttled visitor never reaches the API');
+
+    // Lookups are not runs, and are not counted here.
+    assert.equal((await forwardDemoPost(request(), '/api/demo/resolve')).status, 202);
+  } finally {
+    globalThis.fetch = originalFetch;
+    if (before === undefined) delete process.env.VERCEL;
+    else process.env.VERCEL = before;
+    resetDemoRuns();
+  }
 });

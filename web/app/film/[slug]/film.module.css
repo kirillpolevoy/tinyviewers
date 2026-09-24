@@ -1,175 +1,199 @@
-/* The film page is the high-UX register: clear, generous, undecorated. Nothing tilts, nothing has a
-   hard shadow, and every row lines up with the one above it. */
+/* The film page is the calm register: clear, generous, undecorated. A rail — the poster and three
+   facts — and one aligned content column. On a phone the rail becomes a small poster beside the
+   facts, under the title. */
 
 .main {
   flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'head'
+    'rail'
+    'content';
   gap: 22px;
+  align-items: start;
   padding-top: 8px;
   padding-bottom: 90px;
 }
 
-.head {
+.rail {
+  grid-area: rail;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 18px;
   align-items: start;
 }
 
-.headText {
+.poster {
+  width: 96px;
+  height: 137px;
+  object-fit: cover;
+  border-radius: 14px;
+  font-size: 9px;
+}
+
+.facts {
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+}
+
+.fact {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.fact dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.factLink {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.head {
+  grid-area: head;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   min-width: 0;
 }
 
 .title {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  flex-wrap: wrap;
-  font-size: clamp(32px, 6vw, 50px);
-  line-height: 1.12;
+  font-size: clamp(34px, 6vw, 50px);
+  line-height: 1.1;
   font-weight: 700;
 }
 
-.year {
-  font-family: var(--serif);
-  font-size: clamp(16px, 2vw, 20px);
-  font-weight: 400;
-  color: var(--body);
-}
-
-/* The film's synopsis. Body copy, not a footnote: it is the first thing a parent reads under the
-   title, so it takes the reading size the rest of the site gives prose. */
+/* The film's synopsis: the first thing a parent reads under the title, at the reading size. */
 .overview {
   font-family: var(--serif);
   font-size: 17px;
   line-height: 1.6;
   color: var(--body-strong);
-  max-width: 44em;
+  max-width: 40em;
 }
 
-/* This page's own wrapper for the poster: the Poster component owns its class, this owns the box
-   it sits in. On a phone the header is the title and the timing line; the poster would only push
-   them down, so it is not rendered at all below this width. */
-.filmPoster {
-  display: none;
-}
-
-@media (min-width: 860px) {
-  .head {
-    grid-template-columns: minmax(0, 1fr) 92px;
-    gap: 28px;
-  }
-
-  .filmPoster {
-    display: flex;
-    width: 92px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 14px;
-    font-size: 10px;
-  }
-}
-
-.controls {
+.content {
+  grid-area: content;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  flex-wrap: wrap;
   flex-direction: column;
+  gap: 22px;
+  min-width: 0;
 }
 
-@media (min-width: 720px) {
-  .controls {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-/* --- the timeline strip ------------------------------------------------------------------------ */
-
-.timeline {
+/* "How this guide was made": quiet prose under the scene list. */
+.about {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: var(--sheet);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sheet);
-  padding: 16px 20px 18px;
-}
-
-.timelineNote {
+  max-width: 44em;
+  padding-top: 6px;
   font-family: var(--serif);
   font-size: 15px;
-  color: var(--body);
+  line-height: 1.6;
+  color: var(--body-strong);
 }
 
-.timelineNote b {
+.aboutTitle {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
   color: var(--ink);
 }
 
-.listHeading {
-  font-size: clamp(22px, 3.4vw, 28px);
-  line-height: 1.25;
-  font-weight: 700;
-  padding-top: 4px;
+/* The phone synopsis: the first sentence, and the rest behind a tap. */
+.overviewSummary {
+  list-style: none;
+  cursor: pointer;
 }
 
-/* --- the three kinds of nothing ---------------------------------------------------------------- */
-
-.state {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-  background: var(--sheet);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-sheet);
-  padding: 26px 26px 28px;
+.overviewSummary::-webkit-details-marker {
+  display: none;
 }
 
-.stateHeadline {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.stateBody {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--body);
-}
-
-/* --- foot ------------------------------------------------------------------------------------- */
-
-.foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding-top: 8px;
-}
-
-.footLink {
+.overviewMore {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   font-family: var(--display);
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--coral-text);
   text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
-.footNote {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 15px;
-  color: var(--body);
+.overviewPhone[open] .overviewMore {
+  display: none;
+}
+
+.overviewPhone > p {
+  margin-top: 6px;
+}
+
+/* On a phone the findings come straight after the title and the synopsis's first sentence; the
+   poster and the facts follow the scene list rather than pushing the verdict below the fold. */
+@media (max-width: 719px) {
+  .main {
+    grid-template-areas:
+      'head'
+      'content'
+      'rail';
+  }
+
+  .overviewWide {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .overviewPhone {
+    display: none;
+  }
+}
+
+@media (min-width: 720px) {
+  .overview {
+    font-size: 18px;
+  }
+}
+
+/* The design's frame: a 280px rail beside the column, 56px apart. The rail spans both rows, and the
+   second row takes any spare height, so the title never floats away from the findings card. */
+@media (min-width: 960px) {
+  .main {
+    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'rail head'
+      'rail content';
+    gap: 22px 56px;
+    padding-top: 24px;
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+  }
+
+  .poster {
+    width: 100%;
+    height: 400px;
+    border-radius: 22px;
+    font-size: 12px;
+  }
 }

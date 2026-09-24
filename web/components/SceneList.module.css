@@ -1,5 +1,5 @@
-/* The film page is the opposite register to Home: no tilts, no stickers, no decoration on rows.
-   Generous spacing, big tabular time ranges, everything aligned. */
+/* The film page's calm register: no tilts, no stickers, no decoration on rows. Strength first,
+   then what the scene is, then when; everything aligned column to column. */
 
 .list {
   list-style: none;
@@ -7,7 +7,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .row {
@@ -16,8 +16,7 @@
   border-radius: var(--radius-card);
 }
 
-/* The open row is the one with the ink outline; no JavaScript decides this. */
-.row:has(.details[open]) {
+.open {
   border: 2px solid var(--ink);
 }
 
@@ -32,21 +31,16 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'range chevron'
-    'middle middle'
-    'strength strength';
+    'strength range'
+    'title title';
   gap: 6px 16px;
   align-items: center;
   width: 100%;
   min-height: 44px;
-  padding: 14px 18px 16px;
+  padding: 14px 18px;
   text-align: left;
-  background: transparent;
-  border: none;
   border-radius: var(--radius-card);
   cursor: pointer;
-  font: inherit;
-  color: inherit;
 }
 
 .summary::-webkit-details-marker {
@@ -57,175 +51,124 @@
   content: '';
 }
 
-.details[open] .chevron svg {
-  transform: rotate(180deg);
+.strength {
+  grid-area: strength;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
 }
 
-.range {
-  grid-area: range;
+.swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 5px;
+}
+
+.title {
+  grid-area: title;
+  min-width: 0;
   font-family: var(--display);
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1.25;
   font-weight: 700;
   color: var(--ink);
 }
 
-.middle {
-  grid-area: middle;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.title {
+.range {
+  grid-area: range;
   font-family: var(--display);
-  font-size: 19px;
-  line-height: 1.3;
-  font-weight: 700;
+  font-size: 17px;
+  /* The design's time cell sets no line-height of its own, so Baloo's 'normal' gives the collapsed
+     row its height (27px of type + 32px of padding). */
+  line-height: normal;
+  font-weight: 600;
   color: var(--ink);
+  white-space: nowrap;
 }
 
-.tags {
-  font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--body);
-}
+/* --- the open row ------------------------------------------------------------------------------ */
 
-.strength {
-  grid-area: strength;
-  display: flex;
-  align-items: center;
-}
-
-.chevron {
-  grid-area: chevron;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--body);
-}
-
-.details[open] .chevron {
-  color: var(--ink);
-}
-
-/* From tablet up the row becomes the design's four columns: time, what it is, how strong, chevron. */
-@media (min-width: 860px) {
-  .summary {
-    grid-template-columns: 210px minmax(0, 1fr) 200px 40px;
-    grid-template-areas: 'range middle strength chevron';
-    gap: 22px;
-    padding: 15px 22px 16px;
-  }
-
-  .range {
-    font-size: 25px;
-  }
-
-  .title {
-    font-size: 21px;
-  }
-
-  .tags {
-    font-size: 16px;
-  }
-}
-
-/* --- the expanded panel ----------------------------------------------------------------------- */
-
-.panelInner {
-  display: grid;
-  gap: 18px;
-  margin: 0 14px 16px;
-  background: var(--page);
-  border-radius: 20px;
-  padding: 18px 20px 20px;
-}
-
-.panelText {
+.panel {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  padding: 0 18px 18px;
+}
+
+.ready {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--coral-text);
 }
 
 .description {
   font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--ink);
-}
-
-.panelFacts {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.times {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.timeRow {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.timeRow dt {
-  font-family: var(--display);
   font-size: 16px;
-  font-weight: 600;
-  color: var(--ink);
-  min-width: 150px;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 44em;
 }
 
-.timeRow dd {
-  margin: 0;
-}
-
-.timeValue {
-  font-family: var(--display);
-  font-size: 24px;
-  line-height: 1.2;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.rule {
-  height: 1px;
-  width: 100%;
-  border: none;
-  background: var(--hairline);
-  margin: 0;
-}
-
-.bands {
+.tags {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--ink);
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-@media (min-width: 860px) {
-  .panelInner {
-    grid-template-columns: minmax(0, 1fr) 400px;
-    gap: 32px;
-    margin: 0 20px 18px;
-    padding: 20px 24px 22px;
+.tag {
+  background: var(--page);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body-strong);
+}
+
+/* From tablet up: the design's three columns — strength, title, time — and the open panel aligned
+   under the title column (22px padding + 140px strength + 20px gap = 182px). */
+@media (min-width: 720px) {
+  .summary {
+    grid-template-columns: 140px minmax(0, 1fr) auto;
+    grid-template-areas: 'strength title range';
+    gap: 20px;
+    padding: 16px 22px;
   }
 
-  .description {
-    font-size: 18px;
+  .panel {
+    padding: 0 22px 20px 182px;
   }
+}
+
+/* --- severity fills: 0 mint, 1 butter, 2 blush, 3 coral; not checked is dust, never a zero ------ */
+
+.mint {
+  background: var(--mint);
+}
+
+.butter {
+  background: var(--butter);
+}
+
+.blush {
+  background: var(--blush);
+}
+
+.coral {
+  background: var(--coral);
+}
+
+.dust {
+  background: var(--dust);
 }
