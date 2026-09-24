@@ -18,7 +18,7 @@ import { applySchema } from '../lib/db.js';
 import { resolve, startJob, jobStatus, jobRecording, addStatus } from '../lib/add.js';
 import { slugify } from '../lib/tmdb.js';
 import {
-  liveJob, putBlob, sweepBlobs, maybeSweepBlobs, resetBlobSweepThrottle, resetPasscodeAttempts,
+  liveJob, putBlob, sweepBlobs, maybeSweepBlobs, resetBlobSweepThrottle, resetPasscodeAttempts, requirePasscode,
   STALE_MS, RESERVE_USD, PASSCODE_MAX_FAILURES,
 } from '../lib/jobs.js';
 import { parseSrt, buildWindows } from '../pipeline/srt.js';
@@ -1222,4 +1222,18 @@ test('a live run checks its own excerpts against the policy before it writes the
   const { body: replay } = await jobRecording(db, id);
   assert.deepEqual(verifyExcerpts(rows[0].excerpts, replay.recording, cues).fails, []);
   await db.end();
+});
+
+test('a passcode stored or typed with surrounding whitespace still matches', () => {
+  const saved = process.env.ADD_FILM_PASSCODE;
+  try {
+    process.env.ADD_FILM_PASSCODE = `${PASSCODE}\n`; // what `echo … | vercel env add` stores
+    assert.doesNotThrow(() => requirePasscode(PASSCODE));
+    assert.doesNotThrow(() => requirePasscode(` ${PASSCODE} `));
+    assert.throws(() => requirePasscode(`${PASSCODE}x`), (e) => e.status === 401);
+    process.env.ADD_FILM_PASSCODE = ' \n';
+    assert.throws(() => requirePasscode(PASSCODE), (e) => e.status === 503);
+  } finally {
+    process.env.ADD_FILM_PASSCODE = saved;
+  }
 });

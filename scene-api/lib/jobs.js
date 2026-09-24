@@ -18,7 +18,9 @@ import { HttpError } from './http.js';
  * `crypto.timingSafeEqual` throws on buffers of different lengths, so comparing the raw strings
  * would leak the passcode's length through the exception before it compared a single byte.
  */
-const digest = (s) => crypto.createHash('sha256').update(String(s ?? ''), 'utf8').digest();
+// Trimmed on both sides: a passcode piped into `vercel env add` arrives with a trailing newline,
+// and one pasted into a form can carry a space. Neither is part of what a person means by it.
+const digest = (s) => crypto.createHash('sha256').update(String(s ?? '').trim(), 'utf8').digest();
 
 // Guessing the passcode should cost something. This is an in-memory counter per calling IP, which
 // on a serverless platform means PER INSTANCE and only for as long as that instance lives: an
@@ -64,7 +66,7 @@ function noteFailure(ip) {
  */
 export function requirePasscode(given, ip = null) {
   const expected = process.env.ADD_FILM_PASSCODE;
-  if (!expected) {
+  if (!expected?.trim()) {
     throw new HttpError(503, 'Adding films is switched off on this deployment: no passcode is configured.', { error_code: 'no_passcode' });
   }
   if (ip && (attemptsFor(ip)?.n ?? 0) >= PASSCODE_MAX_FAILURES) {
@@ -76,7 +78,7 @@ export function requirePasscode(given, ip = null) {
   }
 }
 
-export const passcodeConfigured = () => Boolean(process.env.ADD_FILM_PASSCODE);
+export const passcodeConfigured = () => Boolean(process.env.ADD_FILM_PASSCODE?.trim());
 
 // ------------------------------------------------------------------------------------------------
 // Money and time
