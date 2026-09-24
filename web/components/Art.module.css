@@ -1,0 +1,163 @@
+/* Home's ambient motion: the fin in the headline underline and the sea floor. The one exception to
+   the design system's "almost no animation" rule.
+
+   Every animation lives inside prefers-reduced-motion: no-preference, so a reader who asks for less
+   motion gets the still drawing (fin up, ripples showing, weed upright, bubbles where they are
+   drawn) and nothing has to be switched off after the fact. All of it is transform and opacity on
+   decorative, aria-hidden SVG: nothing moves in layout, nothing waits on it, and it starts with
+   the page. */
+
+/* The sea floor's three layers (SeaFloor in Art.tsx). The box itself is placed and sized by the
+   page; the sand fills it, and the two end groups are as tall as it with their width from their
+   own viewBox, positioned at the share of the width they have in the 1440-unit drawing. */
+.sea {
+  overflow: hidden;
+}
+
+.sand,
+.seaLeft,
+.seaRight {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+}
+
+.sand {
+  left: 0;
+  width: 100%;
+}
+
+.seaLeft {
+  left: calc(80 / 1440 * 100%);
+  width: auto;
+  aspect-ratio: 150 / 150;
+}
+
+.seaRight {
+  right: calc(155 / 1440 * 100%);
+  width: auto;
+  aspect-ratio: 125 / 150;
+}
+
+/* Each piece pivots at its own base, not at the SVG's origin. */
+.finBody,
+.weed {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The fin rises from fully under the waterline, cruises, sinks, and the water stays quiet for a
+     beat (9s). A separate rock and bob runs on top the whole time, on the individual rotate and
+     translate properties so it composes with the rise instead of replacing it. */
+  .finBody {
+    animation:
+      finRise 9s ease-in-out infinite,
+      finLean 1.4s ease-in-out infinite alternate;
+  }
+
+  /* The ripples either side of the fin show while it is up, in step with the rise. */
+  .finRipple {
+    animation: finRipple 9s linear infinite;
+  }
+
+  .weed {
+    animation: sway 4s ease-in-out infinite;
+  }
+
+  .weed.later {
+    animation-delay: -1.3s;
+  }
+
+  .weed.latest {
+    animation-delay: -2.6s;
+  }
+
+  .bubble {
+    animation: bubble 5s ease-in infinite;
+  }
+
+  .bubble.later {
+    animation-delay: -1.8s;
+  }
+
+  .bubble.latest {
+    animation-delay: -3.6s;
+  }
+}
+
+/* 46 units takes the fin's tip from y -16 to y 30, fully under the waterline clip at y 27.5.
+   Hidden 0-0.9s, rises to 2.34s, up until 5.4s, sinks by 6.84s, quiet water until 9s. */
+@keyframes finRise {
+  0%,
+  10% {
+    transform: translateY(46px);
+  }
+  26%,
+  60% {
+    transform: translateY(0);
+  }
+  76%,
+  100% {
+    transform: translateY(46px);
+  }
+}
+
+@keyframes finLean {
+  from {
+    rotate: -3deg;
+    translate: 0 0;
+  }
+  to {
+    rotate: 3deg;
+    translate: 0 -2.5px;
+  }
+}
+
+/* Fades in 1.26-1.98s as the fin breaks the surface, out 5.4-6.3s as it goes under. */
+@keyframes finRipple {
+  0%,
+  14% {
+    opacity: 0;
+  }
+  22%,
+  60% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Each bubble comes up from 32 units below where it is drawn, wobbles right then left, and fades
+   out 50 units above it. */
+@keyframes bubble {
+  0% {
+    translate: 0 32px;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  55% {
+    translate: 7px -10px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    translate: -5px -50px;
+    opacity: 0;
+  }
+}

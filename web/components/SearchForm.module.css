@@ -19,6 +19,7 @@
 
 .field {
   flex: 1 1 240px;
+  cursor: text;
   min-width: 0;
   display: flex;
   align-items: center;

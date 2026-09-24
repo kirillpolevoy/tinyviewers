@@ -2,14 +2,24 @@
    gets — then one quiet row of links. The text column is never positioned, and the peek card lives
    in its own grid track, so nothing can land on top of the headline at any width. */
 
+/* One screen, no scroll, on a laptop: the page is at least the viewport tall (but never under
+   760px, so a short window scrolls instead of crushing), and main takes whatever the header leaves
+   and centres the hero and the links in it. The bottom padding keeps them clear of the sea floor.
+   On a phone the content is taller than the screen, so it simply stacks and scrolls. */
+.page {
+  min-height: max(760px, 100vh);
+  min-height: max(760px, 100dvh);
+}
+
 .main {
   position: relative;
   z-index: 1;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 72px;
-  padding-bottom: 170px;
+  justify-content: center;
+  gap: 40px;
+  padding-bottom: 140px;
 }
 
 /* --- hero -------------------------------------------------------------------------------------- */
@@ -94,11 +104,16 @@
   .hero {
     grid-template-columns: minmax(0, 1.15fr) 440px;
     gap: 48px;
-    padding-top: 48px;
+    padding-top: 0;
   }
 
   .headline {
     font-size: 52px;
+  }
+
+  /* The drawing's own size on a laptop (0.8em of 52px would be 41.6px). */
+  .fin {
+    height: 42px;
   }
 }
 

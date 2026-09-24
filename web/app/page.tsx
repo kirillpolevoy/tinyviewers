@@ -22,7 +22,7 @@ export default async function HomePage() {
   const showcase = await getShowcase(films);
 
   return (
-    <div className="page">
+    <div className={`page ${styles.page}`}>
       <SiteHeader />
 
       <main className={styles.main}>

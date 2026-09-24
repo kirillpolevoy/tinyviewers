@@ -1,6 +1,9 @@
 // The hand-drawn pieces, inline so they inherit the page's colours and scale with the type.
 // Every one is decorative: aria-hidden, focusable={false}, and never the only carrier of meaning.
 
+import { useId } from 'react';
+import art from './Art.module.css';
+
 type ArtProps = { className?: string };
 
 /** The clownfish in the wordmark. Thick ink outline, white stripe, coral body. */
@@ -90,8 +93,23 @@ export function Lure({ className }: ArtProps) {
   );
 }
 
-/** The wobbly shark fin cutting through a wave: the underline for the second headline line. */
+/**
+ * The shark fin lurking behind a wave: the underline for the second headline line. Home only.
+ *
+ * Paint order is fin, ripples, wave, so the wave line is drawn over the fin. The fin sits in a group
+ * clipped at the waterline (y 27.5, just under the wave's lowest point), so whatever part of it
+ * drops below the surface is simply not drawn. The design did this with a page-coloured cover
+ * rect; a clip does the same without depending on the colour behind it and without a 50px rect
+ * spilling out of the SVG over the search field under it.
+ *
+ * On Home the fin rises, rocks while it cruises, and sinks again; the two ripple strokes fade in
+ * and out with it (Art.module.css). Under prefers-reduced-motion none of that runs and this is the
+ * drawing as it stands: fin up, ripples showing.
+ */
 export function FinUnderline({ className }: ArtProps) {
+  // SVG ids are document-wide, so the clip gets a per-instance id. React's id is stable across the
+  // server render and hydration; the replace keeps it to plain id characters so url(#…) resolves.
+  const clipId = `tv-fin-waterline${useId().replace(/[^\w-]/g, '')}`;
   return (
     <svg
       className={className}
@@ -101,69 +119,114 @@ export function FinUnderline({ className }: ArtProps) {
       aria-hidden="true"
       focusable="false"
     >
+      <defs>
+        <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+          <rect x="-40" y="-80" width="510" height="107.5" />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#${clipId})`}>
+        <path
+          className={art.finBody}
+          d="M236 24c3-19 13-32 31-40-3 16 2 29 12 40z"
+          fill="#87867f"
+          stroke="var(--ink)"
+          strokeWidth="2.6"
+          strokeLinejoin="round"
+        />
+      </g>
+      <path
+        className={art.finRipple}
+        d="M300 22c8 4 14 4 22 0M196 22c-8 4-14 4-22 0"
+        stroke="var(--ink)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
       <path
         d="M6 26q22-12 44 0t44 0 44 0 44 0 44 0 44 0 44 0 44 0 44 0"
         stroke="var(--sky)"
         strokeWidth="5"
         strokeLinecap="round"
       />
-      <path
-        d="M236 24c3-19 13-32 31-40-3 16 2 29 12 40z"
-        fill="#87867f"
-        stroke="var(--ink)"
-        strokeWidth="2.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M300 22c8 4 14 4 22 0M196 22c-8 4-14 4-22 0"
-        stroke="var(--ink)"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
 
-/** Bubbles and weed on the sea floor, sat behind the bottom of the page. */
+/**
+ * Bubbles and weed on the sea floor, sat behind the bottom of the page. Home only. The three blades
+ * sway from their bases and the bubbles rise and fade, on staggered clocks (Art.module.css); under
+ * prefers-reduced-motion it is the still drawing.
+ *
+ * Three layers in one box, all in the same 1440x150 drawing units. The sand stretches to whatever
+ * width the page is. The weed and bubbles at each end are their own SVGs that scale evenly with the
+ * box's height and keep their place as a share of the width: on a laptop that is the drawing as
+ * designed, and on a phone the blades and bubbles keep their shape instead of being squeezed to a
+ * quarter of their width with the sand.
+ */
 export function SeaFloor({ className }: ArtProps) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 1440 150"
-      preserveAspectRatio="none"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M0 92q60-26 120 0t120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0v58H0z"
-        fill="var(--sand)"
-      />
-      <path
-        d="M186 92c-10-30 6-46 2-66-14 20-24 40-18 66"
-        fill="var(--mint)"
-        stroke="var(--ink)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M214 92c-6-22 10-34 8-50-12 14-20 30-16 50"
-        fill="var(--mint)"
-        stroke="var(--ink)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M1262 92c-12-34 8-52 4-76-16 24-28 46-22 76"
-        fill="var(--mint)"
-        stroke="var(--ink)"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <circle cx="1180" cy="60" r="9" fill="none" stroke="var(--dust)" strokeWidth="2" />
-      <circle cx="1212" cy="34" r="5.5" fill="none" stroke="var(--dust)" strokeWidth="2" />
-      <circle cx="96" cy="46" r="7" fill="none" stroke="var(--dust)" strokeWidth="2" />
-    </svg>
+    <div className={`${art.sea} ${className ?? ''}`} aria-hidden="true">
+      <svg
+        className={art.sand}
+        viewBox="0 0 1440 150"
+        preserveAspectRatio="none"
+        fill="none"
+        focusable="false"
+      >
+        <path
+          d="M0 92q60-26 120 0t120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0 120 0v58H0z"
+          fill="var(--sand)"
+        />
+      </svg>
+      {/* x 80-230: two blades and a bubble at the left end. */}
+      <svg className={art.seaLeft} viewBox="80 0 150 150" fill="none" focusable="false">
+        <path
+          className={art.weed}
+          d="M186 92c-10-30 6-46 2-66-14 20-24 40-18 66"
+          fill="var(--mint)"
+          stroke="var(--ink)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <path
+          className={`${art.weed} ${art.later}`}
+          d="M214 92c-6-22 10-34 8-50-12 14-20 30-16 50"
+          fill="var(--mint)"
+          stroke="var(--ink)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <circle
+          className={`${art.bubble} ${art.latest}`}
+          cx="96"
+          cy="46"
+          r="7"
+          fill="none"
+          stroke="var(--dust)"
+          strokeWidth="2"
+        />
+      </svg>
+      {/* x 1160-1285: a blade and two bubbles at the right end. */}
+      <svg className={art.seaRight} viewBox="1160 0 125 150" fill="none" focusable="false">
+        <path
+          className={`${art.weed} ${art.latest}`}
+          d="M1262 92c-12-34 8-52 4-76-16 24-28 46-22 76"
+          fill="var(--mint)"
+          stroke="var(--ink)"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        <circle className={art.bubble} cx="1180" cy="60" r="9" fill="none" stroke="var(--dust)" strokeWidth="2" />
+        <circle
+          className={`${art.bubble} ${art.later}`}
+          cx="1212"
+          cy="34"
+          r="5.5"
+          fill="none"
+          stroke="var(--dust)"
+          strokeWidth="2"
+        />
+      </svg>
+    </div>
   );
 }
 

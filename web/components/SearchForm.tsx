@@ -1,6 +1,6 @@
 'use client';
 
-import type { FormEvent } from 'react';
+import { useRef, type FormEvent } from 'react';
 import { SearchIcon } from './Art';
 import styles from './SearchForm.module.css';
 
@@ -42,6 +42,7 @@ export function SearchForm({
   count,
 }: Props) {
   const controlled = value !== undefined;
+  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <form
       action="/library"
@@ -54,9 +55,24 @@ export function SearchForm({
         {label}
       </label>
       <div className={styles.row}>
-        <span className={styles.field}>
+        {/* The whole pill reads as the field, so a tap on the magnifier or the padding around the
+            input focuses it (and opens a phone's keyboard) instead of doing nothing. Mouse and
+            touch only: the input itself is the one keyboard stop. */}
+        <span
+          className={styles.field}
+          onMouseDown={(event) => {
+            // Already typing: a press on the padding must not blur the field and lose the caret.
+            if (event.target !== inputRef.current && document.activeElement === inputRef.current) {
+              event.preventDefault();
+            }
+          }}
+          onClick={(event) => {
+            if (event.target !== inputRef.current) inputRef.current?.focus();
+          }}
+        >
           <SearchIcon className={styles.icon} />
           <input
+            ref={inputRef}
             id={id}
             className={styles.input}
             type="search"
