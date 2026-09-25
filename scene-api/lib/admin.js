@@ -68,7 +68,7 @@ export async function startRebuild(db, body = {}, { ip = null, launch, keys, fet
   const admission = await createJob(db, { id, film: jobFilm, cap, pipeline: 'jevfirst', reserveUsd: JEVFIRST_RESERVE_USD, steps: freshJevfirstSteps(), kind: 'rebuild' });
   if (!admission.admitted && admission.reason === 'busy') throw await busy();
   if (!admission.admitted) {
-    const spent = await spentTodayUsd(db);
+    const spent = await spentTodayUsd(db, 'rebuild');
     throw new HttpError(429, `Today's budget for rebuilds is spent ($${spent.toFixed(2)} of $${cap.toFixed(2)}, adds included). Try again tomorrow.`, {
       error_code: 'daily_cap', spent_usd: Number(spent.toFixed(6)), cap_usd: cap, reserve_usd: JEVFIRST_RESERVE_USD,
     });

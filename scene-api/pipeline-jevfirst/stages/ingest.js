@@ -206,16 +206,39 @@ function checkedSummary(seg) {
   return kept.length ? kept.join(' ') : null;
 }
 
+/**
+ * A title for a scene that has none, cut from its checked summary: the first sentence if it is short,
+ * else the longest leading clause that fits in 60 characters (cut before ", ", " and ", " while " ...). Jev checked the sentence; a leading
+ * clause of it says less, never more. Null when no clause reads as a title (the page then names the
+ * scene by its start time).
+ */
+export function titleFromSummary(text) {
+  const first = String(text ?? '').split(/(?<=[.!?])\s+/)[0]?.trim().replace(/[.!?]+$/, '');
+  if (!first) return null;
+  if (first.length <= 60) return first;
+  let best = null;
+  for (const sep of [', ', ' and ', ' while ', ' as ', ' until ', ' before ', ' after ', ' but ', ' when ', ' so ', ' then ']) {
+    for (let i = first.indexOf(sep); i !== -1 && i <= 60; i = first.indexOf(sep, i + 1)) {
+      if (i >= 20 && (best === null || i > best)) best = i;
+    }
+  }
+  if (best !== null) return first.slice(0, best).replace(/[,;:]+$/, '');
+  // No clause break fits: cut at a word, and say so.
+  const cut = first.slice(0, 58);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]+$/, '')}…`;
+}
+
 /** The mild rows of a selection, in the guide rows' shape: level 1 for both bands, reasons = the signals. */
 export function mildRows(tags, segments, { grams = null, creditIds = null } = {}) {
   const segById = new Map((segments ?? []).map((g) => [g.id, g]));
   // End credits (outtakes, songs) are never a scene to know about; the segment says which scenes they are.
   return tags.scenes.filter((s) => !segById.get(s.id)?.credits && !creditIds?.has(s.id)).map((s) => [s, mildSignals(s)]).filter(([, sig]) => sig.length).map(([s, sig]) => {
-    const text = quoteGate(null, checkedSummary(segById.get(s.id)), grams);
+    const summary = checkedSummary(segById.get(s.id));
+    const text = quoteGate(titleFromSummary(summary), summary, grams);
     const why = sig.map((t) => ({ label: t.label, category: null, ids: [t.id], by: [t.by], p: t.p, rule: 'mild' }));
     return {
       scene_id: s.id, start_ms: s.start_ms, end_ms: Math.max(s.end_ms, s.start_ms), start_cue: s.start_cue, end_cue: s.end_cue,
-      title: 'Flagged scene', description: text.description ?? null, text_source: 'segment_summary', quote_dropped: text.dropped,
+      title: text.title ?? 'Flagged scene', description: text.description ?? null, text_source: 'segment_summary', quote_dropped: text.dropped,
       text_rule: null, title_rule: null, severity_5_7: 1, severity_8_10: 1, mild: true,
       why, why_line: why.map((t) => t.label).join(' · '),
       reasons: sig.map((t) => ({ id: t.id, label: t.label, by: t.by, p: t.p })),
@@ -250,7 +273,13 @@ export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null
   const labels = [];
   const reasonLabels = [];
   const grams = quoteGrams(cues);
-  const rows = [...guideRows(tags, { grams }), ...(segments ? mildRows(tags, segments, { grams, creditIds: creditSceneIds(cues, tags, precheck) }) : [])].sort((a, b) => a.start_ms - b.start_ms);
+  const segById = new Map((segments ?? []).map((g) => [g.id, g]));
+  const flaggedRows = guideRows(tags, { grams }).map((g) => {
+    if (g.title && g.title !== 'Flagged scene') return g;
+    const t = quoteGate(titleFromSummary(checkedSummary(segById.get(g.scene_id))), null, grams).title;
+    return t ? { ...g, title: t, title_rule: 'summary' } : g;
+  });
+  const rows = [...flaggedRows, ...(segments ? mildRows(tags, segments, { grams, creditIds: creditSceneIds(cues, tags, precheck) }) : [])].sort((a, b) => a.start_ms - b.start_ms);
   for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
     scenes.push({
