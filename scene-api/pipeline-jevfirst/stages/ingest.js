@@ -33,9 +33,10 @@ import * as taxonomy from '../taxonomy-v3.js';
 import { BY_ID as V3 } from '../taxonomy-v3.js';
 import { writeArtifacts } from '../store.js';
 import { backupGuide, replaceGuide } from '../guide.js';
-import { fail, SONNET_MODEL, JEV_MODEL, quoteSafe, quoteGrams } from './common.js';
+import { fail, SONNET_MODEL, JEV_MODEL, quoteSafe, quoteGrams, POLICY } from './common.js';
 import { quoteRuns } from '../pack/validate.js';
 import { strengthOf } from '../strength.js';
+import { creditsSpan, isCreditsScene } from '../pack/credits.js';
 
 export const PIPELINE_VERSION = 'jevfirst-v10.4';
 export const REASONS_VOCAB_VERSION = 'reasons-v10.4';
@@ -206,9 +207,10 @@ function checkedSummary(seg) {
 }
 
 /** The mild rows of a selection, in the guide rows' shape: level 1 for both bands, reasons = the signals. */
-export function mildRows(tags, segments, { grams = null } = {}) {
+export function mildRows(tags, segments, { grams = null, creditIds = null } = {}) {
   const segById = new Map((segments ?? []).map((g) => [g.id, g]));
-  return tags.scenes.map((s) => [s, mildSignals(s)]).filter(([, sig]) => sig.length).map(([s, sig]) => {
+  // End credits (outtakes, songs) are never a scene to know about; the segment says which scenes they are.
+  return tags.scenes.filter((s) => !segById.get(s.id)?.credits && !creditIds?.has(s.id)).map((s) => [s, mildSignals(s)]).filter(([, sig]) => sig.length).map(([s, sig]) => {
     const text = quoteGate(null, checkedSummary(segById.get(s.id)), grams);
     const why = sig.map((t) => ({ label: t.label, category: null, ids: [t.id], by: [t.by], p: t.p, rule: 'mild' }));
     return {
@@ -223,7 +225,15 @@ export function mildRows(tags, segments, { grams = null } = {}) {
 }
 
 /** The film's rows in the shape load.js writeFilmRows takes. `filmId` is the films.id (= slug). */
-export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null }) {
+/** The film's end-credit scenes: the segmenter's marker, or the credits detector run on the cues. */
+export function creditSceneIds(cues, tags, precheck = null) {
+  const ids = new Set((precheck ?? []).filter((s) => s.credits).map((s) => s.id));
+  const span = creditsSpan(cues, POLICY.credits ?? {});
+  for (const s of tags.scenes) if (isCreditsScene(s, span, POLICY.credits ?? {})) ids.add(s.id);
+  return ids;
+}
+
+export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null, precheck = null }) {
   const trackId = `${slug}:opensubtitles`;
   const track = {
     id: trackId, film_id: slug, source: 'opensubtitles', release_label: srt.release ?? null, language: 'en',
@@ -240,7 +250,7 @@ export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null
   const labels = [];
   const reasonLabels = [];
   const grams = quoteGrams(cues);
-  const rows = [...guideRows(tags, { grams }), ...(segments ? mildRows(tags, segments, { grams }) : [])].sort((a, b) => a.start_ms - b.start_ms);
+  const rows = [...guideRows(tags, { grams }), ...(segments ? mildRows(tags, segments, { grams, creditIds: creditSceneIds(cues, tags, precheck) }) : [])].sort((a, b) => a.start_ms - b.start_ms);
   for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
     scenes.push({
@@ -332,7 +342,7 @@ export async function ingestStage(S) {
       } else {
         slug = await claimSlug(tx, film);
       }
-      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs, segments: S.out('refold')?.segments?.scenes ?? null });
+      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs, segments: S.out('refold')?.segments?.scenes ?? null, precheck: S.out('segment_build')?.segments?.scenes ?? null });
       await ensureVocabulary(tx, taxonomy);
       await ensureReasonVocabulary(tx, built.reasonLabels);
       if (rebuildOf) {
