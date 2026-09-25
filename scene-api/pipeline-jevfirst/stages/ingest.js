@@ -197,16 +197,66 @@ export function titleFromSummary(text) {
 }
 
 /**
+ * Sonnet's title attempts that Jev did not contradict, per scene, best supported first: from the text
+ * checks of attempts 1-3 (check_describe, 2, 3). Sonnet wrote these from the scene's checked sentences
+ * and its flag reasons, so they name why the scene is listed; a title Jev contradicted, or placed in
+ * another part of the film, is never used.
+ */
+export function titleAttempts(...docs) {
+  const out = new Map();
+  for (const d of docs) {
+    for (const [id, sc] of Object.entries(d?.scenes ?? {})) {
+      for (const c of sc?.checked ?? []) {
+        if (!String(c?.key ?? '').endsWith('.title') || !c.text) continue;
+        if (c.final === 'contradicted' || c.placed === false || c.placement === 'conflicts' || (c.p_contradicts ?? 1) >= 0.3) continue;
+        if (!out.has(id)) out.set(id, []);
+        out.get(id).push(c);
+      }
+    }
+  }
+  for (const list of out.values()) list.sort((a, b) => (b.p_supports ?? 0) - (a.p_supports ?? 0));
+  return out;
+}
+
+/** The film's names: words its summaries write capitalised mid-sentence (Boo, Waternoose, CDA). */
+export function properNouns(segments) {
+  const core = (w) => w.replace(/^[^A-Za-z]+|[^A-Za-z'’]+$/g, '').replace(/['’]s$/, '');
+  const out = new Set();
+  for (const seg of segments ?? []) {
+    for (const x of seg.sentences ?? []) {
+      const words = String(x.text ?? '').split(/\s+/);
+      words.forEach((w, i) => { if (i > 0 && !/[.!?:]$/.test(words[i - 1]) && /^[A-Z]/.test(core(w))) out.add(core(w)); });
+    }
+  }
+  return out;
+}
+
+/** A Title Case title ("Boo Cries Out, Group Rushes To Move") in sentence case, names kept; others as they are. */
+export function sentenceCase(title, nouns = new Set()) {
+  const core = (w) => w.replace(/^[^A-Za-z]+|[^A-Za-z'’]+$/g, '').replace(/['’]s$/, '');
+  const words = String(title).split(' ');
+  const rest = words.slice(1).filter((w) => core(w).length > 3);
+  if (!rest.length || rest.filter((w) => /^[A-Z]/.test(core(w))).length / rest.length < 0.6) return title;
+  return words.map((w, i) => (i === 0 || /^[A-Z]{2,}$/.test(core(w)) || nouns.has(core(w)) ? w : w.toLowerCase())).join(' ');
+}
+
+/**
  * Every scene has a title (guides and the live demo alike). When no title passed Jev's check, in order:
  * the lead of the scene's checked description, of its checked summary, of any summary sentence Jev did
  * not contradict, and last its main reason ("Crying").
  */
-export function withTitles(rows, segments, grams = null) {
+export function withTitles(rows, segments, grams = null, attempts = null) {
   const segById = new Map((segments ?? []).map((g) => [g.id, g]));
   const uncontradicted = (seg) => (seg?.sentences ?? []).filter((x) => x?.text && (x.check?.probabilities?.contradicts ?? 0) < 0.3).map((x) => x.text.trim()).join(' ') || null;
-  return rows.map((g) => {
+  const nouns = properNouns(segments);
+  return rows.map((row) => {
+    const g = row.title && row.title !== 'Flagged scene' ? { ...row, title: sentenceCase(row.title, nouns) } : row;
     if (g.title && g.title !== 'Flagged scene') return g;
     const seg = segById.get(g.scene_id);
+    for (const a of attempts?.get(g.scene_id) ?? []) {
+      const t = quoteGate(a.text, null, grams).title;
+      if (t) return { ...g, title: sentenceCase(t, nouns), title_rule: 'sonnet_uncontradicted' };
+    }
     for (const [text, rule] of [[g.description, 'description'], [checkedSummary(seg), 'summary'], [uncontradicted(seg), 'summary_unchecked']]) {
       const t = text ? quoteGate(titleFromSummary(text), null, grams).title : null;
       if (t) return { ...g, title: t, title_rule: rule };
@@ -216,7 +266,7 @@ export function withTitles(rows, segments, grams = null) {
   });
 }
 
-export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null }) {
+export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null, attempts = null }) {
   const trackId = `${slug}:opensubtitles`;
   const track = {
     id: trackId, film_id: slug, source: 'opensubtitles', release_label: srt.release ?? null, language: 'en',
@@ -233,7 +283,7 @@ export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null
   const labels = [];
   const reasonLabels = [];
   const grams = quoteGrams(cues);
-  const flaggedRows = withTitles(guideRows(tags, { grams }), segments, grams);
+  const flaggedRows = withTitles(guideRows(tags, { grams }), segments, grams, attempts);
   const rows = flaggedRows;
   for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
@@ -326,7 +376,7 @@ export async function ingestStage(S) {
       } else {
         slug = await claimSlug(tx, film);
       }
-      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs, segments: S.out('refold')?.segments?.scenes ?? null });
+      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs, segments: S.out('refold')?.segments?.scenes ?? null, attempts: titleAttempts(S.out('check_describe'), S.out('check_describe2'), S.out('check_describe3')) });
       await ensureVocabulary(tx, taxonomy);
       await ensureReasonVocabulary(tx, built.reasonLabels);
       if (rebuildOf) {

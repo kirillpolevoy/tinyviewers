@@ -228,6 +228,9 @@ export const STRENGTH_TABLE = [
  * (in one line), that it is the real step that builds a film's page (not a showcase), that Sonnet's
  * slow reading was done earlier and does not run again, and that a run changes nothing on the page.
  */
+/** A sentence ending in a film title: no second full stop after 'Monsters, Inc.' */
+const endWith = (title: string) => (/[.!?]$/.test(title) ? title : `${title}.`);
+
 export const DEMO_LIVE = {
   // --- pick a film ---------------------------------------------------------------------------------
   eyebrow: 'Watch it work',
@@ -288,7 +291,7 @@ export const DEMO_LIVE = {
   // --- the live run ----------------------------------------------------------------------------------
   runEyebrow: (title: string, year: number | null) => `Live check · ${title}${year ? ` (${year})` : ''}`,
   queuedHeadline: (title: string) => `Starting Jev on ${title}…`,
-  runningHeadline: (title: string) => `Jev is checking ${title}.`,
+  runningHeadline: (title: string) => `Jev is checking ${endWith(title)}`,
   failedHeadline: 'This check stopped.',
   failedBody: 'This check stopped before it finished. The saved guide has not changed.',
   /** A failed run whose stage is known and whose failure was Jev's: `what` is the stage in plain words. */
@@ -388,11 +391,11 @@ export const DEMO_LIVE = {
   sonnetTitle: 'What Sonnet did earlier',
   sonnetBody: (scenes: number) =>
     `Sonnet divided the film into ${scenes} ${scenes === 1 ? 'scene' : 'scenes'}, wrote what happens in each, and answered the questions that take reading between the lines: a death, grief, a child lost or taken. None of that runs again here: this check only calls Jev.`,
-  srDone: (title: string) => `Jev finished checking ${title}.`,
+  srDone: (title: string) => `Jev finished checking ${endWith(title)}`,
 
   // --- finished ------------------------------------------------------------------------------------
   doneEyebrow: (title: string) => `Live check · ${title} · finished`,
-  doneIn: (title: string) => `Jev finished checking ${title}.`,
+  doneIn: (title: string) => `Jev finished checking ${endWith(title)}`,
   numbersNote: 'These measurements cover Jev’s live check. Sonnet’s earlier reading and writing are not included.',
   numbersLabel: 'The check in numbers',
   numTime: 'Jev check time',
