@@ -12,7 +12,10 @@
 //      runner persists a spending high-water mark there), and every settled amount goes to the
 //      context's onSpend as well as the caller's -- with `uncertain_usd`, the part of it that is an
 //      upper bound rather than a measured bill (an attempt that never answered, a 200 whose body could
-//      not be read: each charged at its reservation).
+//      not be read or is not an answer object, an answer whose usage is not a readable token count, a
+//      failure that brought no attempt history: each charged at its reservation). Where the experiment
+//      read a missing usage as 0 tokens and a malformed 200 as free, this one never lets money that may
+//      have been billed go unrecorded.
 //   4. progress: every request is reported to the context's onDispatch(meta) as it is sent and to
 //      onResult(meta, result) when it completes, which is how the demo page counts real requests.
 // TODO(v10.2-sync): if v10_2/jev-client.js changes a constant (reserve factors, concurrency, the fixed
@@ -94,6 +97,9 @@ export async function postJev(body, key, { retries = 5, timeoutMs = 60_000, befo
       }
       done();
       attempts.push({ status: res.status, ms });
+      // Valid JSON that is not an answer object (`null`, an array, a number...) is no more readable than
+      // invalid JSON: the same 'unparseable', with the attempts that led to it kept for the charge.
+      if (!isAnswerObject(json)) throw Object.assign(new UpstreamError({ service: 'jev', status: res.status, requestId: requestIdOf(res.headers), code: 'unparseable' }), { attempts });
       return { json, attempts, latencyMs: ms };
     }
     // Drained and dropped: a Jev error body quotes the state, and the state is subtitle lines.
@@ -105,6 +111,18 @@ export async function postJev(body, key, { retries = 5, timeoutMs = 60_000, befo
     await pause(ra > 0 ? ra * 1000 : 1000 * 2 ** attempt);
     if (ctx.signal?.aborted) throw Object.assign(new UpstreamError({ service: 'jev', code: 'cancelled' }), { attempts });
   }
+}
+
+/** A 200's body is an answer only when it is a JSON object (not null, not an array, not a scalar). */
+export const isAnswerObject = (json) => json !== null && typeof json === 'object' && !Array.isArray(json);
+
+/**
+ * The input tokens a response says it was billed for, or null when it does not say so readably: a
+ * billed request always has input, so only a finite number above zero is a measured bill.
+ */
+export function billedInputTokens(json) {
+  const n = json?.usage?.input_tokens;
+  return typeof n === 'number' && Number.isFinite(n) && n > 0 ? n : null;
 }
 
 /**
@@ -140,7 +158,9 @@ export function abortableSleep(ctx, ms) {
  * The reservation is taken BEFORE dispatch; when it would break the cap the job is skipped ('cap')
  * and no later job starts. An HTTP error status means nothing was billed (reservation released); a
  * network error or our own timeout may have been billed, so the reservation is kept as spent (an
- * upper bound). A cancelled run skips what it has not sent ('cancelled').
+ * upper bound). So is a 200 that is not an answer object (ok: false), an answer whose usage is not a
+ * readable token count (ok: true, record.usage_unreadable), and a failure with no attempt history.
+ * A cancelled run skips what it has not sent ('cancelled').
  */
 export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY, post = postJev, onSpend = () => {}, log = () => {} }) {
   const ctx = runCtx();
@@ -148,7 +168,8 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
   const results = new Array(jobs.length).fill(null);
   let stopped = null;
   let next = 0;
-  const spend = (cost, uncertain = 0) => { if (cost > 0) { onSpend(cost); ctx.onSpend(cost, { service: 'jev', uncertain_usd: Math.min(cost, uncertain) }); } };
+  // the run's ledger first: it is what the spending mark and the daily cap are reconciled from
+  const spend = (cost, uncertain = 0) => { if (cost > 0) { ctx.onSpend(cost, { service: 'jev', uncertain_usd: Math.min(cost, uncertain) }); onSpend(cost); } };
   const worker = async () => {
     while (next < jobs.length) {
       const i = next++;
@@ -183,35 +204,60 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
         silent++;
         return true;
       };
+      // The request, and nothing else, inside this try: whatever went wrong afterwards must never be
+      // mistaken for the request failing, and nothing may lose the attempt history the charge needs.
+      let res = null;
+      let err = null;
       try {
-        const res = await post(job.body, key, { beforeRetryAfterSilence });
-        const inTok = res.json.usage?.input_tokens ?? 0;
-        // the unanswered attempts before the answer, each at its reservation (an upper bound)
-        const extra = res.attempts.filter((a) => a.status === null).length * job.reserveUsd;
-        const cost = usd(inTok) + extra;
-        budget.settle((1 + silent) * job.reserveUsd, cost);
-        // measured: the answer's own usage; an upper bound: the silent attempts before it
-        spend(cost, extra);
-        const overReserve = usd(inTok) > job.reserveUsd;
-        if (overReserve) log(`  ${job.meta.label} OVER RESERVE: billed ${inTok} tok > reserved $${job.reserveUsd.toFixed(8)}`);
+        res = await post(job.body, key, { beforeRetryAfterSilence });
+      } catch (e) {
+        err = e ?? new Error('request failed');
+      }
+      // A 200 that is not an answer object is 'unparseable' (postJev says so itself; a `post` passed in
+      // may not), with the history it came with -- or none, when it brought none.
+      if (!err && !isAnswerObject(res?.json)) err = Object.assign(new UpstreamError({ service: 'jev', status: 200, code: 'unparseable' }), { attempts: Array.isArray(res?.attempts) ? res.attempts : null });
+      const reserved = (1 + silent) * job.reserveUsd;
+      if (!err) {
+        const history = Array.isArray(res.attempts) ? res.attempts : [];
+        // the unanswered attempts before the answer, each at its reservation (an upper bound). `silent` is
+        // our own count of them, so a history that lost some can never make them free.
+        const extra = Math.max(silent, history.filter((a) => a?.status === null).length) * job.reserveUsd;
+        // The answer's own usage is a measured bill only when it is a readable token count; otherwise the
+        // answer is charged at its reservation, and all of it is an upper bound.
+        const inTok = billedInputTokens(res.json);
+        const answerCost = inTok === null ? job.reserveUsd : usd(inTok);
+        const cost = answerCost + extra;
+        budget.settle(reserved, cost);
+        spend(cost, inTok === null ? cost : extra);
+        const overReserve = inTok !== null && usd(inTok) > job.reserveUsd;
+        try {
+          if (overReserve) log(`  ${job.meta.label} OVER RESERVE: billed ${inTok} tok > reserved $${job.reserveUsd.toFixed(8)}`);
+          if (inTok === null) log(`  ${job.meta.label} USAGE UNREADABLE: charged at its reservation $${job.reserveUsd.toFixed(8)}`);
+        } catch { /* a log line never fails a request that was paid for */ }
         results[i] = {
           meta: job.meta, ok: true, json: res.json,
-          record: { model: res.json.model, est_tokens: job.est, input_tokens: inTok, output_tokens: res.json.usage?.output_tokens ?? 0, cost_usd: cost, latency_ms: res.latencyMs, wall_ms: Date.now() - t0, retries: res.attempts.length - 1, attempts: res.attempts, question_count: Object.keys(job.body.questions).length, reserve_usd: job.reserveUsd, ...(overReserve ? { over_reserve: true } : {}) },
+          record: {
+            model: res.json.model, est_tokens: job.est, input_tokens: inTok ?? 0, output_tokens: res.json.usage?.output_tokens ?? 0, cost_usd: cost, latency_ms: res.latencyMs, wall_ms: Date.now() - t0,
+            retries: Math.max(0, history.length - 1), attempts: history, question_count: Object.keys(job.body.questions ?? {}).length, reserve_usd: job.reserveUsd,
+            ...(overReserve ? { over_reserve: true } : {}), ...(inTok === null ? { usage_unreadable: true, cost_is_upper_bound: true } : {}),
+          },
         };
-      } catch (err) {
-        const attempts = err.attempts ?? [];
-        // ...and a 200 whose body could not be read was billed for work done, at an amount we cannot read
+      } else {
+        const history = Array.isArray(err?.attempts) ? err.attempts : null;
         // Billable: every attempt that went out and got no answer, and a 200 whose body could not be read
         // (work was done; its usage is unreadable) -- each at its reservation, an upper bound. A retry that
-        // was reserved but never sent (cancelled in its backoff) costs nothing. Never above what was reserved.
-        const billable = attempts.filter((a) => a.status === null).length + (err.code === 'unparseable' ? 1 : 0);
-        const cost = Math.min((1 + silent) * job.reserveUsd, billable * job.reserveUsd);
-        const maybeBilled = cost > 0;
-        budget.settle((1 + silent) * job.reserveUsd, cost);
+        // was reserved but never sent (cancelled in its backoff) costs nothing. A failure that brought no
+        // attempt history at all cannot show that nothing went out: everything reserved for it is charged.
+        // Never above what was reserved.
+        const billable = history
+          ? Math.max(silent, history.filter((a) => a?.status === null).length) + (err?.code === 'unparseable' ? 1 : 0)
+          : 1 + silent;
+        const cost = Math.min(reserved, billable * job.reserveUsd);
+        budget.settle(reserved, cost);
         // none of it measured: every billable attempt here is charged at its reservation
         spend(cost, cost);
         const message = err instanceof UpstreamError ? err.message : 'request failed';
-        results[i] = { meta: job.meta, ok: false, error: message, record: { est_tokens: job.est, error: message, attempts, wall_ms: Date.now() - t0, cost_usd: cost, cost_is_upper_bound: maybeBilled } };
+        results[i] = { meta: job.meta, ok: false, error: message, record: { est_tokens: job.est, error: message, attempts: history ?? [], wall_ms: Date.now() - t0, cost_usd: cost, cost_is_upper_bound: cost > 0 } };
       }
       try { ctx.onResult(job.meta, results[i]); } catch { /* progress is never allowed to fail a stage */ }
     }

@@ -218,12 +218,55 @@
   color: var(--body);
 }
 
-.whyDetail {
-  margin-top: 6px;
+/* The individual checks behind the grouped reasons, one tap away. */
+.checksSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.checksSummary::-webkit-details-marker {
+  display: none;
+}
+
+.checksSummary::after {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.checks[open] > .checksSummary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.checkList {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   font-family: var(--serif);
   font-size: 14px;
   line-height: 1.5;
   color: var(--body-strong);
+}
+
+.checkGroup {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

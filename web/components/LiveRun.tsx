@@ -31,6 +31,7 @@ import {
   latest,
   pct,
   reasonChips,
+  runActivity,
   sameness,
   sceneNumber,
   spanLabel,
@@ -44,6 +45,7 @@ import {
   type WhyAnswer,
   type WhyTag,
 } from '@/lib/demo';
+import { groupReasons, nameContext, type ReasonGroup } from '@/lib/reasons';
 import {
   endsAroundMs,
   formatTime,
@@ -324,9 +326,31 @@ function Board({ run, ruled, onScene }: { run: DemoRun; ruled: Map<string, boole
   const perScene = perSceneAnswers(run);
   const answered = scenes.filter((s) => s.state === 'answered');
   const uncertain = scenes.slice(1).filter((s) => (s.cut ? cutDoubted(s.cut) : ruled.get(s.id)) === true).length;
+  // What Jev is doing right now, first — on a phone the three jobs below it are more than a screen, and
+  // the first seconds of a check (the scene breaks, then the descriptions) happen below the scene strip.
+  const activity = runActivity(run);
 
   return (
     <section className={styles.board} aria-label={DEMO_LIVE.boardLabel}>
+      {activity && (
+        <div className={styles.now}>
+          <span className={styles.nowKey}>{DEMO_LIVE.nowKey}</span>
+          <p className={`tabular ${styles.nowText}`}>
+            {activity.name}
+            {activity.count && (
+              <>
+                {DEMO_LIVE.nowSep}
+                <span className={styles.nowCount}>{activity.count}</span>
+              </>
+            )}
+          </p>
+          {/* Said once per step, not on every poll: the counts in the line above change each time. */}
+          <p className="srOnly" role="status">
+            {activity.name}
+          </p>
+        </div>
+      )}
+
       {/* The measured time and cost, compact: the scenes are the news. */}
       <p className={`tabular ${styles.boardStats}`}>
         <span>
@@ -347,9 +371,7 @@ function Board({ run, ruled, onScene }: { run: DemoRun; ruled: Map<string, boole
               {answered.length} / {scenes.length || '—'}
             </b>
           </p>
-          <p className={styles.jobBody}>
-            {DEMO_LIVE.job2Body} {perScene !== null && DEMO_LIVE.perScene(perScene)}
-          </p>
+          <p className={styles.jobBody}>{DEMO_LIVE.job2Body}</p>
         </div>
         <div className={styles.jobVisual}>
           {/* A picture, not a control: the scenes are opened from the list under it. */}
@@ -467,6 +489,10 @@ function Board({ run, ruled, onScene }: { run: DemoRun; ruled: Map<string, boole
           <div>
             <dt>{DEMO_LIVE.answers}</dt>
             <dd className="tabular">{classify.answers > 0 ? formatCount(classify.answers) : '—'}</dd>
+          </div>
+          <div>
+            <dt>{DEMO_LIVE.perSceneLabel}</dt>
+            <dd className="tabular">{perScene !== null ? formatCount(perScene) : '—'}</dd>
           </div>
           <div>
             <dt>{DEMO_LIVE.sentencesChecked}</dt>
@@ -757,76 +783,123 @@ function ScoreBar({ p, act }: { p: number | null; act: number | null | undefined
   );
 }
 
-function ReasonItem({ tag, index, asked }: { tag: WhyTag; index: number; asked: number | null }) {
+/** The questions behind one check, each with its answer: a combined check lists every one of them. */
+function answersOf(tag: WhyTag): WhyAnswer[] {
+  return tag.answers?.length ? tag.answers : tag.question ? [{ question: tag.question, p: tag.p, decides: true }] : [];
+}
+
+function WhoChips({ jev, sonnet }: { jev: boolean; sonnet: boolean }) {
+  return (
+    <span className={styles.who}>
+      {jev && <span className={`${styles.whoChip} ${styles.whoJev}`}>Jev</span>}
+      {sonnet && <span className={`${styles.whoChip} ${styles.whoSonnet}`}>Sonnet</span>}
+    </span>
+  );
+}
+
+/** One check behind a reason: its question(s), Jev's answer against its cutoff, and the rule that let it count. */
+function CheckDetail({ tag, named }: { tag: WhyTag; named: boolean }) {
   const jev = tag.by.includes('jev');
   const sonnet = tag.by.includes('sonnet');
-  const answers: WhyAnswer[] = tag.answers?.length ? tag.answers : tag.question ? [{ question: tag.question, p: tag.p, decides: true }] : [];
+  const answers = answersOf(tag);
   const combined = answers.length > 1;
   const how = tag.how === 'all' ? DEMO_LIVE.combinedAll : tag.how === 'gate' ? DEMO_LIVE.combinedGate : DEMO_LIVE.combinedAny;
   return (
+    <>
+      {/* Inside a grouped reason, each check by its own words ("Hogarth Hughes in danger"). */}
+      {named && (
+        <p className={styles.checkLabel}>
+          <span>{tag.label}</span>
+          <WhoChips jev={jev} sonnet={sonnet} />
+        </p>
+      )}
+      {sonnet && !jev ? (
+        <>
+          {tag.question && (
+            <p className={styles.reasonQuestion}>
+              <span className={styles.reasonKey}>{DEMO_LIVE.asked}</span>
+              <q>{tag.question}</q>
+            </p>
+          )}
+          <p className={styles.reasonAnswerText}>
+            <span className={styles.reasonKey}>{DEMO_LIVE.sonnetAnswered}</span>
+            {DEMO_LIVE.sonnetYes}
+          </p>
+        </>
+      ) : answers.length === 0 ? (
+        <p className={styles.reasonAnswerText}>
+          <span className={styles.reasonKey}>{DEMO_LIVE.jevAnswered}</span>
+          {DEMO_LIVE.notChecked}
+        </p>
+      ) : (
+        <>
+          {combined && <p className={styles.reasonLineNote}>{how}</p>}
+          <ul className={styles.answerList}>
+            {answers.map((a, i) => (
+              <li key={`${i}-${a.question}`} className={`${styles.answerItem} ${a.decides ? styles.answerDecides : ''}`}>
+                <q className={styles.answerQuestion}>{a.question}</q>
+                <span className={styles.reasonAnswer}>
+                  <span className={styles.reasonKey}>{DEMO_LIVE.answerScore}</span>
+                  <ScoreBar p={a.p} act={a.role === 'condition' ? a.at : tag.act} />
+                  <span className={`tabular ${styles.answerP}`}>{a.p === null ? DEMO_LIVE.notChecked : formatAnswer(a.p)}</span>
+                  {combined && a.decides && <span className={styles.decidedTag}>{DEMO_LIVE.decided}</span>}
+                  {a.role === 'condition' && <span className={styles.reasonLineNote}>{DEMO_LIVE.condition}</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {tag.act !== null && tag.act !== undefined && <p className={styles.reasonLineNote}>{DEMO_LIVE.cutoff(formatAnswer(tag.act))}</p>}
+        </>
+      )}
+      <p className={styles.reasonRule}>
+        <span className={styles.reasonKey}>{DEMO_LIVE.theRule}</span>
+        {ruleSentence(tag.rule, tag.with)}
+      </p>
+    </>
+  );
+}
+
+/**
+ * One reason the scene is listed, as a parent would say it ("The Giant and Hogarth in danger"), with
+ * every check behind it one tap away: the overlapping checks are grouped, never dropped (lib/reasons.ts).
+ */
+function ReasonItem({ group, index, asked }: { group: ReasonGroup<WhyTag>; index: number; asked: number | null }) {
+  const by = new Set(group.items.flatMap((t) => t.by));
+  const jev = by.has('jev');
+  const used = group.items.filter((t) => t.by.includes('jev')).reduce((n, t) => n + answersOf(t).length, 0);
+  const scored = group.items.some((t) => t.by.includes('jev') && answersOf(t).some((a) => a.p !== null));
+  // A single check whose words are the reason's own needs no heading of its own inside.
+  const several = group.items.length > 1 || group.items[0].label.trim() !== group.label;
+  return (
     <li className={styles.reason}>
-      {/* The film's own words for the reason ("The Iron Giant in danger"); its general category is
-          for the filters and the checking details, not repeated here. */}
       <p className={styles.reasonLabel}>
-        <span>{tag.label}</span>
-        <span className={styles.who}>
-          {jev && <span className={`${styles.whoChip} ${styles.whoJev}`}>Jev</span>}
-          {sonnet && <span className={`${styles.whoChip} ${styles.whoSonnet}`}>Sonnet</span>}
-        </span>
+        <span>{group.label}</span>
+        <WhoChips jev={jev} sonnet={by.has('sonnet')} />
       </p>
       <details className={styles.reasonHow}>
         <summary className={styles.reasonHowSummary} id={`how-${index}`}>
-          {DEMO_LIVE.howChecked}
+          {group.items.length > 1 ? DEMO_LIVE.howCheckedMany(group.items.length) : DEMO_LIVE.howChecked}
         </summary>
-        {jev && asked ? <p className={styles.reasonLineNote}>{DEMO_LIVE.questionCount(asked, answers.length)}</p> : null}
-        {tag.category && (
+        {jev && asked ? <p className={styles.reasonLineNote}>{DEMO_LIVE.questionCount(asked, used)}</p> : null}
+        {group.category !== group.label && (
           <p className={styles.reasonRule}>
             <span className={styles.reasonKey}>{DEMO_LIVE.categoryKey}</span>
-            {tag.category}
+            {group.category}
           </p>
         )}
-        {sonnet && !jev ? (
-          <>
-            {tag.question && (
-              <p className={styles.reasonQuestion}>
-                <span className={styles.reasonKey}>{DEMO_LIVE.asked}</span>
-                <q>{tag.question}</q>
-              </p>
-            )}
-            <p className={styles.reasonAnswerText}>
-              <span className={styles.reasonKey}>{DEMO_LIVE.sonnetAnswered}</span>
-              {DEMO_LIVE.sonnetYes}
-            </p>
-          </>
-        ) : answers.length === 0 ? (
-          <p className={styles.reasonAnswerText}>
-            <span className={styles.reasonKey}>{DEMO_LIVE.jevAnswered}</span>
-            {DEMO_LIVE.notChecked}
-          </p>
+        {/* What a score is, directly above the first bars. */}
+        {scored && <p className={styles.scoreNote}>{DEMO_LIVE.scoreNote}</p>}
+        {several ? (
+          <ol className={styles.checkList}>
+            {group.items.map((tag, i) => (
+              <li key={`${i}-${tag.label}`} className={styles.checkItem}>
+                <CheckDetail tag={tag} named />
+              </li>
+            ))}
+          </ol>
         ) : (
-          <>
-            {combined && <p className={styles.reasonLineNote}>{how}</p>}
-            <ul className={styles.answerList}>
-              {answers.map((a, i) => (
-                <li key={`${i}-${a.question}`} className={`${styles.answerItem} ${a.decides ? styles.answerDecides : ''}`}>
-                  <q className={styles.answerQuestion}>{a.question}</q>
-                  <span className={styles.reasonAnswer}>
-                    <span className={styles.reasonKey}>{DEMO_LIVE.answerScore}</span>
-                    <ScoreBar p={a.p} act={a.role === 'condition' ? a.at : tag.act} />
-                    <span className={`tabular ${styles.answerP}`}>{a.p === null ? DEMO_LIVE.notChecked : formatAnswer(a.p)}</span>
-                    {combined && a.decides && <span className={styles.decidedTag}>{DEMO_LIVE.decided}</span>}
-                    {a.role === 'condition' && <span className={styles.reasonLineNote}>{DEMO_LIVE.condition}</span>}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {tag.act !== null && tag.act !== undefined && <p className={styles.reasonLineNote}>{DEMO_LIVE.cutoff(formatAnswer(tag.act))}</p>}
-          </>
+          <CheckDetail tag={group.items[0]} named={false} />
         )}
-        <p className={styles.reasonRule}>
-          <span className={styles.reasonKey}>{DEMO_LIVE.theRule}</span>
-          {ruleSentence(tag.rule, tag.with)}
-        </p>
       </details>
     </li>
   );
@@ -855,6 +928,11 @@ function SceneUpClose({
   const number = sceneNumber(run.scenes, sceneId);
   const flagged = flaggedFor(run, sceneId);
   const live = isRunLive(run.status);
+  // The reasons as a parent would say them; a character's name shortened only to a form the run's own
+  // checked titles and descriptions use.
+  const context = useMemo(() => nameContext(run.result?.flagged ?? []), [run.result]);
+  const groups = useMemo(() => (flagged ? groupReasons(whyTags(flagged), context) : []), [flagged, context]);
+
   // Kept in view while the parent reads: the way back to where they were.
   const back = (
     <div className={styles.backBar}>
@@ -878,7 +956,6 @@ function SceneUpClose({
   const start = flagged?.start_ms ?? scene.start_ms;
   const end = flagged?.end_ms ?? scene.end_ms;
   const strength = flagged ? flaggedStrength(run, flagged, band) : strengthFor(scene, band);
-  const tags = flagged ? whyTags(flagged) : [];
   const heading = flagged ? flaggedHeading(flagged) : spanLabel(start, end);
   const status =
     scene.state !== 'answered'
@@ -949,11 +1026,10 @@ function SceneUpClose({
             <h2 className={styles.cardHeading}>{DEMO_LIVE.whyTitle}</h2>
             <p className={styles.cardNote}>{DEMO_LIVE.whyLead}</p>
             <ol className={styles.reasons}>
-              {tags.map((t, i) => (
-                <ReasonItem key={`${t.label}-${i}`} tag={t} index={i} asked={scene.questions ?? null} />
+              {groups.map((g, i) => (
+                <ReasonItem key={`${g.label}-${i}`} group={g} index={i} asked={scene.questions ?? null} />
               ))}
             </ol>
-            <p className={styles.cardNote}>{DEMO_LIVE.scoreNote}</p>
             <p className={styles.cardNote}>{DEMO_LIVE.whyNote}</p>
           </div>
         </section>

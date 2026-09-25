@@ -542,8 +542,12 @@ statement as the checkpoint that names it) or the run's end, and it deletes the 
 its owner-conditional end changed the row. An ending invocation drains its queued writes before it stops its
 heartbeat. No request goes out until a spending mark
 covering it is durable (`demo_runs.mark_usd`); a crashed invocation's spend is carried at that mark, a
-request that never answered or a 200 whose body could not be read is charged at its reservation, and those
-unmeasured parts are reported apart (`cost_uncertain_usd`), never as a bill. A sentence's live verdict is
+request that never answered, a 200 whose body could not be read or is not a JSON object (`null`, an array),
+an answer whose `usage.input_tokens` is not a number above zero, and a failure that brought no attempt history
+are each charged at their reservation (the attempts before them kept), and those unmeasured parts are reported
+apart (`cost_uncertain_usd`), never as a bill. A reservation still open when an invocation ends or hands off
+is charged the same way. A finished row the v10.4.2 code ended during a rolling upgrade (`cost_usd` set,
+`spent_usd` left stale) is brought into line by the demo sweep (`lib/demo.js` `healOldEndings`). A sentence's live verdict is
 Jev's support answer (provisional); the run ends by reconciling the feed and `claims.final` with what the
 guide actually kept (a summary sentence counts as kept only if it survived every acceptance step, the
 judgement-word exclusion included). The comparison with the library's guide matches scenes one to one, by

@@ -9,6 +9,7 @@
 // cost are the API's measurements. Nothing here counts on its own clock.
 
 import { DEMO_LIVE, FILM } from './copy';
+import { groupReasons } from './reasons';
 import { formatTime, type AgeBand } from './scenes';
 
 /** `GET /api/demo/films`: a film whose Sonnet artifacts are stored, so Jev can run on it live. */
@@ -397,16 +398,74 @@ export function finalOutcome(item: Pick<FeedItem, 'final'>): 'kept' | 'left_out'
 }
 
 /**
- * The chips a list row shows: each reason by its stable category (a film-specific reason's category,
- * else its own label), repeats merged, at most `max` of them, and how many more there are.
+ * The chips a list row shows: each reason, grouped as the scene view groups them (lib/reasons.ts:
+ * "Child in danger" folds into the characters in danger), by its stable category, repeats merged, at
+ * most `max` of them, and how many more there are.
  */
 export function reasonChips(f: Pick<FlaggedScene, 'why' | 'reasons'>, max = 3): { chips: string[]; more: number } {
   const all: string[] = [];
-  for (const t of whyTags(f)) {
-    const label = (t.category ?? t.label).trim();
+  for (const g of groupReasons(whyTags(f))) {
+    const label = g.category.trim();
     if (label && !all.some((x) => x.toLowerCase() === label.toLowerCase())) all.push(label);
   }
   return { chips: all.slice(0, max), more: Math.max(0, all.length - max) };
+}
+
+/**
+ * What the live board says Jev is doing right now, from the stage the API reports (`run.stage`) and the
+ * API's own counts — never from a clock. Null once the run has finished or failed.
+ */
+export type Activity = {
+  key: 'starting' | 'breaks' | 'descriptions' | 'danger' | 'skip' | 'choosing' | 'waiting';
+  /** The step: "Checking descriptions". */
+  name: string;
+  /** The API's count for it, when it has one: "127 sentences checked". */
+  count: string | null;
+  /** Both, as one line: "Checking descriptions · 127 sentences checked". */
+  text: string;
+};
+
+/** The demo's stages (the scene API's DEMO_STAGES ids), by the part of Jev's work a visitor sees. */
+const STAGE_ACTIVITY: Record<string, Activity['key']> = {
+  segment_build: 'breaks',
+  split_check: 'breaks',
+  claims: 'descriptions',
+  fill: 'descriptions',
+  refold: 'descriptions',
+  describe: 'descriptions',
+  check_describe: 'descriptions',
+  describe2: 'descriptions',
+  check_describe2: 'descriptions',
+  titles: 'descriptions',
+  check_describe3: 'descriptions',
+  mergetext: 'descriptions',
+  classify: 'danger',
+  sonnetq: 'danger',
+  childcry: 'danger',
+  resolve: 'danger',
+  mortal: 'danger',
+  select1: 'skip',
+  moments: 'skip',
+  select2: 'skip',
+  select3: 'choosing',
+};
+
+export function runActivity(run: Pick<DemoRun, 'status' | 'stage' | 'stages' | 'scenes'>): Activity | null {
+  if (!isRunLive(run.status)) return null;
+  const key: Activity['key'] = run.status === 'queued' ? 'starting' : (run.stage && STAGE_ACTIVITY[run.stage]) || 'waiting';
+  const name = DEMO_LIVE.nowName[key];
+  const { split_check: breaks, claims, moments } = run.stages;
+  const count =
+    key === 'breaks' && breaks.total
+      ? DEMO_LIVE.nowBreaks(Math.min(breaks.done, breaks.total), breaks.total)
+      : key === 'descriptions'
+        ? DEMO_LIVE.nowDescriptions(claims.done)
+        : key === 'danger' && run.scenes.length
+          ? DEMO_LIVE.nowScenes(run.scenes.filter((s) => s.state === 'answered').length, run.scenes.length)
+          : key === 'skip' && moments.total
+            ? DEMO_LIVE.nowScenes(Math.min(moments.done, moments.total), moments.total)
+            : null;
+  return { key, name, count, text: count ? `${name}${DEMO_LIVE.nowSep}${count}` : name };
 }
 
 /**

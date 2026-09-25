@@ -5,6 +5,7 @@ import { AgeToggle, FilterPanel, LevelsDisclosure } from './FilmControls';
 import { SceneList } from './SceneList';
 import { StateCard } from './StateCard';
 import { EMPTY, FILM } from '@/lib/copy';
+import { nameContext } from '@/lib/reasons';
 import {
   filmHref,
   formatTime,
@@ -58,6 +59,8 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
   const markersRef = useRef<HTMLDivElement>(null);
 
   const facets = useMemo(() => mergedFacets(scenes), [scenes]);
+  // The whole film's checked text, so a reason names a character the way the film's text does.
+  const context = useMemo(() => nameContext(scenes), [scenes]);
   const breakdown = useMemo(() => strengthBreakdown(scenes, band), [scenes, band]);
   const lastEnd = useMemo(() => lastSceneEndMs(scenes), [scenes]);
   const shown = useMemo(
@@ -279,6 +282,7 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
           <SceneList
             scenes={shown}
             band={band}
+            context={context}
             openId={openId}
             onToggle={(id) => setOpenId((was) => (was === id ? null : id))}
           />

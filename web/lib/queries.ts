@@ -13,7 +13,7 @@
 import 'server-only';
 import { cache } from 'react';
 import { getDb } from './db';
-import { parseWhy, parseWhyDetail, type Scene, type SceneTag } from './scenes';
+import { parseWhy, parseWhyTags, type Scene, type SceneTag } from './scenes';
 
 export type FilmSummary = {
   slug: string;
@@ -199,7 +199,7 @@ export const getFilmScenes = cache(async (slug: string): Promise<Scene[]> => {
       severity810: row.severity_8_10,
       tags: tags as SceneTag[],
       why: parseWhy(row.why_tags),
-      whyDetail: parseWhyDetail(row.why_tags),
+      whyTags: parseWhyTags(row.why_tags),
     };
   });
 });

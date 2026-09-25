@@ -195,3 +195,24 @@ test('the film page states the subtitle release its times follow, when it is kno
   assert.match(FILM.aboutTiming('Coco.2017.1080p.WEB'), /Coco\.2017\.1080p\.WEB/);
   assert.doesNotMatch(FILM.aboutTiming(null), /\(\)/);
 });
+
+test('the open row gets every stored reason tag, in order, whatever shape the guide stored', async () => {
+  const { parseWhyTags } = await import('../lib/scenes');
+  const v104 = {
+    line: 'Weapon used · The Iron Giant in danger',
+    tags: [
+      { label: 'Weapon used', category: null, ids: ['weapon_used'], by: ['sonnet'], p: 0.8, rule: 'strong_event' },
+      { label: 'The Iron Giant in danger', category: 'Character in danger', ids: ['C01_in_danger'], by: ['jev'], p: 0.93, rule: 'film_child_in_danger' },
+    ],
+  };
+  assert.deepEqual(parseWhyTags(v104), [
+    { label: 'Weapon used', category: null, rule: 'strong_event' },
+    { label: 'The Iron Giant in danger', category: 'Character in danger', rule: 'film_child_in_danger' },
+  ]);
+  assert.deepEqual(parseWhyTags(JSON.stringify(v104)).length, 2);
+  // An older guide: labels only.
+  assert.deepEqual(parseWhyTags({ tags: [{ label: 'Chased', by: ['jev'] }, { label: 'chased' }] }), [{ label: 'Chased', category: null, rule: null }]);
+  assert.deepEqual(parseWhyTags('Chased · Fire').map((t) => t.label), ['Chased', 'Fire']);
+  assert.deepEqual(parseWhyTags(null), []);
+  assert.deepEqual(parseWhyTags({ nonsense: 1 }), []);
+});

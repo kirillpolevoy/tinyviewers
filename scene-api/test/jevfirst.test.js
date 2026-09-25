@@ -1528,3 +1528,168 @@ test('row 13: a 200 whose body could not be read is charged as uncertain, never 
   assert.ok(Math.abs(r.cost_usd + r.cost_uncertain_usd - Number(row.spent_usd)) < 1e-6);
   await db.end();
 });
+
+// ------------------------------------------------------------------------------------------------
+// Astra's round-2 code review (2026-09-25): each finding reproduced, then held
+// ------------------------------------------------------------------------------------------------
+
+const JEV_BODY = { model: 'jev-1.13.0', state: { lines: ['L1| hi'] }, questions: { q1: { type: 'noul', instructions: 'Is it?' } } };
+/** Every request's first attempt dies on the socket; its retry gets a 200 carrying `answer` (a JSON value or raw text). */
+const silentThen = (answer) => {
+  const seen = new Set();
+  return async (u, init) => {
+    const k = init.body;
+    if (!seen.has(k)) { seen.add(k); throw new Error('socket hang up'); }
+    return typeof answer === 'function' ? answer(JSON.parse(init.body)) : new Response(JSON.stringify(answer), { status: 200, headers: { 'content-type': 'application/json' } });
+  };
+};
+async function runOne(fetchImpl, { reserveUsd = 0.001, post } = {}) {
+  const seen = [];
+  const b = budget(1);
+  const { results } = await withRun({ fetchImpl, keys: { typesafe: 'x' }, sleep: noSleep, onSpend: (usd, info) => seen.push([usd, info?.uncertain_usd ?? 0]) },
+    () => runJobs([{ body: JEV_BODY, est: 10, reserveUsd, meta: { label: 'x' } }], { key: 'x', budget: b, concurrency: 1, ...(post ? { post } : {}) }));
+  const spent = seen.reduce((a, [u]) => a + u, 0);
+  const uncertain = seen.reduce((a, [, u]) => a + u, 0);
+  return { result: results[0], b, spent, uncertain };
+}
+const near = (a, b) => Math.abs(a - b) < 1e-12;
+
+test('r2 blocker: a silent attempt then a 200 whose JSON is not an answer keeps both reservations, as uncertain', async () => {
+  // a 200 `null` (Astra's reproduction), and the other JSON values that are not an answer object
+  for (const bad of [null, [], 5, 'ok', true]) {
+    const { result, b, spent, uncertain } = await runOne(silentThen(bad));
+    const label = JSON.stringify(bad);
+    assert.equal(result.ok, false, label);
+    assert.deepEqual(result.record.attempts.map((a) => a.status), [null, 200], `${label}: the attempt history is kept`);
+    assert.ok(near(spent, 0.002) && near(uncertain, 0.002), `${label}: both attempts charged at their reservation, all of it uncertain (spent ${spent})`);
+    assert.ok(near(b.spent, 0.002) && b.reserved < 1e-12, label);
+    assert.equal(result.record.cost_is_upper_bound, true, label);
+  }
+});
+
+test('r2 blocker: a 200 answer whose usage is not a token count is charged at its reservation, as uncertain', async () => {
+  for (const usage of [undefined, null, {}, { input_tokens: '1000' }, { input_tokens: -5 }, { input_tokens: 0 }, { input_tokens: null }]) {
+    const { result, b, spent, uncertain } = await runOne(silentThen((body) => jsonResponse({ ...jevAnswer(body), usage })));
+    const label = JSON.stringify(usage) ?? 'undefined';
+    assert.equal(result.ok, true, `${label}: the answer itself is usable`);
+    assert.ok(near(spent, 0.002) && near(uncertain, 0.002), `${label}: spent ${spent}, uncertain ${uncertain}`);
+    assert.ok(near(b.spent, 0.002) && b.reserved < 1e-12, label);
+    assert.equal(result.record.cost_is_upper_bound, true, label);
+    assert.ok(near(result.record.cost_usd, 0.002), label);
+  }
+  // a readable count is still a measured bill: only the silent attempt is uncertain
+  const ok = await runOne(silentThen((body) => jsonResponse({ ...jevAnswer(body), usage: { input_tokens: 1000, output_tokens: 1 } })));
+  const measured = (1000 * 0.042) / 1e6;
+  assert.ok(near(ok.spent, 0.001 + measured) && near(ok.uncertain, 0.001));
+  assert.equal(ok.result.record.cost_is_upper_bound, undefined);
+});
+
+test('r2 blocker: a post that fails or answers without its attempt history is charged at everything reserved for it', async () => {
+  // a request function that returns no usable answer and no history
+  for (const res of [null, undefined, { json: null }, { json: { answers: {} } }]) {
+    const { result, spent, uncertain, b } = await runOne(null, { post: async () => res });
+    assert.ok(near(spent, 0.001) && near(uncertain, 0.001), `${JSON.stringify(res)}: spent ${spent}`);
+    assert.ok(b.reserved < 1e-12);
+    assert.equal(result.record.cost_is_upper_bound, true);
+  }
+  // one that throws something that is not our error: nobody can say it was not sent
+  for (const err of [new TypeError('x is not a function'), null, undefined, 'boom']) {
+    const { result, spent, uncertain } = await runOne(null, { post: async () => { throw err; } });
+    assert.equal(result.ok, false);
+    assert.ok(near(spent, 0.001) && near(uncertain, 0.001), `${String(err)}: spent ${spent}`);
+  }
+  // ...but a request cancelled before its first attempt went out costs nothing (unchanged)
+  const ac = new AbortController();
+  ac.abort();
+  const b = budget(1);
+  const seen = [];
+  await withRun({ fetchImpl: async () => { throw new Error('never'); }, keys: { typesafe: 'x' }, signal: ac.signal, sleep: noSleep, onSpend: (u) => seen.push(u) },
+    () => runJobs([{ body: JEV_BODY, est: 10, reserveUsd: 0.001, meta: { label: 'x' } }], { key: 'x', budget: b, concurrency: 1 }));
+  assert.equal(b.spent, 0);
+});
+
+test('r2 blocker: a whole demo run of silent attempts and 200 `null`s is charged, and the day\'s cap sees it', async () => {
+  const db = await seededDb();
+  let dispatched = 0;
+  const once = silentThen(null);
+  const f = world({ jevHook: async (body, init) => { dispatched++; return once('https://api.typesafe.ai/v1/systemone', init); } });
+  process.env.DEMO_DAILY_CAP_USD = String(DEMO_RESERVE_USD);
+  try {
+    const { id, done } = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'a', runOpts: { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5 } });
+    await done;
+    assert.ok(dispatched >= 2);
+    const row = (await db.query('select status, cost_usd, spent_usd, mark_usd, uncertain_usd from demo_runs where id = $1', [id])).rows[0];
+    const [cost, spent, mark, uncertain] = [row.cost_usd, row.spent_usd, row.mark_usd, row.uncertain_usd].map(Number);
+    assert.equal(row.status, 'failed');
+    assert.ok(spent > 0, `${dispatched} attempts went out; the run recorded $${spent}`);
+    assert.ok(Math.abs(uncertain - spent) < 1e-6, 'none of it is a measured bill');
+    assert.ok(Math.abs(cost - spent) < 1e-6 && mark >= spent - 1e-6);
+    const view = await demoRun(db, id);
+    assert.deepEqual([view.cost_usd, view.cost_uncertain_usd], [0, Number(spent.toFixed(6))]);
+    // the day's total holds it: a second run's reservation no longer fits under a cap of one reservation
+    await assert.rejects(startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'b', runOpts: { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep } }), (e) => e.status === 429 && e.extra.error_code === 'daily_cap');
+  } finally { delete process.env.DEMO_DAILY_CAP_USD; }
+  await db.end();
+});
+
+test('r2 follow-up: an old (v10.4.2) worker that finishes after the upgrade shows its real final cost', async () => {
+  const { JEVFIRST_SCHEMA_SQL } = await import('../lib/schema-jevfirst.js');
+  const { demoSpentTodayUsd } = await import('../lib/demo.js');
+  const db = await emptyDb();
+  await db.exec(`drop table demo_run_stages;
+    alter table demo_runs drop column lease_owner, drop column lease_until, drop column invocations, drop column crash_count,
+      drop column spent_usd, drop column mark_usd, drop column uncertain_usd, drop column checkpoint, drop column progress_at, drop column kicked_at;
+    delete from schema_marks;`);
+  for (const [id, slot] of [['old-live-finishes-0000', 1], ['old-live-swept-0000000', 2]]) {
+    await db.query(
+      `insert into demo_runs (id, slug, status, slot, reserve_usd, cost_usd, progress, created_at, started_at, updated_at)
+       values ($1, 'x', 'running', $2, 0.6, 0.6, '{"spent_usd": 0.01}'::jsonb, now(), now(), now())`, [id, slot]);
+  }
+  await db.exec(JEVFIRST_SCHEMA_SQL); // the upgrade lands while both old invocations are still alive
+  // ...then the old code ends them the way it always did: cost_usd only, spent_usd never touched
+  await db.query(`update demo_runs set status = 'done', slot = null, cost_usd = 0.12, progress = '{"spent_usd": 0.12}'::jsonb, ended_at = now(), updated_at = now()
+                   where id = 'old-live-finishes-0000'`);
+  await db.query(`update demo_runs set status = 'failed', slot = null, error_code = 'timed_out', error = 'x', ended_at = now(), updated_at = now()
+                   where id = 'old-live-swept-0000000'`);
+  const finished = await demoRun(db, 'old-live-finishes-0000');
+  assert.deepEqual([finished.cost_usd, finished.cost_uncertain_usd], [0.12, null], 'the final bill, not the figure measured at the upgrade');
+  const swept = await demoRun(db, 'old-live-swept-0000000');
+  assert.deepEqual([swept.cost_usd, swept.cost_uncertain_usd], [0.01, 0.59], 'what it measured is a bill; the rest of its reservation is uncertain');
+  const rows = (await db.query("select id, cost_usd, spent_usd, mark_usd, uncertain_usd from demo_runs order by id")).rows;
+  for (const r of rows) assert.equal(Number(r.spent_usd), Number(r.cost_usd), `${r.id}: spent and the cap's figure agree`);
+  assert.ok(Math.abs((await demoSpentTodayUsd(db)) - 0.72) < 1e-9, 'the cap\'s figures are unchanged');
+  // a run the new code ended is left exactly as it was
+  await db.query(`insert into demo_runs (id, slug, status, reserve_usd, cost_usd, spent_usd, mark_usd, uncertain_usd, invocations, ended_at)
+                  values ('new-done-0000000000000', 'x', 'done', 0.6, 0.05, 0.05, 0.1, 0.01, 2, now())`);
+  const fresh = await demoRun(db, 'new-done-0000000000000');
+  assert.deepEqual([fresh.cost_usd, fresh.cost_uncertain_usd], [0.04, 0.01]);
+  const n = (await db.query("select spent_usd, mark_usd, uncertain_usd from demo_runs where id = 'new-done-0000000000000'")).rows[0];
+  assert.deepEqual([n.spent_usd, n.mark_usd, n.uncertain_usd].map(Number), [0.05, 0.1, 0.01]);
+  await db.end();
+});
+
+test('r2 blocker: a demo invocation that ends with a reservation never settled charges it, as uncertain', async () => {
+  const { DEMO_STAGES } = await import('../pipeline-jevfirst/stages/index.js');
+  const db = await seededDb();
+  const f = world();
+  const first = DEMO_STAGES[0];
+  const saved = first.run;
+  // a stage that has taken a reservation for a request it never settled, then fails: whatever went out
+  // under that reservation may have been billed
+  first.run = async (S) => { S.wallet('jev', 0.05).budget.reserve(0.03); throw new Error('boom'); };
+  try {
+    const { id, done } = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'a', runOpts: { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5 } });
+    const res = await done;
+    assert.equal(res.status, 'failed');
+    const row = (await db.query('select cost_usd, spent_usd, uncertain_usd from demo_runs where id = $1', [id])).rows[0];
+    assert.deepEqual([row.cost_usd, row.spent_usd, row.uncertain_usd].map(Number), [0.03, 0.03, 0.03]);
+    // ...and one that runs out of time with it open carries it into the next invocation
+    first.run = async (S) => { S.wallet('jev', 0.05).budget.reserve(0.02); throw new (await import('../pipeline-jevfirst/stages/common.js')).Interrupted('time'); };
+    const two = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'b', runOpts: { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5, continueRun: async () => {} } });
+    const r2 = await two.done;
+    assert.equal(r2.handedOff, true, JSON.stringify(r2));
+    const row2 = (await db.query('select spent_usd, uncertain_usd, mark_usd from demo_runs where id = $1', [two.id])).rows[0];
+    assert.deepEqual([row2.spent_usd, row2.uncertain_usd].map(Number), [0.02, 0.02]);
+  } finally { first.run = saved; }
+  await db.end();
+});

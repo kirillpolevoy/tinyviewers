@@ -404,11 +404,26 @@ export async function runDemo(db, runId, opts = {}) {
     finished = true;
   };
   const lost = () => ({ acquired: true, status: 'running', lostLease: true, ran });
+  /**
+   * Reservations still open as this invocation writes its end or hands off: a request that took one and
+   * never settled it may have been billed, so it is charged at that reservation, all of it uncertain. The
+   * run's record never falls below what it may owe -- whatever path a stage left by.
+   */
+  const chargeOpen = () => {
+    for (const b of wallets) {
+      const open = b.reserved;
+      if (!(open > 1e-12)) continue;
+      b.settle(open, open);
+      spent += open;
+      uncertain += open;
+    }
+  };
 
   /** Hand the run on: progress back to the last checkpoint, lease released, the next invocation asked for. */
   const handOff = async (why) => {
     // A lost lease: the run is someone else's now, and every write of ours would be fenced off anyway.
     if (why === 'lease') { stop(); finished = true; return lost(); }
+    chargeOpen();
     let released = 0;
     try {
       await drain();
@@ -432,6 +447,7 @@ export async function runDemo(db, runId, opts = {}) {
    */
   const finish = async (fields) => {
     let ended = 0;
+    chargeOpen();
     try {
       await drain();
       if (progress) progress.spent_usd = round6(spent);

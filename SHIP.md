@@ -10,10 +10,10 @@ here is committed, pushed or deployed; the main session ships it. Two Vercel pro
 
 ## 0. Before deploying
 
-1. `cd scene-api && npm test` (212 pass, 0 skipped; every mandatory contract runs on committed synthetic
+1. `cd scene-api && npm test` (218 pass, 0 skipped; every mandatory contract runs on committed synthetic
    fixtures). Optional, on a machine with the round-9 outputs:
    `JEVFIRST_REQUIRE_PARITY=1 node --test test/jevfirst-parity.test.js` (9 pass).
-2. `cd web && npm test && npx tsc --noEmit && npx next build` (114 pass, typecheck and build clean).
+2. `cd web && npm test && npx tsc --noEmit && npx next build` (129 pass, typecheck and build clean).
 3. Grep of the changed files (done 2026-09-25): no placeholder keys or test values in shipped code; the
    only `localhost` strings are the off-Vercel fallback in `scene-api/lib/jevfirst.js` `continueBase()` and
    the local server's own banner; the remaining `TODO` markers were already on `main` (phase-4 feedback,
@@ -37,6 +37,15 @@ untouched, so applying it again changes nothing. It was checked on 2026-09-25 ag
 database `jevint`, which had v10.4.2 and v10.4.3: on the API's cold start v10.4.4 was recorded, the five
 v10.4.2 runs went from a shown cost of $0 to their real cost (for example 0.056787), and the v10.4.3 rows
 were left as they were. Production has none of these tables yet, so there it only creates them.
+
+A rolling upgrade has one more case, handled by the demo sweep, not the schema (so the schema mark stays
+v10.4.4): a v10.4.2 invocation still alive when v10.4.4 ran ends its run the old way, writing `cost_usd` but
+leaving `spent_usd` at the figure measured at the upgrade, so the page showed a stale cost ($0.01 against a
+$0.12 final bill in Astra's reproduction). The new code always ends a run with `spent_usd = cost_usd`, so the
+sweep that every demo status, poll and admission already runs (`lib/demo.js` `healOldEndings`) gives any
+finished row where they differ the same money columns the upgrade gives an old finished run. `cost_usd`, what
+the daily cap counts, never goes down, and a run the old sweep ended keeps the part it never measured as
+`uncertain_usd`. Production has no v10.4.2 demo code, so there this never matches a row.
 
 To apply it by hand anyway (for example, before the deploy, from a laptop):
 
@@ -157,6 +166,48 @@ Scene API ship-blocker round (after Astra's code re-check), same scratch databas
   `/api/add/status` `spent_today_usd` by $2.41. (That test row was then deleted.)
 - **Not verified here**: Vercel's own `x-real-ip` / `x-forwarded-for` behaviour (the API trusts those
   headers only when `VERCEL=1`), and any browser rendering (no web change in this round).
+
+Scene API round 2 (Astra's second code review), API only, no web change:
+
+- **Malformed 200s** (the blocker). Before: a request whose first attempt died on the socket and whose retry
+  got HTTP 200 `null` threw a TypeError when its usage was read; the catch lost the attempt history and
+  settled both reservations at $0. Astra's offline full-demo reproduction was 268 attempts and $0 recorded;
+  the new test reproduced exactly that (268 attempts, $0) before the fix. Now (`pack/jev-client.js`, our shim,
+  not a frozen file):
+  - a 200 that is not a JSON object is 'unparseable', like invalid JSON, with its attempts kept;
+  - an answer whose `usage.input_tokens` is not a number above zero is charged at its reservation;
+  - a failure with no attempt history is charged at everything reserved for it;
+  - all of these count as uncertain, never as a measured bill.
+  As a backstop, a demo invocation that ends or hands off with a wallet reservation still open charges it the
+  same way (`pipeline-jevfirst/demo.js` `chargeOpen`).
+- **On real Postgres** (pg driver, scratch copy `jevr2` of `jevint`, Jev stubbed, $0), the same fault on
+  The Gruffalo: 136 attempts, the run charged $0.00817, all of it uncertain (`GET /api/demo/runs/{id}`: `cost_usd`
+  0, `cost_uncertain_usd` 0.00817). A second admission under a cap of one reservation was refused (429 `daily_cap`).
+- **Rolling-upgrade display**, same database: a row the old code ended at $0.12 while `spent_usd` said $0.01
+  now shows $0.12. A row the old sweep ended at its $0.60 reservation shows $0.01 billed and $0.59 uncertain.
+  The day's total was unchanged by the heal.
+- **A real demo check** (The Gruffalo, API only, real keys, `jevint`): 21 s, 3.4¢ ($0.034101), all of it
+  measured (uncertain 0), 2 invocations with one hand-off, 8 of 8 scenes matching the saved guide. Real Jev
+  responses still carry a readable `usage.input_tokens`, so the new rule does not turn real bills into
+  upper bounds. The day's total rose by exactly $0.034101.
+- On the API's cold start the sweep found one row in `jevint` with `spent_usd` ($0.003977) above
+  `cost_usd` ($0) and raised `cost_usd` to it. It was a failed run with error code `verification`, left
+  from an earlier check.
+
+Round 2 verification (both fix rounds together, 2026-09-25), web `:3497` and scene API `:8797` on `jevint`:
+
+- scene-api `npm test` 218 pass; web `npm test` 129 pass, `tsc --noEmit` and `next build` clean; the frozen
+  pack matches `experiments/trigger-scan/v10_4` (`sync-jevfirst-pack.mjs --check`).
+- Schema: with the v10.4.4 mark removed, the API's cold start recorded `jevfirst-schema-v10.4.4` again and
+  left every `demo_runs` money column unchanged (same checksum before and after).
+- One real Iron Giant check through the web proxy: 27.5 s, 5.7 cents ($0.057061, none of it uncertain), 3
+  invocations. It found 12 scenes against the saved 11 ("2 extra scenes, 1 missing": one is the same
+  Mansley scene starting 35 s earlier, past the edge tolerance). The day's total rose by exactly that amount.
+- One check with an invalid Jev key: `split_check_failed` after 3 s, $0, slot and lease released, day total
+  unchanged.
+- Screens at 1296 and true 390x844 (`jev-ship/r2/`: `watch-picker-*`, `live-f1..f7-*`, `run-finished-*`,
+  `scene-reasons-*`, `run-failed-*`, `run-failed-open-*`, `film-scene-open-*`, `add-card-*`). No page
+  scrolls sideways at 390 px.
 
 ## 6. Changed files (against origin/main 7a2097d)
 
@@ -302,6 +353,7 @@ Scene API ship-blocker round (after Astra's code re-check), same scratch databas
 - `web/lib/job.ts` (modified)
 - `web/lib/poll.ts` (modified)
 - `web/lib/queries.ts` (modified)
+- `web/lib/reasons.ts` (new)
 - `web/lib/replay.ts` (deleted)
 - `web/lib/scenes.ts` (modified)
 - `web/README.md` (modified)
@@ -310,5 +362,6 @@ Scene API ship-blocker round (after Astra's code re-check), same scratch databas
 - `web/test/demo.test.ts` (new)
 - `web/test/findings.test.ts` (modified)
 - `web/test/job.test.ts` (modified)
+- `web/test/reasons.test.ts` (new)
 - `web/test/replay.test.ts` (deleted)
 - `SHIP.md` (new; this file)

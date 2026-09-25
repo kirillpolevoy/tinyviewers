@@ -134,8 +134,8 @@ export const FILM = {
   readyNote: 'These times include a margin before and after the scene. Timing can vary by edition.',
   /** Above a scene's reasons: why it is in the guide at all, shown even when there is no description. */
   whyLabel: 'Why it’s included',
-  /** A film-specific reason's own words, under the general chips: "The Iron Giant in danger". */
-  whyDetailLabel: 'In this scene',
+  /** The individual checks behind the grouped reasons ("The Giant and Hogarth in danger"), one tap away. */
+  whyChecks: 'The checks behind these reasons',
   /** Above the scene's other plain-word tags, when both are shown. */
   tagsLabel: 'Also in this scene',
   // TODO(phase 4): the feedback controls are not rendered in this phase — there is nowhere to send
@@ -295,8 +295,26 @@ export const DEMO_LIVE = {
   } as Record<string, string>,
   failedDetails: 'What finished before the check stopped',
   startNew: 'Start a new check',
-  runSub:
-    'Jev is checking for danger and fear, checking where scenes change, and checking the descriptions. When it finishes, you’ll see the scenes to know about.',
+  runSub: 'Watch Jev check scene breaks, descriptions, and signs of danger or fear to help you decide what to skip.',
+  /**
+   * What Jev is doing right now, at the top of the board: the stage the API reports and the API's own
+   * counts (lib/demo.ts runActivity). Never a count of our own while waiting for answers.
+   */
+  nowKey: 'Now',
+  nowName: {
+    starting: 'Starting the check',
+    breaks: 'Checking scene breaks',
+    descriptions: 'Checking descriptions',
+    danger: 'Checking danger and fear',
+    skip: 'Finding where to skip',
+    choosing: 'Choosing the scenes to know about',
+    waiting: 'Waiting for the next answers',
+  } as Record<string, string>,
+  /** The count after the step's name ("Checking descriptions · 127 sentences checked"). */
+  nowBreaks: (done: number, total: number) => `${done} of ${total} checked`,
+  nowDescriptions: (n: number) => `${n.toLocaleString('en-US')} ${n === 1 ? 'sentence' : 'sentences'} checked`,
+  nowScenes: (n: number, total: number) => `${n} of ${total} scenes complete`,
+  nowSep: ' · ',
   thisFilm: 'this film',
   boardLabel: 'Jev’s live check',
   elapsed: 'Time',
@@ -321,7 +339,8 @@ export const DEMO_LIVE = {
   cutKept: 'This check used the stored scene breaks as they are.',
   job2: 'Checks every scene for danger and fear',
   job2Body: 'Each block is a scene. It fills when answers arrive. Colours appear when the scene list is ready.',
-  perScene: (n: number) => `About ${n} questions per scene.`,
+  /** In "More details": the mean of the scenes' own question counts so far (it changes as answers land). */
+  perSceneLabel: 'Questions per scene (average)',
   skipMeter: 'Finding where to skip',
   job3: 'Checks the descriptions',
   job3Body:
@@ -420,6 +439,8 @@ export const DEMO_LIVE = {
   /** Inside "How this was checked": the general category a film-specific reason is filed and filtered under. */
   categoryKey: 'Category',
   howChecked: 'How this was checked',
+  /** A reason that groups several checks ("The Giant and Hogarth in danger"): each one is inside. */
+  howCheckedMany: (n: number) => `How this was checked (${n} checks)`,
   asked: 'The question',
   askedMany: 'The questions',
   jevAnswered: 'Jev’s answer',
@@ -428,7 +449,8 @@ export const DEMO_LIVE = {
   notChecked: 'Not checked',
   answerScore: 'Answer score',
   cutoff: (act: string) => `Cutoff for yes: ${act}`,
-  scoreNote: 'Scores run from 0 to 1. A score is how strongly Jev answered yes, not the chance a child will be scared.',
+  /** Directly above the score bars, inside "How this was checked". */
+  scoreNote: 'Scores show how strongly Jev answered yes. They do not predict how a child will react.',
   combinedAny: 'Jev was asked these questions; the highest answer counts.',
   combinedAll: 'Jev was asked these questions; every answer has to pass.',
   combinedGate: 'The second question counts only when the first one passes.',

@@ -4,7 +4,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   background: var(--sheet);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-sheet);
@@ -21,37 +21,61 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px 24px;
+  gap: 12px 24px;
   flex-wrap: wrap;
 }
 
 .verdict {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   min-width: 0;
 }
 
+/* The number keeps its words beside it: on a phone the words wrap in their own column. */
 .verdictLine {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
   line-height: 1;
   font-weight: 800;
   text-wrap: wrap;
 }
 
 .count {
-  font-size: 46px;
+  flex: none;
+  font-size: 38px;
   font-weight: 800;
 }
 
 .words {
-  font-size: 21px;
+  min-width: 0;
+  font-size: 19px;
   font-weight: 600;
   line-height: 1.2;
   color: var(--body-strong);
+}
+
+@media (min-width: 720px) {
+  .top {
+    gap: 16px 24px;
+  }
+
+  .verdict {
+    gap: 12px;
+  }
+
+  .verdictLine {
+    gap: 12px;
+  }
+
+  .count {
+    font-size: 46px;
+  }
+
+  .words {
+    font-size: 21px;
+  }
 }
 
 .breakdown {
@@ -280,7 +304,7 @@
 .bandBox {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   align-items: flex-start;
 }
 

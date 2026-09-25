@@ -885,7 +885,7 @@ button.tile:hover .tileBar {
 .sheet {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   background: var(--sheet);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-sheet);
@@ -901,7 +901,7 @@ button.tile:hover .tileBar {
 .doneTop {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 @media (min-width: 720px) {
@@ -915,26 +915,43 @@ button.tile:hover .tileBar {
 .doneCount {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .countLine {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
 }
 
+/* The number keeps its words beside it: on a phone the words wrap in their own column. */
 .countNumber {
-  font-size: 46px;
+  flex: none;
+  font-size: 38px;
   line-height: 1;
   font-weight: 800;
 }
 
 .countWords {
-  font-size: 21px;
+  min-width: 0;
+  font-size: 19px;
+  line-height: 1.25;
   font-weight: 600;
   color: var(--body-strong);
+}
+
+@media (min-width: 720px) {
+  .countLine {
+    gap: 12px;
+  }
+
+  .countNumber {
+    font-size: 46px;
+  }
+
+  .countWords {
+    font-size: 21px;
+  }
 }
 
 .breakdown {
@@ -1673,6 +1690,44 @@ button.tile:hover .tileBar {
 
 /* --- the live check, reorganised (final review) ----------------------------------------------------- */
 
+/* What Jev is doing right now: first on the board, so a phone shows it in the first screen while the
+   scene strip under it is still waiting for its answers. The API's words and counts; no motion of its
+   own, so a check that stalls looks stalled. */
+.now {
+  align-self: flex-start;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 14px 11px;
+  border-radius: 16px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-left: 4px solid var(--butter);
+}
+
+.nowKey {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--butter);
+}
+
+.nowText {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--dark-text);
+}
+
+/* The count wraps as one piece ("15 of 38 checked"), never split across lines. */
+.nowCount {
+  white-space: nowrap;
+}
+
 /* Time and cost: measured, small, one line. */
 .boardStats {
   display: flex;
@@ -1837,7 +1892,7 @@ button.tile:hover .tileBar {
 
 @media (min-width: 720px) {
   .detailList {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
 
@@ -1895,7 +1950,7 @@ button.tile:hover .tileBar {
 .bandBox {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   align-items: flex-start;
 }
 
@@ -2061,4 +2116,47 @@ button.tile:hover .tileBar {
 .legendMark.tile_asking {
   border-color: var(--butter);
   border-style: dashed;
+}
+
+/* A grouped reason's checks, each by its own words, inside "How this was checked". */
+.scoreNote {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body-strong);
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+}
+
+.checkList {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checkItem > * + * {
+  margin-top: 8px;
+}
+
+.checkItem + .checkItem {
+  padding-top: 14px;
+  border-top: 1px solid var(--hairline);
+}
+
+.checkLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--ink);
 }

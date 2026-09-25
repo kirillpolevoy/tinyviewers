@@ -216,13 +216,24 @@ poll is the add card's loop (`startPoll` in `lib/poll.ts`): one request at a tim
 polls fail, "Updates interrupted" after three misses, aborted on unmount. Only an answered scene is a
 control. Transitions are CSS only and are switched off under `prefers-reduced-motion`.
 
+**Now, first.** The board opens with one line on what Jev is doing at this moment — "Checking scene
+breaks · 15 of 38 checked", "Checking descriptions · 127 sentences checked", "Checking danger and
+fear · 9 of 39 scenes complete" — from the run's `stage` and the API's own counts (`runActivity` in
+`lib/demo.ts`). The first ten-odd seconds of a real run are the scene breaks and the descriptions,
+which sit below the scene strip; on a phone this line is the only part of them in the first screen.
+
 **The finish, in plain numbers:** time, cost, scenes to know about ("13 of 45"), and "Same as the
 film page?" — yes only when every scene of each list is in the other (`sameness` in `lib/demo.ts`);
 "Not in the library" or "Didn't come back" otherwise, never a "no".
 
-**One scene up close** shows, for every reason the scene is on the list: the question as it was
+**One scene up close** shows the reasons the scene is on the list as a parent would say them,
+overlapping checks grouped (`groupReasons` in `lib/reasons.ts`: "The Giant and Hogarth in danger"
+holds "The Iron Giant in danger", "Hogarth Hughes in danger", "Child in danger" and "Afraid for
+safety"). Each reason's "How this was checked" keeps every check inside it: the question as it was
 asked, Jev's answer against its line (or Sonnet's yes, answered earlier), and the rule that let it
-count (`ruleSentence` in `lib/copy.ts`, one plain sentence per `select.js` rule code).
+count (`ruleSentence` in `lib/copy.ts`, one plain sentence per `select.js` rule code). A character's
+name is shortened only to a word the run's own checked titles and descriptions use. The film page's
+open row groups the same way, with the checks behind each reason one tap away.
 
 **Plain states, kept apart** (`pickState` in `lib/demo.ts`): the budget is spent, the service is not
 answering, no film is ready yet, a film the API says is not ready, a run that failed (with the API's
@@ -325,6 +336,8 @@ node scripts/mock-scene-api.mjs                         # http://localhost:8788
 SCENE_API_URL=http://localhost:8788 npm run dev
 ```
 
+A mock run goes through the real API's stages one at a time, in its order (scene breaks, descriptions,
+questions per scene, where to skip), and names the one running in `stage`.
 `GET /__mock/mode?set=cap|down|empty|notready|flaky|differs|normal` switches state (`differs`: a finished run's list differs from the page's); run ids
 `fixed-<slug>-t<ms>`, `fixed-<slug>-done`, `fixed-<slug>-fail` and job ids `fixed-addjob-t<ms>` are
 frozen at one moment, for screenshots (`/library?job=fixed-addjob-t010000` is the film being read, `…t050000` the questions).

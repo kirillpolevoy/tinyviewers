@@ -14,7 +14,7 @@
 // Switches, for looking at every state:
 //   GET /__mock/mode?set=normal|cap|down|empty|notready|flaky|differs   (flaky: run polls answer 502;
 //                                                   differs: a finished run's list differs from the page's)
-//   run ids  fixed-<slug>-t<ms>   a run frozen at that many ms in, e.g. fixed-zootopia-t004500
+//   run ids  fixed-<slug>-t<ms>   a run frozen at that many ms in, e.g. fixed-croods-t004000 (the descriptions)
 //            fixed-<slug>-done    a finished run;  fixed-<slug>-fail   a failed one
 //   job ids  fixed-addjob-t<ms>   an add run frozen at that many ms in
 //   MOCK_SEGMENT_MS=30000         how long "Sonnet reads the film" takes in a live add run here
@@ -39,7 +39,20 @@ const share = (t, from, to) => clamp((t - from) / (to - from));
 
 // --- demo runs ------------------------------------------------------------------------------------
 
-const T = { cutsEnd: 3000, claimsFrom: 1000, claimsEnd: 8500, classifyFrom: 2000, classifyEnd: 9500, momentsFrom: 9500, momentsEnd: 11000, done: 11500 };
+// One stage at a time, in the real API's order (pipeline-jevfirst/stages/index.js DEMO_STAGES): the scene
+// breaks, then the descriptions, then the questions per scene, then where to skip. `stage` names the one
+// running, as the real API's does.
+const T = { cutsFrom: 300, cutsEnd: 2500, claimsFrom: 2500, claimsEnd: 6500, classifyFrom: 6500, classifyEnd: 10500, momentsFrom: 11000, momentsEnd: 12200, done: 13000 };
+const STAGE_AT = [
+  [T.cutsFrom, 'segment_build'],
+  [T.claimsFrom, 'claims'],
+  [T.classifyFrom, 'classify'],
+  [T.classifyEnd, 'mortal'],
+  [T.momentsFrom, 'moments'],
+  [T.momentsEnd, 'check_describe'],
+  [12_800, 'select3'],
+];
+const stageAt = (t) => (t < T.cutsFrom || t >= T.done ? null : STAGE_AT.filter(([from]) => t >= from).at(-1)?.[1] ?? null);
 
 function runAt(slug, t, { failed = false } = {}) {
   const f = fixture.films.find((x) => x.film.slug === slug);
@@ -47,14 +60,14 @@ function runAt(slug, t, { failed = false } = {}) {
   const N = f.scenes.length;
   const cutScenes = f.scenes.slice(1);
   const doubtIdx = new Set([3, Math.floor(cutScenes.length * 0.6)]);
-  const cutsDone = Math.floor(share(t, 0, T.cutsEnd) * cutScenes.length);
+  const cutsDone = Math.floor(share(t, T.cutsFrom, T.cutsEnd) * cutScenes.length);
   const S = f.sentences.length;
   const claimsDone = Math.floor(share(t, T.claimsFrom, T.claimsEnd) * S);
   const answered = Math.floor(share(t, T.classifyFrom, T.classifyEnd) * N);
   // Like the API's select1: whether a scene is on the list is known only once every scene is answered.
-  const ruled = answered >= N;
+  const ruled = answered >= N && t >= T.momentsFrom;
   const flaggedCount = f.flagged.length;
-  const momentsDone = ruled ? Math.floor(share(t, T.momentsFrom, T.momentsEnd) * flaggedCount) : 0;
+  const momentsDone = ruled && t >= T.momentsFrom ? Math.floor(share(t, T.momentsFrom, T.momentsEnd) * flaggedCount) : 0;
   const done = !failed && t >= T.done;
   const scenes = f.scenes.map((s, i) => ({
     ...s,
@@ -69,9 +82,9 @@ function runAt(slug, t, { failed = false } = {}) {
   // it is about. Doubted cuts are kept once each so the board can still mark them.
   const feed = [];
   const at = (share0, i, n, from, to) => Math.round(from + ((to - from) * (i + 1)) / Math.max(1, n));
-  for (const i of doubtIdx) if (i < cutsDone - 6) feed.push({ kind: 'cut', text: `Cut before ${cutScenes[i].id}`, verdict: 'doubtful', at_ms: at(0, i, cutScenes.length, 0, T.cutsEnd), scene: cutScenes[i].id });
+  for (const i of doubtIdx) if (i < cutsDone - 6) feed.push({ kind: 'cut', text: `Cut before ${cutScenes[i].id}`, verdict: 'doubtful', at_ms: at(0, i, cutScenes.length, T.cutsFrom, T.cutsEnd), scene: cutScenes[i].id });
   for (let i = Math.max(0, cutsDone - 6); i < cutsDone; i++) {
-    feed.push({ kind: 'cut', text: `Cut before ${cutScenes[i].id}`, verdict: doubtIdx.has(i) ? 'doubtful' : 'confirmed', at_ms: at(0, i, cutScenes.length, 0, T.cutsEnd), scene: cutScenes[i].id });
+    feed.push({ kind: 'cut', text: `Cut before ${cutScenes[i].id}`, verdict: doubtIdx.has(i) ? 'doubtful' : 'confirmed', at_ms: at(0, i, cutScenes.length, T.cutsFrom, T.cutsEnd), scene: cutScenes[i].id });
   }
   for (let i = Math.max(0, claimsDone - 6); i < claimsDone; i++) {
     const c = f.sentences[i];
@@ -94,6 +107,7 @@ function runAt(slug, t, { failed = false } = {}) {
     id: 'mock',
     slug,
     status: failed ? 'failed' : done ? 'done' : t < 300 ? 'queued' : 'running',
+    stage: failed ? stageAt(Math.min(t, 6200)) : done ? null : stageAt(t),
     started_at: t < 300 ? null : new Date(Date.now() - t).toISOString(),
     elapsed_ms: t < 300 ? 0 : elapsed,
     cost_usd: Math.round(0.0213 * (elapsed / T.done) * 1e6) / 1e6,

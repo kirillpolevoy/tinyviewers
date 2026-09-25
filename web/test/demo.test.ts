@@ -36,6 +36,7 @@ import {
   compareLine,
   failedLead,
   checkedTitle,
+  runActivity,
   type DemoRun,
   type DemoScene,
 } from '../lib/demo';
@@ -452,4 +453,48 @@ test('the generic poll stops on the first value that is not live', async () => {
   });
   assert.deepEqual(seen, ['running', 'done']);
   assert.equal(answers.length, 0);
+});
+
+test('the board says what Jev is doing now: the API\'s stage and its own counts, nothing more', () => {
+  const stages = run().stages;
+  const scenes = [scene({ id: 'S1' }), scene({ id: 'S2', state: 'asking' }), scene({ id: 'S3', state: 'pending' })];
+  assert.equal(runActivity(run({ status: 'queued' }))?.text, 'Starting the check');
+  assert.equal(
+    runActivity(run({ stage: 'segment_build', stages: { ...stages, split_check: { done: 15, total: 38, doubtful: 1 } } }))?.text,
+    'Checking scene breaks · 15 of 38 checked',
+  );
+  // Nothing planned yet: the step, with no count of our own.
+  assert.equal(runActivity(run({ stage: 'segment_build' }))?.text, 'Checking scene breaks');
+  const claims = { ...stages.claims, done: 127, total: 208 };
+  assert.equal(runActivity(run({ stage: 'claims', stages: { ...stages, claims } }))?.text, 'Checking descriptions · 127 sentences checked');
+  assert.equal(runActivity(run({ stage: 'check_describe2', stages: { ...stages, claims } }))?.name, 'Checking descriptions');
+  const danger = runActivity(run({ stage: 'classify', scenes }));
+  assert.deepEqual([danger?.name, danger?.count], ['Checking danger and fear', '1 of 3 scenes complete']);
+  assert.equal(runActivity(run({ stage: 'mortal', scenes }))?.key, 'danger');
+  assert.equal(
+    runActivity(run({ stage: 'moments', stages: { ...stages, moments: { done: 4, total: 12 } } }))?.text,
+    'Finding where to skip · 4 of 12 scenes complete',
+  );
+  // Between stages (a hand-off), or a stage this page does not know: waiting, said as waiting.
+  assert.equal(runActivity(run({ stage: null }))?.text, 'Waiting for the next answers');
+  assert.equal(runActivity(run({ stage: 'something_new' }))?.key, 'waiting');
+  // Finished or stopped: the board says nothing about now.
+  assert.equal(runActivity(run({ status: 'done', stage: 'select3' })), null);
+  assert.equal(runActivity(run({ status: 'failed', stage: 'classify' })), null);
+});
+
+test('a list row\'s chips fold overlapping reasons, as the scene view groups them', () => {
+  const f = {
+    reasons: [],
+    why: { line: '', tags: [
+      { label: 'Weapon used', by: ['sonnet' as const], p: 0.8, rule: 'strong_event' },
+      { label: 'The Iron Giant in danger', category: 'Character in danger', by: ['jev' as const], p: 0.9, rule: 'film_child_in_danger' },
+      { label: 'Caught in danger', by: ['jev' as const], p: 0.9, rule: 'strong_event' },
+      { label: 'Child in danger', by: ['jev' as const], p: 0.9, rule: 'strong_event' },
+      { label: 'Power substation electrocution endangers someone', category: 'Dangerous situation', by: ['jev' as const], p: 0.8, rule: 'film_danger' },
+      { label: 'Dangerous machinery', by: ['jev' as const], p: 0.9, rule: 'presence_with_danger' },
+      { label: 'Afraid for safety', by: ['jev' as const], p: 0.9, rule: 'strong_event+cooccur', with: ['Child in danger'] },
+    ] },
+  };
+  assert.deepEqual(reasonChips(f), { chips: ['Weapon used', 'Character in danger', 'Dangerous situation'], more: 0 });
 });

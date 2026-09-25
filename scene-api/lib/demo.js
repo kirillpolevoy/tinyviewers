@@ -105,7 +105,30 @@ export async function sweepDemoRuns(db, staleMs = DEMO_STALE_MS) {
         and coalesce(progress_at, updated_at) < now() - ($1::bigint * interval '1 millisecond')`,
     [staleMs],
   );
+  await healOldEndings(db).catch(() => {});
   await db.query("delete from demo_run_stages where run_id in (select id from demo_runs where status in ('done', 'failed'))").catch(() => {});
+}
+
+/**
+ * A rolling upgrade: a v10.4.2 invocation still alive when the v10.4.4 schema step ran ends its run the
+ * old way -- cost_usd only (its final bill, or its reservation when the old sweep gave up on it) -- and
+ * leaves spent_usd at what the upgrade measured, so the page would show a stale cost. The new code always
+ * ends a run with spent_usd = cost_usd, so a finished row where they differ was ended by the old code:
+ * it is given the same money columns the upgrade gives an old finished run. cost_usd, what the daily cap
+ * counts, never goes down; a run the old sweep ended keeps the part of it that was never measured as
+ * uncertain_usd. Idempotent: a healed row has spent_usd = cost_usd.
+ */
+export async function healOldEndings(db) {
+  await db.query(
+    `update demo_runs set
+        uncertain_usd = least(greatest(cost_usd, spent_usd), uncertain_usd + case when status = 'failed' and error_code = 'timed_out'
+          then greatest(cost_usd - greatest(spent_usd, coalesce(case when jsonb_typeof(progress -> 'spent_usd') = 'number' then (progress ->> 'spent_usd')::numeric end, 0)), 0)
+          else 0 end),
+        spent_usd = greatest(cost_usd, spent_usd),
+        cost_usd = greatest(cost_usd, spent_usd),
+        mark_usd = greatest(mark_usd, cost_usd, spent_usd)
+      where status in ('done', 'failed') and spent_usd <> cost_usd`,
+  );
 }
 
 /** A live run no invocation holds, quiet for this long, is asked for again by the next poll. */
@@ -268,7 +291,9 @@ export async function demoRun(db, id, now = Date.now(), { kick = null, keepAlive
     [row.slug],
   ).catch(() => ({ rows: [] }));
   const f = fr[0] ?? null;
-  const spentMeasured = Number(live ? (p.spent_usd ?? row.spent_usd ?? 0) : row.spent_usd ?? row.cost_usd);
+  // A finished run's total is its final figure: spent_usd, which the new code always ends equal to cost_usd
+  // (healOldEndings brings an old ending into line; the larger of the two is read in case it has not yet).
+  const spentMeasured = live ? Number(p.spent_usd ?? row.spent_usd ?? 0) : Math.max(Number(row.spent_usd ?? 0), Number(row.cost_usd ?? 0));
   const uncertain = Number(row.uncertain_usd ?? 0);
   return {
     id: row.id,

@@ -45,11 +45,14 @@ export type Scene = {
    */
   why?: string[];
   /**
-   * The film's own words for a reason whose chip is a general category: "The Iron Giant in danger" under
-   * "Character in danger". Shown inside the open row, never as a chip or a filter.
+   * The reasons as the pipeline stored them, one per check (label, and from a v10.4 guide its rule and
+   * category): grouped for the open row by lib/reasons.ts, never used as filters.
    */
-  whyDetail?: string[];
+  whyTags?: WhyTagLite[];
 };
+
+/** One stored reason tag, as much of it as the open row needs. */
+export type WhyTagLite = { label: string; category?: string | null; rule?: string | null };
 
 /** The title the pipeline writes when no title passed its checks. Never shown as a title. */
 export const PLACEHOLDER_TITLE = 'Flagged scene';
@@ -77,7 +80,7 @@ export function parseWhy(raw: unknown): string[] {
   if (!Array.isArray(value)) return [];
   const out: string[] = [];
   for (const item of value) {
-    // A film-specific reason is shown by its stable category; its own label is the detail (parseWhyDetail).
+    // A film-specific reason is filtered by its stable category; the open row groups the tags themselves (parseWhyTags).
     const obj = item && typeof item === 'object' ? (item as { label?: unknown; category?: unknown }) : null;
     const label = typeof item === 'string' ? item : obj ? (typeof obj.category === 'string' && obj.category.trim() ? obj.category : obj.label) : null;
     if (typeof label !== 'string') continue;
@@ -87,25 +90,38 @@ export function parseWhy(raw: unknown): string[] {
   return out;
 }
 
-/** The film-specific reasons' own words (the tags that carry a `category`), in order, repeats dropped. */
-export function parseWhyDetail(raw: unknown): string[] {
+/**
+ * The stored why (`scenes.why_tags`) as its individual tags, in the pipeline's order, repeats dropped:
+ * every shape `parseWhy` reads (a bare label or an "A · B" line is a tag with a label only). Nothing
+ * readable is no tags, never an error.
+ */
+export function parseWhyTags(raw: unknown): WhyTagLite[] {
   let value = raw;
   if (typeof value === 'string') {
+    const text = value.trim();
+    if (!text) return [];
     try {
-      value = JSON.parse(value);
+      value = JSON.parse(text);
     } catch {
-      return [];
+      value = text.split('·');
     }
   }
-  const tags = value && typeof value === 'object' && !Array.isArray(value) ? (value as { tags?: unknown }).tags : value;
-  if (!Array.isArray(tags)) return [];
-  const out: string[] = [];
-  for (const t of tags) {
-    if (!t || typeof t !== 'object') continue;
-    const { label, category } = t as { label?: unknown; category?: unknown };
-    if (typeof label !== 'string' || typeof category !== 'string' || !category.trim()) continue;
-    const clean = label.trim();
-    if (clean && !out.some((x) => x.toLowerCase() === clean.toLowerCase())) out.push(clean);
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    const v = value as { tags?: unknown; line?: unknown };
+    value = Array.isArray(v.tags) ? v.tags : typeof v.line === 'string' ? v.line.split('·') : [];
+  }
+  if (!Array.isArray(value)) return [];
+  const out: WhyTagLite[] = [];
+  for (const item of value) {
+    const obj = item && typeof item === 'object' ? (item as { label?: unknown; category?: unknown; rule?: unknown }) : null;
+    const label = typeof item === 'string' ? item : typeof obj?.label === 'string' ? obj.label : null;
+    const clean = label?.trim();
+    if (!clean || out.some((t) => t.label.toLowerCase() === clean.toLowerCase())) continue;
+    out.push({
+      label: clean,
+      category: typeof obj?.category === 'string' && obj.category.trim() ? obj.category.trim() : null,
+      rule: typeof obj?.rule === 'string' ? obj.rule : null,
+    });
   }
   return out;
 }
