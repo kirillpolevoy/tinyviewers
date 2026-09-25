@@ -118,7 +118,11 @@ export default async function FilmPage({ params, searchParams }: Props) {
           {/* The film's own synopsis, from TMDB, so a parent knows they are on the right film
               before reading a word about its scenes. Null for a film TMDB has no words for, and
               then the header is the title alone: an empty paragraph is not a synopsis. */}
-          {film.overview && <Overview text={film.overview} />}
+          {film.overview && (
+            <div className={styles.overviewArea}>
+              <Overview text={film.overview} />
+            </div>
+          )}
         </div>
 
         <div className={styles.content}>

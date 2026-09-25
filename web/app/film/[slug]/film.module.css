@@ -165,11 +165,28 @@
   margin-top: 6px;
 }
 
-/* On a phone the poster and the facts sit at the top, a small poster beside them under the title,
-   then the findings. */
+/* On a phone: the title, then the small poster beside the facts, then the synopsis, then the
+   findings. The head's two parts become grid items of their own so the poster sits between them. */
 @media (max-width: 719px) {
   .main {
+    grid-template-areas:
+      'title'
+      'rail'
+      'overview'
+      'content';
     gap: 16px;
+  }
+
+  .head {
+    display: contents;
+  }
+
+  .title {
+    grid-area: title;
+  }
+
+  .overviewArea {
+    grid-area: overview;
   }
 
   .content {
