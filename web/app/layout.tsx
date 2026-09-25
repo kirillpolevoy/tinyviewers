@@ -13,10 +13,18 @@ const baloo = Baloo_2({
   fallback: ['Arial Rounded MT Bold', 'Futura', 'Trebuchet MS', 'sans-serif'],
 });
 
+const SITE_TITLE = 'Tiny Viewers — scene guides for kids’ movies';
+const SITE_DESCRIPTION =
+  'Look up a kids’ movie and see every scary or sad scene: exactly when it happens and what’s in it.';
+
 export const metadata: Metadata = {
-  title: 'Tiny Viewers — scene guides for kids’ movies',
-  description:
-    'Look up a kids’ movie and see every scary or sad scene: exactly when it happens and what’s in it.',
+  // Absolute URLs for link previews. SITE_URL overrides it (a preview deployment, local runs).
+  metadataBase: new URL(process.env.SITE_URL ?? 'https://tinyviewers.kirillpolevoy.com'),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  // The preview image itself is app/opengraph-image.tsx (and a film's own, under film/[slug]).
+  openGraph: { type: 'website', siteName: 'Tiny Viewers', locale: 'en_US', title: SITE_TITLE, description: SITE_DESCRIPTION, url: '/' },
+  twitter: { card: 'summary_large_image', title: SITE_TITLE, description: SITE_DESCRIPTION },
 };
 
 export const viewport: Viewport = {

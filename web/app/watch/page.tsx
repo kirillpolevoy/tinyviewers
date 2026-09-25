@@ -11,6 +11,8 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Watch it work — Tiny Viewers',
   description: DEMO_LIVE.intro,
+  openGraph: { type: 'website', siteName: 'Tiny Viewers', title: 'Watch it work — Tiny Viewers', description: DEMO_LIVE.intro, url: '/watch' },
+  twitter: { card: 'summary_large_image', title: 'Watch it work — Tiny Viewers', description: DEMO_LIVE.intro },
 };
 
 /**

@@ -19,9 +19,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const film = await getFilm(slug);
   if (!film) return { title: 'Not found — Tiny Viewers' };
+  const title = `${film.title} — every scary or sad scene | Tiny Viewers`;
+  const description = `Every scary or sad scene in ${film.title}, in time order: when it happens and what is in it.`;
+  const url = `/film/${film.slug}`;
   return {
-    title: `${film.title} — every scary or sad scene | Tiny Viewers`,
-    description: `Every scary or sad scene in ${film.title}, in time order: when it happens and what is in it.`,
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: 'website', siteName: 'Tiny Viewers', title, description, url },
+    twitter: { card: 'summary_large_image', title, description },
   };
 }
 

@@ -15,6 +15,8 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Film library — Tiny Viewers',
   description: LIBRARY.intro,
+  openGraph: { type: 'website', siteName: 'Tiny Viewers', title: 'Film library — Tiny Viewers', description: LIBRARY.intro, url: '/library' },
+  twitter: { card: 'summary_large_image', title: 'Film library — Tiny Viewers', description: LIBRARY.intro },
 };
 
 type Param = string | string[] | undefined;
