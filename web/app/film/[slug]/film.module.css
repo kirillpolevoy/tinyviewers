@@ -165,19 +165,21 @@
   margin-top: 6px;
 }
 
-/* On a phone: the title, then the small poster beside the facts, then the synopsis, then the
-   findings. The head's two parts become grid items of their own so the poster sits between them. */
+/* On a phone: the title, the poster the full width of the column, the synopsis, then the year and
+   IMDb link, then the findings. The head and the rail become grid items of their own for this. */
 @media (max-width: 719px) {
   .main {
     grid-template-areas:
       'title'
-      'rail'
+      'poster'
       'overview'
+      'facts'
       'content';
     gap: 16px;
   }
 
-  .head {
+  .head,
+  .rail {
     display: contents;
   }
 
@@ -185,8 +187,20 @@
     grid-area: title;
   }
 
+  .poster {
+    grid-area: poster;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    border-radius: 22px;
+  }
+
   .overviewArea {
     grid-area: overview;
+  }
+
+  .facts {
+    grid-area: facts;
   }
 
   .content {
