@@ -435,6 +435,7 @@ export const DEMO_LIVE = {
   bandsSame: 'These scenes have the same ratings for both age groups.',
   openFilm: 'Open the film page',
   runAgain: 'Run the check again',
+  seeResults: 'See the final scene analysis',
   openGuide: 'See the saved guide',
   another: 'Try another film',
   listHeading: 'Scenes to know about',
