@@ -16,9 +16,10 @@ export const metadata: Metadata = {
 /**
  * Pick a film, and watch Jev do its three jobs on it live.
  *
- * Written for a parent who has never heard of Jev: one line on what they get and what to tap, the films
- * straight after it, then the plain note that this is the step that builds the guides (not a showcase)
- * and how it works: what Sonnet did earlier, Jev's three jobs, and what the rules do after.
+ * Written for a parent who has never heard of Jev: one line on what they get, then how it works -- the
+ * three things they do (pick, watch, read) and what happens behind the scenes (what Sonnet did earlier,
+ * Jev's three jobs, what the rules do after) -- then the films, then the plain note that this is the step
+ * that builds the guides (not a showcase).
  *
  * Read fresh on every request: which films have Sonnet's reading stored, and whether today's budget
  * has room for a run. Each state is its own sentence (`pickState`): live, the budget is used up, both
@@ -38,14 +39,14 @@ export default async function WatchPage() {
           <p className={styles.lead}>{DEMO_LIVE.intro}</p>
         </section>
 
-        {/* The choice first: what to tap comes before how it works. */}
+        {/* How it works first: what to do (pick, watch, read), then what happens behind the scenes. */}
+        <HowItFits steps />
+
         <WatchPick films={films} status={status} />
 
         <p className={styles.realStep}>
           {DEMO_LIVE.realStep} {DEMO_LIVE.sourcesNote}
         </p>
-
-        <HowItFits />
       </main>
     </div>
   );

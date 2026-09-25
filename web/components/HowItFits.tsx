@@ -1,13 +1,34 @@
 import { DEMO_LIVE } from '@/lib/copy';
 import styles from './Watch.module.css';
 
-/** Before (Sonnet, stored) → Jev's three jobs, live → after (the rules). Also used on a run's page. */
-export function HowItFits() {
+/**
+ * Before (Sonnet, stored) → Jev's three jobs, live → after (the rules). Also used on a run's page.
+ * With `steps` (the /watch picker page), it opens with what the visitor does: pick, watch, read.
+ */
+export function HowItFits({ steps = false }: { steps?: boolean }) {
   return (
     <section className={styles.how} aria-labelledby="how-heading">
       <h2 id="how-heading" className={styles.sectionHeading}>
         {DEMO_LIVE.howHeading}
       </h2>
+      {steps && (
+        <>
+          <ol className={styles.jobList}>
+            {DEMO_LIVE.steps.map((step, i) => (
+              <li key={step.title} className={styles.jobItem}>
+                <span className={styles.jobNumber} aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span className={styles.jobItemText}>
+                  <span className={styles.jobItemTitle}>{step.title}</span>
+                  <span className={styles.jobItemBody}>{step.body}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+          <p className={styles.flowTag}>{DEMO_LIVE.behindLabel}</p>
+        </>
+      )}
       <div className={styles.flow}>
       <div className={styles.flowSide}>
         <p className={styles.flowTag}>{DEMO_LIVE.beforeTag}</p>

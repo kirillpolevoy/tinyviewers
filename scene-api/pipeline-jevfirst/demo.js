@@ -69,6 +69,7 @@ import { PipelineError, errorSummary } from '../pipeline/errors.js';
 import { formatTime } from './srt.js';
 import { whyDetail } from './why-detail.js';
 import { localBudgetMs } from './runner.js';
+import { strengthOf } from './strength.js';
 
 export const DEMO_BUDGET_MS = 240_000;   // no stage STARTS after this much of an invocation
 export const DEMO_HARD_MS = 285_000;     // every in-flight call is aborted here; the stage resumes next time
@@ -577,8 +578,8 @@ export async function runDemo(db, runId, opts = {}) {
             const s = progress.scenes.find((x) => x.id === sc.id);
             if (!s) continue;
             s.flagged = !!sc.flagged;
-            s.strength_5_7 = sc.flagged ? sc.severity?.['5-7']?.level ?? null : null;
-            s.strength_8_10 = sc.flagged ? sc.severity?.['8-10']?.level ?? null : null;
+            s.strength_5_7 = strengthOf(sc)['5-7'];
+            s.strength_8_10 = strengthOf(sc)['8-10'];
             // v10.4: every flagged scene says why -- its flag reasons as plain tags, with who answered
             s.why = sc.flagged ? whyTagsOf(sc) : null;
             if (def.id === 'select3' && sc.flagged) {
