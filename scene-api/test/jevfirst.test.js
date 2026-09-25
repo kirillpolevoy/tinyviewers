@@ -38,7 +38,7 @@ import { withRun } from '../pipeline-jevfirst/context.js';
 import { writeArtifacts, storeTrack, DEMO_KINDS } from '../pipeline-jevfirst/store.js';
 import { startDemoRun, demoRun, demoStatus, demoFilms, resetDemoLimiter, DEMO_RESERVE_USD } from '../lib/demo.js';
 import { compareWithGuide, applyResult, newProgress, reconcileClaims } from '../pipeline-jevfirst/demo.js';
-import { reasonCategory } from '../pipeline-jevfirst/stages/ingest.js';
+import { reasonCategory, mildSignals } from '../pipeline-jevfirst/stages/ingest.js';
 import { makeFetch, jevAnswer, jsonResponse, claudeStream } from './jevfirst-stubs.js';
 
 const PASSCODE = 'open sesame';
@@ -331,13 +331,22 @@ test('a Jev-first add runs every stage across many invocations and writes a film
   const { rows: sel } = await db.query("select doc from jevfirst_artifacts where slug = $1 and kind = 'tags'", [slug]);
   const tagsDoc = typeof sel[0].doc === 'string' ? JSON.parse(sel[0].doc) : sel[0].doc;
   const flaggedDocs = tagsDoc.scenes.filter((x) => x.flagged);
-  assert.equal(flaggedDocs.length, scenes.length);
+  // the guide is the flagged scenes plus the mild ones (a scare or sadness event the flag rules keep off
+  // the flagged list), each mild scene at level 1 with its signals as its chips
+  const mildDocs = tagsDoc.scenes.filter((x) => mildSignals(x).length);
+  assert.equal(flaggedDocs.length + mildDocs.length, scenes.length);
   for (const s of scenes) {
     const chips = typeof s.tags === 'string' ? JSON.parse(s.tags) : s.tags;
     const events = chips.filter((c) => c.channel === 'event');
     const doc = flaggedDocs.find((x) => s.id === `${slug}:${x.id}`);
     assert.ok(events.length > 0, `${s.id} shows why`);
     assert.ok(events.every((c) => c.id.startsWith('reason:')), `${s.id}: event chips are the flag reasons`);
+    if (!doc) {
+      assert.ok(mildDocs.some((x) => s.id === `${slug}:${x.id}`), `${s.id} is flagged or mild`);
+      assert.equal(s.severity_5_7, 1);
+      assert.equal(s.severity_8_10, 1);
+      continue;
+    }
     // a film-specific reason ('Arlo in danger') is filed under its stable category ('Character in danger'):
     // the chip and the filter are the category, the film's own words stay in why_tags as the detail
     assert.deepEqual(events.map((c) => c.label).sort(), [...new Set(doc.why_tags.tags.map((t) => reasonCategory(t.rule) ?? t.label))].sort());
@@ -352,7 +361,7 @@ test('a Jev-first add runs every stage across many invocations and writes a film
   // v10.4 (a): the text rule. Attempt 1's sentence passed only loosely, so the second attempt ran and its
   // strictly confirmed sentence is shown; the title pass wrote the confirmed title. Nothing unchecked is shown.
   assert.ok(f.claude.describe2 >= 1 && f.claude.titles >= 1, JSON.stringify(f.claude));
-  for (const s of scenes) {
+  for (const s of scenes.filter((x) => flaggedDocs.some((d) => x.id === `${slug}:${d.id}`))) {
     assert.ok([null, 'Arlo cries for help by the river.', 'Arlo is in danger by the river.'].includes(s.description), s.description);
     assert.ok(['Arlo cries for help', 'Flagged scene'].includes(s.title), s.title);
   }

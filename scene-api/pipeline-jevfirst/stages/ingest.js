@@ -163,8 +163,67 @@ export async function ensureReasonVocabulary(tx, labels) {
   return byId.size;
 }
 
+/**
+ * Scene events that put an unflagged scene on the list as MILD: a brief scare or sadness a parent of a
+ * young child still wants to know about (a sudden appearance, screaming, a threat, a chase, a fall,
+ * crying). The flag rules keep these off the flagged list -- their questions are not proven enough to
+ * flag, or the policy makes them tag-only (comic peril) -- but a guide that drops them loses the gentle
+ * films' whole list (Room on the Broom: 10 scenes before v10.4, 4 after). Presence alone (a monster in
+ * Monsters, Inc., a mouse, darkness) never adds a scene.
+ */
+export const MILD_EVENTS = new Set([
+  'jump_scare', 'appears_suddenly', 'child_frightened', 'threatens_harm', 'plots_harm', 'creature_threat', 'chased', 'attacked',
+  'injured', 'falls', 'nearly_falls', 'caught_in_hazard', 'trapped', 'captured', 'crying', 'despair', 'grieving', 'comic_peril',
+]);
+/** Shown with a mild scene's reasons, but never enough on their own: they fire on calm scenes too. */
+export const MILD_SUPPORT = new Set(['startled', 'screams', 'afraid_for_safety']);
+/** An event tag counts only at this probability or above (gated reasons already passed their rule). */
+export const MILD_MIN_P = 0.75;
+
+/** The mild signals of one unflagged scene (empty = not on the list): its events, then supporting labels. */
+export function mildSignals(s) {
+  if (s.flagged || s.kind?.choice === 'credits') return [];
+  const events = new Map();
+  const support = new Map();
+  const note = (id, label, by, p, strong) => {
+    const into = MILD_EVENTS.has(id) && strong ? events : MILD_SUPPORT.has(id) ? support : null;
+    if (into && !events.has(id) && !into.has(id)) into.set(id, { id, label, by: by === 'sonnet' ? 'sonnet' : 'jev', p: p ?? null });
+  };
+  for (const r of s.gated_reasons ?? []) note(r.id, r.label, r.by, r.p, true);
+  for (const t of s.tags ?? []) if (t.level === 'act' && t.layer === 'event') note(t.id, t.label, t.by, t.p, (t.p ?? 0) >= MILD_MIN_P);
+  return events.size ? [...events.values(), ...support.values()] : [];
+}
+
+/**
+ * Sonnet's own summary of a scene, as Jev checked it when the film was read (the claims stage): the
+ * sentences a flagged scene's text would also be allowed to show (verified, or the A0>C loose bar:
+ * supports >= 0.4 and contradicts < 0.3).
+ */
+function checkedSummary(seg) {
+  const ok = (c) => c?.status === 'verified' || ((c?.probabilities?.supports ?? 0) >= 0.4 && (c?.probabilities?.contradicts ?? 1) < 0.3);
+  const kept = (seg?.sentences ?? []).filter((x) => x?.text && ok(x.check)).map((x) => x.text.trim());
+  return kept.length ? kept.join(' ') : null;
+}
+
+/** The mild rows of a selection, in the guide rows' shape: level 1 for both bands, reasons = the signals. */
+export function mildRows(tags, segments, { grams = null } = {}) {
+  const segById = new Map((segments ?? []).map((g) => [g.id, g]));
+  return tags.scenes.map((s) => [s, mildSignals(s)]).filter(([, sig]) => sig.length).map(([s, sig]) => {
+    const text = quoteGate(null, checkedSummary(segById.get(s.id)), grams);
+    const why = sig.map((t) => ({ label: t.label, category: null, ids: [t.id], by: [t.by], p: t.p, rule: 'mild' }));
+    return {
+      scene_id: s.id, start_ms: s.start_ms, end_ms: Math.max(s.end_ms, s.start_ms), start_cue: s.start_cue, end_cue: s.end_cue,
+      title: 'Flagged scene', description: text.description ?? null, text_source: 'segment_summary', quote_dropped: text.dropped,
+      text_rule: null, title_rule: null, severity_5_7: 1, severity_8_10: 1, mild: true,
+      why, why_line: why.map((t) => t.label).join(' · '),
+      reasons: sig.map((t) => ({ id: t.id, label: t.label, by: t.by, p: t.p })),
+      labels: [], other_events: [],
+    };
+  });
+}
+
 /** The film's rows in the shape load.js writeFilmRows takes. `filmId` is the films.id (= slug). */
-export function buildGuide({ slug, film, srt, cues, tags, costs }) {
+export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null }) {
   const trackId = `${slug}:opensubtitles`;
   const track = {
     id: trackId, film_id: slug, source: 'opensubtitles', release_label: srt.release ?? null, language: 'en',
@@ -180,7 +239,9 @@ export function buildGuide({ slug, film, srt, cues, tags, costs }) {
   const scenes = [];
   const labels = [];
   const reasonLabels = [];
-  for (const g of guideRows(tags, { grams: quoteGrams(cues) })) {
+  const grams = quoteGrams(cues);
+  const rows = [...guideRows(tags, { grams }), ...(segments ? mildRows(tags, segments, { grams }) : [])].sort((a, b) => a.start_ms - b.start_ms);
+  for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
     scenes.push({
       id, film_id: slug, track_id: trackId, run_id: `${slug}:labeller`, start_ms: g.start_ms, end_ms: g.end_ms,
@@ -271,7 +332,7 @@ export async function ingestStage(S) {
       } else {
         slug = await claimSlug(tx, film);
       }
-      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs });
+      const built = buildGuide({ slug, film, srt: S.srt, cues: S.cues, tags, costs, segments: S.out('refold')?.segments?.scenes ?? null });
       await ensureVocabulary(tx, taxonomy);
       await ensureReasonVocabulary(tx, built.reasonLabels);
       if (rebuildOf) {
