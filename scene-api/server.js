@@ -26,6 +26,7 @@ const ROUTES = [
   { pattern: /^\/api\/admin\/rebuild\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-rebuild' },
   { pattern: /^\/api\/admin\/backups\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-backups' },
   { pattern: /^\/api\/admin\/restore\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-restore' },
+  { pattern: /^\/api\/admin\/reapply\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-reapply' },
   { pattern: /^\/api\/add\/jobs\/([^/]+)\/?$/, module: './api/add/jobs/[id].js', params: ['id'] },
   { pattern: /^\/api\/add\/jobs\/?$/, module: './api/add/jobs.js', params: [] },
   { pattern: /^\/api\/add\/status\/?$/, module: './api/add/status.js', params: [] },

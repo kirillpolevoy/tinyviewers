@@ -44,6 +44,10 @@
     {
       "source": "/api/admin/restore",
       "destination": "/api/jevfirst?route=admin-restore"
+    },
+    {
+      "source": "/api/admin/reapply",
+      "destination": "/api/jevfirst?route=admin-reapply"
     }
   ],
   "functions": {

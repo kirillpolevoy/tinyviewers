@@ -11,12 +11,13 @@
 //   POST /api/admin/rebuild            -> route=admin-rebuild      passcode; 202 { id, slug }
 //   POST /api/admin/backups            -> route=admin-backups      passcode
 //   POST /api/admin/restore            -> route=admin-restore      passcode
+//   POST /api/admin/reapply            -> route=admin-reapply      passcode
 import { waitUntil } from '@vercel/functions';
 import { noStoreHandler, sendJson, clientIp, first, WRITE_METHODS, notFound } from '../lib/http.js';
 import { getDb } from '../lib/db.js';
 import { demoFilms, demoStatus, startDemoRun, demoRun, continueDemoRun } from '../lib/demo.js';
 import { continueJob } from '../lib/add.js';
-import { startRebuild, backups, restore } from '../lib/admin.js';
+import { startRebuild, backups, restore, reapply } from '../lib/admin.js';
 
 export const config = { maxDuration: 300 };
 
@@ -52,6 +53,7 @@ const ROUTES = {
   }, { methods: ['POST'], parseBody: true }),
   'admin-backups': noStoreHandler(async (req) => backups(await getDb(), req.jsonBody, { ip: clientIp(req) }), { methods: ['POST'], parseBody: true }),
   'admin-restore': noStoreHandler(async (req) => restore(await getDb(), req.jsonBody, { ip: clientIp(req) }), { methods: ['POST'], parseBody: true }),
+  'admin-reapply': noStoreHandler(async (req) => reapply(await getDb(), req.jsonBody, { ip: clientIp(req) }), { methods: ['POST'], parseBody: true }),
 };
 
 const unknown = noStoreHandler(async () => { throw notFound('No such route.'); }, { methods: ['GET', 'HEAD', 'POST'] });
