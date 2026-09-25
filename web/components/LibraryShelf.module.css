@@ -243,3 +243,23 @@ span.poster {
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
+
+/* --- under the list: the way to add a film, closed until asked for ------------------------------ */
+
+.addQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 16px 20px;
+  background: var(--sheet);
+  border: 1px dashed var(--dust);
+  border-radius: var(--radius-card);
+}
+
+.addQuestionHeading {
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 700;
+}

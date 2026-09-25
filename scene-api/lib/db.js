@@ -9,10 +9,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { JEVFIRST_SCHEMA_SQL } from './schema-jevfirst.js';
+import { ensureSchemaOnce } from './ensure-schema.js';
 
 export const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
-export const schemaSql = () => fs.readFileSync(path.join(root, 'schema.sql'), 'utf8');
+/** The Jev-first section (additive, idempotent; also applied by the API itself, lib/ensure-schema.js). */
+export const jevfirstSchemaSql = () => JEVFIRST_SCHEMA_SQL;
+/** The whole schema: the base file, then the Jev-first file. */
+export const schemaSql = () => `${fs.readFileSync(path.join(root, 'schema.sql'), 'utf8')}\n${jevfirstSchemaSql()}`;
 
 export function pgAdapter(pool) {
   const wrap = (client) => ({
@@ -104,6 +109,9 @@ export async function getDb() {
       ...POOL_TIMEOUTS,
     }), 'api'));
   }
+  // The scene-api brings the Jev-first tables up to date by itself, once per instance (lib/ensure-schema.js).
+  // SCHEMA_AUTO=off skips it (e.g. a read-only database role).
+  if (process.env.SCHEMA_AUTO !== 'off') await ensureSchemaOnce(lazyPool);
   return lazyPool;
 }
 

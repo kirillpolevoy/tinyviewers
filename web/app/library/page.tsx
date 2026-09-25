@@ -43,8 +43,8 @@ export default async function LibraryPage({ searchParams }: Props) {
   if (jobId && isJobId(jobId)) {
     const lookup = await readJob(jobId);
     if (lookup.kind === 'job') {
-      // A public screening run has its own page, with its replay.
-      if (lookup.job.kind === 'demo') redirect(`/watch/run/${jobId}`);
+      // A run of the retired Jev-screening demo: that page is gone, and /watch is where demos live now.
+      if (lookup.job.kind === 'demo') redirect('/watch');
       job = lookup.job;
     } else if (lookup.kind === 'unreachable') {
       unreachable = true;
@@ -69,7 +69,6 @@ export default async function LibraryPage({ searchParams }: Props) {
           <LibraryShelf
             films={films}
             query={query}
-            forceAdd={forceAdd}
             initialJob={job}
             unreachableJobId={unreachable ? jobId : null}
           />

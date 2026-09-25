@@ -29,10 +29,10 @@
 .summary {
   list-style: none;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto 18px;
   grid-template-areas:
-    'strength range'
-    'title title';
+    'strength range chevron'
+    'title title chevron';
   gap: 6px 16px;
   align-items: center;
   width: 100%;
@@ -126,6 +126,21 @@
   gap: 8px;
 }
 
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.groupLabel {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
 .tag {
   background: var(--page);
   border: 1px solid var(--hairline);
@@ -136,12 +151,20 @@
   color: var(--body-strong);
 }
 
+/* A reason the scene is on the list: warmer than a plain tag, so the two groups read apart. */
+.tag.why {
+  background: var(--blush);
+  border-color: var(--blush);
+  color: var(--ink);
+}
+
+
 /* From tablet up: the design's three columns — strength, title, time — and the open panel aligned
    under the title column (22px padding + 140px strength + 20px gap = 182px). */
 @media (min-width: 720px) {
   .summary {
-    grid-template-columns: 140px minmax(0, 1fr) auto;
-    grid-template-areas: 'strength title range';
+    grid-template-columns: 140px minmax(0, 1fr) auto 18px;
+    grid-template-areas: 'strength title range chevron';
     gap: 20px;
     padding: 16px 22px;
   }
@@ -171,4 +194,83 @@
 
 .dust {
   background: var(--dust);
+}
+
+/* The disclosure's mark: a chevron that turns when the row is open. */
+.chevron {
+  grid-area: chevron;
+  justify-self: end;
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid var(--ink);
+  border-bottom: 2.5px solid var(--ink);
+  transform: translateY(-3px) rotate(45deg);
+}
+
+.details[open] .chevron {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.readyNote {
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+/* The individual checks behind the grouped reasons, one tap away. */
+.checksSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+
+.checksSummary::-webkit-details-marker {
+  display: none;
+}
+
+.checksSummary::after {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.checks[open] > .checksSummary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.checkList {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body-strong);
+}
+
+.checkGroup {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
 }

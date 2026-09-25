@@ -1,0 +1,3349 @@
+{
+  "version": "split-v10.0-draft",
+  "decided_at": "2026-09-25T01:19:06.640Z",
+  "status": "DECIDED from data by assemble/decide.mjs (rule in that file), written by assemble/build.mjs. fix_mode measured. NOT FROZEN.",
+  "rule": "Jev first. Eligible = every Jev question passes lint.js (one question, explicit yes and no criteria, one condition, no presupposition, no degree, no indirection, no seen-film entity). A: an eligible candidate with precision >= 0.70 on >= 4 fires (magic films >= 0.60) and, where Sonnet was measured, recall >= Sonnet - 0.05 -> Jev (highest recall). S: Sonnet measured (>= 4 fires) and no eligible candidate within 0.05 of it on both precision and recall -> Sonnet. B: Sonnet measured and an eligible candidate ties it -> Jev (highest recall). C: Sonnet never asked or < 4 fires -> Jev (best Wilson lower bound that keeps recall within 0.05 of the v9 wording at 0.7).",
+  "data": {
+    "tournament": "jevfirst/tournament/results.json (13 seen films, jev-1.13.0, $1.5361)",
+    "lint_fix": "lint-fix variants measured (assemble/fixrun/out)",
+    "dev_bias": "all 13 films are seen films and the phrasings were chosen on them; the frozen held-out run is the real test"
+  },
+  "not_split": "Scores (danger, harm, distress, share, resolution, laughs), modifiers (retold, imagined), the kind Choice, mention questions (m.*), film presence (fpl/fps), the claim checks, the split gate, the moment finder and the why check stay with Jev at their v9 wording (not part of the tournament).",
+  "sonnet_asked": [
+    "seriously_ill",
+    "vehicle_crash",
+    "cage_net_trap",
+    "restraints",
+    "graveyard_funeral",
+    "weapon_used",
+    "captured",
+    "trapped",
+    "abandoned",
+    "caregiver_cruelty",
+    "crying",
+    "despair"
+  ],
+  "sonnet_used": [
+    "seriously_ill",
+    "vehicle_crash",
+    "cage_net_trap",
+    "restraints",
+    "graveyard_funeral",
+    "weapon_used",
+    "captured",
+    "trapped",
+    "abandoned",
+    "caregiver_cruelty",
+    "crying",
+    "despair"
+  ],
+  "shadow": [],
+  "assign": {
+    "monster_creature": "jev",
+    "ghost_spirit": "jev",
+    "reanimated_dead": "jev",
+    "skeleton_bones": "jev",
+    "dead_body": "jev",
+    "shark": "jev",
+    "spider_insect": "jev",
+    "snake_reptile": "jev",
+    "large_predator": "jev",
+    "rodent_bat": "jev",
+    "clown": "jev",
+    "doll_puppet": "jev",
+    "mask": "jev",
+    "robot_machine_being": "jev",
+    "witch_sorcerer": "jev",
+    "dark_magic": "jev",
+    "alien": "jev",
+    "scary_appearance": "jev",
+    "gun": "jev",
+    "blade_weapon": "jev",
+    "fire": "jev",
+    "explosion": "jev",
+    "storm": "jev",
+    "deep_dark_water": "jev",
+    "heights": "jev",
+    "darkness": "jev",
+    "needle_medical": "jev",
+    "medical_care": "jev",
+    "seriously_ill": "sonnet",
+    "blood_wound": "jev",
+    "vehicle_crash": "sonnet",
+    "vehicle_accident": "jev",
+    "cage_net_trap": "sonnet",
+    "restraints": "sonnet",
+    "captured": "sonnet",
+    "graveyard_funeral": "sonnet",
+    "dangerous_machine": "jev",
+    "chased": "jev",
+    "attacked": "jev",
+    "falls": "jev",
+    "nearly_falls": "jev",
+    "cannot_breathe": "jev",
+    "caught_in_hazard": "jev",
+    "child_in_danger": "jev",
+    "creature_threat": "jev",
+    "weapon_used": "sonnet",
+    "battle": "jev",
+    "trapped": "sonnet",
+    "swallowed": "jev",
+    "injured": "jev",
+    "badly_hurt": "jev",
+    "dies": "jev",
+    "loved_one_dies": "jev",
+    "pet_dies": "jev",
+    "believed_dead": "jev",
+    "parent_death_learned": "jev",
+    "grieving": "jev",
+    "child_taken": "jev",
+    "child_separated": "jev",
+    "parent_searching": "jev",
+    "abandoned": "sonnet",
+    "family_in_danger": "jev",
+    "parents_argue": "jev",
+    "rages_at_child": "jev",
+    "threatens_harm": "jev",
+    "plots_harm": "jev",
+    "mocked": "jev",
+    "excluded": "jev",
+    "discrimination": "jev",
+    "caregiver_cruelty": "sonnet",
+    "betrayal": "jev",
+    "transforms": "jev",
+    "possessed": "jev",
+    "nightmare": "jev",
+    "unseen_threat": "jev",
+    "appears_suddenly": "jev",
+    "startled": "jev",
+    "child_frightened": "jev",
+    "afraid_for_safety": "jev",
+    "screams": "jev",
+    "crying": "sonnet",
+    "despair": "sonnet",
+    "animal_cruelty": "jev",
+    "animal_in_danger": "jev",
+    "dangerous_act": "jev",
+    "runs_away": "jev",
+    "goes_with_stranger": "jev",
+    "slapstick": "jev",
+    "comic_peril": "jev"
+  },
+  "concepts": {
+    "monster_creature": {
+      "owner": "jev",
+      "v9_ids": [
+        "monster_creature"
+      ],
+      "film": null,
+      "jev": "max(V:pl.monster_creature@L, V:ps.monster_creature@V9C)",
+      "targets": [
+        "presence:monster_creature@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:monster_creature",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "40/125",
+          "precision_p": 0.32,
+          "recall": "68/135",
+          "recall_p": 0.5037,
+          "magic_films": "10/13",
+          "wilson_lo": 0.245
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "32/109",
+          "recall": "58/135"
+        },
+        "strict_measured_only": "V:monster_creature @0.6",
+        "tournament_best": "C:monster_creature.b@S @0.8 (not eligible: no_entity:giant crab|lava monster)"
+      }
+    },
+    "ghost_spirit": {
+      "owner": "jev",
+      "v9_ids": [
+        "ghost_spirit"
+      ],
+      "film": null,
+      "jev": "max(C+:ghost_spirit.a@S, C+:ghost_spirit.b@Lnl, C:ghost_spirit.c@S)",
+      "targets": [
+        "presence:ghost_spirit@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:or:ghost_spirit+fix",
+          "threshold": 0.8,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:ghost_spirit.a@S",
+              "to": "C+:ghost_spirit.a@S"
+            },
+            {
+              "from": "C:ghost_spirit.b@Lnl",
+              "to": "C+:ghost_spirit.b@Lnl"
+            }
+          ],
+          "precision": "7/8",
+          "precision_p": 0.875,
+          "recall": "8/135",
+          "recall_p": 0.0593,
+          "magic_films": "5/6",
+          "wilson_lo": 0.529
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:or:ghost_spirit+fix @0.8",
+        "tournament_best": "C:or:ghost_spirit @0.8 (not eligible: no_entity:boo|land of the dead|gramma tala; no_entity:boo)"
+      }
+    },
+    "reanimated_dead": {
+      "owner": "jev",
+      "v9_ids": [
+        "reanimated_dead"
+      ],
+      "film": null,
+      "jev": "max(V:pl.reanimated_dead@L, V:ps.reanimated_dead@V9C)",
+      "targets": [
+        "presence:reanimated_dead@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:reanimated_dead",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "13/45",
+          "precision_p": 0.2889,
+          "recall": "25/135",
+          "recall_p": 0.1852,
+          "magic_films": "2/8",
+          "wilson_lo": 0.177
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "10/35",
+          "recall": "19/135"
+        },
+        "strict_measured_only": "V:reanimated_dead @0.6",
+        "tournament_best": "V:reanimated_dead @0.6"
+      }
+    },
+    "skeleton_bones": {
+      "owner": "jev",
+      "v9_ids": [
+        "skeleton_bones"
+      ],
+      "film": null,
+      "jev": "max(V:pl.skeleton_bones@L, V:ps.skeleton_bones@V9C)",
+      "targets": [
+        "presence:skeleton_bones@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:skeleton_bones",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "4/5",
+          "precision_p": 0.8,
+          "recall": "8/135",
+          "recall_p": 0.0593,
+          "magic_films": "3/4",
+          "wilson_lo": 0.376
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:skeleton_bones @0.7",
+        "tournament_best": "V:skeleton_bones @0.7"
+      }
+    },
+    "dead_body": {
+      "owner": "jev",
+      "v9_ids": [
+        "dead_body"
+      ],
+      "film": null,
+      "jev": "A:dead_body.a@S",
+      "targets": [
+        "presence:dead_body@0.8"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:dead_body.a@S",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "6/135",
+          "recall_p": 0.0444,
+          "magic_films": "0/0",
+          "wilson_lo": 0.15
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "4/14",
+          "recall": "10/135"
+        },
+        "strict_measured_only": "A:dead_body.a@S @0.8",
+        "tournament_best": "A:dead_body.a@S @0.8"
+      }
+    },
+    "shark": {
+      "owner": "jev",
+      "v9_ids": [
+        "shark"
+      ],
+      "film": null,
+      "jev": "A+:shark.a@L",
+      "targets": [
+        "presence:shark@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "A:shark.a@L+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "A:shark.a@L",
+              "to": "A+:shark.a@L"
+            }
+          ],
+          "precision": "5/6",
+          "precision_p": 0.8333,
+          "recall": "4/135",
+          "recall_p": 0.0296,
+          "magic_films": "0/0",
+          "wilson_lo": 0.436
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "A:shark.a@L+fix @0.6",
+        "tournament_best": "A:shark.a@L @0.7 (not eligible: no_entity:sharkbait)"
+      }
+    },
+    "spider_insect": {
+      "owner": "jev",
+      "v9_ids": [
+        "spider_insect"
+      ],
+      "film": null,
+      "jev": "A:spider_insect.a@L",
+      "targets": [
+        "presence:spider_insect@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:spider_insect.a@L",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "1/8",
+          "precision_p": 0.125,
+          "recall": "2/135",
+          "recall_p": 0.0148,
+          "magic_films": "1/4",
+          "wilson_lo": 0.022
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "1/9",
+          "recall": "2/135"
+        },
+        "strict_measured_only": "A:spider_insect.a@L @0.6",
+        "tournament_best": "A:spider_insect.a@L @0.6"
+      }
+    },
+    "snake_reptile": {
+      "owner": "jev",
+      "v9_ids": [
+        "snake_reptile"
+      ],
+      "film": null,
+      "jev": "max(A:snake_reptile.a@L, A:snake_reptile.a@S)",
+      "targets": [
+        "presence:snake_reptile@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "A:snake_reptile.a@max",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "3/4",
+          "precision_p": 0.75,
+          "recall": "10/135",
+          "recall_p": 0.0741,
+          "magic_films": "2/2",
+          "wilson_lo": 0.301
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "A:snake_reptile.a@max @0.6",
+        "tournament_best": "A:snake_reptile.a@max @0.7"
+      }
+    },
+    "large_predator": {
+      "owner": "jev",
+      "v9_ids": [
+        "large_predator"
+      ],
+      "film": null,
+      "jev": "max(V:pl.large_predator@L, V:ps.large_predator@V9C)",
+      "targets": [
+        "presence:large_predator@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:large_predator",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "27/78",
+          "precision_p": 0.3462,
+          "recall": "43/135",
+          "recall_p": 0.3185,
+          "magic_films": "5/8",
+          "wilson_lo": 0.25
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "15/49",
+          "recall": "29/135"
+        },
+        "strict_measured_only": "V:large_predator @0.6",
+        "tournament_best": "V:large_predator @0.6"
+      }
+    },
+    "rodent_bat": {
+      "owner": "jev",
+      "v9_ids": [
+        "rodent_bat"
+      ],
+      "film": null,
+      "jev": "max(A:rodent_bat.a@L, A:rodent_bat.a@S)",
+      "targets": [
+        "presence:rodent_bat@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:rodent_bat.a@max",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "3/6",
+          "precision_p": 0.5,
+          "recall": "7/135",
+          "recall_p": 0.0519,
+          "magic_films": "0/0",
+          "wilson_lo": 0.188
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "3/7",
+          "recall": "7/135"
+        },
+        "strict_measured_only": "A:rodent_bat.a@max @0.6",
+        "tournament_best": "A:rodent_bat.a@max @0.6"
+      }
+    },
+    "clown": {
+      "owner": "jev",
+      "v9_ids": [
+        "clown"
+      ],
+      "film": null,
+      "jev": "max(V:pl.clown@L, V:ps.clown@V9C)",
+      "targets": [
+        "presence:clown@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:clown",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "3/135",
+          "recall_p": 0.0222,
+          "magic_films": "0/0",
+          "wilson_lo": 0.15
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "1/1",
+          "recall": "2/135"
+        },
+        "strict_measured_only": "V:clown @0.6",
+        "tournament_best": "V:clown @0.6"
+      }
+    },
+    "doll_puppet": {
+      "owner": "jev",
+      "v9_ids": [
+        "doll_puppet"
+      ],
+      "film": null,
+      "jev": "A:doll_puppet.a@L",
+      "targets": [
+        "presence:doll_puppet@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:doll_puppet.a@L",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "0/4",
+          "precision_p": 0,
+          "recall": "0/135",
+          "recall_p": 0,
+          "magic_films": "0/1",
+          "wilson_lo": 0
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "0/4",
+          "recall": "0/135"
+        },
+        "strict_measured_only": "A:doll_puppet.a@L @0.6",
+        "tournament_best": "A:doll_puppet.a@L @0.6"
+      }
+    },
+    "mask": {
+      "owner": "jev",
+      "v9_ids": [
+        "mask"
+      ],
+      "film": null,
+      "jev": "max(V:pl.mask@L, V:ps.mask@V9C)",
+      "targets": [
+        "presence:mask@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:mask",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "4/5",
+          "precision_p": 0.8,
+          "recall": "7/135",
+          "recall_p": 0.0519,
+          "magic_films": "1/1",
+          "wilson_lo": 0.376
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:mask @0.7",
+        "tournament_best": "V:mask @0.7"
+      }
+    },
+    "robot_machine_being": {
+      "owner": "jev",
+      "v9_ids": [
+        "robot_machine_being"
+      ],
+      "film": null,
+      "jev": "max(V:pl.robot_machine_being@L, V:ps.robot_machine_being@V9C)",
+      "targets": [
+        "presence:robot_machine_being@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:robot_machine_being",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "7/97",
+          "precision_p": 0.0722,
+          "recall": "12/135",
+          "recall_p": 0.0889,
+          "magic_films": "0/0",
+          "wilson_lo": 0.035
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "5/90",
+          "recall": "5/135"
+        },
+        "strict_measured_only": "V:robot_machine_being @0.6",
+        "tournament_best": "V:robot_machine_being @0.6"
+      }
+    },
+    "witch_sorcerer": {
+      "owner": "jev",
+      "v9_ids": [
+        "witch_sorcerer"
+      ],
+      "film": null,
+      "jev": "max(V:pl.witch_sorcerer@L, V:ps.witch_sorcerer@V9C)",
+      "targets": [
+        "presence:witch_sorcerer@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:witch_sorcerer",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "3/4",
+          "precision_p": 0.75,
+          "recall": "5/135",
+          "recall_p": 0.037,
+          "magic_films": "3/3",
+          "wilson_lo": 0.301
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:witch_sorcerer @0.8",
+        "tournament_best": "V:witch_sorcerer @0.8"
+      }
+    },
+    "dark_magic": {
+      "owner": "jev",
+      "v9_ids": [
+        "dark_magic"
+      ],
+      "film": null,
+      "jev": "max(V:pl.dark_magic@L, V:ps.dark_magic@V9C)",
+      "targets": [
+        "presence:dark_magic@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:dark_magic",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "10/14",
+          "precision_p": 0.7143,
+          "recall": "24/135",
+          "recall_p": 0.1778,
+          "magic_films": "5/7",
+          "wilson_lo": 0.454
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:dark_magic @0.8",
+        "tournament_best": "V:dark_magic @0.8"
+      }
+    },
+    "alien": {
+      "owner": "jev",
+      "v9_ids": [
+        "alien"
+      ],
+      "film": null,
+      "jev": "C+:alien.a@LSnl",
+      "targets": [
+        "presence:alien@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:alien.a@LSnl+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:alien.a@LSnl",
+              "to": "C+:alien.a@LSnl"
+            }
+          ],
+          "precision": "3/25",
+          "precision_p": 0.12,
+          "recall": "3/135",
+          "recall_p": 0.0222,
+          "magic_films": "0/0",
+          "wilson_lo": 0.042
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "0/0",
+          "recall": "0/135"
+        },
+        "strict_measured_only": "C:alien.a@LSnl+fix @0.6",
+        "tournament_best": "C:alien.a@LSnl @0.6 (not eligible: no_entity:boo)"
+      }
+    },
+    "scary_appearance": {
+      "owner": "jev",
+      "v9_ids": [
+        "scary_appearance"
+      ],
+      "film": null,
+      "jev": "max(V:pl.scary_appearance@L, V:ps.scary_appearance@V9C)",
+      "targets": [
+        "presence:scary_appearance@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:scary_appearance",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "23/51",
+          "precision_p": 0.451,
+          "recall": "42/135",
+          "recall_p": 0.3111,
+          "magic_films": "7/15",
+          "wilson_lo": 0.323
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "13/31",
+          "recall": "29/135"
+        },
+        "strict_measured_only": "V:scary_appearance @0.6",
+        "tournament_best": "V:scary_appearance @0.6"
+      }
+    },
+    "gun": {
+      "owner": "jev",
+      "v9_ids": [
+        "gun"
+      ],
+      "film": null,
+      "jev": "C:gun.a@LSnl",
+      "targets": [
+        "presence:gun@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:gun.a@LSnl",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "4/9",
+          "precision_p": 0.4444,
+          "recall": "6/158",
+          "recall_p": 0.038,
+          "magic_films": "1/1",
+          "wilson_lo": 0.189
+        },
+        "sonnet": {
+          "ids": [
+            "gun"
+          ],
+          "precision": "3/9",
+          "precision_p": 0.3333,
+          "recall": "5/158",
+          "recall_p": 0.0316
+        },
+        "strict_measured_only": "C:gun.a@LSnl @0.6",
+        "tournament_best": "C:gun.a@LSnl @0.6"
+      }
+    },
+    "blade_weapon": {
+      "owner": "jev",
+      "v9_ids": [
+        "blade_weapon"
+      ],
+      "film": null,
+      "jev": "A:blade_weapon.a@L",
+      "targets": [
+        "presence:blade_weapon@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "A:blade_weapon.a@L",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "7/10",
+          "precision_p": 0.7,
+          "recall": "9/158",
+          "recall_p": 0.057,
+          "magic_films": "1/1",
+          "wilson_lo": 0.397
+        },
+        "sonnet": {
+          "ids": [
+            "blade_weapon"
+          ],
+          "precision": "7/13",
+          "precision_p": 0.5385,
+          "recall": "9/158",
+          "recall_p": 0.057
+        },
+        "strict_measured_only": "A:blade_weapon.a@L @0.7",
+        "tournament_best": "A:blade_weapon.a@L @0.7"
+      }
+    },
+    "fire": {
+      "owner": "jev",
+      "v9_ids": [
+        "fire"
+      ],
+      "film": null,
+      "jev": "max(A:fire.a@L, A:fire.a@S)",
+      "targets": [
+        "presence:fire@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "A:fire.a@max",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "6/7",
+          "precision_p": 0.8571,
+          "recall": "9/158",
+          "recall_p": 0.057,
+          "magic_films": "1/1",
+          "wilson_lo": 0.487
+        },
+        "sonnet": {
+          "ids": [
+            "fire"
+          ],
+          "precision": "6/12",
+          "precision_p": 0.5,
+          "recall": "7/158",
+          "recall_p": 0.0443
+        },
+        "strict_measured_only": "A:fire.a@max @0.6",
+        "tournament_best": "A:fire.a@max @0.6"
+      }
+    },
+    "explosion": {
+      "owner": "jev",
+      "v9_ids": [
+        "explosion"
+      ],
+      "film": null,
+      "jev": "max(A:explosion.a@L, A:explosion.a@S)",
+      "targets": [
+        "presence:explosion@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:explosion.a@max",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "8/12",
+          "precision_p": 0.6667,
+          "recall": "14/158",
+          "recall_p": 0.0886,
+          "magic_films": "4/5",
+          "wilson_lo": 0.391
+        },
+        "sonnet": {
+          "ids": [
+            "explosion"
+          ],
+          "precision": "5/8",
+          "precision_p": 0.625,
+          "recall": "6/158",
+          "recall_p": 0.038
+        },
+        "strict_measured_only": "A:explosion.a@max @0.6",
+        "tournament_best": "A:explosion.a@max @0.6"
+      }
+    },
+    "storm": {
+      "owner": "jev",
+      "v9_ids": [
+        "storm"
+      ],
+      "film": null,
+      "jev": "V:pl.storm@L",
+      "targets": [
+        "presence:storm@0.8"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:pl.storm@L",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "8/21",
+          "precision_p": 0.381,
+          "recall": "11/158",
+          "recall_p": 0.0696,
+          "magic_films": "1/4",
+          "wilson_lo": 0.208
+        },
+        "sonnet": {
+          "ids": [
+            "storm"
+          ],
+          "precision": "12/29",
+          "precision_p": 0.4138,
+          "recall": "16/158",
+          "recall_p": 0.1013
+        },
+        "strict_measured_only": "V:pl.storm@L @0.8",
+        "tournament_best": "V:pl.storm@L @0.8"
+      }
+    },
+    "deep_dark_water": {
+      "owner": "jev",
+      "v9_ids": [
+        "deep_dark_water"
+      ],
+      "film": null,
+      "jev": "V:pl.deep_dark_water@L",
+      "targets": [
+        "presence:deep_dark_water@0.8"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:pl.deep_dark_water@L",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "3/5",
+          "precision_p": 0.6,
+          "recall": "11/158",
+          "recall_p": 0.0696,
+          "magic_films": "0/0",
+          "wilson_lo": 0.231
+        },
+        "sonnet": {
+          "ids": [
+            "deep_dark_water"
+          ],
+          "precision": "9/15",
+          "precision_p": 0.6,
+          "recall": "17/158",
+          "recall_p": 0.1076
+        },
+        "strict_measured_only": "V:pl.deep_dark_water@L @0.8",
+        "tournament_best": "V:pl.deep_dark_water@L @0.8"
+      }
+    },
+    "heights": {
+      "owner": "jev",
+      "v9_ids": [
+        "heights"
+      ],
+      "film": null,
+      "jev": "max(V:pl.heights@L, V:ps.heights@V9C)",
+      "targets": [
+        "presence:heights@0.8"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:heights",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "4/12",
+          "precision_p": 0.3333,
+          "recall": "6/158",
+          "recall_p": 0.038,
+          "magic_films": "0/0",
+          "wilson_lo": 0.138
+        },
+        "sonnet": {
+          "ids": [
+            "heights"
+          ],
+          "precision": "9/24",
+          "precision_p": 0.375,
+          "recall": "12/158",
+          "recall_p": 0.0759
+        },
+        "strict_measured_only": "V:heights @0.8",
+        "tournament_best": "C:or:heights @0.6"
+      }
+    },
+    "darkness": {
+      "owner": "jev",
+      "v9_ids": [
+        "darkness"
+      ],
+      "film": null,
+      "jev": "A:darkness.a@L",
+      "targets": [
+        "presence:darkness@0.7"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:darkness.a@L",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "6/158",
+          "recall_p": 0.038,
+          "magic_films": "1/2",
+          "wilson_lo": 0.15
+        },
+        "sonnet": {
+          "ids": [
+            "darkness"
+          ],
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "5/158",
+          "recall_p": 0.0316
+        },
+        "strict_measured_only": "A:darkness.a@L @0.7",
+        "tournament_best": "A:darkness.a@L @0.7"
+      }
+    },
+    "needle_medical": {
+      "owner": "jev",
+      "v9_ids": [
+        "needle_medical"
+      ],
+      "film": null,
+      "jev": "A:needle_medical.a@S",
+      "targets": [
+        "presence:needle_medical@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:needle_medical.a@S",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "0/0",
+          "precision_p": null,
+          "recall": "0/158",
+          "recall_p": 0,
+          "magic_films": "0/0",
+          "wilson_lo": -1
+        },
+        "sonnet": {
+          "ids": [
+            "needle_medical"
+          ],
+          "precision": "0/2",
+          "precision_p": 0,
+          "recall": "0/158",
+          "recall_p": 0
+        },
+        "v9_wording_at_07": {
+          "precision": "0/1",
+          "recall": "0/158"
+        },
+        "strict_measured_only": "A:needle_medical.a@S @0.6",
+        "tournament_best": "A:needle_medical.a@L @0.6"
+      }
+    },
+    "medical_care": {
+      "owner": "jev",
+      "v9_ids": [
+        "medical_care"
+      ],
+      "film": null,
+      "jev": "max(V:pl.medical_care@L, V:ps.medical_care@V9C)",
+      "targets": [
+        "presence:medical_care@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:medical_care",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "2/5",
+          "precision_p": 0.4,
+          "recall": "2/158",
+          "recall_p": 0.0127,
+          "magic_films": "0/0",
+          "wilson_lo": 0.118
+        },
+        "sonnet": {
+          "ids": [
+            "medical_care"
+          ],
+          "precision": "0/3",
+          "precision_p": 0,
+          "recall": "0/158",
+          "recall_p": 0
+        },
+        "v9_wording_at_07": {
+          "precision": "2/5",
+          "recall": "2/158"
+        },
+        "strict_measured_only": "V:medical_care @0.7",
+        "tournament_best": "V:medical_care @0.7"
+      }
+    },
+    "seriously_ill": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "seriously_ill"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "seriously_ill"
+          ],
+          "precision": "1/5",
+          "precision_p": 0.2,
+          "recall": "1/158",
+          "recall_p": 0.0063
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:seriously_ill @0.6 (not eligible: no_degree; no_degree)"
+      }
+    },
+    "blood_wound": {
+      "owner": "jev",
+      "v9_ids": [
+        "blood_wound"
+      ],
+      "film": null,
+      "jev": "C:blood_wound.a@LSnl",
+      "targets": [
+        "presence:blood_wound@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:blood_wound.a@LSnl",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "3/158",
+          "recall_p": 0.019,
+          "magic_films": "0/0",
+          "wilson_lo": 0.15
+        },
+        "sonnet": {
+          "ids": [
+            "blood_wound"
+          ],
+          "precision": "2/3",
+          "precision_p": 0.6667,
+          "recall": "3/158",
+          "recall_p": 0.019
+        },
+        "v9_wording_at_07": {
+          "precision": "2/3",
+          "recall": "3/158"
+        },
+        "strict_measured_only": "C:blood_wound.a@LSnl @0.6",
+        "tournament_best": "C:blood_wound.a@LSnl @0.6"
+      }
+    },
+    "vehicle_crash": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "vehicle_crash",
+        "vehicle_accident"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [
+        "event:vehicle_accident@0.7"
+      ],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "vehicle_crash"
+          ],
+          "precision": "5/6",
+          "precision_p": 0.8333,
+          "recall": "9/270",
+          "recall_p": 0.0333
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:vehicle_crash @0.6"
+      }
+    },
+    "captured": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "cage_net_trap",
+        "restraints",
+        "captured"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "mixed",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "cage_net_trap",
+            "restraints",
+            "captured"
+          ],
+          "precision": "22/43",
+          "precision_p": 0.5116,
+          "recall": "28/58",
+          "recall_p": 0.4828
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "C:captured.b@S @0.8"
+      }
+    },
+    "graveyard_funeral": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "graveyard_funeral"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "graveyard_funeral"
+          ],
+          "precision": "2/4",
+          "precision_p": 0.5,
+          "recall": "3/158",
+          "recall_p": 0.019
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "A:graveyard_funeral.a.place@L @0.6"
+      }
+    },
+    "dangerous_machine": {
+      "owner": "jev",
+      "v9_ids": [
+        "dangerous_machine"
+      ],
+      "film": null,
+      "jev": "max(V:pl.dangerous_machine@L, V:ps.dangerous_machine@V9C)",
+      "targets": [
+        "presence:dangerous_machine@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:dangerous_machine",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "10/14",
+          "precision_p": 0.7143,
+          "recall": "17/158",
+          "recall_p": 0.1076,
+          "magic_films": "0/0",
+          "wilson_lo": 0.454
+        },
+        "sonnet": {
+          "ids": [
+            "dangerous_machine"
+          ],
+          "precision": "5/8",
+          "precision_p": 0.625,
+          "recall": "8/158",
+          "recall_p": 0.0506
+        },
+        "strict_measured_only": "V:dangerous_machine @0.8",
+        "tournament_best": "V:dangerous_machine @0.8"
+      }
+    },
+    "chased": {
+      "owner": "jev",
+      "v9_ids": [
+        "chased"
+      ],
+      "film": null,
+      "jev": "C:chased.c@S",
+      "targets": [
+        "event:chased@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:chased.c@S",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "14/19",
+          "precision_p": 0.7368,
+          "recall": "29/270",
+          "recall_p": 0.1074,
+          "magic_films": "2/3",
+          "wilson_lo": 0.512
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:chased.c@S @0.6",
+        "tournament_best": "C:chased.c@S @0.6"
+      }
+    },
+    "attacked": {
+      "owner": "jev",
+      "v9_ids": [
+        "attacked"
+      ],
+      "film": null,
+      "jev": "V+:e.attacked@V9C",
+      "targets": [
+        "event:attacked@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:attacked+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.attacked@V9C",
+              "to": "V+:e.attacked@V9C"
+            }
+          ],
+          "precision": "25/38",
+          "precision_p": 0.6579,
+          "recall": "60/270",
+          "recall_p": 0.2222,
+          "magic_films": "9/13",
+          "wilson_lo": 0.499
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "15/23",
+          "recall": "38/270"
+        },
+        "strict_measured_only": "V:attacked+fix @0.6",
+        "tournament_best": "C:attacked.b@Lnl @0.7 (not eligible: one_condition)"
+      }
+    },
+    "falls": {
+      "owner": "jev",
+      "v9_ids": [
+        "falls"
+      ],
+      "film": null,
+      "jev": "V+:e.falls@V9C",
+      "targets": [
+        "event:falls@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:falls+fix",
+          "threshold": 0.8,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.falls@V9C",
+              "to": "V+:e.falls@V9C"
+            }
+          ],
+          "precision": "3/4",
+          "precision_p": 0.75,
+          "recall": "7/270",
+          "recall_p": 0.0259,
+          "magic_films": "0/0",
+          "wilson_lo": 0.301
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:falls+fix @0.8",
+        "tournament_best": "V:falls @0.8 (not eligible: yes_criteria)"
+      }
+    },
+    "nearly_falls": {
+      "owner": "jev",
+      "v9_ids": [
+        "nearly_falls"
+      ],
+      "film": null,
+      "jev": "V+:e.nearly_falls@V9C",
+      "targets": [
+        "event:nearly_falls@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:nearly_falls+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.nearly_falls@V9C",
+              "to": "V+:e.nearly_falls@V9C"
+            }
+          ],
+          "precision": "3/4",
+          "precision_p": 0.75,
+          "recall": "5/270",
+          "recall_p": 0.0185,
+          "magic_films": "0/0",
+          "wilson_lo": 0.301
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:nearly_falls+fix @0.6",
+        "tournament_best": "C:nearly_falls.a@Lnl @0.6 (not eligible: one_condition)"
+      }
+    },
+    "cannot_breathe": {
+      "owner": "jev",
+      "v9_ids": [
+        "cannot_breathe"
+      ],
+      "film": null,
+      "jev": "V+:e.cannot_breathe@V9C",
+      "targets": [
+        "event:cannot_breathe@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:cannot_breathe+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.cannot_breathe@V9C",
+              "to": "V+:e.cannot_breathe@V9C"
+            }
+          ],
+          "precision": "10/11",
+          "precision_p": 0.9091,
+          "recall": "15/270",
+          "recall_p": 0.0556,
+          "magic_films": "2/2",
+          "wilson_lo": 0.623
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:cannot_breathe+fix @0.6",
+        "tournament_best": "V:cannot_breathe @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "caught_in_hazard": {
+      "owner": "jev",
+      "v9_ids": [
+        "caught_in_hazard"
+      ],
+      "film": null,
+      "jev": "V+:e.caught_in_hazard@V9C",
+      "targets": [
+        "event:caught_in_hazard@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:caught_in_hazard+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.caught_in_hazard@V9C",
+              "to": "V+:e.caught_in_hazard@V9C"
+            }
+          ],
+          "precision": "41/50",
+          "precision_p": 0.82,
+          "recall": "81/270",
+          "recall_p": 0.3,
+          "magic_films": "5/6",
+          "wilson_lo": 0.692
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:caught_in_hazard+fix @0.6",
+        "tournament_best": "V:caught_in_hazard @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "child_in_danger": {
+      "owner": "jev",
+      "v9_ids": [
+        "child_in_danger"
+      ],
+      "film": null,
+      "jev": "C:child_in_danger.a@LSnlC",
+      "targets": [
+        "event:child_in_danger@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:child_in_danger.a@LSnlC",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "27/38",
+          "precision_p": 0.7105,
+          "recall": "47/270",
+          "recall_p": 0.1741,
+          "magic_films": "2/3",
+          "wilson_lo": 0.552
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:child_in_danger.a@LSnlC @0.8",
+        "tournament_best": "C:child_in_danger.a@LSnlC @0.8"
+      }
+    },
+    "creature_threat": {
+      "owner": "jev",
+      "v9_ids": [
+        "creature_threat"
+      ],
+      "film": null,
+      "jev": "V+:e.creature_threat@V9C",
+      "targets": [
+        "event:creature_threat@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:creature_threat+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.creature_threat@V9C",
+              "to": "V+:e.creature_threat@V9C"
+            }
+          ],
+          "precision": "44/58",
+          "precision_p": 0.7586,
+          "recall": "100/270",
+          "recall_p": 0.3704,
+          "magic_films": "8/11",
+          "wilson_lo": 0.635
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:creature_threat+fix @0.7",
+        "tournament_best": "V:creature_threat @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "weapon_used": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "weapon_used"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "weapon_used"
+          ],
+          "precision": "20/27",
+          "precision_p": 0.7407,
+          "recall": "46/202",
+          "recall_p": 0.2277
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:e.weapon_used@V9C @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "battle": {
+      "owner": "jev",
+      "v9_ids": [
+        "battle"
+      ],
+      "film": null,
+      "jev": "V+:e.battle@V9C",
+      "targets": [
+        "event:battle@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:battle+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.battle@V9C",
+              "to": "V+:e.battle@V9C"
+            }
+          ],
+          "precision": "20/25",
+          "precision_p": 0.8,
+          "recall": "41/202",
+          "recall_p": 0.203,
+          "magic_films": "7/8",
+          "wilson_lo": 0.609
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:battle+fix @0.6",
+        "tournament_best": "V:battle @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "trapped": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "trapped"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "trapped"
+          ],
+          "precision": "12/34",
+          "precision_p": 0.3529,
+          "recall": "15/58",
+          "recall_p": 0.2586
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "A:trapped.a@S @0.6"
+      }
+    },
+    "swallowed": {
+      "owner": "jev",
+      "v9_ids": [
+        "swallowed"
+      ],
+      "film": null,
+      "jev": "V+:e.swallowed@V9C",
+      "targets": [
+        "event:swallowed@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:e.swallowed@V9C+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.swallowed@V9C",
+              "to": "V+:e.swallowed@V9C"
+            }
+          ],
+          "precision": "3/5",
+          "precision_p": 0.6,
+          "recall": "4/58",
+          "recall_p": 0.069,
+          "magic_films": "0/1",
+          "wilson_lo": 0.231
+        },
+        "sonnet": {
+          "ids": [
+            "swallowed"
+          ],
+          "precision": "2/2",
+          "precision_p": 1,
+          "recall": "3/58",
+          "recall_p": 0.0517
+        },
+        "v9_wording_at_07": {
+          "precision": "2/3",
+          "recall": "3/58"
+        },
+        "strict_measured_only": "V:e.swallowed@V9C+fix @0.6",
+        "tournament_best": "V:e.swallowed@V9C @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "injured": {
+      "owner": "jev",
+      "v9_ids": [
+        "injured"
+      ],
+      "film": null,
+      "jev": "V+:e.injured@V9C",
+      "targets": [
+        "event:injured@0.8"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:injured+fix",
+          "threshold": 0.8,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.injured@V9C",
+              "to": "V+:e.injured@V9C"
+            }
+          ],
+          "precision": "11/19",
+          "precision_p": 0.5789,
+          "recall": "23/82",
+          "recall_p": 0.2805,
+          "magic_films": "3/3",
+          "wilson_lo": 0.363
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "14/30",
+          "recall": "27/82"
+        },
+        "strict_measured_only": "V:injured+fix @0.8",
+        "tournament_best": "C:or:injured @0.7"
+      }
+    },
+    "badly_hurt": {
+      "owner": "jev",
+      "v9_ids": [
+        "badly_hurt"
+      ],
+      "film": null,
+      "jev": "max(max(max(A:badly_hurt.a.unconscious@L, A:badly_hurt.a.unconscious@S), max(A:badly_hurt.a.immobile@L, A:badly_hurt.a.immobile@S)), max(A:badly_hurt.a.critical@L, A:badly_hurt.a.critical@S))",
+      "targets": [
+        "event:badly_hurt@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:bundle:badly_hurt",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "1/5",
+          "precision_p": 0.2,
+          "recall": "2/82",
+          "recall_p": 0.0244,
+          "magic_films": "0/0",
+          "wilson_lo": 0.036
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "7/17",
+          "recall": "15/82"
+        },
+        "strict_measured_only": "A:bundle:badly_hurt @0.6",
+        "tournament_best": "V:badly_hurt @0.7 (not eligible: yes_criteria; no_degree)"
+      }
+    },
+    "dies": {
+      "owner": "jev",
+      "v9_ids": [
+        "dies"
+      ],
+      "film": null,
+      "jev": "C:dies.b@S",
+      "targets": [
+        "event:dies@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:dies.b@S",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "8/11",
+          "precision_p": 0.7273,
+          "recall": "22/133",
+          "recall_p": 0.1654,
+          "magic_films": "2/2",
+          "wilson_lo": 0.434
+        },
+        "sonnet": {
+          "ids": [
+            "dies"
+          ],
+          "precision": "9/10",
+          "precision_p": 0.9,
+          "recall": "26/133",
+          "recall_p": 0.1955
+        },
+        "strict_measured_only": "C:dies.b@S @0.6",
+        "tournament_best": "C:bundle:dies @0.7 (not eligible: no_entity:manolo)"
+      }
+    },
+    "loved_one_dies": {
+      "owner": "jev",
+      "v9_ids": [
+        "loved_one_dies"
+      ],
+      "film": null,
+      "jev": "V+:e.loved_one_dies@V9C",
+      "targets": [
+        "event:loved_one_dies@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:loved_one_dies+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.loved_one_dies@V9C",
+              "to": "V+:e.loved_one_dies@V9C"
+            }
+          ],
+          "precision": "10/10",
+          "precision_p": 1,
+          "recall": "24/133",
+          "recall_p": 0.1805,
+          "magic_films": "4/4",
+          "wilson_lo": 0.722
+        },
+        "sonnet": {
+          "ids": [
+            "loved_one_dies"
+          ],
+          "precision": "8/10",
+          "precision_p": 0.8,
+          "recall": "18/133",
+          "recall_p": 0.1353
+        },
+        "strict_measured_only": "V:loved_one_dies+fix @0.6",
+        "tournament_best": "V:loved_one_dies @0.7 (not eligible: yes_criteria)"
+      }
+    },
+    "pet_dies": {
+      "owner": "jev",
+      "v9_ids": [
+        "pet_dies"
+      ],
+      "film": null,
+      "jev": "max(C:pet_dies.a@S, C+:pet_dies.b@Lnl)",
+      "targets": [
+        "event:pet_dies@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:or:pet_dies+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:pet_dies.b@Lnl",
+              "to": "C+:pet_dies.b@Lnl"
+            }
+          ],
+          "precision": "3/4",
+          "precision_p": 0.75,
+          "recall": "6/133",
+          "recall_p": 0.0451,
+          "magic_films": "0/0",
+          "wilson_lo": 0.301
+        },
+        "sonnet": {
+          "ids": [
+            "pet_dies"
+          ],
+          "precision": "2/3",
+          "precision_p": 0.6667,
+          "recall": "2/133",
+          "recall_p": 0.015
+        },
+        "strict_measured_only": "C:or:pet_dies+fix @0.6",
+        "tournament_best": "C:or:pet_dies @0.6 (not eligible: no_entity:sparky)"
+      }
+    },
+    "believed_dead": {
+      "owner": "jev",
+      "v9_ids": [
+        "believed_dead"
+      ],
+      "film": null,
+      "jev": "V+:e.believed_dead@V9C",
+      "targets": [
+        "event:believed_dead@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:believed_dead+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.believed_dead@V9C",
+              "to": "V+:e.believed_dead@V9C"
+            }
+          ],
+          "precision": "17/39",
+          "precision_p": 0.4359,
+          "recall": "34/133",
+          "recall_p": 0.2556,
+          "magic_films": "5/10",
+          "wilson_lo": 0.293
+        },
+        "sonnet": {
+          "ids": [
+            "believed_dead"
+          ],
+          "precision": "9/22",
+          "precision_p": 0.4091,
+          "recall": "15/133",
+          "recall_p": 0.1128
+        },
+        "strict_measured_only": "V:believed_dead+fix @0.6",
+        "tournament_best": "V:believed_dead @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "parent_death_learned": {
+      "owner": "jev",
+      "v9_ids": [
+        "parent_death_learned"
+      ],
+      "film": null,
+      "jev": "V+:e.parent_death_learned@V9C",
+      "targets": [
+        "event:parent_death_learned@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:parent_death_learned+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.parent_death_learned@V9C",
+              "to": "V+:e.parent_death_learned@V9C"
+            }
+          ],
+          "precision": "3/5",
+          "precision_p": 0.6,
+          "recall": "8/133",
+          "recall_p": 0.0602,
+          "magic_films": "0/0",
+          "wilson_lo": 0.231
+        },
+        "sonnet": {
+          "ids": [
+            "parent_death_learned"
+          ],
+          "precision": "2/3",
+          "precision_p": 0.6667,
+          "recall": "4/133",
+          "recall_p": 0.0301
+        },
+        "v9_wording_at_07": {
+          "precision": "2/4",
+          "recall": "7/133"
+        },
+        "strict_measured_only": "V:parent_death_learned+fix @0.6",
+        "tournament_best": "V:parent_death_learned @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "grieving": {
+      "owner": "jev",
+      "v9_ids": [
+        "grieving"
+      ],
+      "film": null,
+      "jev": "V+:e.grieving@V9C",
+      "targets": [
+        "event:grieving@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:grieving+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.grieving@V9C",
+              "to": "V+:e.grieving@V9C"
+            }
+          ],
+          "precision": "13/30",
+          "precision_p": 0.4333,
+          "recall": "21/133",
+          "recall_p": 0.1579,
+          "magic_films": "7/14",
+          "wilson_lo": 0.274
+        },
+        "sonnet": {
+          "ids": [
+            "grieving"
+          ],
+          "precision": "9/29",
+          "precision_p": 0.3103,
+          "recall": "19/133",
+          "recall_p": 0.1429
+        },
+        "strict_measured_only": "V:grieving+fix @0.6",
+        "tournament_best": "V:grieving @0.8 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "child_taken": {
+      "owner": "jev",
+      "v9_ids": [
+        "child_taken"
+      ],
+      "film": null,
+      "jev": "max(C:child_taken.a@SC, C+:child_taken.b@Lnl)",
+      "targets": [
+        "event:child_taken@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:bundle:child_taken+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:child_taken.b@Lnl",
+              "to": "C+:child_taken.b@Lnl"
+            }
+          ],
+          "precision": "4/9",
+          "precision_p": 0.4444,
+          "recall": "4/34",
+          "recall_p": 0.1176,
+          "magic_films": "1/3",
+          "wilson_lo": 0.189
+        },
+        "sonnet": {
+          "ids": [
+            "child_taken"
+          ],
+          "precision": "2/3",
+          "precision_p": 0.6667,
+          "recall": "3/34",
+          "recall_p": 0.0882
+        },
+        "v9_wording_at_07": {
+          "precision": "3/8",
+          "recall": "3/34"
+        },
+        "strict_measured_only": "C:bundle:child_taken+fix @0.6",
+        "tournament_best": "C:bundle:child_taken @0.8 (not eligible: no_entity:nemo)"
+      }
+    },
+    "child_separated": {
+      "owner": "jev",
+      "v9_ids": [
+        "child_separated"
+      ],
+      "film": null,
+      "jev": "V+:e.child_separated@V9C",
+      "targets": [
+        "event:child_separated@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:child_separated+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.child_separated@V9C",
+              "to": "V+:e.child_separated@V9C"
+            }
+          ],
+          "precision": "3/19",
+          "precision_p": 0.1579,
+          "recall": "7/34",
+          "recall_p": 0.2059,
+          "magic_films": "1/2",
+          "wilson_lo": 0.055
+        },
+        "sonnet": {
+          "ids": [
+            "child_separated"
+          ],
+          "precision": "2/15",
+          "precision_p": 0.1333,
+          "recall": "2/34",
+          "recall_p": 0.0588
+        },
+        "strict_measured_only": "V:child_separated+fix @0.6",
+        "tournament_best": "C:or:child_separated @0.8 (not eligible: no_entity:nemo|fish tank)"
+      }
+    },
+    "parent_searching": {
+      "owner": "jev",
+      "v9_ids": [
+        "parent_searching"
+      ],
+      "film": null,
+      "jev": "C+:parent_searching.a@Lnl",
+      "targets": [
+        "event:parent_searching@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:parent_searching.a@Lnl+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:parent_searching.a@Lnl",
+              "to": "C+:parent_searching.a@Lnl"
+            }
+          ],
+          "precision": "5/30",
+          "precision_p": 0.1667,
+          "recall": "6/34",
+          "recall_p": 0.1765,
+          "magic_films": "3/7",
+          "wilson_lo": 0.073
+        },
+        "sonnet": {
+          "ids": [
+            "parent_searching"
+          ],
+          "precision": "2/13",
+          "precision_p": 0.1538,
+          "recall": "2/34",
+          "recall_p": 0.0588
+        },
+        "strict_measured_only": "C:parent_searching.a@Lnl+fix @0.6",
+        "tournament_best": "V:parent_searching @0.8 (not eligible: yes_criteria)"
+      }
+    },
+    "abandoned": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "abandoned"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "abandoned"
+          ],
+          "precision": "3/9",
+          "precision_p": 0.3333,
+          "recall": "5/34",
+          "recall_p": 0.1471
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:e.abandoned@V9C @0.8 (not eligible: yes_criteria)"
+      }
+    },
+    "family_in_danger": {
+      "owner": "jev",
+      "v9_ids": [
+        "family_in_danger"
+      ],
+      "film": null,
+      "jev": "max(C:family_in_danger.a@Lnl, C:family_in_danger.b@S)",
+      "targets": [
+        "event:family_in_danger@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:or:family_in_danger",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "5/19",
+          "precision_p": 0.2632,
+          "recall": "6/34",
+          "recall_p": 0.1765,
+          "magic_films": "2/4",
+          "wilson_lo": 0.118
+        },
+        "sonnet": {
+          "ids": [
+            "family_in_danger"
+          ],
+          "precision": "4/32",
+          "precision_p": 0.125,
+          "recall": "7/34",
+          "recall_p": 0.2059
+        },
+        "strict_measured_only": "C:or:family_in_danger @0.6",
+        "tournament_best": "C:family_in_danger.a@Lnl @0.8"
+      }
+    },
+    "parents_argue": {
+      "owner": "jev",
+      "v9_ids": [
+        "parents_argue"
+      ],
+      "film": null,
+      "jev": "C:parents_argue.a@S",
+      "targets": [
+        "event:parents_argue@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:parents_argue.a@S",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "0/0",
+          "precision_p": null,
+          "recall": "0/34",
+          "recall_p": 0,
+          "magic_films": "0/0",
+          "wilson_lo": -1
+        },
+        "sonnet": {
+          "ids": [
+            "parents_argue"
+          ],
+          "precision": "1/1",
+          "precision_p": 1,
+          "recall": "1/34",
+          "recall_p": 0.0294
+        },
+        "v9_wording_at_07": {
+          "precision": "0/0",
+          "recall": "0/34"
+        },
+        "strict_measured_only": "C:parents_argue.a@S @0.6",
+        "tournament_best": "A:parents_argue.a.parents@LS @0.7 (not eligible: no_presupposition)"
+      }
+    },
+    "rages_at_child": {
+      "owner": "jev",
+      "v9_ids": [
+        "rages_at_child"
+      ],
+      "film": null,
+      "jev": "V+:e.rages_at_child@V9C",
+      "targets": [
+        "event:rages_at_child@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:rages_at_child+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.rages_at_child@V9C",
+              "to": "V+:e.rages_at_child@V9C"
+            }
+          ],
+          "precision": "15/31",
+          "precision_p": 0.4839,
+          "recall": "17/79",
+          "recall_p": 0.2152,
+          "magic_films": "6/13",
+          "wilson_lo": 0.32
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "12/19",
+          "recall": "14/79"
+        },
+        "strict_measured_only": "V:rages_at_child+fix @0.6",
+        "tournament_best": "V:rages_at_child @0.7 (not eligible: yes_criteria)"
+      }
+    },
+    "threatens_harm": {
+      "owner": "jev",
+      "v9_ids": [
+        "threatens_harm"
+      ],
+      "film": null,
+      "jev": "max(max(A:threatens_harm.a.kill@L, A:threatens_harm.a.hurt@L), A:threatens_harm.a.summary@S)",
+      "targets": [
+        "event:threatens_harm@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:bundle:threatens_harm",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "17/52",
+          "precision_p": 0.3269,
+          "recall": "23/79",
+          "recall_p": 0.2911,
+          "magic_films": "3/6",
+          "wilson_lo": 0.215
+        },
+        "sonnet": {
+          "ids": [
+            "threatens_harm"
+          ],
+          "precision": "17/84",
+          "precision_p": 0.2024,
+          "recall": "22/79",
+          "recall_p": 0.2785
+        },
+        "strict_measured_only": "A:bundle:threatens_harm @0.6",
+        "tournament_best": "A:bundle:threatens_harm @0.6"
+      }
+    },
+    "plots_harm": {
+      "owner": "jev",
+      "v9_ids": [
+        "plots_harm"
+      ],
+      "film": null,
+      "jev": "V+:e.plots_harm@V9C",
+      "targets": [
+        "event:plots_harm@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:plots_harm+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.plots_harm@V9C",
+              "to": "V+:e.plots_harm@V9C"
+            }
+          ],
+          "precision": "14/64",
+          "precision_p": 0.2188,
+          "recall": "18/79",
+          "recall_p": 0.2278,
+          "magic_films": "5/14",
+          "wilson_lo": 0.135
+        },
+        "sonnet": {
+          "ids": [
+            "plots_harm"
+          ],
+          "precision": "7/28",
+          "precision_p": 0.25,
+          "recall": "7/79",
+          "recall_p": 0.0886
+        },
+        "strict_measured_only": "V:plots_harm+fix @0.6",
+        "tournament_best": "C:plots_harm.c@L @0.6"
+      }
+    },
+    "mocked": {
+      "owner": "jev",
+      "v9_ids": [
+        "mocked"
+      ],
+      "film": null,
+      "jev": "V+:e.mocked@V9C",
+      "targets": [
+        "event:mocked@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:mocked+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.mocked@V9C",
+              "to": "V+:e.mocked@V9C"
+            }
+          ],
+          "precision": "30/114",
+          "precision_p": 0.2632,
+          "recall": "37/79",
+          "recall_p": 0.4684,
+          "magic_films": "14/30",
+          "wilson_lo": 0.191
+        },
+        "sonnet": {
+          "ids": [
+            "mocked"
+          ],
+          "precision": "9/31",
+          "precision_p": 0.2903,
+          "recall": "14/79",
+          "recall_p": 0.1772
+        },
+        "strict_measured_only": "V:mocked+fix @0.6",
+        "tournament_best": "V:mocked @0.7 (not eligible: yes_criteria)"
+      }
+    },
+    "excluded": {
+      "owner": "jev",
+      "v9_ids": [
+        "excluded"
+      ],
+      "film": null,
+      "jev": "max(C:excluded.a@Lnl, C:excluded.b@S)",
+      "targets": [
+        "event:excluded@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:or:excluded",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "17/64",
+          "precision_p": 0.2656,
+          "recall": "22/79",
+          "recall_p": 0.2785,
+          "magic_films": "7/15",
+          "wilson_lo": 0.173
+        },
+        "sonnet": {
+          "ids": [
+            "excluded"
+          ],
+          "precision": "1/4",
+          "precision_p": 0.25,
+          "recall": "4/79",
+          "recall_p": 0.0506
+        },
+        "strict_measured_only": "C:or:excluded @0.6",
+        "tournament_best": "C:excluded.b@S @0.8"
+      }
+    },
+    "discrimination": {
+      "owner": "jev",
+      "v9_ids": [
+        "discrimination"
+      ],
+      "film": null,
+      "jev": "A:discrimination.a.words@L",
+      "targets": [
+        "event:discrimination@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "A:discrimination.a.words@L",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "1/3",
+          "precision_p": 0.3333,
+          "recall": "1/79",
+          "recall_p": 0.0127,
+          "magic_films": "0/2",
+          "wilson_lo": 0.061
+        },
+        "sonnet": {
+          "ids": [
+            "discrimination"
+          ],
+          "precision": "0/1",
+          "precision_p": 0,
+          "recall": "0/79",
+          "recall_p": 0
+        },
+        "v9_wording_at_07": {
+          "precision": "3/12",
+          "recall": "5/79"
+        },
+        "strict_measured_only": "A:discrimination.a.words@L @0.6",
+        "tournament_best": "V:discrimination @0.8 (not eligible: yes_criteria; no_criteria; one_condition; no_degree)"
+      }
+    },
+    "caregiver_cruelty": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "caregiver_cruelty"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "caregiver_cruelty"
+          ],
+          "precision": "9/14",
+          "precision_p": 0.6429,
+          "recall": "12/79",
+          "recall_p": 0.1519
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:e.caregiver_cruelty@V9C @0.8 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "betrayal": {
+      "owner": "jev",
+      "v9_ids": [
+        "betrayal"
+      ],
+      "film": null,
+      "jev": "C:betrayal.b@Lnl",
+      "targets": [
+        "event:betrayal@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:betrayal.b@Lnl",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "5/13",
+          "precision_p": 0.3846,
+          "recall": "5/79",
+          "recall_p": 0.0633,
+          "magic_films": "2/5",
+          "wilson_lo": 0.177
+        },
+        "sonnet": {
+          "ids": [
+            "betrayal"
+          ],
+          "precision": "7/22",
+          "precision_p": 0.3182,
+          "recall": "7/79",
+          "recall_p": 0.0886
+        },
+        "strict_measured_only": "C:betrayal.b@Lnl @0.6",
+        "tournament_best": "C:betrayal.b@Lnl @0.8"
+      }
+    },
+    "transforms": {
+      "owner": "jev",
+      "v9_ids": [
+        "transforms"
+      ],
+      "film": null,
+      "jev": "max(C+:transforms.a@S, C:transforms.b@Lnl)",
+      "targets": [
+        "event:transforms@0.6"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:or:transforms+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "C:transforms.a@S",
+              "to": "C+:transforms.a@S"
+            }
+          ],
+          "precision": "11/14",
+          "precision_p": 0.7857,
+          "recall": "22/83",
+          "recall_p": 0.2651,
+          "magic_films": "5/5",
+          "wilson_lo": 0.524
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:or:transforms+fix @0.6",
+        "tournament_best": "C:or:transforms @0.6 (not eligible: no_entity:naveen)"
+      }
+    },
+    "possessed": {
+      "owner": "jev",
+      "v9_ids": [
+        "possessed"
+      ],
+      "film": null,
+      "jev": "V+:e.possessed@V9C",
+      "targets": [
+        "event:possessed@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:possessed+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.possessed@V9C",
+              "to": "V+:e.possessed@V9C"
+            }
+          ],
+          "precision": "4/32",
+          "precision_p": 0.125,
+          "recall": "4/83",
+          "recall_p": 0.0482,
+          "magic_films": "0/7",
+          "wilson_lo": 0.05
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "0/12",
+          "recall": "0/83"
+        },
+        "strict_measured_only": "V:possessed+fix @0.6",
+        "tournament_best": "A:possessed.a.resistance@L @0.7"
+      }
+    },
+    "nightmare": {
+      "owner": "jev",
+      "v9_ids": [
+        "nightmare"
+      ],
+      "film": null,
+      "jev": "V+:e.nightmare@V9C",
+      "targets": [
+        "event:nightmare@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:nightmare+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.nightmare@V9C",
+              "to": "V+:e.nightmare@V9C"
+            }
+          ],
+          "precision": "2/3",
+          "precision_p": 0.6667,
+          "recall": "2/83",
+          "recall_p": 0.0241,
+          "magic_films": "0/0",
+          "wilson_lo": 0.208
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "0/1",
+          "recall": "0/83"
+        },
+        "strict_measured_only": "V:nightmare+fix @0.6",
+        "tournament_best": "C:nightmare.b@Lnl @0.6"
+      }
+    },
+    "unseen_threat": {
+      "owner": "jev",
+      "v9_ids": [
+        "unseen_threat"
+      ],
+      "film": null,
+      "jev": "V+:e.unseen_threat@V9C",
+      "targets": [
+        "event:unseen_threat@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:unseen_threat+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.unseen_threat@V9C",
+              "to": "V+:e.unseen_threat@V9C"
+            }
+          ],
+          "precision": "13/82",
+          "precision_p": 0.1585,
+          "recall": "22/83",
+          "recall_p": 0.2651,
+          "magic_films": "4/17",
+          "wilson_lo": 0.095
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "16/82",
+          "recall": "25/83"
+        },
+        "strict_measured_only": "V:unseen_threat+fix @0.6",
+        "tournament_best": "A:unseen_threat.a.presence@L @0.7"
+      }
+    },
+    "appears_suddenly": {
+      "owner": "jev",
+      "v9_ids": [
+        "appears_suddenly",
+        "startled"
+      ],
+      "film": null,
+      "jev": "min(V+:e.appears_suddenly@V9C, V+:e.startled@V9C)",
+      "targets": [
+        "derived:jump_scare@0.7",
+        "event:appears_suddenly@0.7",
+        "event:startled@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:jump_scare+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.appears_suddenly@V9C",
+              "to": "V+:e.appears_suddenly@V9C"
+            },
+            {
+              "from": "V:e.startled@V9C",
+              "to": "V+:e.startled@V9C"
+            }
+          ],
+          "precision": "15/66",
+          "precision_p": 0.2273,
+          "recall": "19/83",
+          "recall_p": 0.2289,
+          "magic_films": "7/15",
+          "wilson_lo": 0.143
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "10/49",
+          "recall": "16/83"
+        },
+        "strict_measured_only": "V:jump_scare+fix @0.7",
+        "tournament_best": "V:jump_scare @0.8 (not eligible: yes_criteria; yes_criteria)"
+      }
+    },
+    "child_frightened": {
+      "owner": "jev",
+      "v9_ids": [
+        "child_frightened"
+      ],
+      "film": null,
+      "jev": "V:e.child_frightened@V9C",
+      "targets": [
+        "event:child_frightened@0.6"
+      ],
+      "evidence": {
+        "tier": "B",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:e.child_frightened@V9C",
+          "threshold": 0.6,
+          "measured": true,
+          "precision": "22/96",
+          "precision_p": 0.2292,
+          "recall": "28/78",
+          "recall_p": 0.359,
+          "magic_films": "5/14",
+          "wilson_lo": 0.156
+        },
+        "sonnet": {
+          "ids": [
+            "child_frightened"
+          ],
+          "precision": "17/82",
+          "precision_p": 0.2073,
+          "recall": "23/78",
+          "recall_p": 0.2949
+        },
+        "strict_measured_only": "V:e.child_frightened@V9C @0.6",
+        "tournament_best": "C:child_frightened.c@SC @0.6"
+      }
+    },
+    "afraid_for_safety": {
+      "owner": "jev",
+      "v9_ids": [
+        "afraid_for_safety"
+      ],
+      "film": null,
+      "jev": "V+:e.afraid_for_safety@V9C",
+      "targets": [
+        "event:afraid_for_safety@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:afraid_for_safety+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.afraid_for_safety@V9C",
+              "to": "V+:e.afraid_for_safety@V9C"
+            }
+          ],
+          "precision": "41/246",
+          "precision_p": 0.1667,
+          "recall": "44/78",
+          "recall_p": 0.5641,
+          "magic_films": "8/39",
+          "wilson_lo": 0.125
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "42/237",
+          "recall": "45/78"
+        },
+        "strict_measured_only": "V:afraid_for_safety+fix @0.7",
+        "tournament_best": "V:afraid_for_safety @0.7 (not eligible: yes_criteria)"
+      }
+    },
+    "screams": {
+      "owner": "jev",
+      "v9_ids": [
+        "screams"
+      ],
+      "film": null,
+      "jev": "V+:e.screams@V9C",
+      "targets": [
+        "event:screams@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:screams+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.screams@V9C",
+              "to": "V+:e.screams@V9C"
+            }
+          ],
+          "precision": "40/224",
+          "precision_p": 0.1786,
+          "recall": "47/78",
+          "recall_p": 0.6026,
+          "magic_films": "14/59",
+          "wilson_lo": 0.134
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "37/207",
+          "recall": "44/78"
+        },
+        "strict_measured_only": "V:screams+fix @0.6",
+        "tournament_best": "V:screams @0.8 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "crying": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "crying"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "crying"
+          ],
+          "precision": "9/29",
+          "precision_p": 0.3103,
+          "recall": "13/78",
+          "recall_p": 0.1667
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "A:crying.a.dialogue@L @0.6"
+      }
+    },
+    "despair": {
+      "owner": "sonnet",
+      "v9_ids": [
+        "despair"
+      ],
+      "film": null,
+      "jev": null,
+      "targets": [],
+      "evidence": {
+        "tier": "S",
+        "v9_owner": "sonnet",
+        "tournament_owner": "sonnet",
+        "sonnet": {
+          "ids": [
+            "despair"
+          ],
+          "precision": "12/34",
+          "precision_p": 0.3529,
+          "recall": "15/78",
+          "recall_p": 0.1923
+        },
+        "strict_measured_only": "sonnet",
+        "tournament_best": "V:e.despair@V9C @0.6 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "animal_cruelty": {
+      "owner": "jev",
+      "v9_ids": [
+        "animal_cruelty"
+      ],
+      "film": null,
+      "jev": "V+:e.animal_cruelty@V9C",
+      "targets": [
+        "event:animal_cruelty@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:animal_cruelty+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.animal_cruelty@V9C",
+              "to": "V+:e.animal_cruelty@V9C"
+            }
+          ],
+          "precision": "6/7",
+          "precision_p": 0.8571,
+          "recall": "14/259",
+          "recall_p": 0.0541,
+          "magic_films": "1/1",
+          "wilson_lo": 0.487
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:animal_cruelty+fix @0.7",
+        "tournament_best": "C:animal_cruelty.a@S @0.6"
+      }
+    },
+    "animal_in_danger": {
+      "owner": "jev",
+      "v9_ids": [
+        "animal_in_danger"
+      ],
+      "film": null,
+      "jev": "V+:e.animal_in_danger@V9C",
+      "targets": [
+        "event:animal_in_danger@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "V:animal_in_danger+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.animal_in_danger@V9C",
+              "to": "V+:e.animal_in_danger@V9C"
+            }
+          ],
+          "precision": "33/46",
+          "precision_p": 0.7174,
+          "recall": "63/259",
+          "recall_p": 0.2432,
+          "magic_films": "1/1",
+          "wilson_lo": 0.575
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "V:animal_in_danger+fix @0.7",
+        "tournament_best": "V:animal_in_danger @0.7 (not eligible: yes_criteria)"
+      }
+    },
+    "dangerous_act": {
+      "owner": "jev",
+      "v9_ids": [
+        "dangerous_act"
+      ],
+      "film": null,
+      "jev": "V+:e.dangerous_act@V9C",
+      "targets": [
+        "event:dangerous_act@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:dangerous_act+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.dangerous_act@V9C",
+              "to": "V+:e.dangerous_act@V9C"
+            }
+          ],
+          "precision": "6/32",
+          "precision_p": 0.1875,
+          "recall": "8/44",
+          "recall_p": 0.1818,
+          "magic_films": "3/4",
+          "wilson_lo": 0.089
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "6/27",
+          "recall": "8/44"
+        },
+        "strict_measured_only": "V:dangerous_act+fix @0.6",
+        "tournament_best": "A:dangerous_act.a.risk@LSC @0.6 (not eligible: no_presupposition)"
+      }
+    },
+    "runs_away": {
+      "owner": "jev",
+      "v9_ids": [
+        "runs_away"
+      ],
+      "film": null,
+      "jev": "max(C:runs_away.a@SC, C:runs_away.b@LnlC)",
+      "targets": [
+        "event:runs_away@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:or:runs_away",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "1/5",
+          "precision_p": 0.2,
+          "recall": "1/44",
+          "recall_p": 0.0227,
+          "magic_films": "0/2",
+          "wilson_lo": 0.036
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "0/3",
+          "recall": "0/44"
+        },
+        "strict_measured_only": "C:or:runs_away @0.7",
+        "tournament_best": "C:or:runs_away @0.7"
+      }
+    },
+    "goes_with_stranger": {
+      "owner": "jev",
+      "v9_ids": [
+        "goes_with_stranger"
+      ],
+      "film": null,
+      "jev": "V+:e.goes_with_stranger@V9C",
+      "targets": [
+        "event:goes_with_stranger@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:goes_with_stranger+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.goes_with_stranger@V9C",
+              "to": "V+:e.goes_with_stranger@V9C"
+            }
+          ],
+          "precision": "1/4",
+          "precision_p": 0.25,
+          "recall": "1/44",
+          "recall_p": 0.0227,
+          "magic_films": "0/1",
+          "wilson_lo": 0.046
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "1/6",
+          "recall": "1/44"
+        },
+        "strict_measured_only": "V:goes_with_stranger+fix @0.6",
+        "tournament_best": "V:goes_with_stranger @0.7 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "slapstick": {
+      "owner": "jev",
+      "v9_ids": [
+        "slapstick"
+      ],
+      "film": null,
+      "jev": "V+:e.slapstick@V9C",
+      "targets": [
+        "event:slapstick@0.6"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:slapstick+fix",
+          "threshold": 0.6,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.slapstick@V9C",
+              "to": "V+:e.slapstick@V9C"
+            }
+          ],
+          "precision": "9/68",
+          "precision_p": 0.1324,
+          "recall": "13/44",
+          "recall_p": 0.2955,
+          "magic_films": "0/18",
+          "wilson_lo": 0.071
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "9/59",
+          "recall": "13/44"
+        },
+        "strict_measured_only": "V:slapstick+fix @0.6",
+        "tournament_best": "V:slapstick @0.7 (not eligible: yes_criteria; no_criteria)"
+      }
+    },
+    "comic_peril": {
+      "owner": "jev",
+      "v9_ids": [
+        "comic_peril"
+      ],
+      "film": null,
+      "jev": "V+:e.comic_peril@V9C",
+      "targets": [
+        "event:comic_peril@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "V:comic_peril+fix",
+          "threshold": 0.7,
+          "measured": true,
+          "lint_fixed": [
+            {
+              "from": "V:e.comic_peril@V9C",
+              "to": "V+:e.comic_peril@V9C"
+            }
+          ],
+          "precision": "7/36",
+          "precision_p": 0.1944,
+          "recall": "8/44",
+          "recall_p": 0.1818,
+          "magic_films": "1/7",
+          "wilson_lo": 0.098
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "2/14",
+          "recall": "3/44"
+        },
+        "strict_measured_only": "V:comic_peril+fix @0.7",
+        "tournament_best": "V:comic_peril @0.6 (not eligible: yes_criteria)"
+      }
+    },
+    "film:threatens": {
+      "owner": "jev",
+      "v9_ids": [],
+      "film": "threatens",
+      "jev": "C:film_threatens.b#{item}@L",
+      "targets": [
+        "film:threatens@0.7"
+      ],
+      "evidence": {
+        "tier": "C",
+        "v9_owner": "jev",
+        "tournament_owner": "sonnet",
+        "jev": {
+          "candidate": "C:film_threatens.b@L",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "2/5",
+          "precision_p": 0.4,
+          "recall": "3/79",
+          "recall_p": 0.038,
+          "magic_films": "1/2",
+          "wilson_lo": 0.118
+        },
+        "sonnet": "never asked",
+        "v9_wording_at_07": {
+          "precision": "4/41",
+          "recall": "5/79"
+        },
+        "strict_measured_only": "C:film_threatens.b@L @0.7",
+        "tournament_best": "C:film_threatens.b@L @0.7"
+      }
+    },
+    "film:child_in_danger": {
+      "owner": "jev",
+      "v9_ids": [],
+      "film": "child_in_danger",
+      "jev": "C:film_child_in_danger.a#{item}@LSnl",
+      "targets": [
+        "film:child_in_danger@0.8"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:film_child_in_danger.a@LSnl",
+          "threshold": 0.8,
+          "measured": true,
+          "precision": "25/35",
+          "precision_p": 0.7143,
+          "recall": "46/221",
+          "recall_p": 0.2081,
+          "magic_films": "2/3",
+          "wilson_lo": 0.549
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:film_child_in_danger.a@LSnl @0.8",
+        "tournament_best": "C:film_child_in_danger.a@LSnl @0.8"
+      }
+    },
+    "film:danger": {
+      "owner": "jev",
+      "v9_ids": [],
+      "film": "danger",
+      "jev": "C:film_danger.a#{item}@LSnl",
+      "targets": [
+        "film:danger@0.7"
+      ],
+      "evidence": {
+        "tier": "A",
+        "v9_owner": "jev",
+        "tournament_owner": "jev",
+        "jev": {
+          "candidate": "C:film_danger.a@LSnl",
+          "threshold": 0.7,
+          "measured": true,
+          "precision": "13/18",
+          "precision_p": 0.7222,
+          "recall": "22/421",
+          "recall_p": 0.0523,
+          "magic_films": "4/4",
+          "wilson_lo": 0.491
+        },
+        "sonnet": "never asked",
+        "strict_measured_only": "C:film_danger.a@LSnl @0.7",
+        "tournament_best": "C:film_danger.a@LSnl @0.7"
+      }
+    }
+  },
+  "counts": {
+    "concepts": 88,
+    "jev_concepts": 78,
+    "sonnet_concepts": 10,
+    "v9_ids_jev": 77,
+    "v9_ids_sonnet": 12,
+    "jev_questions": 112,
+    "jev_questions_lint_fixed_measured": 39
+  }
+}

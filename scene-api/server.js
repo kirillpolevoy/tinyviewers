@@ -16,6 +16,16 @@ import { pathToFileURL } from 'node:url';
 const ROUTES = [
   { pattern: /^\/api\/add\/resolve\/?$/, module: './api/add/resolve.js', params: [] },
   { pattern: /^\/api\/add\/jobs\/([^/]+)\/recording\/?$/, module: './api/add/jobs/[id]/recording.js', params: ['id'] },
+  // The Jev-first routes share one function (api/jevfirst.js), as vercel.json's rewrites send them there.
+  { pattern: /^\/api\/add\/jobs\/([^/]+)\/continue\/?$/, module: './api/jevfirst.js', params: ['id'], route: 'continue' },
+  { pattern: /^\/api\/demo\/films\/?$/, module: './api/jevfirst.js', params: [], route: 'demo-films' },
+  { pattern: /^\/api\/demo\/status\/?$/, module: './api/jevfirst.js', params: [], route: 'demo-status' },
+  { pattern: /^\/api\/demo\/runs\/([^/]+)\/continue\/?$/, module: './api/jevfirst.js', params: ['id'], route: 'demo-continue' },
+  { pattern: /^\/api\/demo\/runs\/([^/]+)\/?$/, module: './api/jevfirst.js', params: ['id'], route: 'demo-run' },
+  { pattern: /^\/api\/demo\/runs\/?$/, module: './api/jevfirst.js', params: [], route: 'demo-runs' },
+  { pattern: /^\/api\/admin\/rebuild\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-rebuild' },
+  { pattern: /^\/api\/admin\/backups\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-backups' },
+  { pattern: /^\/api\/admin\/restore\/?$/, module: './api/jevfirst.js', params: [], route: 'admin-restore' },
   { pattern: /^\/api\/add\/jobs\/([^/]+)\/?$/, module: './api/add/jobs/[id].js', params: ['id'] },
   { pattern: /^\/api\/add\/jobs\/?$/, module: './api/add/jobs.js', params: [] },
   { pattern: /^\/api\/add\/status\/?$/, module: './api/add/status.js', params: [] },
@@ -41,7 +51,7 @@ export async function route(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
     res.statusCode = 404;
-    res.end(`${JSON.stringify({ error: 'not_found', message: `No route for ${url.pathname}.`, routes: ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/films/{slug}/recording', '/api/vocabulary', '/api/openapi.json', '/api/add/status', '/api/add/resolve', '/api/add/jobs', '/api/add/jobs/{id}', '/api/add/jobs/{id}/recording'] }, null, 2)}\n`);
+    res.end(`${JSON.stringify({ error: 'not_found', message: `No route for ${url.pathname}.`, routes: ['/api/films', '/api/films/{slug}', '/api/films/{slug}/scenes', '/api/films/{slug}/recording', '/api/vocabulary', '/api/openapi.json', '/api/add/status', '/api/add/resolve', '/api/add/jobs', '/api/add/jobs/{id}', '/api/add/jobs/{id}/recording', '/api/demo/films', '/api/demo/status', '/api/demo/runs', '/api/demo/runs/{id}', '/api/admin/rebuild', '/api/admin/backups', '/api/admin/restore'] }, null, 2)}\n`);
     return;
   }
   const match = url.pathname.match(hit.pattern);
@@ -53,6 +63,7 @@ export async function route(req, res) {
     query[key] = values.length > 1 ? values : values[0];
   }
   hit.params.forEach((name, i) => { query[name] = decodeURIComponent(match[i + 1]); });
+  if (hit.route) query.route = hit.route;
   req.query = query;
   const fn = await load(hit.module);
   await fn(req, res);
@@ -91,6 +102,8 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
     console.log('  /api/vocabulary');
     console.log('  /api/openapi.json');
     console.log('  /api/add/status   (POST /api/add/resolve, POST /api/add/jobs, GET /api/add/jobs/{id}[/recording])');
+    console.log('  /api/demo/films   (GET /api/demo/status, POST /api/demo/runs, GET /api/demo/runs/{id})');
+    console.log('  POST /api/admin/rebuild | /api/admin/backups | /api/admin/restore   (passcode)');
     if (!process.env.DATABASE_URL && !process.argv.includes('--pglite')) {
       console.log('\nDATABASE_URL is not set — every data route will return 500. Add --pglite to serve an in-memory copy instead.');
     }

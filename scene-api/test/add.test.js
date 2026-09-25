@@ -35,6 +35,8 @@ import { freshDb } from './helper.js';
 const PASSCODE = 'open sesame';
 
 test.before(() => {
+  // These tests are the one-invocation pipeline's (pipeline/run.js); the default is now Jev-first.
+  process.env.ADD_PIPELINE = 'live';
   process.env.ADD_FILM_PASSCODE = PASSCODE;
   process.env.ADD_FILM_DAILY_CAP_USD = '5';
   // `startJob` looks its film up from TMDB by IMDb id, so it needs a key to be configured. Every
@@ -434,8 +436,9 @@ test('the daily cap counts what today already spent plus what this run would', a
       && Math.abs(e.extra.spent_usd - 4.75) < 1e-9 && e.extra.cap_usd === 5
       && e.extra.reserve_usd === RESERVE_USD,
   );
-  // Yesterday's spending does not count against today.
-  await db.query("update jobs set created_at = now() - interval '2 days' where id = 'spent'");
+  // Spending by a job that was created AND ended on an earlier day does not count against today (one
+  // that ended today does, whenever it was created: see the blocker 4 test in jevfirst.test.js).
+  await db.query("update jobs set created_at = now() - interval '2 days', updated_at = now() - interval '2 days' where id = 'spent'");
   const { id } = await admit(db);
   assert.ok(id);
   // And the reserve is on the row from the moment it is created, so a run that is killed before it

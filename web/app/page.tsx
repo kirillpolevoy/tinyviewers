@@ -3,7 +3,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SearchForm } from '@/components/SearchForm';
 import { PeekCard } from '@/components/PeekCard';
 import { FinUnderline, SeaFloor } from '@/components/Art';
-import { HOME } from '@/lib/copy';
+import { HOME, WATCH_LINKED } from '@/lib/copy';
 import { getShowcase, listFilms } from '@/lib/queries';
 import styles from './home.module.css';
 
@@ -65,8 +65,12 @@ export default async function HomePage() {
           <Link href="/library" className={styles.link}>
             {HOME.browseLink}
           </Link>
-          {/* "Watch it work →" is off until /watch shows the stages that build the guides (see NAV
-              in lib/copy.ts). */}
+          {/* `WATCH_LINKED` in lib/copy.ts puts this and the nav entry in front of everyone, or takes both away. */}
+          {WATCH_LINKED && (
+            <Link href="/watch" className={styles.link}>
+              {HOME.watchLink}
+            </Link>
+          )}
         </nav>
       </main>
 

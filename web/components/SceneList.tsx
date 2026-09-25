@@ -2,10 +2,12 @@
 
 import { useState, type MouseEvent } from 'react';
 import { FILM } from '@/lib/copy';
+import { groupReasons } from '@/lib/reasons';
 import {
   endsAroundMs,
   formatTime,
   readyAtMs,
+  sceneHeading,
   severityFor,
   severityTone,
   strengthWord,
@@ -19,6 +21,12 @@ type Props = {
   /** Controlled: which row is open. Leave out and the list keeps its own state. */
   openId?: string | null;
   onToggle?: (id: string) => void;
+  /**
+   * The film's checked text (every scene's title and description, lib/reasons.ts nameContext): the
+   * grouped reasons shorten a character's name only to a form it uses. Whole-film, so a filter never
+   * changes what a reason is called.
+   */
+  context?: string;
 };
 
 /**
@@ -30,7 +38,7 @@ type Props = {
  * — the summary's click is handled here — so exactly one row is open and a tapped timeline marker
  * can open its row from outside.
  */
-export function SceneList({ scenes, band, openId, onToggle }: Props) {
+export function SceneList({ scenes, band, openId, onToggle, context = '' }: Props) {
   const [ownOpen, setOwnOpen] = useState<string | null>(null);
   const controlled = openId !== undefined;
   const current = controlled ? openId : ownOpen;
@@ -46,6 +54,16 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
       {scenes.map((scene) => {
         const value = severityFor(scene, band);
         const open = current === scene.id;
+        // The reasons, grouped as a parent would say them ("The Giant and Hogarth in danger"), each
+        // group's individual checks one tap away. A reason already shown is not repeated among the
+        // scene's other tags.
+        const whyTags = scene.whyTags?.length ? scene.whyTags : (scene.why ?? []).map((label) => ({ label }));
+        const groups = groupReasons(whyTags, context);
+        const detailed = groups.filter((g) => g.items.length > 1 || g.items[0].label.trim() !== g.label);
+        const whyKeys = new Set(
+          [...whyTags.map((t) => t.label), ...groups.map((g) => g.label), ...(scene.why ?? [])].map((label) => label.trim().toLowerCase()),
+        );
+        const tags = scene.tags.filter((tag) => !whyKeys.has(tag.label.toLowerCase()));
         return (
           <li key={scene.id} className={`${styles.row} ${open ? styles.open : ''}`}>
             <details className={styles.details} open={open}>
@@ -54,10 +72,12 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
                   <span className={`${styles.swatch} ${styles[severityTone(value)]}`} aria-hidden="true" />
                   {strengthWord(value)}
                 </span>
-                <span className={styles.title}>{scene.title}</span>
+                <span className={styles.title}>{sceneHeading(scene)}</span>
                 <span className={`tabular ${styles.range}`}>
                   {formatTime(scene.startMs)}–{formatTime(scene.endMs)}
                 </span>
+                {/* The row opens: said by a mark, not only by the pointer. */}
+                <span className={styles.chevron} aria-hidden="true" />
               </summary>
 
               <div className={styles.panel}>
@@ -67,10 +87,36 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
                     formatTime(endsAroundMs(scene.endMs)),
                   )}
                 </p>
+                <p className={styles.readyNote}>{FILM.readyNote}</p>
                 {scene.description && <p className={styles.description}>{scene.description}</p>}
-                {scene.tags.length > 0 && (
+                {groups.length > 0 && (
+                  <div className={styles.group}>
+                    <p className={styles.groupLabel}>{FILM.whyLabel}</p>
+                    <ul className={styles.tags}>
+                      {groups.map((g) => (
+                        <li key={g.label} className={`${styles.tag} ${styles.why}`}>
+                          {g.label}
+                        </li>
+                      ))}
+                    </ul>
+                    {detailed.length > 0 && (
+                      <details className={styles.checks}>
+                        <summary className={styles.checksSummary}>{FILM.whyChecks}</summary>
+                        <ul className={styles.checkList}>
+                          {detailed.map((g) => (
+                            <li key={g.label}>
+                              <span className={styles.checkGroup}>{g.label}:</span> {g.items.map((t) => t.label).join(' · ')}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </div>
+                )}
+                {tags.length > 0 && groups.length > 0 && <p className={styles.groupLabel}>{FILM.tagsLabel}</p>}
+                {tags.length > 0 && (
                   <ul className={styles.tags}>
-                    {scene.tags.map((tag) => (
+                    {tags.map((tag) => (
                       <li key={tag.id} className={styles.tag}>
                         {tag.label}
                       </li>

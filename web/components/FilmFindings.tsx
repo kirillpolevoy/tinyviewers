@@ -4,8 +4,12 @@ import { useMemo, useRef, useState, type MouseEvent } from 'react';
 import { AgeToggle, FilterPanel, LevelsDisclosure } from './FilmControls';
 import { SceneList } from './SceneList';
 import { StateCard } from './StateCard';
+import { useWidth } from './useWidth';
 import { EMPTY, FILM } from '@/lib/copy';
+import { nameContext } from '@/lib/reasons';
 import {
+  clusterMarkers,
+  markWidthPx,
   filmHref,
   formatTime,
   lastSceneEndMs,
@@ -17,6 +21,7 @@ import {
   strengthBreakdown,
   strengthWord,
   visibleScenes,
+  sceneHeading,
 } from '@/lib/scenes';
 import type { AgeBand, Scene } from '@/lib/scenes';
 import styles from './FilmFindings.module.css';
@@ -38,8 +43,9 @@ type Props = {
  * Four pieces of state, and one rule about each:
  *  - `band` recomputes the breakdown, the marker heights and colours and the strength words — never
  *    which scenes are listed.
- *  - `selectedSceneId` (a tapped marker) narrows the list to that one scene and opens it; a second
- *    tap, or "Show all", restores the list.
+ *  - `selectedIds` (a tapped marker) narrows the list to that one scene and opens it — or, for a mark
+ *    that stands for several scenes sat close together, to those scenes; a second tap, or "Show all",
+ *    restores the list.
  *  - `tags` filter the list the moment a chip is pressed, and clear any marker selection.
  *  - `openId` is the one open row.
  *
@@ -49,21 +55,41 @@ type Props = {
 export function FilmFindings({ slug, title, scenes, durationMs, initialBand, initialTags }: Props) {
   const [band, setBand] = useState<AgeBand>(initialBand);
   const [tags, setTags] = useState<string[]>(initialTags);
-  const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[] | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const summaryRef = useRef<HTMLElement>(null);
+  // Keyed by the first scene of each mark (a mark can stand for several scenes).
   const markerRefs = useRef(new Map<string, HTMLButtonElement>());
   const markersRef = useRef<HTMLDivElement>(null);
+  // Scenes that sit closer together than a mark is wide share one mark, with their count on it; how
+  // close that is depends on how wide the timeline is drawn, so it is measured (0 on the server, where
+  // every scene is its own mark).
+  const trackWidth = useWidth(markersRef);
 
   const facets = useMemo(() => mergedFacets(scenes), [scenes]);
+  // The whole film's checked text, so a reason names a character the way the film's text does.
+  const context = useMemo(() => nameContext(scenes), [scenes]);
   const breakdown = useMemo(() => strengthBreakdown(scenes, band), [scenes, band]);
   const lastEnd = useMemo(() => lastSceneEndMs(scenes), [scenes]);
   const shown = useMemo(
-    () => visibleScenes(scenes, { selectedSceneId, tags }),
-    [scenes, selectedSceneId, tags],
+    () => visibleScenes(scenes, { selectedIds, tags }),
+    [scenes, selectedIds, tags],
   );
-  const selected = selectedSceneId ? (scenes.find((s) => s.id === selectedSceneId) ?? null) : null;
+  const selected = useMemo(
+    () => (selectedIds ? scenes.filter((s) => selectedIds.includes(s.id)) : []),
+    [scenes, selectedIds],
+  );
+  const clusters = useMemo(
+    () => clusterMarkers(scenes, (s) => markerLeftPct(s.startMs, durationMs), (s) => severityFor(s, band), trackWidth),
+    [scenes, durationMs, band, trackWidth],
+  );
+  const markPx = markWidthPx(trackWidth);
+  // Every scene rated the same for both bands: said, so the age switch changing nothing does not look broken.
+  const bandsSame = useMemo(
+    () => scenes.length > 0 && scenes.every((s) => severityFor(s, '5-7') === severityFor(s, '8-10')),
+    [scenes],
+  );
 
   const keepUrl = (next: { band: AgeBand; tags: string[] }) => {
     window.history.replaceState(null, '', filmHref(slug, { band: next.band, selected: next.tags }));
@@ -76,22 +102,23 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
 
   const changeTags = (next: string[]) => {
     setTags(next);
-    setSelectedSceneId(null);
+    setSelectedIds(null);
     // A row the filter has just hidden cannot stay the open one.
-    if (openId && !visibleScenes(scenes, { selectedSceneId: null, tags: next }).some((s) => s.id === openId)) {
+    if (openId && !visibleScenes(scenes, { tags: next }).some((s) => s.id === openId)) {
       setOpenId(null);
     }
     keepUrl({ band, tags: next });
   };
 
-  const tapMarker = (id: string) => {
-    if (selectedSceneId === id) {
-      setSelectedSceneId(null);
+  const tapMarker = (ids: string[]) => {
+    if (selectedIds && sameIds(selectedIds, ids)) {
+      setSelectedIds(null);
       setOpenId(null);
       return;
     }
-    setSelectedSceneId(id);
-    setOpenId(id);
+    setSelectedIds(ids);
+    // One scene opens; several are listed, closed, for the parent to choose from.
+    setOpenId(ids.length === 1 ? ids[0] : null);
     // On a phone the list is a screen away from the timeline; bring the scene to the reader.
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     requestAnimationFrame(() =>
@@ -99,33 +126,38 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
     );
   };
 
-  // A finger is wider than a 16px marker, and markers late in a film sit a few pixels apart. So a tap
-  // anywhere on the timeline's inset picks the marker nearest to it (within half a 44px target);
-  // a tap on a marker itself is that marker's own click. The markers stay the buttons that keyboard
+  // Touch screens never get here: under a coarse pointer the timeline is a picture (FilmFindings.module.css)
+  // and the rows are the controls. A mouse can still land a few pixels off a 10px mark, so a click
+  // anywhere on the timeline's inset picks the mark nearest to it (within half a 44px target);
+  // a tap on a mark itself is that mark's own click. The marks stay the buttons that keyboard
   // and screen-reader users reach — this only widens where a pointer can land.
   const tapTimeline = (event: MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).closest('button')) return;
     const box = markersRef.current?.getBoundingClientRect();
     if (!box || box.width === 0) return;
     const x = event.clientX - box.left;
-    let best: { id: string; distance: number } | null = null;
-    for (const scene of scenes) {
-      const distance = Math.abs((markerLeftPct(scene.startMs, durationMs) / 100) * box.width - x);
-      if (!best || distance < best.distance) best = { id: scene.id, distance };
+    let best: { ids: string[]; distance: number } | null = null;
+    for (const cluster of clusters) {
+      // How far outside the mark's own edges the click landed (0 inside it).
+      const from = (cluster.firstPct / 100) * box.width - markPx / 2;
+      const to = (cluster.lastPct / 100) * box.width + markPx / 2;
+      const distance = Math.max(0, from - x, x - to);
+      if (!best || distance < best.distance) best = { ids: cluster.items.map((s) => s.id), distance };
     }
-    if (best && best.distance <= 22) {
-      tapMarker(best.id);
-      markerRefs.current.get(best.id)?.focus({ preventScroll: true });
+    if (best && best.distance <= 17) {
+      tapMarker(best.ids);
+      markerRefs.current.get(best.ids[0])?.focus({ preventScroll: true });
     }
   };
 
   // "Show all" removes itself when pressed, so focus would fall to the page. It goes back to the
   // marker that was selected instead: the control the parent used to get here.
   const showAll = () => {
-    const was = selectedSceneId;
-    setSelectedSceneId(null);
+    const was = selectedIds?.[0];
+    setSelectedIds(null);
     setOpenId(null);
-    if (was) requestAnimationFrame(() => markerRefs.current.get(was)?.focus());
+    const mark = was ? clusters.find((c) => c.items.some((s) => s.id === was))?.items[0].id : undefined;
+    if (mark) requestAnimationFrame(() => markerRefs.current.get(mark)?.focus());
   };
 
   // Both "Clear filters" buttons disappear once nothing is selected. Focus goes to the filter's
@@ -151,13 +183,24 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
                 {breakdown.map((entry) => (
                   <li key={entry.word} className={styles.breakdownItem}>
                     <span className={`${styles.swatch} ${styles[entry.tone]}`} aria-hidden="true" />
-                    <span className="tabular">{entry.count}</span> {entry.word}
+                    {/* Every scene at one level: the level alone, not the count a second time. */}
+                    {breakdown.length === 1 && entry.value !== null ? (
+                      FILM.breakdownAll(entry.word, entry.count)
+                    ) : (
+                      <>
+                        <span className="tabular">{entry.count}</span> {entry.word}
+                      </>
+                    )}
                   </li>
                 ))}
               </ul>
             )}
           </div>
-          <AgeToggle slug={slug} band={band} selected={tags} onChange={changeBand} />
+          <div className={styles.bandBox}>
+            <AgeToggle slug={slug} band={band} selected={tags} onChange={changeBand} />
+            {bandsSame && <p className={styles.bandsSame}>{FILM.bandsSame}</p>}
+            <LevelsDisclosure />
+          </div>
         </div>
 
         {scenes.length > 0 && (
@@ -169,28 +212,49 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
               role="group"
               aria-label={`Where the ${scenes.length} scenes sit across ${title}. Tap one to see it.`}
             >
-              {scenes.map((scene) => {
-                const value = severityFor(scene, band);
-                const isSelected = scene.id === selectedSceneId;
+              {clusters.map((cluster) => {
+                const ids = cluster.items.map((s) => s.id);
+                const first = cluster.items[0];
+                const last = cluster.items[cluster.items.length - 1];
+                const many = ids.length > 1;
+                const value = cluster.value;
+                const isSelected = selectedIds !== null && ids.every((id) => selectedIds.includes(id));
                 return (
                   <button
-                    key={scene.id}
+                    key={first.id}
                     ref={(node) => {
-                      if (node) markerRefs.current.set(scene.id, node);
-                      else markerRefs.current.delete(scene.id);
+                      if (node) markerRefs.current.set(first.id, node);
+                      else markerRefs.current.delete(first.id);
                     }}
                     type="button"
-                    className={`${styles.marker} ${styles[severityTone(value)]} ${
-                      isSelected ? styles.markerSelected : selectedSceneId ? styles.markerDimmed : ''
+                    className={`${styles.marker} ${many ? styles.cluster : ''} ${styles[severityTone(value)]} ${
+                      isSelected ? styles.markerSelected : selectedIds ? styles.markerDimmed : ''
                     }`}
-                    style={{
-                      left: `${markerLeftPct(scene.startMs, durationMs)}%`,
-                      height: `${markerHeightPx(value)}px`,
-                    }}
+                    style={
+                      many
+                        ? {
+                            // As wide as the scenes it stands for, from the first one's start to the last's.
+                            left: `calc(${cluster.firstPct}% - ${markPx / 2}px)`,
+                            width: `calc(${cluster.lastPct - cluster.firstPct}% + ${markPx}px)`,
+                            height: `${markerHeightPx(value)}px`,
+                          }
+                        : // Measured, the width is the one the grouping assumed; before that, the stylesheet's.
+                          { left: `${cluster.firstPct}%`, height: `${markerHeightPx(value)}px`, ...(trackWidth ? { width: `${markPx}px` } : {}) }
+                    }
                     aria-pressed={isSelected}
-                    aria-label={`${scene.title}, ${formatTime(scene.startMs)}, ${strengthWord(value)}`}
-                    onClick={() => tapMarker(scene.id)}
-                  />
+                    aria-label={
+                      many
+                        ? FILM.markerGroupLabel(ids.length, formatTime(first.startMs), formatTime(last.startMs), strengthWord(value))
+                        : `${sceneHeading(first)}, ${formatTime(first.startMs)}, ${strengthWord(value)}`
+                    }
+                    onClick={() => tapMarker(ids)}
+                  >
+                    {many && (
+                      <span className={`tabular ${styles.clusterCount}`} aria-hidden="true">
+                        {ids.length}
+                      </span>
+                    )}
+                  </button>
                 );
               })}
             </div>
@@ -209,9 +273,11 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
         <div className={styles.bottom}>
           {scenes.length > 0 && (
             <p className={styles.hint} aria-live="polite">
-              {selected ? (
+              {selected.length > 0 ? (
                 <>
-                  {FILM.showingScene(formatTime(selected.startMs))}{' '}
+                  {selected.length === 1
+                    ? FILM.showingScene(formatTime(selected[0].startMs))
+                    : FILM.showingScenes(selected.length, formatTime(selected[0].startMs), formatTime(selected[selected.length - 1].startMs))}{' '}
                   {/* With a filter on, the way back is to the matching scenes, not to all of them —
                       and the button says which. */}
                   <button type="button" className={styles.showAll} onClick={showAll}>
@@ -219,12 +285,15 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
                   </button>
                 </>
               ) : (
-                FILM.timelineHint
+                <>
+                  {/* On a phone or any touch screen the markers are a picture: the rows below are the way in. */}
+                  <span className={styles.hintWide}>{FILM.timelineHint}</span>
+                  <span className={styles.hintPhone}>{FILM.timelineHintPhone}</span>
+                </>
               )}
               <span> · {FILM.allClear(formatTime(lastEnd))}</span>
             </p>
           )}
-          <LevelsDisclosure />
         </div>
       </section>
 
@@ -260,14 +329,23 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
             </button>
           </StateCard>
         ) : (
+          <>
+          <p className={styles.rowsHint}>{FILM.rowsHint}</p>
           <SceneList
             scenes={shown}
             band={band}
+            context={context}
             openId={openId}
             onToggle={(id) => setOpenId((was) => (was === id ? null : id))}
           />
+          </>
         )}
       </div>
     </>
   );
+}
+
+/** The same scenes, in any order. */
+function sameIds(a: string[], b: string[]): boolean {
+  return a.length === b.length && a.every((id) => b.includes(id));
 }

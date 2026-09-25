@@ -788,7 +788,7 @@ export async function attachPoster(film, opts = {}) {
 
 const cols = (row) => Object.keys(row);
 
-async function insertRows(tx, table, rows, { chunk = 400 } = {}) {
+export async function insertRows(tx, table, rows, { chunk = 400 } = {}) {
   if (!rows.length) return;
   const keys = cols(rows[0]);
   for (let i = 0; i < rows.length; i += chunk) {
@@ -860,7 +860,9 @@ export async function ensureVocabulary(tx, taxonomy) {
   const version = items[0]?.taxonomy_version ?? null;
 
   const { rows: stored } = await tx.query(
-    'select distinct taxonomy_version from vocabulary where taxonomy_version is not null',
+    // 'reasons-*' rows are the Jev-first pipeline's flag-reason chips (pipeline-jevfirst/stages/ingest.js),
+    // a vocabulary of their own beside the taxonomy, never a different version of it.
+    "select distinct taxonomy_version from vocabulary where taxonomy_version is not null and taxonomy_version not like 'reasons-%'",
   );
   const other = stored.map((r) => r.taxonomy_version).filter((v) => v !== version);
   if (other.length) {

@@ -1,19 +1,83 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/api/openapi.json", "destination": "/api/openapi" },
-    { "source": "/", "destination": "/api/openapi" }
+    {
+      "source": "/api/openapi.json",
+      "destination": "/api/openapi"
+    },
+    {
+      "source": "/",
+      "destination": "/api/openapi"
+    },
+    {
+      "source": "/api/demo/films",
+      "destination": "/api/jevfirst?route=demo-films"
+    },
+    {
+      "source": "/api/demo/status",
+      "destination": "/api/jevfirst?route=demo-status"
+    },
+    {
+      "source": "/api/demo/runs",
+      "destination": "/api/jevfirst?route=demo-runs"
+    },
+    {
+      "source": "/api/demo/runs/:id/continue",
+      "destination": "/api/jevfirst?route=demo-continue&id=:id"
+    },
+    {
+      "source": "/api/demo/runs/:id",
+      "destination": "/api/jevfirst?route=demo-run&id=:id"
+    },
+    {
+      "source": "/api/add/jobs/:id/continue",
+      "destination": "/api/jevfirst?route=continue&id=:id"
+    },
+    {
+      "source": "/api/admin/rebuild",
+      "destination": "/api/jevfirst?route=admin-rebuild"
+    },
+    {
+      "source": "/api/admin/backups",
+      "destination": "/api/jevfirst?route=admin-backups"
+    },
+    {
+      "source": "/api/admin/restore",
+      "destination": "/api/jevfirst?route=admin-restore"
+    }
   ],
   "functions": {
-    "api/add/jobs.js": { "maxDuration": 300 }
+    "api/add/jobs.js": {
+      "maxDuration": 300,
+      "includeFiles": "pipeline-jevfirst/pack/*.json"
+    },
+    "api/add/jobs/[id].js": {
+      "maxDuration": 300,
+      "includeFiles": "pipeline-jevfirst/pack/*.json"
+    },
+    "api/jevfirst.js": {
+      "maxDuration": 300,
+      "includeFiles": "pipeline-jevfirst/pack/*.json"
+    }
   },
-  "crons": [{ "path": "/api/add/status", "schedule": "0 3 * * *" }],
+  "crons": [
+    {
+      "path": "/api/add/status",
+      "schedule": "0 3 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" }
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        }
       ]
     }
   ]

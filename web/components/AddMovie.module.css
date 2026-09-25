@@ -14,6 +14,14 @@
   max-width: 620px;
 }
 
+/* On a wide screen the live card takes the room it needs: the step list and what is happening now
+   side by side. */
+@media (min-width: 900px) {
+  .live {
+    max-width: none;
+  }
+}
+
 @media (min-width: 720px) {
   .card {
     padding: 26px 28px 28px;
@@ -292,6 +300,36 @@
   color: var(--dark-muted);
 }
 
+.whoNote {
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--dark-body);
+}
+
+.stepWhoLine {
+  display: flex;
+  gap: 6px;
+}
+
+.stepWho {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  color: var(--ink);
+}
+
+.whoJev {
+  background: var(--butter);
+}
+
+.whoSonnet {
+  background: var(--lilac);
+}
+
 .stepDetail {
   font-family: var(--serif);
   font-size: 14px;
@@ -301,6 +339,10 @@
 }
 
 .stepState {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
   font-family: var(--display);
   font-size: 12px;
   font-weight: 700;
@@ -308,6 +350,24 @@
   text-transform: uppercase;
   color: var(--dark-muted);
   white-space: nowrap;
+}
+
+/* How long a finished row took: the API's measurement, not a clock of this page's. */
+.stepTook {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--dark-body);
+}
+
+/* Beside the running row only: how long this step usually takes, so a slow one reads as expected. */
+.stepPace {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--butter);
 }
 
 .step_running .stepMark {
@@ -388,4 +448,108 @@
   font-size: 15px;
   line-height: 1.55;
   color: var(--ink);
+}
+
+/* --- the live card's two parts ------------------------------------------------------------------ */
+
+.liveGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .liveGrid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .stepsPanel {
+    order: 1;
+  }
+
+  .nowPanel {
+    order: 2;
+    position: sticky;
+    top: 16px;
+  }
+}
+
+.nowPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+}
+
+.nowEyebrow {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+}
+
+.nowLabel {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--butter);
+}
+
+.stepsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.stepsPhone {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .stepsWide {
+    display: none;
+  }
+
+  .stepsPhone {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+.fold {
+  color: var(--dark-text);
+}
+
+.foldSummary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.detailList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--dark-body);
 }

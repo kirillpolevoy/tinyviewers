@@ -199,7 +199,7 @@ function internalPaths() {
           400: { description: 'error_code "no_imdb_id".' },
           401: { description: 'Wrong passcode.' },
           409: { description: 'error_code "exists" (with slug) or "busy" (with the running job id).' },
-          429: { description: 'error_code "daily_cap", with spent_usd, cap_usd and reserve_usd; or "too_many_attempts" after ten wrong passcodes from one address.' },
+          429: { description: 'error_code "daily_cap", with spent_usd, cap_usd and reserve_usd; or "too_many_attempts" after ten wrong passcodes from one caller in ten minutes (other callers\' wrong passcodes never count against it).' },
           502: { description: 'error_code "tmdb_failed": TMDB did not answer, or has no film with that IMDb id.' },
           503: { description: 'No passcode is configured on this deployment.' },
         },
@@ -216,6 +216,74 @@ function internalPaths() {
           200: { description: 'status, step, film, steps[], cost_usd, error_code, error, recording_ready, scene_count, created_at, updated_at, elapsed_ms.', content: { 'application/json': { schema: { type: 'object' } } } },
           404: { description: 'No job with that id.' },
         },
+      },
+    },
+    '/api/add/jobs/{id}/continue': {
+      post: {
+        ...INTERNAL,
+        operationId: 'addJobContinue',
+        summary: 'INTERNAL. The next invocation of a Jev-first job (a self-call; x-continue-secret = ADD_FILM_PROXY_SECRET).',
+        description: 'Answers 202 at once and runs the job in the background of this invocation. Idempotent: a second call while one invocation holds the job\'s lease does nothing, and a finished stage never runs again.',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { 202: { description: '{ accepted: true }' }, 401: { description: 'Wrong secret.' }, 503: { description: 'No continuation secret configured.' } },
+      },
+    },
+    '/api/admin/rebuild': {
+      post: {
+        ...INTERNAL,
+        operationId: 'adminRebuild',
+        summary: 'INTERNAL. Re-run a library film through the Jev-first pipeline and replace its guide when the run finishes. Costs money.',
+        description: 'Admitted like an add (one job at a time; reserves the pipeline\'s worst case against REBUILD_DAILY_CAP_USD, default $15). The previous guide is copied into a backup in the same transaction that replaces it; a failed run leaves the guide unchanged. Poll GET /api/add/jobs/{id}.',
+        requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', required: ['slug', 'passcode'], properties: { slug: { type: 'string' }, passcode } } } } },
+        responses: { 202: { description: '{ id, slug, poll }' }, 401: { description: 'Wrong passcode.' }, 404: { description: 'error_code "no_such_film".' }, 409: { description: 'error_code "busy" or "no_imdb_id".' }, 429: { description: 'error_code "daily_cap".' } },
+      },
+    },
+    '/api/admin/backups': {
+      post: {
+        ...INTERNAL,
+        operationId: 'adminBackups',
+        summary: 'INTERNAL. The guide backups of one film, newest first.',
+        requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', required: ['slug', 'passcode'], properties: { slug: { type: 'string' }, passcode } } } } },
+        responses: { 200: { description: '{ slug, backups: [{ id, reason, job_id, pipeline_version, scene_count, taken_at, restored_at }] }' } },
+      },
+    },
+    '/api/admin/restore': {
+      post: {
+        ...INTERNAL,
+        operationId: 'adminRestore',
+        summary: 'INTERNAL. Put a guide backup back (the guide it replaces is backed up first).',
+        requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', required: ['backup_id', 'passcode'], properties: { backup_id: { type: 'integer' }, passcode } } } } },
+        responses: { 200: { description: '{ restored, film_id, scenes, backup_of_current }' }, 404: { description: 'error_code "no_such_backup".' }, 409: { description: 'A job is running.' } },
+      },
+    },
+    '/api/demo/films': { get: { ...INTERNAL, operationId: 'demoFilms', summary: 'INTERNAL. Films a live Jev run can use (stored Sonnet work and a stored track).', responses: { 200: { description: '[{ slug, title, year, poster, scene_count, cut_count, sentence_count, in_library, library_slug }]' } } } },
+    '/api/demo/status': { get: { ...INTERNAL, operationId: 'demoStatus', summary: 'INTERNAL. Whether a live run can start: { spent_today_usd, cap_usd, available, reserve_usd, reason? }.', responses: { 200: { description: 'status' } } } },
+    '/api/demo/runs': {
+      post: {
+        ...INTERNAL,
+        operationId: 'demoStart',
+        summary: 'INTERNAL. Start a live Jev run on a stored film (no passcode; per-client limit, 2 at once, DEMO_DAILY_CAP_USD reserved per run). Sonnet is never called.',
+        requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', required: ['slug'], properties: { slug: { type: 'string' } } } } } },
+        responses: { 202: { description: '{ id }' }, 404: { description: 'error_code "no_such_film".' }, 409: { description: 'error_code "busy".' }, 429: { description: 'error_code "daily_cap" or "too_many_runs".' } },
+      },
+    },
+    '/api/demo/runs/{id}': {
+      get: {
+        ...INTERNAL,
+        operationId: 'demoRun',
+        summary: 'INTERNAL. A live run: stage counters (completed / planned requests), per-scene tiles, a feed, and at the end the flagged scenes with WHY (reasons as tags, who answered each) compared with the film\'s current guide.',
+        description: 'A run nobody is working on (a lost continuation, a crashed invocation) is resumed by this poll. cost_usd is measured; cost_uncertain_usd (or null) is the part of the spend that is an upper bound, never a bill: a crashed attempt\'s spending mark, and requests that never answered or whose 200 body could not be read, each at its reservation. film is the run\'s own film: { slug, title, year, in_library, library_slug }.',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { 200: { description: 'id, slug, film, status, stage, elapsed_ms, cost_usd, cost_uncertain_usd, reserve_usd, invocations, stages, scenes[], feed[], result?' }, 404: { description: 'No such run.' } },
+      },
+    },
+    '/api/demo/runs/{id}/continue': {
+      post: {
+        ...INTERNAL,
+        operationId: 'demoContinue',
+        summary: 'INTERNAL, deployment-only: the next invocation of a demo run (header x-continue-secret = ADD_FILM_PROXY_SECRET). 202 at once; the run continues in the background.',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: { 202: { description: '{ accepted: true }' }, 401: { description: 'Wrong secret.' }, 503: { description: 'No continuation secret configured.' } },
       },
     },
     '/api/add/jobs/{id}/recording': {

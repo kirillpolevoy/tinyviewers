@@ -1,7 +1,7 @@
 -- scene-api schema. Plain Postgres, idempotent: safe to apply any number of times.
 -- Target: Neon (also runs on plain Postgres 14+ and on @electric-sql/pglite for the tests).
 --
--- NO SUBTITLE TEXT IS STORED ANYWHERE in here, with four named exceptions, and nothing else may be
+-- NO SUBTITLE TEXT IS STORED ANYWHERE in here, with five named exceptions, and nothing else may be
 -- added to that list without the owner saying so:
 --
 --   1. anchors.quote — three lines per track, capped at 12 words, so a parent can find the same line
@@ -18,8 +18,12 @@
 --      by the migration below on an older database. The recording endpoint refuses to serve them
 --      for a job that is not live regardless, so the column going stale cannot become an answer.
 --   4. job_blobs.srt — a whole subtitle file, for the minutes one live analysis is running, and
---      deleted the moment the job ends. See the comment on that table; it is the only place a whole
---      track ever sits, and it is never served by any endpoint.
+--      deleted the moment the job ends. See the comment on that table; it is the only place the live
+--      pipeline keeps a whole track, and it is never served by any endpoint.
+--   5. subtitle_tracks.srt — whole subtitle files kept per IMDb id, for the Jev-first pipeline and
+--      its demo (see that table near the end of this file). Never served, never logged. This one
+--      comes from the owner's earlier decision to keep tracks (the build that first added the
+--      table); the live pipeline is unchanged and still keeps its track only in job_blobs.
 
 -- ---------------------------------------------------------------------------------------------
 -- Films and tracks
@@ -312,3 +316,7 @@ update jobs set status = 'failed', error_code = coalesce(error_code, 'timed_out'
    and id <> (select id from jobs where status in ('queued', 'running') order by created_at desc limit 1);
 
 create unique index if not exists jobs_one_live on jobs ((true)) where status in ('queued', 'running');
+
+-- The Jev-first pipeline's tables (jobs lease columns, job_stages, subtitle_tracks, jevfirst_*, demo_runs,
+-- guide_backups) are in schema-jevfirst.sql. lib/db.js applies both files, in this order; a running
+-- scene-api also applies schema-jevfirst.sql by itself on a cold start (lib/ensure-schema.js).

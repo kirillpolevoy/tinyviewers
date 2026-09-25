@@ -30,23 +30,29 @@ function imdbHref(id: string | null): string | null {
   return id && /^tt\d{5,10}$/.test(id) ? `https://www.imdb.com/title/${id}/` : null;
 }
 
+/** About three lines of the synopsis on a phone: a first sentence longer than this is cut at three lines. */
+const PHONE_OVERVIEW_CHARS = 120;
+
 /**
  * The synopsis. On a wide screen it is shown whole, as designed. On a phone the findings are what the
- * parent came for, so only the first sentence sits above them and the rest is one tap away — the
- * two renderings are swapped by CSS, and the hidden one is `display: none`, so it is never read twice.
+ * parent came for, so only the first sentence sits above them — at most three lines of it — and the
+ * rest is one tap away. The two renderings are swapped by CSS, and the hidden one is `display: none`,
+ * so it is never read twice.
  */
 function Overview({ text }: { text: string }) {
   const [first, rest] = splitFirstSentence(text);
+  const longFirst = first.length > PHONE_OVERVIEW_CHARS;
+  const folded = Boolean(rest) || longFirst;
   return (
     <>
-      <p className={`${styles.overview} ${rest ? styles.overviewWide : ''}`}>{text}</p>
-      {rest && (
+      <p className={`${styles.overview} ${folded ? styles.overviewWide : ''}`}>{text}</p>
+      {folded && (
         <details className={styles.overviewPhone}>
           <summary className={styles.overviewSummary}>
-            <span className={styles.overview}>{first}</span>{' '}
+            <span className={`${styles.overview} ${longFirst ? styles.overviewClamp : ''}`}>{first}</span>{' '}
             <span className={styles.overviewMore}>{FILM.overviewMore}</span>
           </summary>
-          <p className={styles.overview}>{rest}</p>
+          {rest && <p className={styles.overview}>{rest}</p>}
         </details>
       )}
     </>

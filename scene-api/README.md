@@ -104,7 +104,13 @@ node --env-file=.env.local --env-file=../.env.local server.js
 | `ADD_FILM_PROXY_SECRET` | letting the failed-passcode counter see the visitor rather than the proxy | the counter keys on the proxy's own address, so one guesser can use up everybody's ten tries on that instance |
 | `OPENSUBTITLES_API_KEY` | the live pipeline's `subtitles` stage | the job fails with `no_subtitle_key` |
 | `TYPESAFE_API_KEY` | the live pipeline's `jev` stage | the job fails in that stage |
-| `CLAUDE_API_KEY` | the live pipeline's `scenes` and `presence` stages | the job fails in those stages |
+| `CLAUDE_API_KEY` | the live pipeline's `scenes` and `presence` stages; the Jev-first pipeline's Sonnet stages | the job fails in those stages |
+| `ADD_PIPELINE` | which pipeline a new add runs | **Jev-first (v10.4) by default**; `live` switches back to `pipeline/run.js` |
+| `ADD_FILM_PROXY_SECRET` (again) | the Jev-first continuation self-call (`x-continue-secret`) | on Vercel a Jev-first add or rebuild is refused with **503** `no_continue_secret` rather than started and stranded |
+| `REBUILD_DAILY_CAP_USD` | optional: the cap rebuilds are admitted against | defaults to **15** (adds keep `ADD_FILM_DAILY_CAP_USD`; both count the same day's jobs) |
+| `DEMO_DAILY_CAP_USD` | optional: the live demo's daily cap | defaults to **2** |
+| `SCHEMA_AUTO` | optional: `off` stops the API applying `schema-jevfirst.sql` itself on a cold start | the schema is applied once per instance, guarded |
+| `JEVFIRST_LOCAL_BUDGET_MS` | local testing only (ignored on Vercel): shortens a Jev-first invocation's time budget so a laptop run hands off to a continuation every few stages | the production budget (240 s) |
 
 Nothing logs a key or the passcode, and the `.env.local` files are untracked. The Neon connection
 string contains an `&`: never `echo`, `cat` or `source` these files.
@@ -470,6 +476,106 @@ has corrected by hand.
 
 The analysis code lives in `pipeline/`, copied from `experiments/trigger-scan` at commit `5fe8fb5`.
 `pipeline/README.md` says what changed and why it is a copy rather than an import.
+
+## The Jev-first pipeline (v10.4): adds, library rebuilds, the live demo
+
+New films are analysed by the frozen experiment pipeline **v10.4** (`experiments/trigger-scan/v10_4`,
+frozen 2026-09-25): Sonnet reads the film from verified sources only (subtitles, TMDB cast, the Wikipedia
+plot, with citations), Jev checks Sonnet's scene cut and claims, answers the per-scene questions, the
+child-cry, resolution-guard and mortal-danger questions and the exact moments, Sonnet answers its ten
+meaning concepts, and code decides the flags. The parent text follows the **A0>C** rule (a Jev-verified
+Sonnet text or title, strict when one passed, else loose: supports >= 0.4 and contradicts < 0.3; never a
+contradicted, unplaced or reversed one; never text built by code), and **every flagged scene says why**:
+its flag reasons as plain tags ("Creature threatens · Child in danger"), each with the model that raised it.
+
+- `pipeline-jevfirst/pack/` is the experiment's modules byte for byte (`scripts/sync-jevfirst-pack.mjs
+  --from ../experiments/trigger-scan/v10_4 [--check]`; `pack/SOURCE.json` records the hashes, which equal
+  `v10_4/out104/freeze.json`). The script bodies are ported in `pipeline-jevfirst/stages/`, and
+  `test/jevfirst-parity.test.js` checks the ports against the experiment's own CLIs on round 9's stored
+  outputs (check_describe replayed from stored Jev answers, the A0>C merge, select3, resolve and mortal).
+- **Orchestration** (`pipeline-jevfirst/runner.js`): a run is a chain of 300 s invocations. Each takes the
+  job's lease (one conditional UPDATE), runs checkpointed stages (`job_stages`) while its time budget
+  allows, releases the lease and calls `POST /api/add/jobs/{id}/continue` on its own deployment with
+  `x-continue-secret: $ADD_FILM_PROXY_SECRET` inside `waitUntil`. A continuation that never lands is
+  re-asked by the next poll of `GET /api/add/jobs/{id}` once the job is quiet (one poll wins the kick). A
+  crashed stage re-runs with its spending high-water mark carried, so per-stage caps hold across crashes.
+  Crons are daily on Hobby, so nothing relies on them.
+- **Money**: every call reserves its worst case before it is sent. An add or rebuild reserves $2.41 (the
+  sum of v10.4's stage caps, `pipeline-jevfirst/caps.js`) against the day's cap at admission; the row is
+  reconciled to the real cost at the end (a v10.3/v10.4 film costs about $0.55-0.70).
+- **Where it lands**: the guide tables the web reads, unchanged in shape, plus `scenes.why_tags` (`{ line, tags: [{ label, category?, by, p }] }`, the flag reasons the film page shows under "Why it's included"; a film-specific reason ("The Iron Giant in danger") carries a stable `category` ("Character in danger") that is its chip and its filter; added by `schema-jevfirst.sql`, null on older guides). A sonnetq run that could not answer every scene fails the job (it never replaces a guide with fewer reasons), and a title or description sentence that still holds more than eight words of the subtitles is dropped at the last step, never repaired. Flagged scenes only; title and
+  description per the text rule; presence chips from taxonomy v3; event chips = the flag reasons (vocabulary
+  rows `reason:*`, `taxonomy_version 'reasons-v10.4'`, excluded from `/api/vocabulary`). The run's documents
+  go to `jevfirst_artifacts` (what the demo reads).
+
+```
+POST /api/admin/rebuild  { passcode, slug }       -> 202 { id, slug, poll }   poll GET /api/add/jobs/{id}
+POST /api/admin/backups  { passcode, slug }       -> { backups: [...] }
+POST /api/admin/restore  { passcode, backup_id }  -> { restored, scenes, backup_of_current }
+```
+
+A **rebuild** re-runs an existing library film (its stored track in `subtitle_tracks`, else OpenSubtitles
+by its IMDb id) and, in the ingest transaction, copies the old guide into `guide_backups` and replaces it.
+A failed rebuild changes nothing. A restore backs up the current guide first, so it can be undone.
+`node scripts/rebuild-library.mjs [--films nemo,frozen] [--keep-going]` rebuilds the library one film at a
+time (default: nemo, frankenweenie, frozen, monsters-inc, room-on-the-broom, iron-giant, lion-king,
+wild-robot); it needs `ADD_FILM_PASSCODE` in the environment or a `.env.local`, and never prints it.
+
+The **live demo** (`/api/demo/*`) runs Jev's stages live on a film's stored Sonnet work (any film a
+rebuild or an add wrote, or one seeded locally by `scripts/seed-jevfirst.mjs`): split check, claim and
+text checks, the per-scene questions, child-cry, resolution guard, mortal questions, moments, then the
+code selection; Sonnet is never called. Progress is written per completed request; the result lists each
+flagged scene with its why tags and who answered, compared with the film's current guide and its last
+full run. Each flagged scene's `why` carries, per reason, the question as the model was asked it, Jev's line and the policy rule (`pipeline-jevfirst/why-detail.js`). The counters mean what the page says: `split_check.done/total` are cuts (`doubtful` = merge candidates), `claims.done/total` are sentences (claim and description checks); every other request is in `requests_done/requests_total`, a request that failed is `failed` and never counted as done, each scene carries its own `cut` verdict and `questions` count, and every feed item names its `scene`. Fenced by a per-client limit, two runs at once, and `DEMO_DAILY_CAP_USD` (default $2) taken as a
+reservation (about $0.60 a run, reconciled to the real ~$0.03-0.06). The day's total counts every run live
+at any time that UTC day (created today, ended today, or still going), so a run that crosses midnight is
+never forgotten while it spends.
+
+A demo run **resumes like an add job** (`pipeline-jevfirst/demo.js`): one invocation at a time holds its
+lease (short, renewed by a heartbeat); every finished stage checkpoints its output (`demo_run_stages`) and
+the progress document (`demo_runs.checkpoint`); an invocation that runs short of time hands off through
+`POST /api/demo/runs/{id}/continue` (same secret, same `waitUntil` self-call), and a poll of
+`GET /api/demo/runs/{id}` that finds the run quiet asks again. A stage cut short re-runs with the page put
+back to the last checkpoint, so nothing is counted twice. Every write an invocation makes is fenced by its
+lease: one whose lease lapsed and was taken over cannot write progress, a stage output (written in the same
+statement as the checkpoint that names it) or the run's end, and it deletes the run's checkpoints only when
+its owner-conditional end changed the row. An ending invocation drains its queued writes before it stops its
+heartbeat. No request goes out until a spending mark
+covering it is durable (`demo_runs.mark_usd`); a crashed invocation's spend is carried at that mark, a
+request that never answered, a 200 whose body could not be read or is not a JSON object (`null`, an array),
+an answer whose `usage.input_tokens` is not a number above zero, and a failure that brought no attempt history
+are each charged at their reservation (the attempts before them kept), and those unmeasured parts are reported
+apart (`cost_uncertain_usd`), never as a bill. A reservation still open when an invocation ends or hands off
+is charged the same way. The same rule holds for Sonnet in adds and rebuilds (`stages/common.js`
+`sonnetCall`): a stream whose usage cannot be read (empty, no final output count, not token counts; the
+start event's `output_tokens: 1` is a placeholder and never read as the bill) is charged at its whole
+reservation, as uncertain, never at $0. A Jev 200 whose answer to any asked question is missing or unusable
+for its type (a null or out-of-range noul, a choice or score without its confidence and distribution;
+`pack/jev-client.js` `malformedAnswers`) is paid for by its usage and returned as a failed request, so no
+stage reads it as a "no": the stage fails, and a rebuild keeps the guide it had. A finished row the v10.4.2 code ended during a rolling upgrade (`cost_usd` set,
+`spent_usd` left stale) is brought into line by the demo sweep (`lib/demo.js` `healOldEndings`). A sentence's live verdict is
+Jev's support answer (provisional); the run ends by reconciling the feed and `claims.final` with what the
+guide actually kept (a summary sentence counts as kept only if it survived every acceptance step, the
+judgement-word exclusion included). The comparison with the library's guide matches scenes one to one, by
+overlap and with a boundary tolerance (each edge within 20 s or a quarter of the longer scene).
+
+Every passcode route (`/api/add/*`, `/api/admin/*`) counts wrong passcodes in the database
+(`passcode_failures`: 10 per caller per ten minutes), so the limit holds across function instances and cold
+starts. An attempt is counted before it is compared, so concurrent guesses cannot overshoot, and a right
+passcode gives its count back. The caller is the identity Vercel's edge writes (`x-real-ip`), or the visitor
+our own web proxy vouches for with `ADD_FILM_PROXY_SECRET`; off Vercel it is the socket address. Wrong
+passcodes across all callers only log a `[passcode]` alert at 60 in ten minutes: they never lock anyone
+out, so strangers cannot lock the owner out (the passcode is 16 random characters). A restore takes the same one-live-job lock as a rebuild's admission,
+inside its own transaction.
+
+**Schema**: `schema-jevfirst.sql` (generated from `lib/schema-jevfirst.js` by `node scripts/emit-schema.mjs
+--write`) is additive and idempotent. The API applies it itself on the first database use of an instance
+(`lib/ensure-schema.js`: under an advisory lock, skipped once `schema_marks` records its version), so a
+deploy needs no manual migration. `node scripts/emit-schema.mjs` prints it for anyone who wants to apply it
+by hand.
+
+**Functions**: every Jev-first route is one function, `api/jevfirst.js`, reached by the rewrites in
+`vercel.json`, so the deployment has 12 functions (Hobby's limit).
 
 ## Neon and Vercel: how this is set up, and how to redo it
 

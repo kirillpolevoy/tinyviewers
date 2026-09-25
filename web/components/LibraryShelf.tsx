@@ -28,8 +28,6 @@ type Props = {
   films: FilmSummary[];
   /** `?q=` as the server read it, so the first paint already shows the right films. */
   query: string;
-  /** `?add=1` (what /add redirects to): open the ask even when the search matches films. */
-  forceAdd: boolean;
   /** `?job=`: an add run to show live — one just started, or one a parent came back to. */
   initialJob: Job | null;
   /** `?job=` named a run the analysis service could not be asked about. */
@@ -60,8 +58,9 @@ function rememberJustAdded(slug: string): string[] {
 }
 
 /**
- * The library: comparison rows, filtered as a parent types, and — when a search misses — the ask
- * that adds the film, in place.
+ * The library: comparison rows, filtered as a parent types; under them, closed until asked for, the
+ * way to add a film ("Can't find your film?"); and — when a search misses — the ask itself, in place.
+ * The films always come first: an access-code form is never the first thing on the page.
  *
  * The whole library is on the page already, so narrowing it is a filter over an array: nothing to
  * wait for, nothing to debounce. The matching is `lib/search.ts` — the same pure rules the server
@@ -75,7 +74,6 @@ function rememberJustAdded(slug: string): string[] {
 export function LibraryShelf({
   films,
   query: initialQuery,
-  forceAdd,
   initialJob,
   unreachableJobId,
 }: Props) {
@@ -91,6 +89,9 @@ export function LibraryShelf({
   const [statusAttempt, setStatusAttempt] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
   const liveRef = useRef<HTMLDivElement>(null);
+  const askRef = useRef<HTMLDivElement>(null);
+  // "Add a film" pressed under the list: the ask opens there, in place of the question.
+  const [addAsked, setAddAsked] = useState(false);
 
   // The film a finished run added, until the refreshed list has it in it; and whether the list was
   // refreshed as often as it will be without the film turning up (then the notice carries a link).
@@ -137,7 +138,9 @@ export function LibraryShelf({
   const missed = query.trim() !== '' && shown.length === 0;
   // The legend names only the levels the rows on screen actually draw.
   const legendScenes = useMemo(() => shown.flatMap((film) => film.markers.map(asScene)), [shown]);
-  const askOpen = liveJob === null && (forceAdd || missed);
+  // Open when a search misses (the ask is the answer to it), when the parent asked for it under the
+  // list, or when there is no film at all to list above it.
+  const askOpen = liveJob === null && (missed || addAsked || films.length === 0);
   // A new search that misses while a run is on screen: the ask is taken (one run at a time), but the
   // miss still gets its own empty state rather than a bare count line. The search that started the
   // run is not a new miss — the live card is its answer.
@@ -181,6 +184,8 @@ export function LibraryShelf({
 
   const onStarted = (job: Job) => {
     setStartedHere(job.id);
+    // The ask has done its job: after this run it is the question under the list again.
+    setAddAsked(false);
     setRunQuery(query.trim());
     setLiveJob(job);
     window.history.replaceState(null, '', libraryHref('', job.id));
@@ -233,6 +238,31 @@ export function LibraryShelf({
     listRef.current?.querySelector<HTMLAnchorElement>(`a[data-slug="${CSS.escape(slug)}"]`)?.focus();
   }, [films]);
 
+  // The question under the list becomes the ask: focus goes to its heading while the page asks whether
+  // adding is open, then to the title field once the form is there — unless the parent has moved on.
+  const focusAsk = useRef(false);
+  const openAsk = () => {
+    focusAsk.current = true;
+    setAddAsked(true);
+  };
+  useEffect(() => {
+    if (!focusAsk.current || !askOpen) return;
+    const box = askRef.current;
+    const input = box?.querySelector<HTMLElement>('input') ?? null;
+    const heading = box?.querySelector<HTMLElement>('h2') ?? null;
+    const active = document.activeElement;
+    const free = !active || active === document.body || active === heading || !document.contains(active);
+    if (input) {
+      if (free) input.focus();
+      focusAsk.current = false;
+    } else if (heading) {
+      heading.setAttribute('tabindex', '-1');
+      if (free) heading.focus();
+      // No form is coming (switched off, or the service is not answering): the heading was the place.
+      if (status !== undefined) focusAsk.current = false;
+    }
+  }, [askOpen, status]);
+
   const onBrowse = () => {
     onChange('');
     listRef.current?.scrollIntoView({ block: 'start' });
@@ -269,15 +299,13 @@ export function LibraryShelf({
 
       {/* Outside the card, so it survives the card: the news that the run finished, read out
           politely, and shown with a link only if the film is slow to reach the list. */}
-      <p className={gaveUp && added ? styles.added : 'srOnly'} role="status">
+      <p className={added ? styles.added : 'srOnly'} role="status">
         {added && (
           <>
-            {LIBRARY.added(added.title)}{' '}
-            {gaveUp && (
-              <Link href={`/film/${added.slug}`} className={styles.addedLink}>
-                {LIBRARY.addedLink}
-              </Link>
-            )}
+            {added.rebuilt ? ADD.rebuildDone(added.title) : LIBRARY.added(added.title)}{' '}
+            <Link href={`/film/${added.slug}`} className={styles.addedLink}>
+              {ADD.openGuide}
+            </Link>
           </>
         )}
       </p>
@@ -298,15 +326,6 @@ export function LibraryShelf({
         </div>
       )}
 
-      {askOpen && (
-        <AddAsk
-          query={query}
-          status={status}
-          onStarted={onStarted}
-          onRetryStatus={() => setStatusAttempt((n) => n + 1)}
-        />
-      )}
-
       <div ref={listRef} id="library-list" className={styles.listWrap}>
         {missedWhileRunning && (
           <StateCard as="h2" headline={SEARCH.noMatchHeadline} body={SEARCH.noMatchBody} />
@@ -319,13 +338,37 @@ export function LibraryShelf({
             <ul className={styles.rows}>
               {shown.map((film) => (
                 <li key={film.slug}>
-                  <FilmRow film={film} justAdded={justAdded.includes(film.slug)} />
+                  <FilmRow film={film} justAdded={justAdded.includes(film.slug)} rebuilt={added?.rebuilt === true && added.slug === film.slug} />
                 </li>
               ))}
             </ul>
           </>
         )}
       </div>
+
+      {/* After the films, never before them. */}
+      {askOpen ? (
+        <div ref={askRef}>
+          <AddAsk
+            query={query}
+            from={missed ? 'miss' : 'asked'}
+            status={status}
+            onStarted={onStarted}
+            onRetryStatus={() => setStatusAttempt((n) => n + 1)}
+          />
+        </div>
+      ) : (
+        liveJob === null && (
+          <section className={styles.addQuestion} aria-labelledby="add-question">
+            <h2 id="add-question" className={styles.addQuestionHeading}>
+              {LIBRARY.addHeadline}
+            </h2>
+            <button type="button" className="button buttonQuiet" onClick={openAsk}>
+              {LIBRARY.addAction}
+            </button>
+          </section>
+        )
+      )}
     </>
   );
 }
@@ -336,7 +379,7 @@ function asScene(m: FilmSummary['markers'][number]): Scene {
 }
 
 /** One film as a comparison row: poster, title and year, where its scenes sit, how many. */
-function FilmRow({ film, justAdded }: { film: FilmSummary; justAdded: boolean }) {
+function FilmRow({ film, justAdded, rebuilt }: { film: FilmSummary; justAdded: boolean; rebuilt: boolean }) {
   // The strip is a picture; the strengths it draws are also said in words, after the count, so a
   // screen reader hears "18 scenes: 3 very strong, 8 strong…" rather than a bare number.
   const breakdown = strengthBreakdown(film.markers.map(asScene), DEFAULT_BAND).map(
@@ -356,7 +399,7 @@ function FilmRow({ film, justAdded }: { film: FilmSummary; justAdded: boolean })
       <span className={styles.name}>
         <span className={styles.filmTitle}>{film.title}</span>
         {film.year && <span className={styles.year}>{film.year}</span>}
-        {justAdded && <span className={styles.chip}>{LIBRARY.justAdded}</span>}
+        {justAdded && <span className={styles.chip}>{rebuilt ? ADD.guideUpdated : LIBRARY.justAdded}</span>}
       </span>
       <span className={styles.strip}>
         {/* Decorative: the count beside it says this in words, and the row is one link whose

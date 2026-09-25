@@ -10,19 +10,19 @@
 
 export const SITE_NAME = 'Tiny Viewers';
 
+/**
+ * Whether "Watch it work" is linked — the navigation entry and Home's link both. On since the
+ * Jev-first pipeline shipped; this one switch takes it out of the header and Home's footer again.
+ */
+export const WATCH_LINKED = true;
+
 // One way in. The library is the search: it holds every film and filters as a parent types, so a
-// separate Search page would have been the same page with fewer films on it.
-export const NAV = [
+// separate Search page would have been the same page with fewer films on it. No "Add a movie"
+// entry: adding lives inside the library, where a search that misses turns into the ask.
+export const NAV: readonly { href: string; label: string }[] = [
   { href: '/library', label: 'Library' },
-  // No "Add a movie" entry: adding lives inside the library, where a search that misses turns into
-  // the ask. /add redirects there.
-  //
-  // No "Watch it work" entry either, for now. What /watch runs live is the subtitle fetch and Jev's
-  // beat screening, and Jev's answers do not reach a scene guide (Sonnet reads the subtitles on its
-  // own; the Jev labels are stored unasserted and never shown). A page that shows off a pass the
-  // product does not use is the thing the owner asked not to have. The route still exists; it comes
-  // back into the navigation when the stages it shows are the ones that build the film page.
-] as const;
+  ...(WATCH_LINKED ? [{ href: '/watch', label: 'Watch it work' }] : []),
+];
 
 /** Home. The headline is two lines; "that" is the emphasised word inside the pen circle. */
 export const HOME = {
@@ -37,6 +37,8 @@ export const HOME = {
   /** The one value line, directly under the field. */
   valueLine: 'Every scary or sad scene, when it happens, and what’s in it.',
   browseLink: 'Browse the library →',
+  /** Shown only when `WATCH_LINKED` is on. */
+  watchLink: 'Watch it work →',
   /** The peek card's marks are for one age band; it names it rather than leave the numbers bare. */
   peekBand: 'ages 5–7',
 } as const;
@@ -56,6 +58,9 @@ export const LIBRARY = {
   /** Announced (and, if the row is slow to arrive, shown) when an add run finishes. */
   added: (title: string) => `${title} is in the library now.`,
   addedLink: 'See its scene guide →',
+  /** Under the list, closed until asked for: the way to add a film that is not in it. */
+  addHeadline: 'Can’t find your film?',
+  addAction: 'Add a film',
 } as const;
 
 /** "18 scenes" on a library row. One scene is a scene. */
@@ -83,7 +88,7 @@ export function libraryCount(shown: number, total: number): string {
 
 /** Film page. */
 export const FILM = {
-  ageControlLabel: 'Strength for',
+  ageControlLabel: 'Your child’s age',
   scaleDisclosure: 'What the levels mean',
   scaleLead: 'A low rating can still include your child’s fear.',
   ageFourNote: 'For a 4-year-old, use 5–7; expect some scenes to feel stronger.',
@@ -97,14 +102,30 @@ export const FILM = {
   // number we do not have.
   imdbLink: 'Open →',
   // The findings card. The count is the big number; this is the words beside it.
-  verdictWords: 'scenes parents should know about',
-  verdictWordsOne: 'scene parents should know about',
+  verdictWords: 'scenes to know about',
+  verdictWordsOne: 'scene to know about',
+  /** The breakdown when every scene is at one level: the level, not the count a second time. */
+  breakdownAll: (word: string, n: number) =>
+    n === 1 ? `${word}`.charAt(0).toUpperCase() + `${word}`.slice(1) : n === 2 ? `Both ${word}` : `All ${word}`,
   timelineHint: 'Tap a marker to jump to that scene.',
+  /** On a phone the markers are a picture, not controls: the rows below are the way in. */
+  timelineHintPhone: 'Tap a scene below for details and skip times.',
+  rowsHint: 'Tap a scene for details and skip times.',
+  /**
+   * A scene with no title that passed its checks is named by where it starts: its reasons are shown
+   * beside it, never stitched into a title that reads like a summary of what happens.
+   */
+  untitledScene: (time: string) => `Scene starting at ${time}`,
+  bandsSame: 'These scenes have the same ratings for both age groups.',
   showingScene: (time: string) => `Showing the scene at ${time}.`,
+  /** A mark that stands for several scenes sat close together: tapped, the list is those scenes. */
+  showingScenes: (n: number, from: string, to: string) => `Showing the ${n} scenes from ${from} to ${to}.`,
+  markerGroupLabel: (n: number, from: string, to: string, strongest: string) =>
+    `${n} scenes close together, ${from} to ${to}; the strongest is ${String(strongest).toLowerCase()}`,
   showAll: 'Show all →',
   /** With a filter on, the way back from one scene is to the filtered list, and it says so. */
   showMatching: 'Back to matching scenes →',
-  allClear: (time: string) => `Nothing flagged after ${time}.`,
+  allClear: (time: string) => `This guide lists no scenes after ${time}.`,
   // The filter: one chip group, applied the moment a chip is pressed.
   filterTitle: 'Filter scenes',
   filterOn: (n: number) => ` · ${n} on`,
@@ -119,7 +140,14 @@ export const FILM = {
   /** Only ever seen with JavaScript off, where the chips cannot apply themselves. */
   filterApplyNoScript: 'Show these scenes',
   // One scene row, opened.
-  readyLine: (readyAt: string, endsAround: string) => `Be ready at ${readyAt} · ends around ${endsAround}`,
+  readyLine: (readyAt: string, endsAround: string) => `Skip from ${readyAt} to about ${endsAround}.`,
+  readyNote: 'These times include a margin before and after the scene. Timing can vary by edition.',
+  /** Above a scene's reasons: why it is in the guide at all, shown even when there is no description. */
+  whyLabel: 'Why it’s included',
+  /** The individual checks behind the grouped reasons ("The Giant and Hogarth in danger"), one tap away. */
+  whyChecks: 'The checks behind these reasons',
+  /** Above the scene's other plain-word tags, when both are shown. */
+  tagsLabel: 'Also in this scene',
   // TODO(phase 4): the feedback controls are not rendered in this phase — there is nowhere to send
   // an answer yet, and a control that silently discards one is worse than none. The wording stays
   // here so wiring it up is a component change, not a copy decision.
@@ -130,7 +158,7 @@ export const FILM = {
   // scene list. It replaces a link to the Watch page, which showed a pass that does not build it.
   aboutTitle: 'How this guide was made',
   aboutSource:
-    'We read the film’s subtitles and list each scene in them that could scare or upset a child: when it happens, what happens, and how strong it is for ages 5–7 and 8–10.',
+    'This guide uses the film’s subtitles, cast list and plot summary to identify scenes that may scare or upset a child: when it happens, what happens, and how strong it is for ages 5–7 and 8–10.',
   aboutLimitSpeechOnly:
     'Subtitles cannot see, and these ones only carry speech. A scare that is only shown, or only heard, can be missed.',
   aboutLimitCaptions:
@@ -191,147 +219,298 @@ export const STRENGTH_TABLE = [
 ] as const;
 
 /**
- * "Watch it work" — the dark instrument register, and the one corner of the site where the engines
- * are named. A parent page says "scenes"; this page says Jev, Sonnet, tokens and cents, because
- * that is what a visitor came here to see. Everything it claims is read off a recording or a job.
- */
-export const WATCH = {
-  headline: 'Watch Jev read a film, live.',
-  // Every run on /watch is live: the visitor picks a film and the first steps of the real analysis
-  // run on it there and then — which steps is the scene API's decision (pipeline/stages.js), so
-  // nothing here names them. It changes nothing about the film's own page, which a parent reads.
-  intro:
-    'Pick any film and two steps run on it, live: fetching its subtitles, then Jev screening every beat. Jev’s answers are an experiment — the scene guides do not use them yet; Sonnet writes those from the subtitles on its own. What you see is the run that just happened, at the speed it happened. It changes nothing on the film’s page.',
-  shelfHeading: 'Films in the library',
-  shelfNote: 'Their subtitles are already stored, so a run starts straight away.',
-  play: 'Run it live',
-  replay: 'Replay',
-  replaying: 'Replaying…',
-  // What finishes here is Jev's pass and only Jev's pass — Sonnet's reading of the transcript is
-  // not in this run, and its seconds and cents are not in these counters. The headline says so
-  // rather than calling this the whole analysis.
-  runningHeadline: 'Jev is reading the film.',
-  finishedHeadline: 'Jev has read the film.',
-  requestLogHeading: 'Requests',
-  requestLogNote: 'Eight at a time, in film order. They come back when they come back.',
-  beatStripHeading: 'Beats',
-  beatStripNote: 'One square per beat, in film order. It fills in as the answers land; a filled square is a flagged beat.',
-  beatPrompt: 'Pick a lit square to see what Jev said about it.',
-  beatAnswersHeading: 'What Jev said',
-  beatScoresHeading: 'How bad it is',
-  beatLinesHeading: 'The lines it read',
-  scenesHeading: 'What Sonnet made of it',
-  scenesNote:
-    'The same scene list the film page shows. Sonnet wrote it from the whole transcript, not from the answers above — the two passes are independent, which is why it is worth watching them agree.',
-  noScenesYet: 'No scenes are saved for this film yet.',
-  toFilmList: 'See the finished scene list',
-  backToRuns: 'Pick another film',
-  backToLibrary: 'Browse the library',
-  noRecording: 'No run is recorded for this film yet.',
-  // The recorded run, which is now only the fallback for a day whose live budget is spent. It has
-  // to say plainly that it is a recording: the rest of this page's claim is "this just happened".
-  recordedEyebrow: 'A recording, not a live run',
-  recordedLead: (date: string) =>
-    `This is a recording of Jev’s run from ${date}, replayed at the speed it happened.`,
-  // Counter labels. Short, because they sit under a number that is changing.
-  elapsed: 'Elapsed',
-  inFlight: 'In flight',
-  done: 'Answered',
-  beatsKnown: 'Beats known',
-  beatsFlagged: 'Flagged',
-  tokensIn: 'Tokens in',
-  tokensOut: 'Tokens out',
-  cost: 'Cost',
-  confidence: 'confidence',
-} as const;
-
-/**
- * The live run on /watch: the picker, the run page it leads to, and every refusal on the way. One
- * plain sentence each, as everywhere else. None of it names a stage: which part of the analysis is
- * public is the scene API's decision, and the steps themselves come labelled from its job.
- */
-export const DEMO = {
-  pickHeading: 'Pick a film',
-  pickLead: 'One from the library, or any film at all — a title or an IMDb link.',
-  searchLabel: 'Any film: a title or IMDb link',
-  searchPlaceholder: 'Room on the Broom',
-  find: 'Find it',
-  finding: 'Looking it up…',
-  candidatesHeading: 'Which one?',
-  choose: 'Run it live',
-  starting: 'Starting the run…',
-  noCandidates: 'Nothing came back for that. Try the full title, or paste the IMDb link.',
-  onShelf: 'In the library',
-  budgetLine: (spent: number, cap: number) =>
-    `$${spent.toFixed(2)} of $${cap.toFixed(2)} of live runs spent today.`,
-  // Refusals.
-  capHeadline: 'Today’s live runs are used up.',
-  capBody:
-    'Live runs have a daily budget, and today’s is spent. It resets tomorrow. Every film in the library has a recorded run you can watch instead — it is labelled as a recording.',
-  watchRecording: 'Watch its recorded run instead',
-  offHeadline: 'Live runs are switched off',
-  offBody: 'This deployment is missing a key the analysis needs, so nothing can run live right now.',
-  unknownBody: 'The analysis service is not answering, so live runs are put away until it does.',
-  busy: 'Two live runs are already going. Try again in a moment.',
-  tooManyRuns: 'That is a lot of runs from here. Give it ten minutes.',
-  tooManyNewFilms:
-    'Films we have not fetched subtitles for are limited to a couple every ten minutes. Pick one from the library, or give it ten minutes.',
-  newFilmLimit:
-    'Today’s allowance of new films is used up — each one costs a subtitle download. Films in the library still work.',
-  tooManyLookups: 'That is a lot of lookups from here. Give it ten minutes.',
-  badRequest: 'That did not look like a title or an IMDb link.',
-  unreachable: 'The analyser is not answering. Try again in a minute.',
-  // The run page.
-  runQueued: 'Starting the run',
-  runRunning: 'Running it now',
-  runDone: 'That was a live run.',
-  runFailed: 'That run did not finish.',
-  stateQueued: 'Waiting to start.',
-  /** The step that is running, as the API labels it. */
-  stateRunning: (step: string) => `${step}…`,
-  stateStarting: 'Starting…',
-  stateDone: 'Done. Everything below is what it produced, at the speed it ran.',
-  unchanged: 'Nothing about this film’s page changed: a live run is only ever shown, never saved over it.',
-  notSaved: 'Nothing was saved: a live run is only ever shown. To put this film in the library, finish the analysis below.',
-  toFilm: 'See the film’s scene list',
-  runAgain: 'Run it again',
-  another: 'Pick another film',
-  // Carrying a run on into the library.
-  finishHeading: 'This one is not in the library yet',
-  finishBody:
-    'Finish the analysis and it goes in the library. It carries on from this run — nothing it did is done again — through the steps still to go. A few minutes, tens of cents. It needs the passcode.',
-  finishStillToGo: 'Still to go:',
-  finishButton: 'Finish the analysis and add it to the library',
-  finishing: 'Starting…',
-  finishNotDone: 'That run has not finished yet, so there is nothing to carry on from.',
-  finishNoSubtitles: 'The subtitles that run used are no longer stored. Start a new run.',
-} as const;
-
-/** The header line: what ran, how hard it was asked, how many at once. Every number from `meta`. */
-export function engineLine(meta: {
-  model: string;
-  modelReported: string;
-  questionsPerBeat: number;
-  concurrency: number;
-}): string {
-  // The two model names differ only when the API served something other than what we asked for.
-  // On that day the page says both, rather than quietly reporting the request as the answer.
-  const model =
-    meta.modelReported && meta.modelReported !== meta.model
-      ? `${meta.model} (served ${meta.modelReported})`
-      : meta.model;
-  return `Jev ${model} — ${meta.questionsPerBeat} questions per beat — concurrency ${meta.concurrency}`;
-}
-
-/**
- * The finish line, once the last response has landed.
+ * "Watch it work" — the one corner of the site where the engines are named. A parent page says
+ * "scenes"; this page says Jev and Sonnet, because which of the two did what is what a visitor came
+ * to see. Everything it claims is read off a live run: the counters, the tiles and the cost are the
+ * API's, and nothing is replayed.
  *
- * Named, because every number in it is Jev's: the wall clock is the screening pass, the cents are
- * the screening pass, and Sonnet's reading of the transcript comes after all of them. "That was the
- * whole run" was a tidier sentence and a false one.
+ * Written for a parent who has never heard of Jev. It says, on every screen: what they are watching
+ * (in one line), that it is the real step that builds a film's page (not a showcase), that Sonnet's
+ * slow reading was done earlier and does not run again, and that a run changes nothing on the page.
  */
-export function finishLine(wall: string, requests: number, beats: number, cost: string): string {
-  return `That was Jev’s pass: ${wall} · ${requests} requests · ${beats} beats · ${cost}`;
+export const DEMO_LIVE = {
+  // --- pick a film ---------------------------------------------------------------------------------
+  eyebrow: 'Watch it work',
+  headline: 'Watch a film’s scenes get checked.',
+  intro: 'See how we find scenes that may scare or upset a child. Pick a film to watch Jev, a small, fast AI, check it.',
+  realStep:
+    'These live checks are also used to build our film guides. Running them here leaves the saved guide unchanged.',
+  sourcesNote: 'The AI reads the subtitles, cast list and plot; it does not watch the film. Some moments may be missed.',
+  howHeading: 'How it works',
+  jobsLabel: 'What Jev does',
+  liveTag: 'Live, while you watch',
+  beforeTag: 'Prepared earlier',
+  afterTag: 'Then · rules pick the scenes',
+  jobs: [
+    { title: 'Checks every scene for danger and fear', body: 'A long list of yes-or-no questions per scene, like “Is a character in danger?”' },
+    { title: 'Checks where scenes change', body: 'Is each break between two scenes a real change of place or time?' },
+    { title: 'Checks the scene descriptions', body: 'Whether the subtitle lines each sentence cites support it.' },
+  ],
+  before:
+    'Sonnet, a larger AI, already read the subtitles, cast list and plot. It divided the film into scenes, wrote descriptions and answered questions about meaning, such as death or grief. Those results are reused here.',
+  after: 'Rules use Jev’s answers and Sonnet’s earlier answers to choose the scenes and their strength ratings.',
+  pickHeading: 'Pick a film',
+  pickNote: 'Sonnet has already prepared these films for checking.',
+  ready: (scenes: number) => `${scenes} ${scenes === 1 ? 'scene' : 'scenes'} to check`,
+  inLibrary: 'In the library',
+  run: 'Watch this film’s check',
+  starting: 'Starting…',
+  openSaved: 'Open saved guide',
+  budget: (spent: number, cap: number) =>
+    `Today’s demo AI spending: $${spent.toFixed(2)} of the $${cap.toFixed(2)} daily budget.`,
+  // The page's kinds of nothing, kept apart: the budget is used up, every slot is busy for a minute, live
+  // checks are switched off here, the service is not answering, or no film is ready yet. Each is its own news.
+  capHeadline: 'Today’s live checks are used up.',
+  capBody: 'Today’s budget for live checks is used up. You can still read the saved guides.',
+  busyHeadline: 'Both live checks are in use.',
+  busyBody: 'Two checks are running right now. Try again in a minute.',
+  offHeadline: 'Live checks are switched off here.',
+  offBody: 'Live checks are switched off on this site right now. You can still read the saved guides.',
+  refresh: 'Check again',
+  downHeadline: 'Can’t reach the analysis service.',
+  downBody: 'It isn’t answering, so live checks are put away until it does. Try again in a minute.',
+  emptyHeadline: 'No film is ready for a live check yet.',
+  emptyBody: 'A film needs Sonnet’s reading stored before Jev can check it, and none has one yet.',
+  notReadyHeadline: 'That film isn’t ready.',
+  notReadyBody: 'Sonnet’s reading of that film isn’t stored, so there is nothing for Jev to check yet.',
+  busy: 'Both live checks are in use right now. Try again in a minute.',
+  tooManyRuns: 'That is a lot of checks from here. Give it ten minutes.',
+  retry: 'Try again',
+  toLibrary: 'Browse the library',
+
+  // --- the live run ----------------------------------------------------------------------------------
+  runEyebrow: (title: string, year: number | null) => `Live check · ${title}${year ? ` (${year})` : ''}`,
+  queuedHeadline: (title: string) => `Starting Jev on ${title}…`,
+  runningHeadline: (title: string) => `Jev is checking ${title}.`,
+  failedHeadline: 'This check stopped.',
+  failedBody: 'This check stopped before it finished. The saved guide has not changed.',
+  /** A failed run whose stage is known and whose failure was Jev's: `what` is the stage in plain words. */
+  failedJev: (what: string) => `Jev could not finish ${what}. The saved guide has not changed.`,
+  /** The demo stages, as `failedJev` says them (the run's `stage`, else its error code). */
+  failedStage: {
+    segment_build: 'checking the scene breaks',
+    split_check: 'checking the scene breaks',
+    claims: 'checking the scene descriptions',
+    fill: 'checking the scene descriptions',
+    refold: 'checking the scene descriptions',
+    check_describe: 'checking the scene descriptions',
+    check_describe2: 'checking the scene descriptions',
+    check_describe3: 'checking the scene descriptions',
+    mergetext: 'checking the scene descriptions',
+    classify: 'answering its questions about the scenes',
+    childcry: 'answering its questions about the scenes',
+    resolve: 'answering its questions about the scenes',
+    mortal: 'answering its questions about the scenes',
+    moments: 'finding where to skip',
+  } as Record<string, string>,
+  failedDetails: 'What finished before the check stopped',
+  startNew: 'Start a new check',
+  runSub: 'Watch Jev check scene breaks, descriptions, and signs of danger or fear to help you decide what to skip.',
+  /**
+   * What Jev is doing right now, at the top of the board: the stage the API reports and the API's own
+   * counts (lib/demo.ts runActivity). Never a count of our own while waiting for answers.
+   */
+  nowKey: 'Now',
+  nowName: {
+    starting: 'Starting the check',
+    breaks: 'Checking scene breaks',
+    descriptions: 'Checking descriptions',
+    danger: 'Checking danger and fear',
+    skip: 'Finding where to skip',
+    choosing: 'Choosing the scenes to know about',
+    waiting: 'Waiting for the next answers',
+  } as Record<string, string>,
+  /** The count after the step's name ("Checking descriptions · 127 sentences checked"). */
+  nowBreaks: (done: number, total: number) => `${done} of ${total} checked`,
+  nowDescriptions: (n: number) => `${n.toLocaleString('en-US')} ${n === 1 ? 'sentence' : 'sentences'} checked`,
+  nowScenes: (n: number, total: number) => `${n} of ${total} scenes complete`,
+  nowSep: ' · ',
+  thisFilm: 'this film',
+  boardLabel: 'Jev’s live check',
+  elapsed: 'Time',
+  scenesAnswered: 'Scenes checked',
+  answers: 'Questions answered',
+  sentencesChecked: 'Sentences checked',
+  cost: 'AI cost so far',
+  moreDetails: 'More details',
+  viewScenes: 'View checked scenes',
+  viewScenesNone: 'Scenes appear here as Jev answers them.',
+  job1: 'Checks where scenes change',
+  job1Body: 'Is each break between two scenes a real change of place or time?',
+  doubtful: (n: number, finished: boolean) =>
+    n === 0
+      ? finished
+        ? 'No scene change was uncertain.'
+        : ''
+      : n === 1
+        ? '1 scene change was uncertain.'
+        : `${n} scene changes were uncertain.`,
+  uncertainMark: 'Uncertain scene change',
+  cutKept: 'This check used the stored scene breaks as they are.',
+  job2: 'Checks every scene for danger and fear',
+  job2Body: 'Each block is a scene. It fills when answers arrive. Colours appear when the scene list is ready.',
+  /** In "More details": the mean of the scenes' own question counts so far (it changes as answers land). */
+  perSceneLabel: 'Questions per scene (average)',
+  skipMeter: 'Finding where to skip',
+  job3: 'Checks the descriptions',
+  job3Body:
+    'Jev checks whether the cited subtitle lines support each sentence. Sentences it cannot support are left out. These can include setting notes; being left out does not mean a sentence is false.',
+  sentencesSoFar: (n: number) => `${n.toLocaleString('en-US')} ${n === 1 ? 'sentence' : 'sentences'} checked`,
+  kept: 'Supported by cited lines',
+  droppedWord: 'Not supported by cited lines',
+  uncheckedWord: 'Not checked',
+  finalKept: 'In the guide',
+  finalLeft: 'Left out',
+  noClaimsYet: 'Sentences appear here as Jev checks them.',
+  noScenesYet: 'The scenes appear as Jev answers them.',
+  sceneState: {
+    pending: 'Waiting for answers',
+    asking: 'Waiting for answers',
+    answered: 'Answers received',
+    clear: 'Not included',
+    unrated: 'Included in the guide, strength not checked',
+  } as Record<string, string>,
+  sceneIncluded: (word: string) => `Included in the guide · ${word}`,
+  legendIncluded: 'Included in the guide (colour = strength)',
+  legendAsking: 'Being asked',
+  tileLabel: (n: number, time: string, words: string) => `Scene ${n}, ${time}, ${words}`,
+  sceneRow: (n: number, time: string) => `Scene ${n} · ${time}`,
+  whyJevTitle: 'Why Jev does this part',
+  whyJevBody:
+    'In our tests against parent guides, Jev found scary moments about as well as a larger AI working alone. It is faster, cheaper and more consistent, though its answers can still vary between runs.',
+  sonnetTitle: 'What Sonnet did earlier',
+  sonnetBody: (scenes: number) =>
+    `Sonnet divided the film into ${scenes} ${scenes === 1 ? 'scene' : 'scenes'}, wrote what happens in each, and answered the questions that take reading between the lines: a death, grief, a child lost or taken. None of that runs again here: this check only calls Jev.`,
+  srDone: (title: string) => `Jev finished checking ${title}.`,
+
+  // --- finished ------------------------------------------------------------------------------------
+  doneEyebrow: (title: string) => `Live check · ${title} · finished`,
+  doneIn: (title: string) => `Jev finished checking ${title}.`,
+  numbersNote: 'These measurements cover Jev’s live check. Sonnet’s earlier reading and writing are not included.',
+  numbersLabel: 'The check in numbers',
+  numTime: 'Jev check time',
+  numCost: 'Jev check cost',
+  numScenes: 'Scenes to know about',
+  // The comparison with the saved guide: one compact line by the count; what it means, under the list.
+  sameYes: (n: number) => (n === 1 ? 'The saved guide lists the same scene.' : `The saved guide lists the same ${n} scenes.`),
+  sameDiffers: (onlyRun: number, onlyGuide: number) => {
+    const extra = onlyRun === 0 ? 'no extra scenes' : `${onlyRun} extra ${onlyRun === 1 ? 'scene' : 'scenes'}`;
+    const missing = onlyGuide === 0 ? 'none missing' : `${onlyGuide} missing`;
+    return `Compared with the saved guide: ${extra}, ${missing}.`;
+  },
+  /** The lists differ only in length (the API matched none apart): said as the two counts. */
+  sameCounts: (run: number, guide: number) => `This check lists ${run} ${run === 1 ? 'scene' : 'scenes'}; the saved guide lists ${guide}.`,
+  sameNone: 'This film isn’t in the library yet, so there is no saved guide to compare with.',
+  sameUnknown: 'We couldn’t compare this check with the saved guide.',
+  sameUnknownBody: 'The check finished, but we couldn’t load this film’s library details.',
+  sameUnknownRetry: 'Try loading the film details again',
+  sameMatchNote: 'This compares which scenes appear, not their descriptions or strength ratings.',
+  /** The comparison line opens to name the scenes it counts. */
+  onlyRun: 'Only in this check',
+  onlyGuide: 'Only in the saved guide',
+  onlyNone: 'None.',
+  differsBody: 'AI answers can vary between runs, so two checks can list different scenes. The saved guide has not changed.',
+  notInLibraryBody: 'Nothing from this check was saved.',
+  /** The section after the scene list: what the comparison means, and the ways onward. */
+  onwardLabel: 'After this check',
+  checksHeading: 'Description checks',
+  checksSummary: (kept: number, checked: number) =>
+    `Scene summaries: ${kept} of ${checked} sentences were supported by their cited lines and kept.`,
+  checksDescriptions: (withText: number, scenes: number) =>
+    `Descriptions: ${withText} of ${scenes} ${scenes === 1 ? 'scene has' : 'scenes have'} a description that passed.`,
+  checksNote: 'Sentences Jev could not support are left out. Being left out does not mean a sentence is false.',
+  flaggedWords: (n: number) => (n === 1 ? 'scene to know about' : 'scenes to know about'),
+  noFlaggedHeadline: 'No scenes flagged in this check',
+  noFlaggedBody: 'None of the answers met a rule for adding a scene. Subtitles can miss scares, so this does not mean the film has none.',
+  noResultBody: 'The check finished, but its list did not come back with it.',
+  bandGroup: 'Your child’s age',
+  band: { '5-7': 'Ages 5–7', '8-10': 'Ages 8–10' } as Record<string, string>,
+  bandsSame: 'These scenes have the same ratings for both age groups.',
+  openFilm: 'Open the film page',
+  runAgain: 'Run the check again',
+  openGuide: 'See the saved guide',
+  another: 'Try another film',
+  listHeading: 'Scenes to know about',
+  listNote: 'Tap a scene for details and skip times.',
+  moreReasons: (n: number) => `+${n} more`,
+  howItWent: 'How the check went',
+
+  // --- one scene up close --------------------------------------------------------------------------
+  backToList: 'Back to scene list',
+  backToLive: 'Back to live check',
+  sceneEyebrow: (title: string, n: number, of: number) => `${title} · scene ${n} of ${of}`,
+  strengthFor: (word: string, band: string) => `${word} for ${String(band).toLowerCase()}`,
+  whatTitle: 'What happens',
+  whatNote: 'Written by Sonnet. Jev checked each sentence against the subtitle lines it cites.',
+  noWords: 'No description passed Jev’s check for this scene, so none is shown. “Why it’s included” still lists its reasons.',
+  whyTitle: 'Why it’s included',
+  whyLead: 'This scene is listed for the reasons below. Each reason shows which AI supplied the answer.',
+  /** Inside a Jev reason's "How this was checked": the scene's question count, and how many this reason used. */
+  questionCount: (asked: number, used: number) =>
+    `Jev answered ${asked.toLocaleString('en-US')} questions about this scene` +
+    (used === 0 ? '.' : used === 1 ? '; this reason uses one of them.' : `; this reason uses ${used} of them.`),
+  /** Inside "How this was checked": the general category a film-specific reason is filed and filtered under. */
+  categoryKey: 'Category',
+  howChecked: 'How this was checked',
+  /** A reason that groups several checks ("The Giant and Hogarth in danger"): each one is inside. */
+  howCheckedMany: (n: number) => `How this was checked (${n} checks)`,
+  asked: 'The question',
+  askedMany: 'The questions',
+  jevAnswered: 'Jev’s answer',
+  sonnetAnswered: 'Sonnet’s answer',
+  sonnetYes: 'Yes (answered earlier, when Sonnet read the film)',
+  notChecked: 'Not checked',
+  answerScore: 'Answer score',
+  cutoff: (act: string) => `Cutoff for yes: ${act}`,
+  /** Directly above the score bars, inside "How this was checked". */
+  scoreNote: 'Scores show how strongly Jev answered yes. They do not predict how a child will react.',
+  combinedAny: 'Jev was asked these questions; the highest answer counts.',
+  combinedAll: 'Jev was asked these questions; every answer has to pass.',
+  combinedGate: 'The second question counts only when the first one passes.',
+  decided: 'counted',
+  condition: 'condition',
+  yesWord: 'Yes',
+  theRule: 'Why this answer counts',
+  whyNote: 'Jev and Sonnet supply the answers. Rules use those answers to choose which scenes appear.',
+  skipTitle: 'Where to skip',
+  skipNote: 'These times include a margin before and after the identified scene. Timing can vary by edition.',
+  notFlagged: 'This check did not find a reason to include this scene. It may still contain something your child finds upsetting.',
+  notAnswered: 'Jev hasn’t answered this scene yet.',
+  waitForRules: 'Included in the guide. Why, and where to skip, appear when the check finishes.',
+  waitAnswered: 'Answers received. The rules decide whether it is included once every scene is answered.',
+  stoppedBeforeRules: 'Answers received, but the check stopped before the rules could decide whether it is included.',
+  missingScene: 'This check has no scene by that name.',
+} as const;
+
+/**
+ * Each flag rule (select.js's `rule` codes), in one plain sentence. An unknown code gets the general
+ * sentence rather than a guess at what it means.
+ */
+export function ruleSentence(rule: string | null | undefined, withLabels: string[] = []): string {
+  switch (rule) {
+    case 'strong_event':
+      return 'A yes here is enough on its own to put a scene on the list.';
+    case 'mortal_question':
+      return 'A yes to this life-or-death question is enough on its own.';
+    case 'presence':
+      return 'Its being in the scene is enough on its own to put the scene on the list.';
+    case 'presence_with_danger':
+      return 'This counts when the scene is also dangerous.';
+    case 'presence_with_creature_threat':
+      return 'This counts when a creature is also threatening someone.';
+    case 'film_child_in_danger':
+      return 'This answer adds the scene to the guide because a character is in danger.';
+    case 'film_threatens':
+      return 'This answer adds the scene to the guide because the film’s villain or creature threatens someone.';
+    case 'film_danger':
+      return 'This answer adds the scene to the guide because one of the film’s dangers reaches someone.';
+    case 'strong_event+cooccur':
+      return withLabels.length
+        ? `This adds a reason only because the scene also has: ${withLabels.join(', ')}.`
+        : 'This adds a reason only alongside a stronger one in the same scene.';
+    default:
+      return 'One of the rules counts this answer.';
+  }
 }
 
 /**
@@ -342,15 +521,17 @@ export const ADD = {
   // The ask.
   askHeadline: 'Not in the library. Yet.',
   askBody:
-    'We can check it for you. We read the film’s subtitles and map every scary or sad scene. A feature takes a few minutes.',
+    'We can build a scene guide from the film’s subtitles, cast list and plot. It will list scenes that may scare or upset a child.',
   filmLabel: 'Title or IMDb link',
-  passcodeLabel: 'Passcode',
-  passcodeHelp: 'Adding is passcode-locked while the library is small. Ask us for yours.',
-  submit: 'Check this movie',
+  passcodeLabel: 'Access code',
+  passcodeHelp: 'You need an access code to add a film.',
+  submit: 'Find this film',
+  /** An IMDb link names exactly one film: the button builds its guide straight away. */
+  submitExact: 'Build scene guide',
   finding: 'Looking it up…',
   starting: 'Starting the run…',
-  candidatesHeading: 'Which one?',
-  choose: 'Check this one',
+  candidatesHeading: 'Choose your film',
+  choose: 'Build this film’s guide',
   openExisting: 'Already in the library → open it',
   noCandidates: 'Nothing came back for that. Try the full title, or paste the IMDb link.',
   /** A match with no IMDb id: subtitles are found by IMDb id, so this one cannot be checked. */
@@ -366,34 +547,111 @@ export const ADD = {
   runningNow: 'A film is being read right now',
   runningLink: 'watch it',
   // Refusals. One plain sentence each, and a way onward where there is one.
-  wrongPasscode: 'That passcode is not right.',
-  busy: 'A film is already being read. One at a time, so the timings stay honest.',
+  wrongPasscode: 'That access code is not right.',
+  busy: 'Another film is being checked. Please try again when it finishes.',
   exists: 'That one is already in the library.',
   unreachable: 'The analyser is not answering. Try again in a minute.',
   badRequest: 'That did not look like a title or an IMDb link.',
   // A 429 is two different refusals wearing one status code, and telling a fumbled passcode that
   // the day's budget is spent sends the reader to wait until tomorrow for a ten-minute problem.
-  tooManyAttempts: 'Too many wrong passcodes from here. Give it ten minutes.',
+  tooManyAttempts: 'Too many wrong access codes. Give it ten minutes.',
   tooLong: 'That is far more text than a title or a link. Trim it down.',
   // The live card.
   readingHeadline: (title: string) => `We’re reading ${title} now.`,
   readingBody: (title: string) =>
-    `We’re building ${title}’s scene guide from its subtitles. It takes a few minutes, and you don’t have to wait here.`,
+    `We’re building ${title}’s scene guide from its subtitles, cast list and plot. You can browse while we work. Return to the library to check progress.`,
   // Before the API reports a step, nothing is being read yet, and the card does not say otherwise.
   queuedHeadline: (title: string) => `${title} is next.`,
   queuedBody: (title: string) =>
-    `We’ll build ${title}’s scene guide from its subtitles as soon as the run starts. It takes a few minutes, and you don’t have to wait here.`,
+    `We’ll build ${title}’s scene guide as soon as the run starts. You can browse while we work. Return to the library to check progress.`,
+  // A rebuild: the film already has a guide, and it stays readable until the update replaces it.
+  rebuildHeadline: (title: string) => `We’re updating ${title}’s guide.`,
+  rebuildBody: 'You can use the current guide while the update runs.',
+  rebuildQueuedHeadline: (title: string) => `${title}’s guide update is next.`,
+  rebuildDone: (title: string) => `${title}’s guide is updated.`,
+  guideUpdated: 'Guide updated',
+  openGuide: 'Open scene guide',
+  runLink: 'Follow the running check →',
   queued: 'Waiting to start.',
   /**
-   * The steps a parent sees, by the API's step id, in their words. Only the steps whose output
-   * reaches the film page are listed (see `parentSteps` in lib/job.ts); the others still run.
+   * Which row of the card each API step is shown as. Only the steps whose output reaches the film
+   * page have a row (see `parentSteps` in lib/job.ts); the others still run. Two Jev-first stages,
+   * Sonnet's describing and Jev's check of it, share one row because a parent reads them as one.
    */
+  stepRows: {
+    // Both pipelines.
+    subtitles: 'subtitles',
+    ingest: 'ingest',
+    // The live pipeline (ADD_PIPELINE=live).
+    scenes: 'scenes',
+    presence: 'presence',
+    // The Jev-first pipeline (the default). Several internal stages are one step to a parent; the
+    // ids cover the v10.4 stage names as well as the ones the scene API reports today.
+    sources: 'sources',
+    segment: 'segment',
+    split_check: 'check',
+    claims: 'check',
+    fill: 'check',
+    refold: 'check',
+    classify: 'questions',
+    sonnetq: 'questions',
+    childcry: 'questions',
+    resolve: 'questions',
+    mortal: 'questions',
+    moments: 'moments',
+    describe: 'describe',
+    check_describe: 'describe',
+    checkdesc: 'describe',
+    describe2: 'describe',
+    checkdesc2: 'describe',
+    titles: 'describe',
+    checkdesc3: 'describe',
+    mergetext: 'describe',
+  } as Record<string, string>,
+  /** The rows, in a parent's words: what is being done, not which engine does it. */
   stepLabels: {
     subtitles: 'Finding the subtitles',
     scenes: 'Reading the subtitles for scenes',
     presence: 'Labelling what is in each scene',
+    sources: 'Reading the plot summary and the cast list',
+    segment: 'Reading the subtitles and dividing the film into scenes',
+    check: 'Checking scene breaks and descriptions',
+    questions: 'Checking each scene for danger, fear and sadness',
+    moments: 'Finding where to skip',
+    describe: 'Writing and checking scene descriptions',
     ingest: 'Saving the scene guide',
   } as Record<string, string>,
+  /**
+   * Who does a row, beside it: the one place in the library that names the two models, because the
+   * Watch page explains them and the card is where a parent sees them at work on a new film.
+   */
+  stepWho: {
+    segment: ['Sonnet'],
+    check: ['Jev'],
+    questions: ['Jev', 'Sonnet'],
+    moments: ['Jev'],
+    describe: ['Sonnet', 'Jev'],
+  } as Record<string, string[]>,
+  /**
+   * Said beside a row while it runs. Only the one slow step says so, without a duration: this run has
+   * not measured it yet, and a promise of "a couple of minutes" would be ours, not the run's.
+   */
+  stepPace: {
+    segment: 'This is the slow part.',
+  } as Record<string, string>,
+  /** Said once, above the rows, so the chips beside them are introduced. */
+  whoNote: 'Sonnet and Jev are the two AIs doing this work.',
+  /** How long a finished row took, as the API measured it. */
+  stepTook: (ms: number) => formatElapsed(ms),
+  // The Jev-first card's lead, by phase: the one slow stretch, then the quick ones after it.
+  sonnetReadingBody: (title: string) =>
+    `We’re reading ${title}’s subtitles, cast list and plot, and dividing it into scenes. That’s the slow part. You can browse while we work. Return to the library to check progress.`,
+  checkingBody: (title: string) =>
+    `${title} is divided into scenes. Now every scene is checked for danger, fear and sadness, and the ones to know about get a short description. You can browse while we work.`,
+  /** The card's columns: the step list, and what the step running now is doing. */
+  nowHeading: 'Now',
+  completedSteps: (n: number) => (n === 1 ? '1 completed step' : `${n} completed steps`),
+  stepMore: 'More details',
   /** The step that is running, as the API labels it — plain words, never an engine's name. */
   stepLine: (label: string) => `${label}…`,
   /**
@@ -414,7 +672,7 @@ export const ADD = {
   // A finish carries on a run whose beats were read on the Watch page: the reading is already done.
   finishingHeadline: (title: string) => `We’re finishing ${title} now.`,
   finishingBody:
-    'Its subtitles were fetched in the run you watched. Now we build the scene guide from them. It takes a few minutes, and you don’t have to wait here.',
+    'Its subtitles were fetched in the run you watched. Now we build the scene guide from them. You can browse while we work.',
   checkingAdd: 'Checking whether adding is open…',
   meanwhile: 'Browse the library meanwhile →',
   jobDone: 'That one is done.',
@@ -423,15 +681,14 @@ export const ADD = {
   // A reload while the API is down must not tell the reader their run never existed. It exists; we
   // cannot ask about it. Different news, and only one of the two is worth pressing a button over.
   jobUnreachableHeadline: 'Can’t reach the analysis service',
-  jobUnreachableBody:
-    'The run may well still be going — we just can’t ask about it right now. Try again in a minute.',
-  jobUnreachableRetry: 'Try again',
+  jobUnreachableBody: 'The check may still be running. This button checks its progress.',
+  jobUnreachableRetry: 'Check for updates',
   // Kept for the /watch run pages, which still show a job's steps and its money.
   jobHeading: 'Analysing',
   stepsHeading: 'Steps',
   costReserved: (usd: number) => `up to $${usd.toFixed(2)} set aside`,
   costTotal: 'in total',
-  failNoSubtitles: 'No subtitles could be found for that film, and subtitles are all this reads.',
+  failNoSubtitles: 'We couldn’t find subtitles for this film, so we couldn’t build its guide.',
   // The scene pass finished and listed nothing. That is a result about these subtitles, not a
   // verdict that the film is gentle — and nothing was saved, so there is no guide to read.
   failNoScenes:

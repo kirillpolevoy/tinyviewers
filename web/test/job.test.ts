@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  addRefusal, demoRefusal, failureSentence, finishRefusal, isJobId, isLive, stepDurationMs, type JobStep,
+  addRefusal, failureSentence, isJobId, isLive, stepDurationMs, type JobStep,
   namesOneFilm,
 } from '../lib/job';
-import { ADD, DEMO, finishLine, spentLine } from '../lib/copy';
+import { ADD, spentLine } from '../lib/copy';
 
 const step = (over: Partial<JobStep>): JobStep => ({
   id: 'jev',
@@ -75,15 +75,6 @@ test('the day’s spending says when part of it is only set aside', () => {
   assert.equal(spentLine(2.04, 5, null), '$2.04 of $5.00 spent today');
 });
 
-test('the finish line names whose pass it is the finish of', () => {
-  // Sonnet's reading of the transcript is not in this recording and its seconds and cents are not
-  // in these counters, so calling it the whole run was a claim the numbers do not support.
-  assert.equal(
-    finishLine('5.2 s', 78, 247, '8¢'),
-    'That was Jev’s pass: 5.2 s · 78 requests · 247 beats · 8¢',
-  );
-});
-
 test('every add refusal has a sentence, and the running job links to its progress page', () => {
   assert.equal(addRefusal(401, {}).text, ADD.wrongPasscode);
   assert.equal(addRefusal(429, { error_code: 'too_many_attempts' }).text, ADD.tooManyAttempts);
@@ -92,36 +83,6 @@ test('every add refusal has a sentence, and the running job links to its progres
   assert.deepEqual(addRefusal(409, { error_code: 'busy', id: 'abc' }).link, { href: '/library?job=abc', label: ADD.runningLink });
   assert.equal(addRefusal(503, {}).text, ADD.offBody);
   assert.equal(addRefusal(502, { error_code: 'unreachable' }).text, ADD.unreachable);
-});
-
-test('a demo refusal is never mistaken for another: four 429s, four sentences', () => {
-  assert.equal(demoRefusal(429, { error_code: 'too_many_runs' }).text, DEMO.tooManyRuns);
-  assert.equal(demoRefusal(429, { error_code: 'too_many_new_films' }).text, DEMO.tooManyNewFilms);
-  assert.equal(demoRefusal(429, { error_code: 'new_film_limit' }).text, DEMO.newFilmLimit);
-  assert.equal(demoRefusal(429, { error_code: 'too_many_lookups' }).text, DEMO.tooManyLookups);
-  assert.equal(demoRefusal(409, { error_code: 'busy' }).text, DEMO.busy);
-  assert.equal(demoRefusal(502, {}).text, DEMO.unreachable);
-});
-
-test('the demo cap on a shelf film offers its recorded run, clearly labelled; on any other film it says so plainly', () => {
-  const shelf = demoRefusal(429, { error_code: 'daily_cap', slug: 'nemo', spent_usd: 2, cap_usd: 2 });
-  assert.equal(shelf.text, DEMO.capHeadline);
-  assert.deepEqual(shelf.link, { href: '/watch/nemo', label: DEMO.watchRecording });
-  assert.match(DEMO.watchRecording, /recorded/);
-  const other = demoRefusal(429, { error_code: 'daily_cap', slug: null, spent_usd: 1.9, cap_usd: 2 });
-  assert.equal(other.link, undefined);
-  assert.match(other.text, /\$1\.90 of \$2\.00/);
-});
-
-test('finishing a run: its own three refusals, then the add flow\'s', () => {
-  assert.equal(finishRefusal(409, { error_code: 'not_done' }).text, DEMO.finishNotDone);
-  assert.equal(finishRefusal(409, { error_code: 'no_subtitles' }).text, DEMO.finishNoSubtitles);
-  assert.equal(finishRefusal(401, { error_code: 'bad_passcode' }).text, ADD.wrongPasscode);
-  assert.deepEqual(finishRefusal(409, { error_code: 'exists', slug: 'room-on-the-broom' }).link, {
-    href: '/film/room-on-the-broom',
-    label: ADD.openExisting,
-  });
-  assert.match(finishRefusal(429, { error_code: 'daily_cap', spent_usd: 3.5, cap_usd: 5 }).text, /\$3\.50 of \$5\.00/);
 });
 
 test('only an IMDb link or id starts a run without a choice; a title never does', () => {
