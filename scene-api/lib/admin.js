@@ -120,8 +120,8 @@ export async function restore(db, body = {}, { ip = null } = {}) {
 
 /**
  * POST /api/admin/reapply { passcode, slug }: rebuild a film's guide from its STORED Jev-first answers
- * (the tags and checked segments of its last add or rebuild) with the current code -- strength rule,
- * mild scenes -- and no model call. The old guide is backed up first; same one-job lock as restore.
+ * (the tags and checked segments of its last add or rebuild) with the current code (strength rule,
+ * titles) and no model call. The old guide is backed up first; same one-job lock as restore.
  */
 export async function reapply(db, body = {}, { ip = null } = {}) {
   await requirePasscodeShared(db, body.passcode, ip);
@@ -133,7 +133,7 @@ export async function reapply(db, body = {}, { ip = null } = {}) {
   const { ensureVocabulary } = await import('../load.js');
   const { invalidateVocabularyCache } = await import('./data.js');
   const jf = await getJevfirstFilm(db, film.slug);
-  const docs = jf ? await readArtifacts(db, film.slug, ['tags', 'segments', 'segments_precheck']) : {};
+  const docs = jf ? await readArtifacts(db, film.slug, ['tags', 'segments']) : {};
   const track = jf ? await readTrack(db, jf.imdb_id) : null;
   if (!jf || !docs.tags || !docs.segments || !track) throw new HttpError(409, 'This film has no stored Jev-first answers to re-apply; rebuild it instead.', { error_code: 'not_available' });
   const busy = () => new HttpError(409, 'A film is being analysed right now; re-apply when it has finished.', { error_code: 'busy' });
@@ -150,7 +150,7 @@ export async function reapply(db, body = {}, { ip = null } = {}) {
       const cost = (role) => Number(runs.find((r) => r.role === role)?.cost_usd ?? 0);
       const built = ing.buildGuide({
         slug: film.id, film: jf, srt: { release: track.release, sha256: track.sha256 }, cues: track.cues, tags: docs.tags,
-        costs: { sonnet: cost('finder'), jev: cost('labeller') }, segments: docs.segments.scenes ?? null, precheck: docs.segments_precheck?.scenes ?? null,
+        costs: { sonnet: cost('finder'), jev: cost('labeller') }, segments: docs.segments.scenes ?? null,
       });
       await ensureVocabulary(tx, taxonomy);
       await ing.ensureReasonVocabulary(tx, built.reasonLabels);
