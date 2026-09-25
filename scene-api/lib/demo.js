@@ -116,6 +116,7 @@ export async function claimDemoKick(db, id, graceMs = DEMO_RESUME_GRACE_MS) {
   const res = await db.query(
     `update demo_runs set kicked_at = now()
       where id = $1 and status in ('queued', 'running')
+        and not (status = 'running' and invocations = 0)
         and (lease_until is null or lease_until < now())
         and coalesce(progress_at, created_at) < now() - ($2::bigint * interval '1 millisecond')
         and (kicked_at is null or kicked_at < now() - ($2::bigint * interval '1 millisecond'))

@@ -170,10 +170,11 @@ test('a flagged scene says why even with no description, and never shows the pla
   // A guide built before v10.4 has no reasons stored: no chips, no error.
   assert.deepEqual(parseWhy(null), []);
   assert.deepEqual(parseWhy({ nonsense: 1 }), []);
-  const base = { startMs: 60_000, endMs: 120_000 };
-  assert.equal(sceneHeading({ ...base, title: 'Sharks chase Marlin', why: ['Chased'] }), 'Sharks chase Marlin');
-  assert.equal(sceneHeading({ ...base, title: PLACEHOLDER_TITLE, why: ['Creature threatens', 'Child in danger', 'Fire'] }), 'Creature threatens · Child in danger');
-  assert.equal(sceneHeading({ ...base, title: PLACEHOLDER_TITLE, why: [] }), '0:01:00–0:02:00');
+  const base = { startMs: 60_000 };
+  assert.equal(sceneHeading({ ...base, title: 'Sharks chase Marlin' }), 'Sharks chase Marlin');
+  // No checked title: named by where it starts, never by its reasons stitched into a title.
+  assert.equal(sceneHeading({ ...base, title: PLACEHOLDER_TITLE }), 'Scene starting at 0:01:00');
+  assert.equal(sceneHeading({ startMs: 653_376, title: '  ' }), 'Scene starting at 0:10:53');
 });
 
 test('a scene pass that found nothing is its own sentence, not "something went wrong"', async () => {

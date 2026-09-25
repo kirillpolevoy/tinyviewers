@@ -8,7 +8,7 @@
 // done/total, the tiles turn when a scene's state says it was answered, and the elapsed time and the
 // cost are the API's measurements. Nothing here counts on its own clock.
 
-import { DEMO_LIVE } from './copy';
+import { DEMO_LIVE, FILM } from './copy';
 import { formatTime, type AgeBand } from './scenes';
 
 /** `GET /api/demo/films`: a film whose Sonnet artifacts are stored, so Jev can run on it live. */
@@ -186,6 +186,8 @@ export type DemoRun = {
   cost_uncertain_usd?: number | null;
   /** The run's film, by the run itself (authoritative). */
   slug?: string | null;
+  /** The stage the run is in — for a failed run, the stage it failed in (DEMO_STAGES ids). */
+  stage?: string | null;
   /** Not in the contract's list, but read when present: a failed run's reason, and the film. */
   error_code?: string | null;
   /** A failed run's reason, one sentence written by the API for this page. */
@@ -408,15 +410,55 @@ export function reasonChips(f: Pick<FlaggedScene, 'why' | 'reasons'>, max = 3): 
 }
 
 /**
- * What a flagged scene is called in a list: its checked title; else its reasons (the first two chips);
- * else its time range. Never an invented description.
+ * What a flagged scene is called: its checked title; else where it starts ("Scene starting at 0:10:53").
+ * Its reasons are shown beside it, never stitched into a title that would read like a summary.
  */
-export function flaggedHeading(f: Pick<FlaggedScene, 'title' | 'why' | 'reasons' | 'start_ms' | 'end_ms'>): string {
+export function flaggedHeading(f: Pick<FlaggedScene, 'title' | 'start_ms'>): string {
+  return checkedTitle(f) ?? FILM.untitledScene(formatTime(f.start_ms));
+}
+
+/** A flagged scene's own title, when one passed its checks; null for none (or the pipeline's placeholder). */
+export function checkedTitle(f: Pick<FlaggedScene, 'title'>): string | null {
   const title = f.title?.trim();
-  if (title && title !== 'Flagged scene') return title;
-  const { chips } = reasonChips(f, 2);
-  if (chips.length) return chips.join(' · ');
-  return spanLabel(f.start_ms, f.end_ms);
+  return title && title !== 'Flagged scene' ? title : null;
+}
+
+/**
+ * The comparison with the saved guide, in one line for beside the count: "The saved guide lists the same
+ * 11 scenes." / "Compared with the saved guide: 1 extra scene, none missing."
+ */
+export function compareLine(same: Sameness, runScenes: number): string {
+  switch (same.kind) {
+    case 'same':
+      return DEMO_LIVE.sameYes(same.scenes);
+    case 'differs':
+      return same.onlyRun === 0 && same.onlyGuide === 0
+        ? DEMO_LIVE.sameCounts(runScenes, same.guide)
+        : DEMO_LIVE.sameDiffers(same.onlyRun, same.onlyGuide);
+    case 'none':
+      return DEMO_LIVE.sameNone;
+    default:
+      return DEMO_LIVE.sameUnknown;
+  }
+}
+
+/** Failures that were Jev's to finish (the API's error codes); anything else is said generally. */
+const JEV_FAILURES: Record<string, string> = {
+  split_check_failed: 'checking the scene breaks',
+  jev_answers_failed: 'answering its questions about the scenes',
+  jev_check_failed: 'checking the scene descriptions',
+};
+
+/**
+ * A failed run in one sentence: which of Jev's jobs it could not finish ("Jev could not finish checking
+ * the scene breaks."), from the stage it stopped in, else its error code; and that the saved guide is
+ * untouched. A failure that was not Jev's (ours, a timeout, an unknown code) is said generally.
+ */
+export function failedLead(run: Pick<DemoRun, 'stage' | 'error_code'>): string {
+  const code = run.error_code ?? '';
+  if (!(code in JEV_FAILURES)) return DEMO_LIVE.failedBody;
+  const what = (run.stage && DEMO_LIVE.failedStage[run.stage]) || JEV_FAILURES[code];
+  return DEMO_LIVE.failedJev(what);
 }
 
 /** Do the two age bands rate every flagged scene the same? (The page says so, rather than look broken.) */
@@ -525,8 +567,11 @@ export function pickState(films: DemoFilm[] | null, status: DemoStatus | null): 
   if (films === null || status === null) return 'down';
   if (films.length === 0) return 'empty';
   if (status.available) return 'live';
-  if (status.reason === 'busy' || status.busy) return 'busy';
+  // An explicit reason is the news; `busy` only speaks when the API gives no other reason (a run's
+  // slots can be full on a day whose budget is also spent, and that is not "try again in a minute").
+  if (status.reason === 'daily_cap') return 'cap';
   if (status.reason === 'not_configured') return 'off';
+  if (status.reason === 'busy' || status.busy) return 'busy';
   return 'cap';
 }
 

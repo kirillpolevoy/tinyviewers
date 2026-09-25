@@ -6,7 +6,7 @@
 //   2. "Scene ends around" is the scene end plus 15 s.
 //   3. Filters are built only from the labels that actually occur in the film being shown.
 
-import { STRENGTH_WORDS, STRENGTH_WORDS_LOWER, NOT_CHECKED_LOWER, EMPTY } from './copy';
+import { STRENGTH_WORDS, STRENGTH_WORDS_LOWER, NOT_CHECKED_LOWER, EMPTY, FILM } from './copy';
 
 export type AgeBand = '5-7' | '8-10';
 
@@ -112,14 +112,13 @@ export function parseWhyDetail(raw: unknown): string[] {
 
 /**
  * What a scene row is called: its own title, or — when the pipeline had no title that passed its
- * checks — its first two reasons ("Creature threatens · Child in danger"), which are true of the
- * scene by construction. Never the placeholder.
+ * checks — where it starts ("Scene starting at 0:10:53"). Its reasons are shown in the open row,
+ * never stitched into a title that would read like a summary of what happens. Never the placeholder.
  */
-export function sceneHeading(scene: Pick<Scene, 'title' | 'why' | 'startMs' | 'endMs'>): string {
+export function sceneHeading(scene: Pick<Scene, 'title' | 'startMs'>): string {
   const title = scene.title?.trim();
   if (title && title !== PLACEHOLDER_TITLE) return title;
-  if (scene.why?.length) return scene.why.slice(0, 2).join(' · ');
-  return `${formatTime(scene.startMs)}–${formatTime(scene.endMs)}`;
+  return FILM.untitledScene(formatTime(scene.startMs));
 }
 
 export type Facet = {

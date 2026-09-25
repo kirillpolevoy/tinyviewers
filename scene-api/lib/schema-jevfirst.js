@@ -3,7 +3,7 @@
 // schema-jevfirst.sql: `node scripts/emit-schema.mjs --write` regenerates that file from this string, and
 // test/jevfirst-ship.test.js checks the two are identical. Applied by lib/db.js applySchema and, on a
 // cold start, by lib/ensure-schema.js.
-export const JEVFIRST_SCHEMA_VERSION = 'jevfirst-schema-v10.4.3';
+export const JEVFIRST_SCHEMA_VERSION = 'jevfirst-schema-v10.4.4';
 export const JEVFIRST_SCHEMA_SQL = String.raw`-- =============================================================================================
 -- The Jev-first pipeline (pipeline-jevfirst/, v10.4): new-film adds (the default; ADD_PIPELINE=live
 -- switches back), library rebuilds, and the public live Jev demo. Everything below is additive and
@@ -286,14 +286,46 @@ create table if not exists demo_run_stages (
 alter table jobs drop constraint if exists jobs_kind_check;
 alter table jobs add constraint jobs_kind_check check (kind in ('add', 'rebuild', 'restore'));
 
--- Wrong passcodes, counted in the database so every function instance shares one count (per caller,
--- hashed, and across all callers), for every route that takes the passcode: /api/add/* and
--- /api/admin/* alike, however they are reached. One row per key and ten-minute window.
+-- Wrong passcodes, counted in the database so every function instance shares one count, for every
+-- route that takes the passcode: /api/add/* and /api/admin/* alike, however they are reached. One row
+-- per key and ten-minute window (lib/jobs.js requirePasscodeShared). A caller's row ('client:...') is
+-- its LIMIT: an attempt is counted before its passcode is compared (so concurrent guesses cannot
+-- overshoot) and given back when the passcode was right. The row across all callers ('all') only
+-- raises an alert; it never refuses anyone. Rows whose window has passed are deleted as they are seen.
 create table if not exists passcode_failures (
   key           text primary key,             -- 'client:<sha256 of the caller identity>' or 'all'
   failures      integer not null default 0,
   window_start  timestamptz not null default now()
 );
+
+-- ---------------------------------------------------------------------------------------------
+-- v10.4.4: demo runs written before v10.4.3 keep their spending
+-- ---------------------------------------------------------------------------------------------
+
+-- A demo_runs row written by the v10.4.2 code got the v10.4.3 money columns above with their defaults
+-- (zero). Its money was cost_usd (the reservation while live, the final figure after) and
+-- progress.spent_usd (what it had measured). Left at zero, the sweep would charge a live one
+-- greatest(mark_usd, spent_usd) = 0 and release its whole reservation, and a finished one would show a
+-- cost of zero. This fills them in from the old accounting:
+--   finished   spent = mark = cost_usd. A run the old sweep ended ('timed_out') was left at its
+--              reservation: the part of it the run never measured is uncertain_usd, not a bill.
+--   live       mark = cost_usd (its reservation, the only upper bound the old code kept) and spent =
+--              what it had measured. The v10.4.2 code never set 'invocations', so a 'running' row with
+--              invocations = 0 is never leased by the new code (pipeline-jevfirst/demo.js
+--              acquireDemoLease): its old invocation may still be alive and there is no checkpoint to
+--              resume from. The sweep ends it at that mark.
+-- Only rows still exactly as the column defaults left them are touched, so applying this again changes
+-- nothing. (A queued row the new code admitted but has not started yet also matches; it gets its
+-- reservation as its mark, which is an upper bound too.)
+update demo_runs set
+    spent_usd = case when status in ('done', 'failed') then cost_usd
+                     else least(cost_usd, coalesce(case when jsonb_typeof(progress -> 'spent_usd') = 'number' then (progress ->> 'spent_usd')::numeric end, 0)) end,
+    mark_usd = cost_usd,
+    uncertain_usd = case when status = 'failed' and error_code = 'timed_out'
+                         then greatest(cost_usd - coalesce(case when jsonb_typeof(progress -> 'spent_usd') = 'number' then (progress ->> 'spent_usd')::numeric end, 0), 0)
+                         else 0 end
+  where invocations = 0 and lease_owner is null and checkpoint is null and progress_at is null
+    and spent_usd = 0 and mark_usd = 0 and uncertain_usd = 0;
 
 -- ---------------------------------------------------------------------------------------------
 -- Which version of this file a database has had applied (lib/ensure-schema.js reads it)

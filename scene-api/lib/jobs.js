@@ -82,39 +82,73 @@ export function requirePasscode(given, ip = null) {
 export const passcodeConfigured = () => Boolean(process.env.ADD_FILM_PASSCODE?.trim());
 
 /**
- * The same check, with the failed-attempt count kept in the DATABASE (passcode_failures), so every
- * function instance -- and every cold start -- shares one count: PASSCODE_MAX_FAILURES wrong passcodes
- * per caller per window, and PASSCODE_GLOBAL_MAX_FAILURES across all callers (a guesser who rotates
- * addresses still runs into the second). Used by every route that takes the passcode (/api/add/* and
- * /api/admin/*), inside the handler, so it holds however the route is reached. The in-memory counter
- * above still runs too. If the table cannot be read the database count is skipped, never the check.
+ * The same check, with the wrong-passcode count kept in the DATABASE (passcode_failures), so every
+ * function instance -- and every cold start -- shares one count. Used by every route that takes the
+ * passcode (/api/add/* and /api/admin/*), inside the handler, so it holds however the route is reached.
+ *
+ *   * PER CALLER, and only per caller: PASSCODE_MAX_FAILURES wrong passcodes per caller per window. The
+ *     caller is lib/http.js clientIp: an identity Vercel's edge writes (or our own proxy vouches for
+ *     with ADD_FILM_PROXY_SECRET), which a caller cannot choose. Other callers' failures never refuse
+ *     anyone: the passcode is 16 random characters, so no number of guesses spread across callers is a
+ *     threat worth locking the owner out for -- and a lock shared by everybody is one any stranger can
+ *     pull. Across all callers there is only an ALERT (a log line once PASSCODE_GLOBAL_ALERT_FAILURES
+ *     wrong passcodes land in one window), never a refusal.
+ *   * ATOMIC: an attempt is counted BEFORE its passcode is compared, by one upsert that returns the new
+ *     count, so N concurrent guesses get N different numbers and only the first PASSCODE_MAX_FAILURES
+ *     are compared at all. A right passcode (and a refused attempt, which was never compared) gives its
+ *     count back.
+ *   * rows whose window has passed are deleted on the way in.
+ *
+ * A caller with no identity is not counted (a shared bucket would be a lock anyone could pull). The
+ * in-memory counter above still runs too. If the table cannot be used the database count is skipped,
+ * never the check.
  */
-export const PASSCODE_GLOBAL_MAX_FAILURES = 60;
-const FAILS_SQL = `insert into passcode_failures (key, failures, window_start) values ($1, 1, now())
+export const PASSCODE_GLOBAL_ALERT_FAILURES = 60;
+const COUNT_SQL = `insert into passcode_failures (key, failures, window_start) values ($1, 1, now())
   on conflict (key) do update set
     failures = case when passcode_failures.window_start < now() - ($2::bigint * interval '1 millisecond') then 1 else passcode_failures.failures + 1 end,
-    window_start = case when passcode_failures.window_start < now() - ($2::bigint * interval '1 millisecond') then now() else passcode_failures.window_start end`;
+    window_start = case when passcode_failures.window_start < now() - ($2::bigint * interval '1 millisecond') then now() else passcode_failures.window_start end
+  returning failures`;
+const GIVE_BACK_SQL = 'update passcode_failures set failures = greatest(failures - 1, 0) where key = $1';
+const PRUNE_SQL = `delete from passcode_failures where window_start < now() - ($1::bigint * interval '1 millisecond')`;
 
-export async function requirePasscodeShared(db, given, ip = null) {
+export async function requirePasscodeShared(db, given, ip = null, { log = console } = {}) {
+  // Not configured: the 503 says so, and nothing is counted.
+  if (!expectedPasscodeSet()) return requirePasscode(given, ip);
   const clientKey = ip ? `client:${crypto.createHash('sha256').update(String(ip)).digest('hex').slice(0, 32)}` : null;
-  const keys = [...(clientKey ? [clientKey] : []), 'all'];
-  let counted = null;
-  try {
-    const { rows } = await db.query(
-      `select key, failures from passcode_failures where key = any($1::text[]) and window_start >= now() - ($2::bigint * interval '1 millisecond')`,
-      [keys, PASSCODE_WINDOW_MS],
-    );
-    counted = new Map(rows.map((r) => [r.key, Number(r.failures)]));
-  } catch { /* the database count is an addition; the in-memory one below still applies */ }
-  if (counted && expectedPasscodeSet() && ((clientKey && (counted.get(clientKey) ?? 0) >= PASSCODE_MAX_FAILURES) || (counted.get('all') ?? 0) >= PASSCODE_GLOBAL_MAX_FAILURES)) {
-    throw new HttpError(429, 'Too many wrong passcodes. Wait ten minutes.', { error_code: 'too_many_attempts' });
+  let counted = false;
+  if (clientKey) {
+    let n = null;
+    try {
+      await db.query(PRUNE_SQL, [PASSCODE_WINDOW_MS]);
+      const { rows } = await db.query(COUNT_SQL, [clientKey, PASSCODE_WINDOW_MS]);
+      n = Number(rows[0]?.failures);
+      counted = Number.isFinite(n);
+    } catch { /* the database count is an addition; the in-memory one below still applies */ }
+    if (counted && n > PASSCODE_MAX_FAILURES) {
+      // Over this caller's limit: refused without comparing, and this attempt is not left counted.
+      await db.query(GIVE_BACK_SQL, [clientKey]).catch(() => {});
+      throw new HttpError(429, 'Too many wrong passcodes from you. Wait ten minutes.', { error_code: 'too_many_attempts' });
+    }
   }
   try {
     requirePasscode(given, ip);
   } catch (err) {
-    if (err?.status === 401 && counted) for (const k of keys) await db.query(FAILS_SQL, [k, PASSCODE_WINDOW_MS]).catch(() => {});
+    if (err?.status === 401) {
+      // A wrong passcode keeps its count. Across all callers: counted for the alert only.
+      try {
+        const { rows } = await db.query(COUNT_SQL, ['all', PASSCODE_WINDOW_MS]);
+        if (Number(rows[0]?.failures) === PASSCODE_GLOBAL_ALERT_FAILURES) {
+          log.warn?.(`[passcode] ${PASSCODE_GLOBAL_ALERT_FAILURES} wrong passcodes across all callers in the last ten minutes; nobody has been locked out`);
+        }
+      } catch { /* the alert is best effort */ }
+    } else if (counted) {
+      await db.query(GIVE_BACK_SQL, [clientKey]).catch(() => {});
+    }
     throw err;
   }
+  // Right: this attempt was never a failure.
+  if (counted) await db.query(GIVE_BACK_SQL, [clientKey]).catch(() => {});
 }
 const expectedPasscodeSet = () => Boolean(process.env.ADD_FILM_PASSCODE?.trim());
 
@@ -157,11 +191,21 @@ export const capUsd = () => {
   return Number.isFinite(raw) && raw >= 0 ? raw : DEFAULT_CAP_USD;
 };
 
-/** Everything today's jobs have spent, UTC day, failures included — a failed run still paid. */
+/**
+ * Which jobs the day's spending counts (adds and rebuilds together, failures included -- a failed run
+ * still paid): every job that was live at any time this UTC day. Created today; or ended today (a job's
+ * last write is its end: `updated_at` is stamped by every write and nothing writes a job after it ends);
+ * or still queued or running. A job admitted before midnight that finishes, or is still going, after it
+ * is not forgotten at midnight -- it counts at its reservation while live and its real cost after. A job
+ * live across midnight counts on both days: the cap errs on the side of spending less (the demo's rule,
+ * lib/demo.js DEMO_DAY_SQL).
+ */
+const UTC_DAY_START = "(date_trunc('day', now() at time zone 'utc') at time zone 'utc')";
+export const JOBS_DAY_WHERE = `(created_at >= ${UTC_DAY_START} or updated_at >= ${UTC_DAY_START} or status in ('queued', 'running'))`;
+
+/** Everything the jobs live today have spent (JOBS_DAY_WHERE). */
 export async function spentTodayUsd(db) {
-  const { rows } = await db.query(
-    "select coalesce(sum(cost_usd), 0) as spent from jobs where created_at >= date_trunc('day', now() at time zone 'utc')",
-  );
+  const { rows } = await db.query(`select coalesce(sum(cost_usd), 0) as spent from jobs where ${JOBS_DAY_WHERE}`);
   return Number(rows[0]?.spent ?? 0);
 }
 
@@ -212,8 +256,7 @@ export async function createJob(db, { id, film, reserveUsd = RESERVE_USD, cap = 
     res = await db.query(
       `insert into jobs (id, status, step, film, steps, cost_usd, pipeline, reserve_usd, kind)
        select $1, 'queued', null, $2::jsonb, $3::jsonb, $4::numeric, $6, $4::numeric, $7
-        where (select coalesce(sum(cost_usd), 0) from jobs
-                where created_at >= date_trunc('day', now() at time zone 'utc')) + $4::numeric <= $5::numeric`,
+        where (select coalesce(sum(cost_usd), 0) from jobs where ${JOBS_DAY_WHERE}) + $4::numeric <= $5::numeric`,
       [id, JSON.stringify(film), JSON.stringify(steps), reserveUsd, cap, pipeline, kind],
     );
   } catch (err) {

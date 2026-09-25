@@ -536,15 +536,26 @@ lease (short, renewed by a heartbeat); every finished stage checkpoints its outp
 the progress document (`demo_runs.checkpoint`); an invocation that runs short of time hands off through
 `POST /api/demo/runs/{id}/continue` (same secret, same `waitUntil` self-call), and a poll of
 `GET /api/demo/runs/{id}` that finds the run quiet asks again. A stage cut short re-runs with the page put
-back to the last checkpoint, so nothing is counted twice. No request goes out until a spending mark
-covering it is durable (`demo_runs.mark_usd`); a crashed invocation's spend is carried at that mark and the
-unmeasured part is reported apart (`cost_uncertain_usd`), never as a bill. A sentence's live verdict is
+back to the last checkpoint, so nothing is counted twice. Every write an invocation makes is fenced by its
+lease: one whose lease lapsed and was taken over cannot write progress, a stage output (written in the same
+statement as the checkpoint that names it) or the run's end, and it deletes the run's checkpoints only when
+its owner-conditional end changed the row. An ending invocation drains its queued writes before it stops its
+heartbeat. No request goes out until a spending mark
+covering it is durable (`demo_runs.mark_usd`); a crashed invocation's spend is carried at that mark, a
+request that never answered or a 200 whose body could not be read is charged at its reservation, and those
+unmeasured parts are reported apart (`cost_uncertain_usd`), never as a bill. A sentence's live verdict is
 Jev's support answer (provisional); the run ends by reconciling the feed and `claims.final` with what the
-text rule and the quotation gate actually kept.
+guide actually kept (a summary sentence counts as kept only if it survived every acceptance step, the
+judgement-word exclusion included). The comparison with the library's guide matches scenes one to one, by
+overlap and with a boundary tolerance (each edge within 20 s or a quarter of the longer scene).
 
 Every passcode route (`/api/add/*`, `/api/admin/*`) counts wrong passcodes in the database
-(`passcode_failures`: 10 per caller and 60 across all callers per ten minutes), so the limit holds across
-function instances and cold starts. A restore takes the same one-live-job lock as a rebuild's admission,
+(`passcode_failures`: 10 per caller per ten minutes), so the limit holds across function instances and cold
+starts. An attempt is counted before it is compared, so concurrent guesses cannot overshoot, and a right
+passcode gives its count back. The caller is the identity Vercel's edge writes (`x-real-ip`), or the visitor
+our own web proxy vouches for with `ADD_FILM_PROXY_SECRET`; off Vercel it is the socket address. Wrong
+passcodes across all callers only log a `[passcode]` alert at 60 in ten minutes: they never lock anyone
+out, so strangers cannot lock the owner out (the passcode is 16 random characters). A restore takes the same one-live-job lock as a rebuild's admission,
 inside its own transaction.
 
 **Schema**: `schema-jevfirst.sql` (generated from `lib/schema-jevfirst.js` by `node scripts/emit-schema.mjs

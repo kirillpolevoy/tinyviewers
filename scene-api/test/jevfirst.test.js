@@ -37,7 +37,7 @@ import { budget } from '../pipeline-jevfirst/pack/budget.js';
 import { withRun } from '../pipeline-jevfirst/context.js';
 import { writeArtifacts, storeTrack, DEMO_KINDS } from '../pipeline-jevfirst/store.js';
 import { startDemoRun, demoRun, demoStatus, demoFilms, resetDemoLimiter, DEMO_RESERVE_USD } from '../lib/demo.js';
-import { compareWithGuide, applyResult, newProgress } from '../pipeline-jevfirst/demo.js';
+import { compareWithGuide, applyResult, newProgress, reconcileClaims } from '../pipeline-jevfirst/demo.js';
 import { reasonCategory } from '../pipeline-jevfirst/stages/ingest.js';
 import { makeFetch, jevAnswer, jsonResponse, claudeStream } from './jevfirst-stubs.js';
 
@@ -1183,7 +1183,7 @@ test('the demo day counts a run that started before midnight and is still going,
 test('wrong passcodes are counted in the database: a new instance still refuses, for every passcode route', async () => {
   const { startRebuild, backups } = await import('../lib/admin.js');
   const { resolve } = await import('../lib/add.js');
-  const { PASSCODE_MAX_FAILURES, PASSCODE_GLOBAL_MAX_FAILURES } = await import('../lib/jobs.js');
+  const { PASSCODE_MAX_FAILURES } = await import('../lib/jobs.js');
   const db = await emptyDb();
   await libraryFilm(db);
   for (let i = 0; i < PASSCODE_MAX_FAILURES; i++) {
@@ -1193,15 +1193,9 @@ test('wrong passcodes are counted in the database: a new instance still refuses,
   resetPasscodeAttempts();
   await assert.rejects(startRebuild(db, { slug: 'good-dinosaur', passcode: PASSCODE }, { ip: '198.51.100.7', launch: () => {} }), (e) => e.status === 429 && e.extra.error_code === 'too_many_attempts');
   await assert.rejects(resolve(db, { query: 'x', passcode: PASSCODE }, { ip: '198.51.100.7', apiKey: 'k' }), (e) => e.status === 429);
-  // another caller is not locked out by the first...
+  // another caller is not locked out by the first (and never by guesses spread across many callers:
+  // see the blocker 3 test below)
   await backups(db, { slug: 'good-dinosaur', passcode: PASSCODE }, { ip: '203.0.113.9' });
-  // ...until guesses from many addresses pass the shared ceiling
-  for (let i = 0; i < PASSCODE_GLOBAL_MAX_FAILURES; i++) {
-    resetPasscodeAttempts();
-    await backups(db, { slug: 'good-dinosaur', passcode: 'guess' }, { ip: `10.0.${Math.floor(i / 200)}.${i % 200}` }).catch(() => {});
-  }
-  resetPasscodeAttempts();
-  await assert.rejects(backups(db, { slug: 'good-dinosaur', passcode: PASSCODE }, { ip: '203.0.113.10' }), (e) => e.status === 429);
   await db.end();
 });
 
@@ -1278,4 +1272,259 @@ test('a Jev response whose body stalls is cut off at the deadline and by the run
   const t2 = Date.now();
   await assert.rejects(withRun({ fetchImpl: async () => new Response('{}', { status: 503 }), keys: { typesafe: 'x' }, signal: ac2.signal, sleep: () => new Promise(() => {}) }, () => postJev({ questions: {} }, 'x', { retries: 3 })));
   assert.ok(Date.now() - t2 < 2000, 'the backoff sleep is abortable');
+});
+
+// ------------------------------------------------------------------------------------------------
+// Ship blockers and follow-ups from the last review (each test reproduces the finding first)
+// ------------------------------------------------------------------------------------------------
+
+const TAKEOVER_SQL = "update demo_runs set lease_owner = 'invocation-B', lease_until = now() + interval '1 minute' where id = $1";
+const stageRows = async (db, id) => (await db.query('select stage, output from demo_run_stages where run_id = $1 order by stage', [id])).rows;
+
+test('blocker 1: an invocation that lost its lease never deletes the checkpoints of the one that took the run over', async () => {
+  const db = await seededDb();
+  let takenOver = false;
+  let before = null;
+  // after the takeover the old invocation's classify requests are refused, so its stage FAILS and it cleans up
+  const f = world({ jevHook: async () => (takenOver ? new Response('{}', { status: 400 }) : null) });
+  const runOpts = { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5 };
+  const { id } = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'a', launch: () => {}, runOpts });
+  const { runDemo } = await import('../pipeline-jevfirst/demo.js');
+  const res = await runDemo(db, id, {
+    ...runOpts,
+    onStageStart: (stage) => {
+      if (stage !== 'classify' || takenOver) return;
+      takenOver = true;
+      // invocation B takes the run over (A's lease lapsed); A does not know yet
+      before = db.query(TAKEOVER_SQL, [id]).then(() => stageRows(db, id));
+    },
+  });
+  const had = await before;
+  assert.ok(had.length >= 3, `stages were checkpointed before the takeover (${had.map((r) => r.stage)})`);
+  assert.deepEqual((await stageRows(db, id)).map((r) => r.stage), had.map((r) => r.stage), 'B\'s checkpoints are all still there');
+  const row = (await db.query('select status, lease_owner from demo_runs where id = $1', [id])).rows[0];
+  assert.deepEqual([row.status, row.lease_owner], ['running', 'invocation-B'], 'the run is still B\'s, not failed by A');
+  assert.equal(res.lostLease, true, JSON.stringify(res));
+  await db.end();
+});
+
+test('blocker 1: an invocation that lost its lease never overwrites a stage output with its own', async () => {
+  const db = await seededDb();
+  const runOpts = { fetchImpl: world(), keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5 };
+  const { id } = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'a', launch: () => {}, runOpts });
+  const { runDemo } = await import('../pipeline-jevfirst/demo.js');
+  let once = false;
+  const res = await runDemo(db, id, {
+    ...runOpts,
+    onStageStart: (stage) => {
+      if (stage !== 'refold' || once) return;
+      once = true;
+      db.query(TAKEOVER_SQL, [id]);
+      db.query(`insert into demo_run_stages (run_id, stage, output) values ($1, 'refold', '"from-B"'::jsonb)
+                on conflict (run_id, stage) do update set output = excluded.output`, [id]);
+    },
+  });
+  assert.equal(res.lostLease, true, JSON.stringify(res));
+  const refold = (await stageRows(db, id)).find((r) => r.stage === 'refold');
+  // (jsonb 'from-B' comes back as the string itself, or as its JSON text on the pg driver)
+  assert.ok(refold.output === 'from-B' || refold.output === '"from-B"', 'A\'s late output did not replace B\'s');
+  await db.end();
+});
+
+test('blocker 1: a finishing invocation drains its queued writes while its heartbeat still holds the lease', async () => {
+  const base = await seededDb();
+  let slow = 0;
+  // one progress write stalls for well over the lease: the drain at the end of the run has to wait for it
+  const db = {
+    ...base,
+    query: async (sql, params) => {
+      if (slow > 0 && /^\s*update demo_runs set progress = \$3::jsonb/.test(sql)) { slow--; await new Promise((r) => setTimeout(r, 1500)); }
+      return base.query(sql, params);
+    },
+  };
+  let inClassify = false;
+  let refused = false;
+  // the first classify request is refused (the stage will fail); the rest take a moment, so the stalled
+  // write is already in flight when the run ends and starts cleaning up
+  const f = world({ jevHook: async () => {
+    if (!inClassify) return null;
+    if (!refused) { refused = true; slow = 1; return new Response('{}', { status: 400 }); }
+    await new Promise((r) => setTimeout(r, 2));
+    return null;
+  } });
+  const runOpts = { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5, leaseMs: 500, heartbeatMs: 40 };
+  const { id } = await startDemoRun(base, { slug: DEMO_FILM.slug }, { ip: 'a', launch: () => {}, runOpts });
+  const { runDemo, acquireDemoLease } = await import('../pipeline-jevfirst/demo.js');
+  let finished = false;
+  const a = runDemo(db, id, { ...runOpts, onStageStart: (s) => { if (s === 'classify') inClassify = true; } }).finally(() => { finished = true; });
+  // invocation B keeps trying to take the run over the whole time
+  let bTook = null;
+  while (!finished && !bTook) {
+    if (refused) bTook = await acquireDemoLease(base, id, 'invocation-B', 60_000);
+    await new Promise((r) => setTimeout(r, 25));
+  }
+  const res = await a;
+  assert.equal(bTook, null, 'no other invocation could take the run while it was draining its writes');
+  assert.equal(res.status, 'failed', JSON.stringify(res));
+  const row = (await base.query('select status, error_code from demo_runs where id = $1', [id])).rows[0];
+  assert.deepEqual([row.status, row.error_code], ['failed', 'jev_answers_failed']);
+  await base.end();
+});
+
+test('blocker 2: upgrading populated v10.4.2 demo tables keeps their spending', async () => {
+  const { JEVFIRST_SCHEMA_SQL } = await import('../lib/schema-jevfirst.js');
+  const { sweepDemoRuns, demoSpentTodayUsd } = await import('../lib/demo.js');
+  const { acquireDemoLease } = await import('../pipeline-jevfirst/demo.js');
+  const db = await emptyDb();
+  // a v10.4.2 database: demo_runs without the v10.4.3 columns, no demo_run_stages
+  await db.exec(`drop table demo_run_stages;
+    alter table demo_runs drop column lease_owner, drop column lease_until, drop column invocations, drop column crash_count,
+      drop column spent_usd, drop column mark_usd, drop column uncertain_usd, drop column checkpoint, drop column progress_at, drop column kicked_at;
+    delete from schema_marks;`);
+  const ins = (id, status, slot, cost, spent, extra = '') => db.query(
+    `insert into demo_runs (id, slug, status, slot, reserve_usd, cost_usd, progress, created_at, started_at, updated_at${extra ? ', error_code, ended_at' : ''})
+     values ($1, 'x', $2, $3, 0.6, $4, $5::jsonb, now() - interval '10 minutes', now() - interval '10 minutes', now() - interval '10 minutes'${extra ? ", $6, now() - interval '9 minutes'" : ''})`,
+    [id, status, slot, cost, JSON.stringify(spent === null ? {} : { spent_usd: spent }), ...(extra ? [extra] : [])],
+  );
+  await ins('old-done-0000000000000', 'done', null, 0.056787, 0.056787, 'none');
+  await ins('old-timedout-000000000', 'failed', null, 0.6, 0.02, 'timed_out');
+  await ins('old-running-stale-0000', 'running', 1, 0.6, 0.05);
+  await ins('old-running-fresh-0000', 'running', 2, 0.6, 0.01);
+  await db.query("update demo_runs set updated_at = now() where id = 'old-running-fresh-0000'");
+  const dayBefore = await demoSpentTodayUsd(db);
+  await db.exec(JEVFIRST_SCHEMA_SQL); // the upgrade
+  await db.exec(JEVFIRST_SCHEMA_SQL); // and again: idempotent
+  assert.ok(Math.abs((await demoSpentTodayUsd(db)) - dayBefore) < 1e-9, 'the day\'s total is unchanged by the upgrade');
+  // a finished run still shows what it cost
+  const done = await demoRun(db, 'old-done-0000000000000');
+  assert.deepEqual([done.cost_usd, done.cost_uncertain_usd], [0.056787, null]);
+  // a run the old sweep charged at its reservation: only what it measured is shown as a bill
+  const timedOut = await demoRun(db, 'old-timedout-000000000');
+  assert.deepEqual([timedOut.cost_usd, timedOut.cost_uncertain_usd], [0.02, 0.58]);
+  // an old live run is never picked up by the new code (the old invocation may be alive; there is no checkpoint)
+  assert.equal(await acquireDemoLease(db, 'old-running-fresh-0000', 'new-code'), null);
+  // ...and the sweep charges the stale one its reservation, the only upper bound the old code kept
+  await sweepDemoRuns(db);
+  const stale = (await db.query("select status, cost_usd, spent_usd, uncertain_usd from demo_runs where id = 'old-running-stale-0000'")).rows[0];
+  assert.deepEqual([stale.status, Number(stale.cost_usd), Number(stale.spent_usd), Number(stale.uncertain_usd)], ['failed', 0.6, 0.6, 0.55]);
+  const view = await demoRun(db, 'old-running-stale-0000');
+  assert.deepEqual([view.cost_usd, view.cost_uncertain_usd], [0.05, 0.55]);
+  assert.ok(Math.abs((await demoSpentTodayUsd(db)) - dayBefore) < 1e-9, 'the sweep did not release the old run\'s reservation');
+  const { JEVFIRST_SCHEMA_VERSION } = await import('../lib/schema-jevfirst.js');
+  assert.equal(JEVFIRST_SCHEMA_VERSION, 'jevfirst-schema-v10.4.4');
+  await db.end();
+});
+
+test('blocker 3: other callers\' wrong passcodes never lock the owner out; one caller\'s guesses are capped atomically', async () => {
+  const { backups } = await import('../lib/admin.js');
+  const { PASSCODE_MAX_FAILURES, PASSCODE_GLOBAL_ALERT_FAILURES } = await import('../lib/jobs.js');
+  const db = await emptyDb();
+  await libraryFilm(db);
+  const slug = 'good-dinosaur';
+  // 1. many anonymous callers, each under its own limit, far past any count across callers
+  const warned = [];
+  const warn = console.warn;
+  console.warn = (...a) => warned.push(a.join(' '));
+  try {
+    // 80 callers, one wrong guess each: more than the old shared ceiling of 60
+    for (let i = 0; i < 80; i++) {
+      resetPasscodeAttempts();
+      await backups(db, { slug, passcode: 'guess' }, { ip: `10.1.${i}.1` }).catch(() => {});
+    }
+  } finally { console.warn = warn; }
+  resetPasscodeAttempts();
+  assert.equal((await backups(db, { slug, passcode: PASSCODE }, { ip: '203.0.113.50' })).slug, slug, 'the owner is let in');
+  assert.ok(PASSCODE_GLOBAL_ALERT_FAILURES < 80);
+  assert.equal(warned.filter((w) => w.includes('[passcode]')).length, 1, 'one alert when the count across callers passes its mark');
+  // 2. one caller's concurrent guesses, each on a fresh instance (no in-memory count): no more than the limit are compared
+  const fresh = { ...db, query: async (sql, p) => { try { return await db.query(sql, p); } finally { resetPasscodeAttempts(); } } };
+  const outcomes = await Promise.allSettled(Array.from({ length: 100 }, () => backups(fresh, { slug, passcode: 'guess' }, { ip: '198.51.100.99' })));
+  assert.ok(outcomes.every((o) => o.status === 'rejected' && [401, 429].includes(o.reason.status)));
+  const compared = outcomes.filter((o) => o.reason.status === 401).length;
+  assert.ok(compared <= PASSCODE_MAX_FAILURES, `${compared} of 100 concurrent guesses were compared`);
+  resetPasscodeAttempts();
+  await assert.rejects(backups(db, { slug, passcode: PASSCODE }, { ip: '198.51.100.99' }), (e) => e.status === 429, 'that caller is held to its own limit');
+  // 3. expired rows are pruned
+  await db.query("insert into passcode_failures (key, failures, window_start) values ('client:expired', 3, now() - interval '1 hour')");
+  resetPasscodeAttempts();
+  await backups(db, { slug, passcode: PASSCODE }, { ip: '203.0.113.51' });
+  assert.equal((await db.query("select count(*)::int n from passcode_failures where key = 'client:expired'")).rows[0].n, 0);
+  await db.end();
+});
+
+test('blocker 4: a rebuild created yesterday and finished today counts against today\'s cap', async () => {
+  const { startRebuild } = await import('../lib/admin.js');
+  const { spentTodayUsd } = await import('../lib/jobs.js');
+  const db = await emptyDb();
+  await libraryFilm(db);
+  await db.query(`insert into jobs (id, status, film, cost_usd, pipeline, reserve_usd, kind, created_at, updated_at)
+                  values ('rebuild-yesterday-00000', 'done', '{}'::jsonb, $1, 'jevfirst', $1, 'rebuild', now() - interval '1 day', now())`, [JEVFIRST_RESERVE_USD]);
+  await db.query(`insert into jobs (id, status, film, cost_usd, pipeline, reserve_usd, kind, created_at, updated_at)
+                  values ('rebuild-long-ago-000000', 'done', '{}'::jsonb, 1, 'jevfirst', 1, 'rebuild', now() - interval '3 days', now() - interval '3 days')`);
+  assert.ok(Math.abs((await spentTodayUsd(db)) - JEVFIRST_RESERVE_USD) < 1e-9, 'the job that ended today is in today\'s total');
+  process.env.REBUILD_DAILY_CAP_USD = String(JEVFIRST_RESERVE_USD);
+  try {
+    await assert.rejects(startRebuild(db, { slug: 'good-dinosaur', passcode: PASSCODE }, { launch: () => {} }), (e) => e.status === 429 && e.extra.error_code === 'daily_cap');
+  } finally { delete process.env.REBUILD_DAILY_CAP_USD; }
+  // a job still live that was admitted yesterday counts at its reservation today
+  await db.query("update jobs set status = 'running', updated_at = now() - interval '1 day', progress_at = now(), lease_owner = 'x', lease_until = now() + interval '1 minute' where id = 'rebuild-yesterday-00000'");
+  assert.ok(Math.abs((await spentTodayUsd(db)) - JEVFIRST_RESERVE_USD) < 1e-9);
+  await db.end();
+});
+
+test('row 7: the quotation gate reads the whole shown text, across sentences and the title', async () => {
+  const { quoteGrams } = await import('../pipeline-jevfirst/stages/common.js');
+  const { quoteRuns } = await import('../pipeline-jevfirst/pack/validate.js');
+  const { quoteGate } = await import('../pipeline-jevfirst/stages/ingest.js');
+  const grams = quoteGrams([{ text: 'one two three four five six seven eight nine ten' }]);
+  // each sentence alone copies five words; together they copy ten
+  const g = quoteGate(null, 'One two three four five. Six seven eight nine ten. A calm sentence.', grams);
+  assert.deepEqual([g.description, g.dropped], ['One two three four five. A calm sentence.', 1]);
+  assert.equal(quoteRuns(g.description, grams).length, 0);
+  const t = quoteGate('One two three four five', 'Six seven eight nine ten. A calm sentence.', grams);
+  assert.deepEqual([t.title, t.description, t.dropped], ['One two three four five', 'A calm sentence.', 1]);
+  assert.equal(quoteRuns(`${t.title} ${t.description}`, grams).length, 0);
+});
+
+test('row 9: a sentence left out of the summary for a judgement word is not "in the guide"', () => {
+  const p = newProgress();
+  p.scenes = [{ id: 'S001', start_ms: 0, end_ms: 10 }];
+  const yes = { ok: true, json: { answers: { r0: { choice: 'supports', confidence: 0.95, probabilities: { supports: 0.95, contradicts: 0.01, says_nothing: 0.04 } } } } };
+  applyResult(p, { kind: 'claim', scene: 'S001', text: 'A scary storm hits the farm.' }, yes, { atMs: 1 });
+  applyResult(p, { kind: 'claim', scene: 'S001', text: 'A storm hits the farm.' }, yes, { atMs: 2 });
+  const refold = { scenes: [{ id: 'S001', summary: 'A storm hits the farm.', sentences: [
+    { text: 'A scary storm hits the farm.', judgement_words: ['scary'], check: { status: 'verified' } },
+    { text: 'A storm hits the farm.', judgement_words: [], check: { status: 'verified' } },
+  ] }] };
+  reconcileClaims(p, { refold, rows: [] });
+  assert.deepEqual(p.feed.map((x) => [x.text, x.final]), [['A scary storm hits the farm.', 'left_out'], ['A storm hits the farm.', 'kept']]);
+  assert.deepEqual(p.stages.claims.final.summary, { checked: 2, kept: 1, left_out: 1 });
+});
+
+test('row 10: guide comparison has a boundary tolerance: a 0-1000 s run scene is not a 0-100 s guide scene', () => {
+  assert.deepEqual(compareWithGuide([{ start_ms: 0, end_ms: 1_000_000 }], [{ id: 'g', start_ms: 0, end_ms: 100_000 }]), { both: 0, only_run: 1, only_guide: 1, guide_scenes: 1, run_scenes: 1 });
+  // the same scene with slightly different edges still matches
+  assert.equal(compareWithGuide([{ start_ms: 60_000, end_ms: 180_000 }], [{ id: 'g', start_ms: 62_000, end_ms: 175_000 }]).both, 1);
+});
+
+test('row 13: a 200 whose body could not be read is charged as uncertain, never as measured', async () => {
+  const { UpstreamError } = await import('../pipeline/errors.js');
+  const seen = [];
+  const b = budget(1);
+  const job = { body: { questions: { q0: {} } }, reserveUsd: 0.001, meta: { kind: 'classify' } };
+  await withRun({ onSpend: (usd, info) => seen.push([usd, info?.uncertain_usd ?? 0]), keys: { typesafe: 'x' } }, () => runJobs([job], {
+    key: 'x', budget: b, post: async () => { throw Object.assign(new UpstreamError({ service: 'jev', status: 200, code: 'unparseable' }), { attempts: [{ status: 200, ms: 1 }] }); },
+  }));
+  assert.deepEqual(seen, [[0.001, 0.001]]);
+  // ...and in a demo run the page reports it apart from the measured cost
+  const db = await seededDb();
+  let bad = 0;
+  const f = world({ jevHook: async () => (bad++ === 0 ? new Response('not json', { status: 200, headers: { 'content-type': 'application/json' } }) : null) });
+  const { id, done } = await startDemoRun(db, { slug: DEMO_FILM.slug }, { ip: 'a', runOpts: { fetchImpl: f, keys: { typesafe: 'x' }, sleep: noSleep, flushMs: 5 } });
+  await done;
+  const r = await demoRun(db, id);
+  const row = (await db.query('select spent_usd, uncertain_usd from demo_runs where id = $1', [id])).rows[0];
+  assert.ok(r.cost_uncertain_usd > 0, JSON.stringify({ cost: r.cost_usd, uncertain: r.cost_uncertain_usd }));
+  assert.ok(Math.abs(r.cost_usd + r.cost_uncertain_usd - Number(row.spent_usd)) < 1e-6);
+  await db.end();
 });

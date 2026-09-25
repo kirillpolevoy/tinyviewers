@@ -33,6 +33,9 @@ import {
   flaggedHeading,
   growingCount,
   formatRunCost,
+  compareLine,
+  failedLead,
+  checkedTitle,
   type DemoRun,
   type DemoScene,
 } from '../lib/demo';
@@ -133,6 +136,12 @@ test('the picker says each reason a check cannot start as its own news', () => {
   assert.equal(pickState([film], { ...open, available: false, reason: 'busy', busy: true }), 'busy');
   assert.equal(pickState([film], { ...open, available: false, reason: 'not_configured' }), 'off');
   assert.equal(pickState([film], open), 'live');
+  // An explicit reason beats the busy flag: a spent budget or a switched-off site is not "try again in a
+  // minute" just because the slots are also full (Astra's reproduction, code review row 12).
+  assert.equal(pickState([film], { ...open, available: false, reason: 'daily_cap', busy: true }), 'cap');
+  assert.equal(pickState([film], { ...open, available: false, reason: 'not_configured', busy: true }), 'off');
+  // No reason given: the flag still says busy.
+  assert.equal(pickState([film], { ...open, available: false, busy: true }), 'busy');
 });
 
 test('a refused run: the per-visitor limit is not mistaken for the day’s budget', () => {
@@ -267,7 +276,7 @@ test('the run names its film: the run’s own library answer beats the list, and
   assert.equal(runInLibrary({ result: null, film: null }, null), null);
 });
 
-test('a list row shows at most three stable reasons, and a scene without a title is named by them', () => {
+test('a list row shows at most three stable reasons, and a scene without a title is named by where it starts', () => {
   const f = {
     scene_id: 'S1', start_ms: 60_000, end_ms: 90_000, title: null, description: null, strength: 3,
     reasons: [],
@@ -280,9 +289,60 @@ test('a list row shows at most three stable reasons, and a scene without a title
     ] },
   };
   assert.deepEqual(reasonChips(f), { chips: ['Character in danger', 'Weapon used', 'Battle'], more: 1 });
-  assert.equal(flaggedHeading(f), 'Character in danger · Weapon used');
-  assert.equal(flaggedHeading({ ...f, why: { line: '', tags: [] } }), '0:01:00–0:01:30');
+  // Never the reasons stitched into a title (it would read like a summary of what happens).
+  assert.equal(flaggedHeading(f), 'Scene starting at 0:01:00');
+  assert.equal(flaggedHeading({ ...f, title: 'Flagged scene' }), 'Scene starting at 0:01:00');
+  assert.equal(flaggedHeading({ ...f, start_ms: 653_376 }), 'Scene starting at 0:10:53');
   assert.equal(flaggedHeading({ ...f, title: 'The Giant is shot at' }), 'The Giant is shot at');
+  assert.equal(checkedTitle(f), null);
+  assert.equal(checkedTitle({ title: ' Flagged scene ' }), null);
+  assert.equal(checkedTitle({ title: 'The Giant is shot at' }), 'The Giant is shot at');
+});
+
+test('the comparison with the saved guide is one line by the count', () => {
+  assert.equal(compareLine(sameness({ both: 11, only_run: 0, only_guide: 0, guide_scenes: 11, run_scenes: 11 }, true), 11), 'The saved guide lists the same 11 scenes.');
+  assert.equal(compareLine(sameness({ both: 1, only_run: 0, only_guide: 0 }, true), 1), 'The saved guide lists the same scene.');
+  assert.equal(
+    compareLine(sameness({ both: 8, only_run: 1, only_guide: 0, guide_scenes: 8, run_scenes: 9 }, true), 9),
+    'Compared with the saved guide: 1 extra scene, none missing.',
+  );
+  assert.equal(
+    compareLine(sameness({ both: 6, only_run: 0, only_guide: 2, guide_scenes: 8, run_scenes: 6 }, true), 6),
+    'Compared with the saved guide: no extra scenes, 2 missing.',
+  );
+  assert.equal(
+    compareLine(sameness({ both: 6, only_run: 3, only_guide: 2, guide_scenes: 8, run_scenes: 9 }, true), 9),
+    'Compared with the saved guide: 3 extra scenes, 2 missing.',
+  );
+  // Nothing matched apart but the counts differ: said as the two counts, never "no extra, none missing".
+  assert.equal(compareLine(sameness({ both: 8, only_run: 0, only_guide: 0, guide_scenes: 8, run_scenes: 9 }, true), 9), 'This check lists 9 scenes; the saved guide lists 8.');
+  assert.equal(compareLine(sameness(null, false), 3), DEMO_LIVE.sameNone);
+  assert.equal(compareLine(sameness(null, null), 3), DEMO_LIVE.sameUnknown);
+});
+
+test('a failed run says which of Jev’s jobs it could not finish, in plain words', () => {
+  assert.equal(
+    failedLead({ stage: 'segment_build', error_code: 'split_check_failed' }),
+    'Jev could not finish checking the scene breaks. The saved guide has not changed.',
+  );
+  assert.equal(failedLead({ stage: 'classify', error_code: 'jev_answers_failed' }), 'Jev could not finish answering its questions about the scenes. The saved guide has not changed.');
+  assert.equal(failedLead({ stage: 'check_describe2', error_code: 'jev_check_failed' }), 'Jev could not finish checking the scene descriptions. The saved guide has not changed.');
+  // The stage is missing (an older API): the error code says which job.
+  assert.equal(failedLead({ error_code: 'split_check_failed' }), 'Jev could not finish checking the scene breaks. The saved guide has not changed.');
+  // Not Jev's failure (ours, a timeout, an unknown code): said generally, never blamed on Jev.
+  assert.equal(failedLead({ stage: 'classify', error_code: 'internal' }), DEMO_LIVE.failedBody);
+  assert.equal(failedLead({ stage: 'moments', error_code: 'timed_out' }), DEMO_LIVE.failedBody);
+  assert.equal(failedLead({}), DEMO_LIVE.failedBody);
+  // No pipeline words: "cut" is the API's word, not a parent's.
+  assert.doesNotMatch(failedLead({ stage: 'segment_build', error_code: 'split_check_failed' }), /\bcut\b/);
+});
+
+test('the scene view leads with the reasons, not a claim about which AI put the scene in', () => {
+  assert.equal(DEMO_LIVE.whyLead, 'This scene is listed for the reasons below. Each reason shows which AI supplied the answer.');
+  assert.equal(DEMO_LIVE.questionCount(167, 1), 'Jev answered 167 questions about this scene; this reason uses one of them.');
+  assert.equal(DEMO_LIVE.questionCount(1234, 2), 'Jev answered 1,234 questions about this scene; this reason uses 2 of them.');
+  assert.equal(DEMO_LIVE.questionCount(167, 0), 'Jev answered 167 questions about this scene.');
+  assert.equal(DEMO_LIVE.droppedWord, 'Not supported by cited lines');
 });
 
 test('a count that can still grow is never a fraction until the check has finished', () => {

@@ -34,6 +34,7 @@ import { BY_ID as V3 } from '../taxonomy-v3.js';
 import { writeArtifacts } from '../store.js';
 import { backupGuide, replaceGuide } from '../guide.js';
 import { fail, SONNET_MODEL, JEV_MODEL, quoteSafe, quoteGrams } from './common.js';
+import { quoteRuns } from '../pack/validate.js';
 
 export const PIPELINE_VERSION = 'jevfirst-v10.4';
 export const REASONS_VOCAB_VERSION = 'reasons-v10.4';
@@ -66,23 +67,38 @@ export function whyTagsOf(s) {
 }
 
 /**
- * The last gate before a parent reads a text: with the transcript's grams, a title that holds a run of
- * more than eight subtitle words is dropped, and so is each such sentence of a description (the rest of
- * the description stays). Never repaired here -- a repaired text is not the text Jev checked. Pure.
+ * The last gate before a parent reads a text, with the transcript's grams. What a parent reads is the
+ * title and then the description, one after the other, so the rule is checked over that WHOLE text, not
+ * over each piece alone: two five-word sentences that together copy ten subtitle words are a quote.
+ *   1. a title, or a description sentence, that holds a run of more than eight subtitle words on its own
+ *      is dropped;
+ *   2. then the kept pieces are read together, in order; while a run still crosses from one piece into
+ *      the next, the LATER piece it touches is dropped (the title and the earlier sentences are kept).
+ * The rest of the description stays. Never repaired here -- a repaired text is not the text Jev checked.
+ * Pure.
  */
 export function quoteGate(title, description, grams) {
   if (!grams) return { title, description, dropped: 0 };
-  let dropped = 0;
-  const t = title ? quoteSafe(title, grams) : title;
-  if (title && !t) dropped++;
-  let d = description;
-  if (description) {
-    const parts = description.split(/(?<=[.!?…]["')\]]?)\s+/).filter(Boolean);
-    const kept = parts.filter((x) => quoteSafe(x, grams));
-    dropped += parts.length - kept.length;
-    d = kept.length ? kept.join(' ') : null;
+  const sentences = description ? description.split(/(?<=[.!?…]["')\]]?)\s+/).filter(Boolean) : [];
+  const pieces = [...(title ? [{ title: true, text: title }] : []), ...sentences.map((text) => ({ title: false, text }))];
+  const kept = pieces.filter((p) => quoteSafe(p.text, grams));
+  for (;;) {
+    const runs = quoteRuns(kept.map((p) => p.text).join(' '), grams);
+    if (!runs.length) break;
+    // the run's token range, mapped onto the pieces (quoteRuns counts whitespace tokens of the joined text)
+    const [a, b] = runs[0];
+    let tok = 0;
+    let last = -1;
+    kept.forEach((p, i) => {
+      const n = p.text.split(/\s+/).filter(Boolean).length;
+      if (tok <= b && tok + n - 1 >= a) last = i;
+      tok += n;
+    });
+    kept.splice(last, 1);
   }
-  return { title: t, description: d, dropped };
+  const t = kept.find((p) => p.title)?.text ?? null;
+  const d = kept.filter((p) => !p.title).map((p) => p.text);
+  return { title: title ? t : title, description: description ? (d.length ? d.join(' ') : null) : description, dropped: pieces.length - kept.length };
 }
 
 /**

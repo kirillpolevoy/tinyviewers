@@ -9,8 +9,11 @@ import { ADD, DEMO_LIVE, STRENGTH_TABLE, FILM, ruleSentence } from '@/lib/copy';
 import {
   answeredBy,
   bandsAgree,
+  checkedTitle,
   claimOutcome,
+  compareLine,
   cutDoubted,
+  failedLead,
   feedScene,
   filmEndMs,
   finalOutcome,
@@ -254,10 +257,9 @@ export function LiveRun({ id, initialRun, film }: Props) {
             {headline}
           </h1>
           {failed ? (
-            <p className={styles.lead}>
-              {run.error ? `${run.error} ` : ''}
-              {DEMO_LIVE.failedBody}
-            </p>
+            // Which of Jev's jobs it could not finish, in the page's words (the API's own sentence
+            // names pipeline parts), and that the saved guide is untouched.
+            <p className={styles.lead}>{failedLead(run)}</p>
           ) : !finished ? (
             <p className={styles.sub}>{DEMO_LIVE.runSub}</p>
           ) : null}
@@ -564,23 +566,18 @@ function RunDone({
   const same = sameness(run.result?.compare, inLibrary);
   const total = run.scenes.length;
   const final = run.stages.claims.final;
-
-  const sameValue =
+  // One compact line beside the count; what it means, and the ways onward, come after the scenes.
+  const comparison = run.result ? <p className={styles.compareLine}>{compareLine(same, flagged.length)}</p> : null;
+  const compareNote =
     same.kind === 'same'
-      ? DEMO_LIVE.sameYes(same.scenes)
+      ? DEMO_LIVE.sameMatchNote
       : same.kind === 'differs'
-        ? DEMO_LIVE.sameDiffers(same.onlyRun, same.onlyGuide)
-        : same.kind === 'none'
-          ? DEMO_LIVE.sameNone
-          : DEMO_LIVE.sameUnknown;
-  const sameBody =
-    same.kind === 'same'
-      ? DEMO_LIVE.sameBody
-      : same.kind === 'differs'
-        ? DEMO_LIVE.differsBody
+        ? `${DEMO_LIVE.differsBody} ${DEMO_LIVE.sameMatchNote}`
         : same.kind === 'none'
           ? DEMO_LIVE.notInLibraryBody
-          : DEMO_LIVE.sameUnknownBody;
+          : run.result
+            ? DEMO_LIVE.sameUnknownBody
+            : null;
 
   return (
     <>
@@ -599,11 +596,12 @@ function RunDone({
         {!run.result ? (
           <p className={styles.cardBody}>{DEMO_LIVE.noResultBody}</p>
         ) : flagged.length === 0 ? (
-          <div>
+          <div className={styles.doneCount}>
             <h2 id="done-count" className={styles.cardHeading}>
               {DEMO_LIVE.noFlaggedHeadline}
             </h2>
             <p className={styles.cardBody}>{DEMO_LIVE.noFlaggedBody}</p>
+            {comparison}
           </div>
         ) : (
           <>
@@ -624,39 +622,12 @@ function RunDone({
                     </li>
                   ))}
                 </ul>
+                {comparison}
               </div>
               <div className={styles.bandBox}>
                 <BandToggle band={band} onBand={onBand} />
                 {bandsAgree(run) && <p className={styles.cardNote}>{DEMO_LIVE.bandsSame}</p>}
                 <LevelsNote band={band} />
-              </div>
-            </div>
-
-            <div className={`${styles.compareBox} ${same.kind === 'same' ? styles.compareSame : ''}`}>
-              <p className={styles.compareLine}>
-                <span className={styles.compareLabel}>{DEMO_LIVE.numSame}</span> <b>{sameValue}</b>
-              </p>
-              <p className={styles.cardNote}>
-                {sameBody}
-                {(same.kind === 'same' || same.kind === 'differs') && ` ${DEMO_LIVE.sameMatchNote}`}
-              </p>
-              <div className={styles.compareActions}>
-                {librarySlug && inLibrary !== false && (
-                  <Link href={`/film/${librarySlug}`} className="button">
-                    {DEMO_LIVE.openGuide}
-                    <ArrowRight />
-                  </Link>
-                )}
-                {same.kind === 'unknown' && (
-                  // A fresh server render: the page asks the API for the film again.
-                  <button type="button" className={styles.quietButton} onClick={() => window.location.reload()}>
-                    {DEMO_LIVE.sameUnknownRetry}
-                  </button>
-                )}
-                {runAgain}
-                <Link href="/watch" className={styles.quietLink}>
-                  {DEMO_LIVE.another}
-                </Link>
               </div>
             </div>
 
@@ -703,7 +674,8 @@ function RunDone({
                     <span className={styles.flagMain}>
                       <span className={styles.flagTitleLine}>
                         <span className={styles.flagTitle}>{flaggedHeading(f)}</span>
-                        <span className={`tabular ${styles.flagTime}`}>{formatTime(f.start_ms)}</span>
+                        {/* An untitled scene is already named by its start time. */}
+                        {checkedTitle(f) && <span className={`tabular ${styles.flagTime}`}>{formatTime(f.start_ms)}</span>}
                       </span>
                       <span className={styles.flagStrength}>
                         <span className={`${styles.swatch} ${styles[severityTone(strength)]}`} aria-hidden="true" />
@@ -732,6 +704,29 @@ function RunDone({
           </ol>
         </section>
       )}
+
+      {/* After the scenes: what the comparison means, then the ways onward. */}
+      <section className={styles.onward} aria-label={DEMO_LIVE.onwardLabel}>
+        {compareNote && <p className={styles.cardNote}>{compareNote}</p>}
+        <div className={styles.compareActions}>
+          {librarySlug && inLibrary !== false && (
+            <Link href={`/film/${librarySlug}`} className="button">
+              {DEMO_LIVE.openGuide}
+              <ArrowRight />
+            </Link>
+          )}
+          {same.kind === 'unknown' && run.result && (
+            // A fresh server render: the page asks the API for the film again.
+            <button type="button" className={styles.quietButton} onClick={() => window.location.reload()}>
+              {DEMO_LIVE.sameUnknownRetry}
+            </button>
+          )}
+          {runAgain}
+          <Link href="/watch" className={styles.quietLink}>
+            {DEMO_LIVE.another}
+          </Link>
+        </div>
+      </section>
 
       <details className={styles.howItWent}>
         <summary className={styles.howItWentSummary}>{DEMO_LIVE.howItWent}</summary>
@@ -762,7 +757,7 @@ function ScoreBar({ p, act }: { p: number | null; act: number | null | undefined
   );
 }
 
-function ReasonItem({ tag, index }: { tag: WhyTag; index: number }) {
+function ReasonItem({ tag, index, asked }: { tag: WhyTag; index: number; asked: number | null }) {
   const jev = tag.by.includes('jev');
   const sonnet = tag.by.includes('sonnet');
   const answers: WhyAnswer[] = tag.answers?.length ? tag.answers : tag.question ? [{ question: tag.question, p: tag.p, decides: true }] : [];
@@ -770,11 +765,10 @@ function ReasonItem({ tag, index }: { tag: WhyTag; index: number }) {
   const how = tag.how === 'all' ? DEMO_LIVE.combinedAll : tag.how === 'gate' ? DEMO_LIVE.combinedGate : DEMO_LIVE.combinedAny;
   return (
     <li className={styles.reason}>
+      {/* The film's own words for the reason ("The Iron Giant in danger"); its general category is
+          for the filters and the checking details, not repeated here. */}
       <p className={styles.reasonLabel}>
-        <span>
-          {tag.category ?? tag.label}
-          {tag.category && <span className={styles.reasonDetail}> · {tag.label}</span>}
-        </span>
+        <span>{tag.label}</span>
         <span className={styles.who}>
           {jev && <span className={`${styles.whoChip} ${styles.whoJev}`}>Jev</span>}
           {sonnet && <span className={`${styles.whoChip} ${styles.whoSonnet}`}>Sonnet</span>}
@@ -784,6 +778,13 @@ function ReasonItem({ tag, index }: { tag: WhyTag; index: number }) {
         <summary className={styles.reasonHowSummary} id={`how-${index}`}>
           {DEMO_LIVE.howChecked}
         </summary>
+        {jev && asked ? <p className={styles.reasonLineNote}>{DEMO_LIVE.questionCount(asked, answers.length)}</p> : null}
+        {tag.category && (
+          <p className={styles.reasonRule}>
+            <span className={styles.reasonKey}>{DEMO_LIVE.categoryKey}</span>
+            {tag.category}
+          </p>
+        )}
         {sonnet && !jev ? (
           <>
             {tag.question && (
@@ -923,18 +924,9 @@ function SceneUpClose({
       )}
 
       {flagged && (
+        // Where to skip first — it is what a parent came for — then what happens, then why it is listed.
+        // On a wide screen the reasons sit in the second column, after the skip times in reading order.
         <section className={styles.sceneGrid}>
-          <div className={`${styles.card} ${styles.whyCard}`}>
-            <h2 className={styles.cardHeading}>{DEMO_LIVE.whyTitle}</h2>
-            <p className={styles.cardNote}>{DEMO_LIVE.whyLead(scene.questions ?? null)}</p>
-            <ol className={styles.reasons}>
-              {tags.map((t, i) => (
-                <ReasonItem key={`${t.label}-${i}`} tag={t} index={i} />
-              ))}
-            </ol>
-            <p className={styles.cardNote}>{DEMO_LIVE.scoreNote}</p>
-            <p className={styles.cardNote}>{DEMO_LIVE.whyNote}</p>
-          </div>
           <div className={styles.sceneColumn}>
             <div className={styles.card}>
               <h2 className={styles.cardHeading}>{DEMO_LIVE.skipTitle}</h2>
@@ -952,6 +944,17 @@ function SceneUpClose({
                 <p className={styles.cardNote}>{DEMO_LIVE.noWords}</p>
               )}
             </div>
+          </div>
+          <div className={`${styles.card} ${styles.whyCard}`}>
+            <h2 className={styles.cardHeading}>{DEMO_LIVE.whyTitle}</h2>
+            <p className={styles.cardNote}>{DEMO_LIVE.whyLead}</p>
+            <ol className={styles.reasons}>
+              {tags.map((t, i) => (
+                <ReasonItem key={`${t.label}-${i}`} tag={t} index={i} asked={scene.questions ?? null} />
+              ))}
+            </ol>
+            <p className={styles.cardNote}>{DEMO_LIVE.scoreNote}</p>
+            <p className={styles.cardNote}>{DEMO_LIVE.whyNote}</p>
           </div>
         </section>
       )}

@@ -12,8 +12,9 @@
 //   fetchImpl      the fetch every model and source call goes through (tests pass a stub)
 //   keys           { typesafe, claude, tmdb } -- never logged, never put in an error
 //   signal         aborted when the invocation's time budget runs out or its lease is lost
-//   onSpend(usd, { service }) called once per priced response the moment it lands (before it is
-//                  parsed), and with the reservation for a call that went out and never answered
+//   onSpend(usd, { service, uncertain_usd }) called once per priced response the moment it lands (before
+//                  it is parsed), and with the reservation for a call that went out and never answered or
+//                  whose body could not be read; uncertain_usd is the part of usd that is such an upper bound
 //   beforeDispatch(reserveUsd) awaited before every call is sent; the runner persists a spending
 //                  high-water mark there so a crash cannot hide money that was in flight
 //   onResult(meta, result)    called per completed Jev request (the demo's live progress)

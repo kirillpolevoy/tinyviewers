@@ -105,6 +105,11 @@ export const FILM = {
   /** On a phone the markers are a picture, not controls: the rows below are the way in. */
   timelineHintPhone: 'Tap a scene below for details and skip times.',
   rowsHint: 'Tap a scene for details and skip times.',
+  /**
+   * A scene with no title that passed its checks is named by where it starts: its reasons are shown
+   * beside it, never stitched into a title that reads like a summary of what happens.
+   */
+  untitledScene: (time: string) => `Scene starting at ${time}`,
   bandsSame: 'These scenes have the same ratings for both age groups.',
   showingScene: (time: string) => `Showing the scene at ${time}.`,
   showAll: 'Show all →',
@@ -269,6 +274,25 @@ export const DEMO_LIVE = {
   runningHeadline: (title: string) => `Jev is checking ${title}.`,
   failedHeadline: 'This check stopped.',
   failedBody: 'This check stopped before it finished. The saved guide has not changed.',
+  /** A failed run whose stage is known and whose failure was Jev's: `what` is the stage in plain words. */
+  failedJev: (what: string) => `Jev could not finish ${what}. The saved guide has not changed.`,
+  /** The demo stages, as `failedJev` says them (the run's `stage`, else its error code). */
+  failedStage: {
+    segment_build: 'checking the scene breaks',
+    split_check: 'checking the scene breaks',
+    claims: 'checking the scene descriptions',
+    fill: 'checking the scene descriptions',
+    refold: 'checking the scene descriptions',
+    check_describe: 'checking the scene descriptions',
+    check_describe2: 'checking the scene descriptions',
+    check_describe3: 'checking the scene descriptions',
+    mergetext: 'checking the scene descriptions',
+    classify: 'answering its questions about the scenes',
+    childcry: 'answering its questions about the scenes',
+    resolve: 'answering its questions about the scenes',
+    mortal: 'answering its questions about the scenes',
+    moments: 'finding where to skip',
+  } as Record<string, string>,
   failedDetails: 'What finished before the check stopped',
   startNew: 'Start a new check',
   runSub:
@@ -304,7 +328,7 @@ export const DEMO_LIVE = {
     'Jev checks whether the cited subtitle lines support each sentence. Sentences it cannot support are left out. These can include setting notes; being left out does not mean a sentence is false.',
   sentencesSoFar: (n: number) => `${n.toLocaleString('en-US')} ${n === 1 ? 'sentence' : 'sentences'} checked`,
   kept: 'Supported by cited lines',
-  droppedWord: 'Not supported',
+  droppedWord: 'Not supported by cited lines',
   uncheckedWord: 'Not checked',
   finalKept: 'In the guide',
   finalLeft: 'Left out',
@@ -339,17 +363,24 @@ export const DEMO_LIVE = {
   numCost: 'Jev check cost',
   numScenes: 'Scenes to know about',
   numScenesValue: (flagged: number, total: number) => `${flagged} of ${total}`,
-  numSame: 'Same scenes as the saved guide?',
-  sameYes: (n: number) => (n === 1 ? 'Yes, the same scene' : `Yes, the same ${n} scenes`),
-  sameDiffers: (onlyRun: number, onlyGuide: number) => `${onlyRun} extra · ${onlyGuide} missing`,
-  sameNone: 'Not in the library',
-  sameUnknown: 'Comparison unavailable',
+  // The comparison with the saved guide: one compact line by the count; what it means, under the list.
+  sameYes: (n: number) => (n === 1 ? 'The saved guide lists the same scene.' : `The saved guide lists the same ${n} scenes.`),
+  sameDiffers: (onlyRun: number, onlyGuide: number) => {
+    const extra = onlyRun === 0 ? 'no extra scenes' : `${onlyRun} extra ${onlyRun === 1 ? 'scene' : 'scenes'}`;
+    const missing = onlyGuide === 0 ? 'none missing' : `${onlyGuide} missing`;
+    return `Compared with the saved guide: ${extra}, ${missing}.`;
+  },
+  /** The lists differ only in length (the API matched none apart): said as the two counts. */
+  sameCounts: (run: number, guide: number) => `This check lists ${run} ${run === 1 ? 'scene' : 'scenes'}; the saved guide lists ${guide}.`,
+  sameNone: 'This film isn’t in the library yet, so there is no saved guide to compare with.',
+  sameUnknown: 'We couldn’t compare this check with the saved guide.',
   sameUnknownBody: 'The check finished, but we couldn’t load this film’s library details.',
   sameUnknownRetry: 'Try loading the film details again',
-  sameBody: 'The saved guide lists the same scenes.',
   sameMatchNote: 'This compares which scenes appear, not their descriptions or strength ratings.',
-  differsBody: 'Compared with the saved guide. AI answers can vary between runs. The saved guide has not changed.',
-  notInLibraryBody: 'This film isn’t in the library yet, so there is no saved guide to compare with. Nothing from this check was saved.',
+  differsBody: 'AI answers can vary between runs, so two checks can list different scenes. The saved guide has not changed.',
+  notInLibraryBody: 'Nothing from this check was saved.',
+  /** The section after the scene list: what the comparison means, and the ways onward. */
+  onwardLabel: 'After this check',
   checksHeading: 'Description checks',
   checksSummary: (kept: number, checked: number) =>
     `Scene summaries: ${kept} of ${checked} sentences were supported by their cited lines and kept.`,
@@ -379,12 +410,15 @@ export const DEMO_LIVE = {
   strengthFor: (word: string, band: string) => `${word} for ${String(band).toLowerCase()}`,
   whatTitle: 'What happens',
   whatNote: 'Written by Sonnet. Jev checked each sentence against the subtitle lines it cites.',
-  noWords: 'No description passed Jev’s check for this scene, so none is shown. The reasons below still say why it is included.',
+  noWords: 'No description passed Jev’s check for this scene, so none is shown. “Why it’s included” still lists its reasons.',
   whyTitle: 'Why it’s included',
-  whyLead: (asked: number | null) =>
-    asked
-      ? `Jev answered ${asked.toLocaleString('en-US')} questions about this scene. These answers put it in the guide.`
-      : 'These answers put it in the guide.',
+  whyLead: 'This scene is listed for the reasons below. Each reason shows which AI supplied the answer.',
+  /** Inside a Jev reason's "How this was checked": the scene's question count, and how many this reason used. */
+  questionCount: (asked: number, used: number) =>
+    `Jev answered ${asked.toLocaleString('en-US')} questions about this scene` +
+    (used === 0 ? '.' : used === 1 ? '; this reason uses one of them.' : `; this reason uses ${used} of them.`),
+  /** Inside "How this was checked": the general category a film-specific reason is filed and filtered under. */
+  categoryKey: 'Category',
   howChecked: 'How this was checked',
   asked: 'The question',
   askedMany: 'The questions',

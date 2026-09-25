@@ -30,7 +30,13 @@
 //     /api/demo/runs/{id}/continue, secret ADD_FILM_PROXY_SECRET), and a poll of GET /api/demo/runs/{id}
 //     that finds the run quiet asks again (lib/demo.js);
 //   * a stage cut short is re-run from its start; the progress it had drawn is put back to the last
-//     checkpoint, so no counter ever counts a check twice.
+//     checkpoint, so no counter ever counts a check twice;
+//   * every write an invocation makes is FENCED by its lease (where lease_owner = me): an invocation whose
+//     lease lapsed and was taken over can write nothing -- no progress, no stage output, no checkpoint, no
+//     end. A stage's output and the checkpoint naming it are one statement, so they land together or not
+//     at all. An invocation ending (finished, failed, handing off) drains its queued writes while its
+//     heartbeat still holds the lease, and only then writes its end; it deletes the run's checkpoints
+//     only when that owner-conditional end actually changed the row (otherwise they are the new owner's).
 //
 // Honesty rules the page depends on, enforced here:
 //   * every counter is a count of requests that really completed (onResult), every total the real
@@ -44,7 +50,9 @@
 // Money: the run's reservation (demoReserveFor) is taken at admission and is ALSO the run's ceiling: each
 // stage's wallet is min(its cap, what is left of the reservation). No request goes out until a spending
 // mark covering it is durable (demo_runs.mark_usd), so a crashed invocation's in-flight requests are
-// carried into the run's spend at that mark -- an upper bound, reported as such (uncertain_usd).
+// carried into the run's spend at that mark -- an upper bound, reported as such (uncertain_usd). The same
+// goes for a request that went out and never answered, or a 200 whose body could not be read: charged at
+// its reservation (the Jev client's onSpend says which part is an upper bound), and that part is uncertain.
 import crypto from 'node:crypto';
 import { budget } from './pack/budget.js';
 import { withRun, runCtx } from './context.js';
@@ -85,7 +93,8 @@ export function trimFeed(p) {
 const round6 = (n) => Math.round(n * 1e6) / 1e6;
 const GATE = { ...POLICY.split_gate };
 const parsed = (v) => (typeof v === 'string' ? JSON.parse(v) : v);
-const rowCount = (res) => res?.rowCount ?? res?.affectedRows ?? 1;
+/** Rows a fenced (`returning id`) statement changed: 0 means the run is not this invocation's any more. */
+const changed = (res) => res?.rows?.length ?? 0;
 
 /**
  * The most one demo run of a film may cost: the sum of the Jev stage caps a demo runs under
@@ -101,11 +110,23 @@ const overlapShare = (a0, a1, b0, b1) => {
 };
 
 /**
+ * How far apart two scenes' edges may be and still be "the same scene": each edge (start and end) within
+ * min_ms, or within `share` of the longer scene when that is more. Overlap alone is not enough: a 0-1000 s
+ * run scene covers all of a 0-100 s guide scene, but it is not that scene.
+ */
+export const COMPARE_TOLERANCE = { min_ms: 20_000, share: 0.25 };
+const edgesAgree = (a0, a1, b0, b1) => {
+  const tol = Math.max(COMPARE_TOLERANCE.min_ms, COMPARE_TOLERANCE.share * Math.max(a1 - a0, b1 - b0));
+  return Math.abs(a0 - b0) <= tol && Math.abs(a1 - b1) <= tol;
+};
+
+/**
  * This run's flagged scenes against the film page's current guide (the library's scenes), by time, ONE
  * TO ONE: a run scene and a guide scene are the same scene when they overlap by at least half of the
- * shorter one, and each scene of either list is matched at most once (the best overlaps first), so one
- * long run scene can never stand for two guide scenes. "The same scenes" is claimable only when both
- * lists have the same number of scenes and every one is matched (only_run = only_guide = 0).
+ * shorter one AND their edges agree within COMPARE_TOLERANCE, and each scene of either list is matched at
+ * most once (the best overlaps first), so one long run scene can never stand for two guide scenes.
+ * "The same scenes" is claimable only when both lists have the same number of scenes and every one is
+ * matched (only_run = only_guide = 0).
  * null when the film has no guide in the library -- that is "nothing to compare with", not zero.
  */
 export function compareWithGuide(runRows, guide) {
@@ -113,7 +134,7 @@ export function compareWithGuide(runRows, guide) {
   const pairs = [];
   runRows.forEach((r, i) => guide.forEach((g, j) => {
     const share = overlapShare(r.start_ms, r.end_ms, g.start_ms, g.end_ms);
-    if (share >= 0.5) pairs.push({ i, j, share });
+    if (share >= 0.5 && edgesAgree(r.start_ms, r.end_ms, g.start_ms, g.end_ms)) pairs.push({ i, j, share });
   }));
   pairs.sort((a, b) => b.share - a.share || a.i - b.i || a.j - b.j);
   const usedRun = new Set();
@@ -244,10 +265,18 @@ export function applyResult(p, meta, result, { atMs, cues = null }) {
 const norm = (t) => String(t ?? '').toLowerCase().replace(/\s+/g, ' ').trim();
 
 /**
+ * A summary sentence is in the scene summary only when it passed EVERY acceptance step refold applies
+ * (pack/accept.js applyUnified): the unified rule and placement (check.status 'verified') AND the
+ * judgement-word exclusion -- and, as the final word, only if it is actually in the summary refold built.
+ */
+const inSummary = (scene, x) => x.check?.status === 'verified' && !x.judgement_words?.length
+  && (typeof scene.summary !== 'string' || norm(scene.summary).includes(norm(x.text)));
+
+/**
  * The final decisions on the sentences Jev checked, once the run has made them, and the feed items
  * marked with theirs (mutates `p`):
  *   summary      Sonnet's cited scene sentences: kept in the scene summary Jev reads (the acceptance
- *                rule, refold) or left out
+ *                rule, placement and the judgement-word exclusion, refold) or left out
  *   descriptions the parent-facing titles and descriptions of the flagged scenes: shown in the guide
  *                (the A0>C text rule, then the quotation gate) or left out
  * Being left out is not a finding that a sentence is false: it could not be supported well enough.
@@ -261,7 +290,7 @@ export function reconcileClaims(p, { refold, rows }) {
     for (const x of s.sentences ?? []) {
       if (!x.check) continue;
       summaryChecked++;
-      if (x.check.status === 'verified') { summaryKept++; set.add(norm(x.text)); }
+      if (inSummary(s, x)) { summaryKept++; set.add(norm(x.text)); }
     }
     kept.set(s.id, set);
   }
@@ -298,6 +327,9 @@ export async function acquireDemoLease(db, runId, owner, leaseMs = DEMO_LEASE_MS
             progress_at = now(), updated_at = now()
       where id = $1 and status in ('queued', 'running')
         and (lease_until is null or lease_until < now())
+        -- a run the v10.4.2 code started (it never counted invocations): nothing to resume, and its own
+        -- invocation may still be alive -- the sweep ends it (lib/schema-jevfirst.js, v10.4.4)
+        and not (status = 'running' and invocations = 0)
       returning *`,
     [runId, owner, leaseMs],
   );
@@ -322,6 +354,9 @@ export async function runDemo(db, runId, opts = {}) {
   if (!run) return { acquired: false, status: 'not_acquired' };
   const reserve = Number(run.reserve_usd);
   let spent = Number(run.spent_usd ?? 0);
+  // the part of `spent` that is an upper bound, not a measured bill: crashed attempts' marks (carried in by
+  // acquireDemoLease) plus this invocation's unanswered requests and unreadable 200s
+  let uncertain = Number(run.uncertain_usd ?? 0);
   const checkpoint = parsed(run.checkpoint) ?? null;
   const done = new Set(checkpoint?.done ?? []);
   const runStartedAt = run.started_at ? new Date(run.started_at).getTime() : t0;
@@ -343,8 +378,8 @@ export async function runDemo(db, runId, opts = {}) {
     progress.spent_usd = round6(spent);
     const doc = JSON.stringify(progress);
     flushing = flushing.then(() => (finished ? null : db.query(
-      `update demo_runs set progress = $3::jsonb, spent_usd = $4, cost_usd = greatest($5::numeric, cost_usd), progress_at = now(), updated_at = now() ${whereMine}`,
-      [runId, owner, doc, round6(spent), round6(Math.max(reserve, spent))],
+      `update demo_runs set progress = $3::jsonb, spent_usd = $4, cost_usd = greatest($5::numeric, cost_usd), uncertain_usd = $6, progress_at = now(), updated_at = now() ${whereMine}`,
+      [runId, owner, doc, round6(spent), round6(Math.max(reserve, spent)), round6(uncertain)],
     ))).catch(() => {});
     return flushing;
   };
@@ -354,49 +389,70 @@ export async function runDemo(db, runId, opts = {}) {
   const hard = setTimeout(() => abort.abort(new Interrupted('time')), Math.max(0, hardMs));
   let lastBeat = Date.now();
   const beat = setInterval(() => {
-    db.query(`update demo_runs set lease_until = now() + ($3::bigint * interval '1 millisecond'), progress_at = now(), updated_at = now() ${whereMine}`, [runId, owner, leaseMs])
-      .then((res) => { if (!rowCount(res)) abort.abort(new Interrupted('lease')); else lastBeat = Date.now(); })
+    db.query(`update demo_runs set lease_until = now() + ($3::bigint * interval '1 millisecond'), progress_at = now(), updated_at = now() ${whereMine} returning id`, [runId, owner, leaseMs])
+      .then((res) => { if (!changed(res)) abort.abort(new Interrupted('lease')); else lastBeat = Date.now(); })
       .catch(() => {});
     // Heartbeats that keep failing mean the lease may lapse and another invocation take the run: stop
     // before that can happen, never run alongside it.
     if (Date.now() - lastBeat > leaseMs - 2 * heartbeatMs) abort.abort(new Interrupted('lease'));
   }, heartbeatMs);
   const stop = () => { clearTimeout(hard); clearInterval(beat); if (timer) { clearTimeout(timer); timer = null; } };
+  /** Stop scheduling progress writes and wait for the queued ones -- WHILE the heartbeat still holds the lease. */
+  const drain = async () => {
+    if (timer) { clearTimeout(timer); timer = null; }
+    await flushing;
+    finished = true;
+  };
+  const lost = () => ({ acquired: true, status: 'running', lostLease: true, ran });
 
   /** Hand the run on: progress back to the last checkpoint, lease released, the next invocation asked for. */
   const handOff = async (why) => {
-    stop();
-    await flushing;
-    finished = true;
-    if (why === 'lease') return { acquired: true, status: 'running', lostLease: true, ran };
-    await db.query(
-      `update demo_runs set lease_owner = null, lease_until = null, progress = coalesce($3::jsonb, progress), spent_usd = $4,
-              mark_usd = greatest(mark_usd, $4), cost_usd = greatest($5::numeric, cost_usd), progress_at = now(), updated_at = now() ${whereMine}`,
-      [runId, owner, progressAtCheckpoint ? JSON.stringify({ ...progressAtCheckpoint, spent_usd: round6(spent) }) : null, round6(spent), round6(Math.max(reserve, spent))],
-    ).catch(() => {});
+    // A lost lease: the run is someone else's now, and every write of ours would be fenced off anyway.
+    if (why === 'lease') { stop(); finished = true; return lost(); }
+    let released = 0;
+    try {
+      await drain();
+      released = changed(await db.query(
+        `update demo_runs set lease_owner = null, lease_until = null, progress = coalesce($3::jsonb, progress), spent_usd = $4,
+                mark_usd = greatest(mark_usd, $4), cost_usd = greatest($5::numeric, cost_usd), uncertain_usd = $6, progress_at = now(), updated_at = now() ${whereMine}
+          returning id`,
+        [runId, owner, progressAtCheckpoint ? JSON.stringify({ ...progressAtCheckpoint, spent_usd: round6(spent) }) : null, round6(spent), round6(Math.max(reserve, spent)), round6(uncertain)],
+      ).catch(() => null));
+    } finally { stop(); }
+    // Not released: another invocation holds the run (it took the lapsed lease); it needs no continuation.
+    if (!released) return lost();
     await continueRun(runId).catch(() => {});
     return { acquired: true, status: 'running', handedOff: true, ran };
   };
 
+  /**
+   * End the run: queued writes drained under the lease, then ONE owner-conditional update. The run's
+   * checkpoints are deleted only when that update changed the row -- if it did not, the run was taken over
+   * and they belong to the invocation that holds it now. Returns whether the run was ours to end.
+   */
   const finish = async (fields) => {
-    stop();
-    await flushing;
-    finished = true;
-    if (progress) progress.spent_usd = round6(spent);
-    // cost_usd: the run's final figure for the daily cap -- what it was billed, crashed attempts carried
-    // at their marks. The reservation it held while live is released here.
-    await db.query(
-      `update demo_runs set status = $3, slot = null, progress = coalesce($4::jsonb, progress), result = $5::jsonb, cost_usd = $6, spent_usd = $6,
-              mark_usd = greatest(mark_usd, $6), error_code = $7, error = $8, lease_owner = null, lease_until = null,
-              ended_at = now(), updated_at = now() ${whereMine}`,
-      [runId, owner, fields.status, progress ? JSON.stringify(progress) : null, fields.result ? JSON.stringify(fields.result) : null, round6(spent), fields.error_code ?? null, fields.error ?? null],
-    );
+    let ended = 0;
+    try {
+      await drain();
+      if (progress) progress.spent_usd = round6(spent);
+      // cost_usd: the run's final figure for the daily cap -- what it was billed, crashed attempts carried
+      // at their marks. The reservation it held while live is released here.
+      ended = changed(await db.query(
+        `update demo_runs set status = $3, slot = null, progress = coalesce($4::jsonb, progress), result = $5::jsonb, cost_usd = $6, spent_usd = $6,
+                mark_usd = greatest(mark_usd, $6), uncertain_usd = $9, error_code = $7, error = $8, lease_owner = null, lease_until = null,
+                ended_at = now(), updated_at = now() ${whereMine}
+          returning id`,
+        [runId, owner, fields.status, progress ? JSON.stringify(progress) : null, fields.result ? JSON.stringify(fields.result) : null, round6(spent), fields.error_code ?? null, fields.error ?? null, round6(uncertain)],
+      ));
+    } finally { stop(); }
+    if (!ended) return false;
     await db.query('delete from demo_run_stages where run_id = $1', [runId]).catch(() => {});
+    return true;
   };
 
   try {
     if (run.crash_count > DEMO_MAX_CRASHES) {
-      await finish({ status: 'failed', error_code: 'timed_out', error: 'This live run stopped part-way through too many times and did not finish.' });
+      if (!(await finish({ status: 'failed', error_code: 'timed_out', error: 'This live run stopped part-way through too many times and did not finish.' }))) return lost();
       return { acquired: true, status: 'failed', error_code: 'timed_out', cost_usd: round6(spent) };
     }
     const film = await getJevfirstFilm(db, run.slug);
@@ -453,7 +509,7 @@ export async function runDemo(db, runId, opts = {}) {
       signal: abort.signal,
       ...(sleep ? { sleep } : {}),
       beforeDispatch,
-      onSpend: (usd) => { spent += usd; schedule(); },
+      onSpend: (usd, info) => { spent += usd; uncertain += Math.min(usd, Math.max(0, Number(info?.uncertain_usd) || 0)); schedule(); },
       onDispatch: (meta) => {
         if (meta.kind !== 'classify') return;
         const s = progress.scenes.find((x) => x.id === meta.scene);
@@ -515,21 +571,26 @@ export async function runDemo(db, runId, opts = {}) {
           }
           trimFeed(progress);
         }
-        // ---- checkpoint: the output first, then the finished list with the progress as it stands ----
+        // ---- checkpoint: the stage's output and the finished list (with the progress as it stands) in ONE
+        // statement, fenced by the lease: the update locks the run's row and changes it only while this
+        // invocation owns it, and the output is written only when it did -- so an invocation whose lease was
+        // taken over can never replace the new owner's outputs or checkpoint.
         await flush();
         await flushing;
-        await db.query(
-          `insert into demo_run_stages (run_id, stage, output) values ($1, $2, $3::jsonb)
-           on conflict (run_id, stage) do update set output = excluded.output, at = now()`,
-          [runId, def.id, JSON.stringify(out ?? null)],
-        );
-        done.add(def.id);
         const snapshot = structuredClone(progress);
         const res = await db.query(
-          `update demo_runs set checkpoint = $3::jsonb, spent_usd = $4, progress_at = now(), updated_at = now() ${whereMine}`,
-          [runId, owner, JSON.stringify({ done: [...done], progress: snapshot }), round6(spent)],
+          `with mine as (
+             update demo_runs set checkpoint = $3::jsonb, spent_usd = $4, uncertain_usd = $7, progress_at = now(), updated_at = now() ${whereMine}
+             returning id
+           )
+           insert into demo_run_stages (run_id, stage, output)
+           select id, $5, $6::jsonb from mine
+           on conflict (run_id, stage) do update set output = excluded.output, at = now()
+           returning run_id`,
+          [runId, owner, JSON.stringify({ done: [...done, def.id], progress: snapshot }), round6(spent), def.id, JSON.stringify(out ?? null), round6(uncertain)],
         );
-        if (!rowCount(res)) throw new Interrupted('lease');
+        if (!changed(res)) throw new Interrupted('lease');
+        done.add(def.id);
         progressAtCheckpoint = snapshot;
         ran.push(def.id);
       }
@@ -572,18 +633,19 @@ export async function runDemo(db, runId, opts = {}) {
         not_stored: [...(outputs.get('describe2')?.not_stored ?? []), ...(outputs.get('titles')?.not_stored ?? [])].length },
     };
     progress.stage = null;
-    await finish({ status: 'done', result });
+    if (!(await finish({ status: 'done', result }))) return lost();
     return { acquired: true, status: 'done', ran, cost_usd: round6(spent) };
   } catch (err) {
     const interrupted = err instanceof Interrupted || abort.signal.aborted;
     if (interrupted) return await handOff(abort.signal.reason?.message === 'lease' || err?.message === 'lease' ? 'lease' : 'time');
     const known = err instanceof PipelineError;
     if (!known) console.error(`[demo ${runId}]`, errorSummary(err));
-    await finish({
+    const ended = await finish({
       status: 'failed',
       error_code: known ? err.code : 'internal',
       error: known ? err.message : 'Something went wrong on our side part-way through this run.',
-    }).catch(() => {});
+    }).catch(() => false);
+    if (!ended) return lost();
     return { acquired: true, status: 'failed', error_code: known ? err.code : 'internal', cost_usd: round6(spent) };
   } finally {
     stop();

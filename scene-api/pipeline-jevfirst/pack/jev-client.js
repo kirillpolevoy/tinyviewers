@@ -10,7 +10,9 @@
 //      so a test runs a whole film against a stub and a time budget can stop a stage.
 //   3. money: before a request is sent the run context's beforeDispatch(reserve) is awaited (the
 //      runner persists a spending high-water mark there), and every settled amount goes to the
-//      context's onSpend as well as the caller's.
+//      context's onSpend as well as the caller's -- with `uncertain_usd`, the part of it that is an
+//      upper bound rather than a measured bill (an attempt that never answered, a 200 whose body could
+//      not be read: each charged at its reservation).
 //   4. progress: every request is reported to the context's onDispatch(meta) as it is sent and to
 //      onResult(meta, result) when it completes, which is how the demo page counts real requests.
 // TODO(v10.2-sync): if v10_2/jev-client.js changes a constant (reserve factors, concurrency, the fixed
@@ -146,7 +148,7 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
   const results = new Array(jobs.length).fill(null);
   let stopped = null;
   let next = 0;
-  const spend = (cost) => { if (cost > 0) { onSpend(cost); ctx.onSpend(cost, { service: 'jev' }); } };
+  const spend = (cost, uncertain = 0) => { if (cost > 0) { onSpend(cost); ctx.onSpend(cost, { service: 'jev', uncertain_usd: Math.min(cost, uncertain) }); } };
   const worker = async () => {
     while (next < jobs.length) {
       const i = next++;
@@ -188,7 +190,8 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
         const extra = res.attempts.filter((a) => a.status === null).length * job.reserveUsd;
         const cost = usd(inTok) + extra;
         budget.settle((1 + silent) * job.reserveUsd, cost);
-        spend(cost);
+        // measured: the answer's own usage; an upper bound: the silent attempts before it
+        spend(cost, extra);
         const overReserve = usd(inTok) > job.reserveUsd;
         if (overReserve) log(`  ${job.meta.label} OVER RESERVE: billed ${inTok} tok > reserved $${job.reserveUsd.toFixed(8)}`);
         results[i] = {
@@ -205,7 +208,8 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
         const cost = Math.min((1 + silent) * job.reserveUsd, billable * job.reserveUsd);
         const maybeBilled = cost > 0;
         budget.settle((1 + silent) * job.reserveUsd, cost);
-        spend(cost);
+        // none of it measured: every billable attempt here is charged at its reservation
+        spend(cost, cost);
         const message = err instanceof UpstreamError ? err.message : 'request failed';
         results[i] = { meta: job.meta, ok: false, error: message, record: { est_tokens: job.est, error: message, attempts, wall_ms: Date.now() - t0, cost_usd: cost, cost_is_upper_bound: maybeBilled } };
       }

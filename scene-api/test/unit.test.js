@@ -355,9 +355,18 @@ test('a client identity is trusted only when the request proves it came from our
   const req = (headers) => ({ headers, socket: { remoteAddress: '10.0.0.1' } });
   const was = process.env.ADD_FILM_PROXY_SECRET;
   try {
-    // Unset: the header is just a header, and the old behaviour is what happens.
+    // Unset: the header is just a header. Off Vercel the forwarding headers are the caller's own words, so
+    // only the socket counts; on Vercel the edge writes them, so they are the caller's real address.
     delete process.env.ADD_FILM_PROXY_SECRET;
-    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9, 10.0.0.2' })), '203.0.113.9');
+    const wasVercel = process.env.VERCEL;
+    delete process.env.VERCEL;
+    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9, 10.0.0.2', 'x-real-ip': '203.0.113.8' })), '10.0.0.1');
+    assert.equal(clientIp({ headers: { 'x-forwarded-for': '203.0.113.9' } }), null, 'off Vercel a forwarded header alone is nobody');
+    const onVercel = { VERCEL: '1' };
+    assert.equal(clientIp(req({ 'x-forwarded-for': '203.0.113.9, 10.0.0.2', 'x-real-ip': '203.0.113.8' }), onVercel), '203.0.113.8');
+    assert.equal(clientIp(req({ 'x-forwarded-for': '203.0.113.9, 10.0.0.2' }), onVercel), '203.0.113.9');
+    assert.equal(clientIp(req({}), onVercel), '10.0.0.1');
+    if (wasVercel !== undefined) process.env.VERCEL = wasVercel;
 
     process.env.ADD_FILM_PROXY_SECRET = 'shared-secret';
     assert.equal(
@@ -366,8 +375,8 @@ test('a client identity is trusted only when the request proves it came from our
     );
     // A stranger sending the identity header without the secret gets nothing for it — otherwise
     // anyone could spend somebody else's ten guesses, or dodge their own.
-    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' })), '203.0.113.9');
-    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'wrong', 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' })), '203.0.113.9');
+    assert.equal(clientIp(req({ 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' }), { ...process.env, VERCEL: '1' }), '203.0.113.9');
+    assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'wrong', 'x-tinyviewers-client': 'visitor-1', 'x-forwarded-for': '203.0.113.9' }), { ...process.env, VERCEL: '1' }), '203.0.113.9');
     // A secret of a different length must not throw out of timingSafeEqual.
     assert.equal(clientIp(req({ 'x-tinyviewers-proxy': 'x', 'x-tinyviewers-client': 'visitor-1' })), '10.0.0.1');
 

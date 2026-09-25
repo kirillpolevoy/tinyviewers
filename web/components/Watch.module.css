@@ -1948,41 +1948,36 @@ button.tile:hover .tileBar {
   max-width: 420px;
 }
 
-/* The comparison with the saved guide, right under the count. */
-.compareBox {
+/* The comparison with the saved guide: one compact line under the count's breakdown. */
+.compareLine {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--body-strong);
+}
+
+/* After the scene list: what the comparison means, then the ways onward. */
+.onward {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: var(--page);
+  gap: 10px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: var(--sheet);
   border: 1px solid var(--hairline);
 }
 
-.compareSame {
-  background: var(--mint);
-  border-color: var(--ink);
-}
-
-.compareLine {
-  font-family: var(--display);
-  font-size: 17px;
-}
-
-.compareLabel {
-  font-weight: 600;
-  color: var(--body-strong);
-}
-
-/* One scene up close: the reason first, how it was checked behind a disclosure. */
-.reasonDetail {
-  font-weight: 600;
-  color: var(--body-strong);
+@media (min-width: 720px) {
+  .onward {
+    padding: 18px 24px;
+  }
 }
 
 /* Not a flex box: a closed <details> laid out as flex keeps room for its hidden content in some
    browsers. The open content is spaced by margins instead. */
-.reasonHow > * + * {
+.reasonHow > * + *,
+.reasonHow > * + .answerList {
   margin-top: 10px;
 }
 
@@ -1996,12 +1991,25 @@ button.tile:hover .tileBar {
   font-size: 15px;
   cursor: pointer;
   list-style: none;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .reasonHowSummary::-webkit-details-marker {
   display: none;
+}
+
+/* A disclosure, not a link: a chevron that turns when it opens, and no underline. */
+.reasonHowSummary::after {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.reasonHow[open] > .reasonHowSummary::after {
+  transform: translateY(2px) rotate(225deg);
 }
 
 .answerList {

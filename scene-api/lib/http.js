@@ -152,8 +152,12 @@ function parseOrThrow(text) {
  *     worth reading: any stranger can send `x-tinyviewers-client`, and one who does without the
  *     secret is ignored. Set the variable on both projects, or leave it unset and get the old
  *     behaviour.
- *  2. `x-forwarded-for`'s left-most entry, then the socket. Forgeable by the caller, which is why
- *     this is only ever used to slow a guesser down — never to allow anything.
+ *  2. ON VERCEL ONLY (`VERCEL=1`), the address Vercel's edge writes: `x-real-ip`, then the left-most
+ *     `x-forwarded-for`. Vercel overwrites both on every request (it does not forward a caller's own
+ *     values), so a caller cannot choose them. Anywhere else those headers are whatever the caller
+ *     sent -- a limiter keyed on them is one the caller switches off, or points at somebody else -- so
+ *     off Vercel only the socket's address is used.
+ *  3. The socket's address.
  *
  * The proxy sends the literal `unknown` when it cannot see the visitor, and that is NOT an
  * identity: bucketing on it would put every unidentifiable visitor in one counter, where ten wrong
@@ -161,14 +165,14 @@ function parseOrThrow(text) {
  *
  * Best effort either way. The real answer is a Vercel firewall rate-limit rule on /api/add/*.
  */
-export function clientIp(req) {
+export function clientIp(req, env = process.env) {
   const headers = req?.headers ?? {};
   const head = (name) => {
     const v = headers[name];
     return String((Array.isArray(v) ? v[0] : v) ?? '').trim();
   };
 
-  const secret = process.env.ADD_FILM_PROXY_SECRET;
+  const secret = env.ADD_FILM_PROXY_SECRET;
   if (secret && head('x-tinyviewers-proxy')) {
     const given = digest(head('x-tinyviewers-proxy'));
     if (crypto.timingSafeEqual(given, digest(secret))) {
@@ -183,10 +187,13 @@ export function clientIp(req) {
     }
   }
 
-  const fwd = headers['x-forwarded-for'];
-  const first = Array.isArray(fwd) ? fwd[0] : fwd;
-  const ip = String(first ?? '').split(',')[0].trim() || req?.socket?.remoteAddress || '';
-  return ip || null;
+  if (env.VERCEL === '1') {
+    const real = head('x-real-ip');
+    if (real) return real.slice(0, 100);
+    const fwd = head('x-forwarded-for').split(',')[0].trim();
+    if (fwd) return fwd.slice(0, 100);
+  }
+  return req?.socket?.remoteAddress || null;
 }
 
 // --- query parameter helpers -------------------------------------------------------------------

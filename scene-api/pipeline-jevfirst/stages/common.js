@@ -67,7 +67,7 @@ export async function sonnetCall(w, { system, user, schema, maxTokens, effort, w
       throw Object.assign(err, { cost, cost_is_upper_bound: upper });
     } finally {
       w.budget.settle(worst, cost);
-      if (cost > 0) ctx.onSpend(cost, { service: 'anthropic' });
+      if (cost > 0) ctx.onSpend(cost, { service: 'anthropic', uncertain_usd: upper ? cost : 0 });
     }
   });
 }

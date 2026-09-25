@@ -254,14 +254,15 @@
   background: var(--dust);
 }
 
-/* On a phone the timeline is a picture of where the scenes sit, not a row of 16px targets: the scene
-   rows below (full width, 44px and more) are how a scene is opened. The markers stay buttons for a
-   keyboard or a screen reader. */
+/* On a phone, and on any touch screen whatever its width (a tablet), the timeline is a picture of
+   where the scenes sit, not a row of 16px targets a finger cannot tell apart: the scene rows below
+   (full width, 44px and more) are how a scene is opened. The markers stay buttons for a keyboard or a
+   screen reader. */
 .hintPhone {
   display: none;
 }
 
-@media (max-width: 719px) {
+@media (max-width: 719px), (pointer: coarse) {
   .timeline {
     cursor: default;
     pointer-events: none;
@@ -298,8 +299,8 @@
   color: var(--body);
 }
 
-@media (max-width: 719px) {
-  /* The timeline's own line already says it on a phone. */
+@media (max-width: 719px), (pointer: coarse) {
+  /* The timeline's own line already says it on a phone or a touch screen. */
   .rowsHint {
     display: none;
   }

@@ -105,7 +105,8 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
     );
   };
 
-  // A finger is wider than a 16px marker, and markers late in a film sit a few pixels apart. So a tap
+  // Touch screens never get here: under a coarse pointer the timeline is a picture (FilmFindings.module.css)
+  // and the rows are the controls. A mouse can still land a few pixels off a 16px marker, so a click
   // anywhere on the timeline's inset picks the marker nearest to it (within half a 44px target);
   // a tap on a marker itself is that marker's own click. The markers stay the buttons that keyboard
   // and screen-reader users reach — this only widens where a pointer can land.
@@ -230,7 +231,7 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
                 </>
               ) : (
                 <>
-                  {/* On a phone the markers are a picture: the rows below are the way in. */}
+                  {/* On a phone or any touch screen the markers are a picture: the rows below are the way in. */}
                   <span className={styles.hintWide}>{FILM.timelineHint}</span>
                   <span className={styles.hintPhone}>{FILM.timelineHintPhone}</span>
                 </>

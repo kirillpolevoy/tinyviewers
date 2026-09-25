@@ -5,12 +5,12 @@ here is committed, pushed or deployed; the main session ships it. Two Vercel pro
 
 | Project | Root | What changes |
 | --- | --- | --- |
-| scene API (`tinyviewers-scenes`) | `scene-api/` | Jev-first pipeline for new adds (default), admin rebuild/backups/restore, live demo API with resumable runs, schema v10.4.3 applied on cold start |
-| web (`tinyviewers-new`) | `web/` | `/watch` live demo (picker, live check, finished list, one scene up close), add/rebuild card, film page copy and phone layout |
+| scene API (`tinyviewers-scenes`) | `scene-api/` | Jev-first pipeline for new adds (default), admin rebuild/backups/restore, live demo API with resumable runs, schema v10.4.4 applied on cold start |
+| web (`tinyviewers-web`) | `web/` | `/watch` live demo (picker, live check, finished list, one scene up close), add/rebuild card, film page copy and phone layout |
 
 ## 0. Before deploying
 
-1. `cd scene-api && npm test` (202 pass, 0 skipped; every mandatory contract runs on committed synthetic
+1. `cd scene-api && npm test` (212 pass, 0 skipped; every mandatory contract runs on committed synthetic
    fixtures). Optional, on a machine with the round-9 outputs:
    `JEVFIRST_REQUIRE_PARITY=1 node --test test/jevfirst-parity.test.js` (9 pass).
 2. `cd web && npm test && npx tsc --noEmit && npx next build` (114 pass, typecheck and build clean).
@@ -23,10 +23,20 @@ here is committed, pushed or deployed; the main session ships it. Two Vercel pro
 
 The scene API brings its own schema up to date. On the first database use of each instance,
 `lib/ensure-schema.js` applies the Jev-first section under an advisory lock and records
-`jevfirst-schema-v10.4.3` in `schema_marks`. Every statement is additive and idempotent. It was
-checked on 2026-09-25 against a scratch database that already had v10.4.2, and v10.4.3 was added on the
-API's cold start. New since v10.4.2: `demo_runs` lease, money and checkpoint columns, the `demo_run_stages`
-table, the `passcode_failures` table, and `jobs.kind` now accepts `'restore'`.
+`jevfirst-schema-v10.4.4` in `schema_marks`. Every statement is additive and idempotent. New since
+v10.4.2: `demo_runs` lease, money and checkpoint columns, the `demo_run_stages` table, the
+`passcode_failures` table, and `jobs.kind` now accepts `'restore'`.
+
+v10.4.4 adds one data step: demo runs written by the v10.4.2 code get their money columns filled in
+from the old accounting, instead of the zeros the new columns started with. A finished run's `cost_usd`
+becomes its `spent_usd` and `mark_usd`; the part of a `timed_out` run's cost it never measured becomes
+`uncertain_usd`. A live run keeps its reservation as its mark, with what it had measured as its spend.
+The new code never takes over such a live run: its old invocation may still be alive and it has no
+checkpoint. The sweep ends it at its reservation. The step only touches rows the column defaults left
+untouched, so applying it again changes nothing. It was checked on 2026-09-25 against the scratch
+database `jevint`, which had v10.4.2 and v10.4.3: on the API's cold start v10.4.4 was recorded, the five
+v10.4.2 runs went from a shown cost of $0 to their real cost (for example 0.056787), and the v10.4.3 rows
+were left as they were. Production has none of these tables yet, so there it only creates them.
 
 To apply it by hand anyway (for example, before the deploy, from a laptop):
 
@@ -46,7 +56,9 @@ Nothing new is required. Check that these are already set:
   `OPENSUBTITLES_API_KEY`, `ADD_FILM_PASSCODE`, and `ADD_FILM_PROXY_SECRET`. That secret is also the
   continuation secret for add, rebuild and demo hand-offs. Without it, a Jev-first add or rebuild on
   Vercel is refused with 503 instead of being left stuck.
-- **web**: `DATABASE_URL`, `SCENE_API_URL`, `ADD_FILM_PROXY_SECRET` (the same value).
+- **web**: `DATABASE_URL`, `SCENE_API_URL`, `ADD_FILM_PROXY_SECRET` (the same value). The API also
+  uses this secret to trust the visitor identity the web sends with a passcode. Without it, every web
+  visitor looks like the web's own address and shares one wrong-passcode limit.
 - Optional, with these defaults: `ADD_PIPELINE` unset (the Jev-first pipeline; `live` switches adds back
   to the old pipeline), `DEMO_DAILY_CAP_USD=2`, `REBUILD_DAILY_CAP_USD=15`,
   `ADD_FILM_DAILY_CAP_USD=5`. Leave `JEVFIRST_LOCAL_BUDGET_MS` unset (it is a local-only test knob, and
@@ -64,6 +76,12 @@ Nothing new is required. Check that these are already set:
    - `curl -s https://tinyviewers-scenes.vercel.app/api/demo/films`: expect the stored films. After the
      rebuild in step 3 it lists every library film.
    - The first request triggers the schema check. The function log should show no `[schema]` error.
+     `schema_marks` then has `jevfirst-schema-v10.4.4`.
+   - Passcode limits (scene API, every `/api/add/*` and `/api/admin/*` route): 10 wrong passcodes per
+     caller per ten minutes, counted in the database. The caller is the address Vercel's edge writes
+     (`x-real-ip`), or the visitor our web proxy vouches for with `ADD_FILM_PROXY_SECRET`. Other callers'
+     wrong guesses never lock anyone out. At 60 wrong passcodes across all callers in ten minutes the
+     function log shows one `[passcode]` alert line. Nobody is refused because of it.
 2. **web second.** Smoke test on production:
    - `/watch`: the film list comes right under the intro. Start one live check (it costs about 3 to 6
      cents and counts against the $2 daily demo cap) and watch it finish. Then open one scene, press
@@ -83,7 +101,10 @@ Nothing new is required. Check that these are already set:
    The passcode is `ADD_FILM_PASSCODE`, taken from the environment or parsed from `scene-api/.env.local`
    or `../.env.local`. It is never printed. The script prints one line per film: status, scenes, cost and
    backup id. A failed rebuild leaves that film's guide exactly as it was. Each admission reserves $2.41
-   against `REBUILD_DAILY_CAP_USD` and is reconciled to the real cost when the film finishes.
+   against `REBUILD_DAILY_CAP_USD` and is reconciled to the real cost when the film finishes. The day's
+   total (adds and rebuilds together) counts every job that was live at any time that UTC day. A rebuild
+   admitted before midnight that finishes after it counts on both days, so a batch that crosses midnight
+   can be refused early. It is never admitted past the cap.
 
    After it finishes, open each film page. Film-specific reasons now show as stable chips
    ("Character in danger") with the film's own words inside the open row. `/watch` then offers every
@@ -118,6 +139,25 @@ Setup: scene API on `:8797` with the real keys and a scratch Postgres (`jevint`)
 - Screenshots of every changed screen, desktop and true 390x844 phone, are in the scratchpad
   (`jev-ship/final-*.png`). No page scrolls sideways at 390 px.
 
+Scene API ship-blocker round (after Astra's code re-check), same scratch database, API only:
+
+- **Schema**: v10.4.4 applied itself on the API's cold start. The v10.4.2 runs now show their real costs.
+- **A real demo check** (The Gruffalo), called on the API directly: 21 s, 3.4¢ (all measured), 3
+  invocations with two HTTP hand-offs through the fenced checkpoint statement. It matched the saved guide
+  8 of 8 plus 1 extra, with the new edge tolerance. When it ended, no checkpoint rows were left and the
+  lease and slot were released.
+- **Takeover, on real Postgres** (`pg` driver, stubbed Jev, $0): invocation B took over the run at
+  classify, and the old invocation's stage then failed. The old invocation reported the lost lease and
+  left B's four checkpoints alone. The run stayed B's.
+- **Passcode limits**, on two API instances sharing the database: 80 callers made one wrong guess each
+  and all got 401. The owner then got in (200). A burst of 60 simultaneous wrong guesses from one caller,
+  split over both instances, had exactly 10 compared (the other 50 got 429). One `[passcode]` alert was
+  logged, and an expired row was pruned.
+- **Day total for adds and rebuilds**: a rebuild created yesterday and finished today at $2.41 raised
+  `/api/add/status` `spent_today_usd` by $2.41. (That test row was then deleted.)
+- **Not verified here**: Vercel's own `x-real-ip` / `x-forwarded-for` behaviour (the API trusts those
+  headers only when `VERCEL=1`), and any browser rendering (no web change in this round).
+
 ## 6. Changed files (against origin/main 7a2097d)
 
 - `scene-api/api/add/jobs/[id].js` (modified)
@@ -128,6 +168,7 @@ Setup: scene API on `:8797` with the real keys and a scratch Postgres (`jevint`)
 - `scene-api/lib/db.js` (modified)
 - `scene-api/lib/demo.js` (new)
 - `scene-api/lib/ensure-schema.js` (new)
+- `scene-api/lib/http.js` (modified)
 - `scene-api/lib/jevfirst.js` (new)
 - `scene-api/lib/jobs.js` (modified)
 - `scene-api/lib/openapi.js` (modified)
@@ -209,6 +250,7 @@ Setup: scene API on `:8797` with the real keys and a scratch Postgres (`jevint`)
 - `scene-api/test/jevfirst-stubs.js` (new)
 - `scene-api/test/jevfirst.test.js` (new)
 - `scene-api/test/load.test.js` (modified)
+- `scene-api/test/unit.test.js` (modified)
 - `scene-api/vercel.json` (modified)
 - `web/app/add/job/[id]/page.tsx` (modified)
 - `web/app/api/add/finish/route.ts` (deleted)
