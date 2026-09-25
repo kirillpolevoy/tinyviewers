@@ -2374,3 +2374,9 @@ button.tile:hover .tileBar {
   line-height: 1.3;
   color: var(--ink);
 }
+
+/* A run that just finished: the way onward to the result, under the board. */
+.seeResultsRow {
+  display: flex;
+  justify-content: center;
+}

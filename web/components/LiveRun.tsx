@@ -131,6 +131,11 @@ export function LiveRun({ id, initialRun, film, guide = null }: Props) {
   const live = isRunLive(run.status);
   const finished = run.status === 'done';
   const failed = run.status === 'failed';
+  // A run that finishes while the parent watches stays on the board, with a button onward: they see it
+  // finish, then choose to read the result. A run that was already done when the page opened shows it.
+  const [revealed, setRevealed] = useState(initialRun.status === 'done');
+  const showDone = finished && revealed;
+  const justFinished = finished && !revealed;
   // Where the parent came from when they opened a scene, so Back can return them to it.
   const cameFrom = useRef<string | null>(null);
   const pushedScene = useRef(false);
@@ -263,6 +268,18 @@ export function LiveRun({ id, initialRun, film, guide = null }: Props) {
         ? DEMO_LIVE.queuedHeadline(title)
         : DEMO_LIVE.runningHeadline(title);
 
+  const reveal = () => {
+    setRevealed(true);
+    window.scrollTo({ top: 0 });
+    headingRef.current?.focus();
+  };
+  const seeResults = (
+    <button type="button" className={`button ${styles.headerButton}`} onClick={reveal}>
+      {DEMO_LIVE.seeResults}
+      <ArrowRight />
+    </button>
+  );
+
   return (
     <>
       <section className={styles.runHead}>
@@ -280,6 +297,7 @@ export function LiveRun({ id, initialRun, film, guide = null }: Props) {
           ) : null}
         </div>
         {failed && runAgain}
+        {justFinished && seeResults}
       </section>
 
       {refusal && (
@@ -296,7 +314,7 @@ export function LiveRun({ id, initialRun, film, guide = null }: Props) {
         {finished ? DEMO_LIVE.srDone(title) : ''}
       </p>
 
-      {finished && (
+      {showDone && (
         <RunDone run={run} film={film} guide={guide} band={band} onBand={setBand} onScene={openScene} runAgain={runAgain} ruled={ruled} />
       )}
 
@@ -308,9 +326,11 @@ export function LiveRun({ id, initialRun, film, guide = null }: Props) {
         </details>
       )}
 
-      {live && <Board run={run} ruled={ruled} onScene={openScene} />}
+      {(live || justFinished) && <Board run={run} ruled={ruled} onScene={openScene} />}
 
-      {live && (
+      {justFinished && <div className={styles.seeResultsRow}>{seeResults}</div>}
+
+      {(live || justFinished) && (
         <section className={styles.explainers}>
           <div className={styles.card}>
             <h2 className={styles.cardHeading}>{DEMO_LIVE.whyJevTitle}</h2>
