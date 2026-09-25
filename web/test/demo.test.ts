@@ -187,9 +187,11 @@ test('time and money are the API’s numbers, and an unknown one is a dash', () 
 });
 
 test('the Watch copy says what a parent gets, that it is the real step, and that Sonnet ran earlier', () => {
-  // What the parent gets comes first, then what to tap.
-  assert.match(DEMO_LIVE.intro, /scenes that may scare or upset a child/);
-  assert.match(DEMO_LIVE.intro, /Jev, a small, fast AI/);
+  // What the parent gets comes first, then how it works: what to do (pick, watch, read), with Jev named.
+  assert.match(DEMO_LIVE.intro, /scenes in a film that may scare or upset a child/);
+  assert.equal(DEMO_LIVE.steps.length, 3);
+  assert.match(DEMO_LIVE.steps[0].title, /Pick a film/);
+  assert.match(DEMO_LIVE.steps[1].body, /Jev, a small, fast AI/);
   assert.match(DEMO_LIVE.realStep, /also used to build our film guides/);
   assert.match(DEMO_LIVE.realStep, /leaves the saved guide unchanged/);
   assert.equal(DEMO_LIVE.jobs.length, 3);

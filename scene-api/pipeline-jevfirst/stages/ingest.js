@@ -35,6 +35,7 @@ import { writeArtifacts } from '../store.js';
 import { backupGuide, replaceGuide } from '../guide.js';
 import { fail, SONNET_MODEL, JEV_MODEL, quoteSafe, quoteGrams } from './common.js';
 import { quoteRuns } from '../pack/validate.js';
+import { strengthOf } from '../strength.js';
 
 export const PIPELINE_VERSION = 'jevfirst-v10.4';
 export const REASONS_VOCAB_VERSION = 'reasons-v10.4';
@@ -126,7 +127,7 @@ export function guideRows(tags, { grams = null } = {}) {
       scene_id: s.id, start_ms: start, end_ms: Math.max(end, start), start_cue: s.start_cue, end_cue: s.end_cue,
       title: text.title ?? 'Flagged scene', description: text.description ?? null, text_source: s.why?.source ?? null, quote_dropped: text.dropped,
       text_rule: s.why?.text_rule ?? null, title_rule: s.why?.title_rule ?? null,
-      severity_5_7: s.severity?.['5-7']?.level ?? null, severity_8_10: s.severity?.['8-10']?.level ?? null,
+      severity_5_7: strengthOf(s)['5-7'], severity_8_10: strengthOf(s)['8-10'],
       why, why_line: s.why_tags?.line ?? why.map((t) => t.label).join(' · '),
       reasons: (s.flag_reasons ?? []).map((r) => ({ id: r.id, label: r.label, by: r.by === 'sonnet' ? 'sonnet' : 'jev', p: r.p })),
       labels: presence,

@@ -232,11 +232,18 @@ export const DEMO_LIVE = {
   // --- pick a film ---------------------------------------------------------------------------------
   eyebrow: 'Watch it work',
   headline: 'Watch a film’s scenes get checked.',
-  intro: 'See how we find scenes that may scare or upset a child. Pick a film to watch Jev, a small, fast AI, check it.',
+  intro: 'See how we find the scenes in a film that may scare or upset a child.',
   realStep:
     'These live checks are also used to build our film guides. Running them here leaves the saved guide unchanged.',
   sourcesNote: 'The AI reads the subtitles, cast list and plot; it does not watch the film. Some moments may be missed.',
   howHeading: 'How it works',
+  // What the visitor does, first: the page's job is to be tried, so the steps lead and the machinery follows.
+  steps: [
+    { title: 'Pick a film', body: 'Choose any film from the list below.' },
+    { title: 'Watch Jev check it', body: 'Jev, a small, fast AI, checks every scene live. It takes about half a minute.' },
+    { title: 'See what to know', body: 'The scenes that may upset a child, when they happen, and why each one is listed.' },
+  ],
+  behindLabel: 'Behind the scenes',
   jobsLabel: 'What Jev does',
   liveTag: 'Live, while you watch',
   beforeTag: 'Prepared earlier',
