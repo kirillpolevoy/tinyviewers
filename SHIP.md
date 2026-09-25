@@ -428,3 +428,26 @@ Round 3 verification (both round-3 fix passes together, 2026-09-25), web `:3497`
 - `web/test/reasons.test.ts` (new)
 - `web/test/replay.test.ts` (deleted)
 - `SHIP.md` (new; this file)
+
+## 7. Deferred to a follow-up PR (owner's decision, 2026-09-25)
+
+Astra's round-3 code re-check left two blockers of one class, which the owner chose to ship now and fix
+in a separate PR: a malformed model response can be read as a confident answer instead of failing.
+
+1. A Jev distribution missing a required choice (for example `supports`) is accepted
+   (`scene-api/pipeline-jevfirst/pack/jev-client.js:125`), and the missing value becomes 0
+   (`pack/claims.js:205`).
+2. Sonnet `answers: null` is read as an empty list, so "no" for every question
+   (`pack/sonnet-questions.js:162`; the completeness check in `stages/answers.js:204` only checks
+   that scene entries exist).
+
+Either one, during a rebuild, can replace a good guide with a worse one. Until the follow-up lands:
+every rebuild backs up the old guide first, `POST /api/admin/restore` puts it back, and each rebuilt
+film is compared with its backup (scene count, flagged count, descriptions) before the next film.
+
+The follow-up closes the class, not the two instances: strict validation of every Jev and Sonnet
+response where it enters (invalid = failed attempt, retried, then the stage fails and the old guide
+stays), a field-by-field mutation test over recorded responses, and a check of the whole assembled
+guide before ingest. It also carries Astra's remaining UX follow-ups (live phone strip cells, cluster
+number caption, stopped-run wording, the long category explanation, hybrid-touch timeline) and the
+comparison-freshness note.
