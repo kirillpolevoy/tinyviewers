@@ -37,3 +37,8 @@ test('a mild row is level 1 for both bands, lists its signals and shows only che
   assert.equal(row.why_line, 'crying');
   assert.equal(row.description, 'A child cries at the gate.');
 });
+
+test('a scene in the end credits is never mild', () => {
+  const tags = { scenes: [scene('S9', { tags: [tag('screams'), tag('appears_suddenly')] })] };
+  assert.deepEqual(mildRows(tags, [{ id: 'S9', credits: true, sentences: [] }]), []);
+});
