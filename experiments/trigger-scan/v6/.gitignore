@@ -1,0 +1,7 @@
+# Anything here can quote subtitle lines, Wikipedia text, reference text or be derived from them; keep it out of git.
+out/
+out-dev/
+review/
+sources/
+verify/out/
+verify/docs/

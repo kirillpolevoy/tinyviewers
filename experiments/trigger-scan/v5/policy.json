@@ -1,0 +1,218 @@
+{
+  "_about": "Policy for select.js (pure code over Jev's raw answers; changes here need no new Jev calls). Nothing here is tuned: there is no human-reviewed v5 data. v4 flagged 44/52 (Nemo) and 56/57 (Monsters, Inc.) scenes because it ORed ~80 items at 0.70; v5 flags only on the explicit lists below. POLICY v5.1-offline (2026-09-24, after the round-1 run): six select-only changes justified on the dev films (Nemo, Monsters, Inc.) from their saved Jev answers (verify/dev-policy-sim.mjs) and applied unchanged to Lion King; the as-run policy is kept at out/asrun/policy.asrun.json. Lion King results under this policy are post-hoc, not held-out evidence.",
+  "act": 0.7,
+  "band_low": 0.4,
+  "_bands_about": "p >= act -> level 'act'; band_low <= p < act -> 'possible' (shown, NEVER flags); below band_low -> no tag. AUDIT.md: labels at 0.5-0.7 were right 46% of the time, at 0.7+ 69%.",
+  "overrides": {},
+  "_overrides_about": "Per-question {act, band_low} keyed by question id (e.g. \"e.chased\"). Empty on purpose: an override needs held-out evidence.",
+  "claim_accept_confidence": 0.8,
+  "_claim_about": "citation_check cookbook: a claim-check verdict 'supports' stands at confidence >= 0.8. Only such claims reach Jev's state or generate film-specific questions (questions.js verified()).",
+  "modifier_act": 0.7,
+  "retold_cancel": {
+    "act": 0.95,
+    "danger_absent_mass": 0.8
+  },
+  "_retold_change_v5_1": "Was mod.retold >= modifier_act (0.70) with danger_absent_mass 0.50; now mod.retold >= retold_cancel.act (0.95) with 0.80. modifier_act (0.70) still applies to imagined. The scene-level retold Noul is answered literally: it fires when ANY part of a story-length scene is a recollection (>= 0.70 in 22/54 Nemo and 14/48 MI scenes) and then cancelled the live events in the rest of the scene. Dev evidence: Nemo S013 (Marlin's search, baseline S06) and S020 (Nemo wakes in the tank, baseline S09) lost every act-level reason to retold; MI S043 lost 'captured'. At 0.95 / 0.80 those three flag again (r1 and r2) and no dev flag is added outside the baseline. Side effect: without the cancellations Nemo's afraid_for_safety is at act in >= 60% of scenes and becomes film-level context (no Nemo flag is lost: every such scene has another reason).",
+  "_retold_about": "v4 finding 7 (retold did not cancel). A physical event is cancelled as retold only when BOTH: mod.retold >= modifier_act (a character tells about events at another time or place) AND the danger Score puts >= danger_absent_mass of its probability on levels 0-1 ('nobody in danger' / 'danger only talked about'). Two literal questions, combined in code (jaggedness: split interpretation into literal questions).",
+  "imagined_cancel": true,
+  "comic": {
+    "score": "laughs",
+    "on_at": 2.0
+  },
+  "_comic_about": "s.laughs is a Score 0-3 (none / a joke or two / about half / nearly all). Comic is on when its expected score >= on_at (about half the scene or more is jokes). It cancels only events with cancel.comic (rages_at_child, threatens_harm) and scales severity; it never cancels a film-specific item or a strong physical event.",
+  "kind_confidence": 0.9,
+  "_kind_about": "Kind Choice ('which kind of animal or creature threatens or attacks'). For kindGate items (shark, large_predator) at act: a confident different specific kind moves the tag to the parent 'animal_creature' (the creature is real, the species label is not); 'none' never vetoes presence, because a creature can be there without threatening.",
+  "parent_tag": {
+    "id": "animal_creature",
+    "v3": null,
+    "group": "creatures_figures",
+    "label": "Animal or creature",
+    "weights": {
+      "5-7": 2,
+      "8-10": 1
+    }
+  },
+  "flag": {
+    "_about": "A scene is flagged when at least one of these is at level 'act' after modifiers and is not film-level context. Everything else is a tag parents can filter on but that never flags alone.",
+    "strong_events": [
+      "chased",
+      "attacked",
+      "falls",
+      "nearly_falls",
+      "cannot_breathe",
+      "caught_in_hazard",
+      "vehicle_accident",
+      "child_in_danger",
+      "creature_threat",
+      "weapon_used",
+      "battle",
+      "captured",
+      "swallowed",
+      "badly_hurt",
+      "dies",
+      "loved_one_dies",
+      "pet_dies",
+      "believed_dead",
+      "parent_death_learned",
+      "child_taken",
+      "child_separated",
+      "caregiver_cruelty",
+      "animal_cruelty",
+      "afraid_for_safety"
+    ],
+    "requires": {
+      "afraid_for_safety": {
+        "score": "danger",
+        "min_expected": 2.0
+      },
+      "_about": "afraid_for_safety flags only when the danger Score's expected level is >= 2 ('a danger is close by' or worse): fear with no danger present (a comic fright, a false alarm) stays a tag. Requirement forms: {score, min_expected}; {event} (that event at act in the scene); {source: [...]} (the presence tag's channel); {any: [...]}. Keys: an event or presence id, or film_<type> for film-specific items. v5.1 additions, each from dev evidence: dangerous_machine needs caught_in_hazard at act or the summary channel (v4 cause 5: the lines question fires on sound captions such as '(electrical buzzing)', because PL_YES says a caption counts while the item says a caption alone is a no; MI S016, S024, S040 carried it from captions; S040, a slapstick shovel gag, was flagged by it alone). film_child_in_danger needs the danger Score >= 2 (Nemo S025, the Tank Gang initiation, was flagged only by 'Nemo in danger' at danger 1.78 of 4). reanimated_dead needs danger >= 2 (Nemo S050, the father-son reunion, fired 'brought back to life' on 'his father survived', danger 1.34).",
+      "dangerous_machine": {
+        "any": [
+          {
+            "event": "caught_in_hazard"
+          },
+          {
+            "source": [
+              "summary",
+              "both"
+            ]
+          }
+        ]
+      },
+      "film_child_in_danger": {
+        "score": "danger",
+        "min_expected": 2.0
+      },
+      "reanimated_dead": {
+        "score": "danger",
+        "min_expected": 2.0
+      }
+    },
+    "film_specific_types": [
+      "threatens",
+      "child_in_danger",
+      "danger"
+    ],
+    "_film_specific_about": "Generated items of these types flag at act. Film-specific presence ('<name> is in this scene') is a tag only: a villain standing in a room is not a reason to skip.",
+    "presence": {
+      "always": [
+        "ghost_spirit",
+        "reanimated_dead",
+        "skeleton_bones",
+        "dead_body",
+        "blood_wound",
+        "dark_magic",
+        "graveyard_funeral"
+      ],
+      "with_danger": [
+        "scary_appearance",
+        "fire",
+        "explosion",
+        "storm",
+        "heights",
+        "dangerous_machine",
+        "vehicle_crash",
+        "gun",
+        "blade_weapon",
+        "restraints",
+        "cage_net_trap",
+        "needle_medical"
+      ],
+      "with_creature_threat": [
+        "monster_creature",
+        "shark",
+        "large_predator",
+        "spider_insect",
+        "snake_reptile",
+        "rodent_bat",
+        "animal_creature"
+      ],
+      "danger_min_expected": 2.0,
+      "_about": "always: macabre presences flag on sight. scary_appearance moved from always to with_danger after the fixture run (a comic scene where a character is startled and disgusted by a toddler fired pl.scary_appearance 0.72): how someone looks, with no danger present, is a tag, not a skip. with_danger: hazards and weapons flag only when the danger Score's expected level >= danger_min_expected. with_creature_threat: creature presences flag only when e.creature_threat is at act in the same scene ('friendly presences never flag': a friendly monster or shark is a filterable tag, not a flag)."
+    },
+    "never": {
+      "robot_machine_being": "A robot alone is not a warning; robot violence is caught by events.",
+      "deep_dark_water": "Water is the setting of every scene of an ocean film; danger in water is caught by events.",
+      "darkness": "Night alone is not a reason to skip.",
+      "clown": "Shown as a tag for parents who filter on it; no clown threat question exists.",
+      "doll_puppet": "Tag only.",
+      "mask": "Tag only.",
+      "witch_sorcerer": "Presence alone is not a threat; dark magic and threats flag.",
+      "alien": "Presence alone is not a threat.",
+      "medical_care": "Tag only.",
+      "seriously_ill": "Tag only."
+    }
+  },
+  "film_level": {
+    "share": 0.6,
+    "min_scenes": 10,
+    "_about": "v4 finding 4/3: an item at act level in >= share of a film's classified scenes (only when the film has >= min_scenes) is film-level context: reported once as a film note and it cannot flag a scene on its own (it is kept on the scene as a context tag). Computed after modifiers."
+  },
+  "moments": {
+    "pad_ms": 5000,
+    "exists_min": 0.5,
+    "wordless_dialogue_per_min": 4,
+    "max_reasons": 6,
+    "max_lines": 250,
+    "peak_share": 0.5,
+    "_about": "moments.js: per flagged scene, one Jev request with the scene's numbered lines. For each flag reason: a Choice for the begin line, a Choice for the end line, an 'exists' Noul. Begin = the earliest line whose begin-probability is >= peak_share x the top line's; end = the latest such line for the end Choice (wider when unsure: under-skipping is the worse error). Skip span = [begin cue start - pad_ms, end cue end + pad_ms], clamped to the scene. Whole scene when exists < exists_min, when the scene has fewer than wordless_dialogue_per_min dialogue cues per minute (sound captions do not count), or has more than max_lines lines (Choice takes 255 options). Union across reasons.",
+    "pad_back_ms": 15000,
+    "pad_back_to_prev_cue": true,
+    "_pad_about": "v5.1: the begin side pads back to the end of the cue before the begin line, or by pad_back_ms, whichever reaches earlier (wordless action before the first line of a moment, e.g. a strike between two lines, was cut off by the old 5 s pad). A span that begins at the scene's first line starts at the (extended) scene start; one that ends at its last line ends at the scene end. The end side keeps pad_ms."
+  },
+  "severity": {
+    "_about": "Composite per age band (patterns/composite-scoring). Each Score normalised to 0-1 (expected level / top). base = weighted sum; content = max age-band weight (1-3, /3) among the scene's flag reasons; composite = base + min(content_weight x content, content_cap), then x the scale of every modifier that is on. v4 added 0.3 x content with levels 0.2/0.4/0.6, which pinned every flagged scene to 3; content now adds at most content_cap (0.10), less than one level step, so level 3 needs base >= 0.50. A flagged scene is at least level 1. Uncalibrated.",
+    "weights": {
+      "5-7": {
+        "danger": 0.3,
+        "harm": 0.15,
+        "distress": 0.25,
+        "share": 0.15,
+        "resolution": 0.15
+      },
+      "8-10": {
+        "danger": 0.25,
+        "harm": 0.25,
+        "distress": 0.2,
+        "share": 0.1,
+        "resolution": 0.2
+      }
+    },
+    "content_weight": 0.15,
+    "content_cap": 0.1,
+    "modifier_scale": {
+      "comic": {
+        "5-7": 0.7,
+        "8-10": 0.6
+      },
+      "retold": {
+        "5-7": 0.7,
+        "8-10": 0.6
+      },
+      "imagined": {
+        "5-7": 0.8,
+        "8-10": 0.6
+      }
+    },
+    "levels": [
+      0.2,
+      0.4,
+      0.6
+    ],
+    "flagged_min_level": 1
+  },
+  "film_specific": {
+    "drop_generated": {
+      "threatens": [
+        "changes"
+      ]
+    },
+    "cancel_exempt": {},
+    "_about": "drop_generated: film items of a type generated for a given reason are ignored. questions.js turns a 'changes' character arc into '<name> threatens someone'; on Nemo that made 'Gill threatens someone' a stated reason in S047 (Gill is an ally) and asked 'Nemo threatens someone'. questions.js still generates them (changing it changes the question set, which needs a Jev re-ask); select ignores them. cancel_exempt (per item type, modifiers that never cancel it) is EMPTY on purpose: exempting 'threatens' from retold changes nothing on the dev films, and its only evidence is Lion King S049, so it waits for a new held-out film."
+  },
+  "scene_bounds": {
+    "extend_to_next_start": true,
+    "first_from_zero": true,
+    "_about": "A segment ends at its last line, so the wordless time between scenes (Lion King 14.8 min, Nemo 6.3, MI 2.5) belonged to no scene and could never be skipped. Each scene now runs to the next scene's start and the first scene starts at 0; the last scene still ends at the last cue. Whole-scene skips and moment spans clamp to these bounds; line_start_ms / line_end_ms keep the dialogue bounds."
+  }
+}

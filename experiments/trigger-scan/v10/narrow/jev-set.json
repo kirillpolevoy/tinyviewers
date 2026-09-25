@@ -1,0 +1,364 @@
+{
+  "written_at": "2026-09-24T23:23:52.194Z",
+  "written_before_round5_results": true,
+  "honesty_note": "Written before running or reading any round-5 head-to-head / rescore numbers. Before writing this I had seen the STRUCTURE of v9/round5/headtohead.mjs and the first ~4000 chars of v9/round5/out/shadow-split.json (loved_one_dies, pet_dies, believed_dead, parent_death_learned, grieving, child_separated, parent_searching, parents_argue, mocked, excluded Jev-vs-Sonnet rows). None of those are in the set below and the rule is mechanical, so that glimpse could not steer it.",
+  "source": "v8/scorecard/scorecard.json held_out.questions (round-4 held-out films: tangled, coco, how-to-train-your-dragon), threshold 0.7 (policy act), precision_proxy = fired scenes overlapping a key item in the question group / fired scenes",
+  "rule": "Jev keeps a question only if its round-4 held-out precision_proxy >= 0.75 on >= 4 fires at 0.7. Applies to universal presence/event questions and film-specific templates. Excluded by definition: the animal_creature kind-veto parent (not a question; the scorecard reliability rule excludes it too) and derived jump_scare.",
+  "jev_set": [
+    "scary_appearance",
+    "blade_weapon",
+    "explosion",
+    "fire",
+    "child_in_danger",
+    "creature_threat",
+    "battle",
+    "weapon_used",
+    "threatens_harm"
+  ],
+  "jev_set_rows": [
+    {
+      "q": "scary_appearance",
+      "layer": "presence",
+      "group": "creatures_figures",
+      "fires": 4,
+      "precision": 0.75,
+      "caught": 5,
+      "recall": 0.2,
+      "wilson": {
+        "lo": 0.301,
+        "hi": 0.954
+      }
+    },
+    {
+      "q": "blade_weapon",
+      "layer": "presence",
+      "group": "objects_hazards",
+      "fires": 7,
+      "precision": 0.857,
+      "caught": 8,
+      "recall": 0.242,
+      "wilson": {
+        "lo": 0.487,
+        "hi": 0.974
+      }
+    },
+    {
+      "q": "explosion",
+      "layer": "presence",
+      "group": "objects_hazards",
+      "fires": 4,
+      "precision": 1,
+      "caught": 7,
+      "recall": 0.212,
+      "wilson": {
+        "lo": 0.51,
+        "hi": 1
+      }
+    },
+    {
+      "q": "fire",
+      "layer": "presence",
+      "group": "objects_hazards",
+      "fires": 4,
+      "precision": 1,
+      "caught": 4,
+      "recall": 0.121,
+      "wilson": {
+        "lo": 0.51,
+        "hi": 1
+      }
+    },
+    {
+      "q": "child_in_danger",
+      "layer": "event",
+      "group": "peril",
+      "fires": 13,
+      "precision": 0.846,
+      "caught": 15,
+      "recall": 0.273,
+      "wilson": {
+        "lo": 0.578,
+        "hi": 0.957
+      }
+    },
+    {
+      "q": "creature_threat",
+      "layer": "event",
+      "group": "peril",
+      "fires": 7,
+      "precision": 0.857,
+      "caught": 9,
+      "recall": 0.164,
+      "wilson": {
+        "lo": 0.487,
+        "hi": 0.974
+      }
+    },
+    {
+      "q": "battle",
+      "layer": "event",
+      "group": "violence",
+      "fires": 8,
+      "precision": 1,
+      "caught": 13,
+      "recall": 0.188,
+      "wilson": {
+        "lo": 0.676,
+        "hi": 1
+      }
+    },
+    {
+      "q": "weapon_used",
+      "layer": "event",
+      "group": "violence",
+      "fires": 4,
+      "precision": 0.75,
+      "caught": 9,
+      "recall": 0.13,
+      "wilson": {
+        "lo": 0.301,
+        "hi": 0.954
+      }
+    },
+    {
+      "q": "threatens_harm",
+      "layer": "event",
+      "group": "hostility",
+      "fires": 5,
+      "precision": 0.8,
+      "caught": 5,
+      "recall": 0.167,
+      "wilson": {
+        "lo": 0.376,
+        "hi": 0.964
+      }
+    }
+  ],
+  "sensitivity_variant": {
+    "name": "narrow_ge3",
+    "rule": "same but >= 3 fires (declared now, reported as secondary only)",
+    "jev_set": [
+      "scary_appearance",
+      "blade_weapon",
+      "explosion",
+      "fire",
+      "caught_in_hazard",
+      "child_in_danger",
+      "creature_threat",
+      "battle",
+      "weapon_used",
+      "dies",
+      "threatens_harm"
+    ],
+    "adds": [
+      "caught_in_hazard",
+      "dies"
+    ]
+  },
+  "near_misses_not_in_set": [
+    {
+      "q": "monster_creature",
+      "layer": "presence",
+      "group": "creatures_figures",
+      "fires": 16,
+      "precision": 0.688,
+      "caught": 10,
+      "recall": 0.4,
+      "wilson": {
+        "lo": 0.444,
+        "hi": 0.858
+      },
+      "why_out": "precision 0.688 < 0.75"
+    },
+    {
+      "q": "dangerous_machine",
+      "layer": "presence",
+      "group": "objects_hazards",
+      "fires": 1,
+      "precision": 1,
+      "caught": 2,
+      "recall": 0.061,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "cannot_breathe",
+      "layer": "event",
+      "group": "peril",
+      "fires": 2,
+      "precision": 1,
+      "caught": 3,
+      "recall": 0.055,
+      "wilson": {
+        "lo": 0.342,
+        "hi": 1
+      },
+      "why_out": "only 2 fires"
+    },
+    {
+      "q": "caught_in_hazard",
+      "layer": "event",
+      "group": "peril",
+      "fires": 3,
+      "precision": 1,
+      "caught": 6,
+      "recall": 0.109,
+      "wilson": {
+        "lo": 0.438,
+        "hi": 1
+      },
+      "why_out": "only 3 fires"
+    },
+    {
+      "q": "falls",
+      "layer": "event",
+      "group": "peril",
+      "fires": 1,
+      "precision": 1,
+      "caught": 3,
+      "recall": 0.055,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "vehicle_accident",
+      "layer": "event",
+      "group": "peril",
+      "fires": 1,
+      "precision": 1,
+      "caught": 2,
+      "recall": 0.036,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "believed_dead",
+      "layer": "event",
+      "group": "death",
+      "fires": 2,
+      "precision": 1,
+      "caught": 5,
+      "recall": 0.132,
+      "wilson": {
+        "lo": 0.342,
+        "hi": 1
+      },
+      "why_out": "only 2 fires"
+    },
+    {
+      "q": "dies",
+      "layer": "event",
+      "group": "death",
+      "fires": 3,
+      "precision": 1,
+      "caught": 7,
+      "recall": 0.184,
+      "wilson": {
+        "lo": 0.438,
+        "hi": 1
+      },
+      "why_out": "only 3 fires"
+    },
+    {
+      "q": "loved_one_dies",
+      "layer": "event",
+      "group": "death",
+      "fires": 1,
+      "precision": 1,
+      "caught": 2,
+      "recall": 0.053,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "child_taken",
+      "layer": "event",
+      "group": "separation",
+      "fires": 1,
+      "precision": 1,
+      "caught": 1,
+      "recall": 0.091,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "parent_searching",
+      "layer": "event",
+      "group": "separation",
+      "fires": 1,
+      "precision": 1,
+      "caught": 2,
+      "recall": 0.182,
+      "wilson": {
+        "lo": 0.207,
+        "hi": 1
+      },
+      "why_out": "only 1 fires"
+    },
+    {
+      "q": "rages_at_child",
+      "layer": "event",
+      "group": "hostility",
+      "fires": 8,
+      "precision": 0.625,
+      "caught": 7,
+      "recall": 0.233,
+      "wilson": {
+        "lo": 0.306,
+        "hi": 0.863
+      },
+      "why_out": "precision 0.625 < 0.75"
+    },
+    {
+      "q": "film:child_in_danger",
+      "layer": "film_template",
+      "group": "per film item",
+      "fires": 17,
+      "precision": 0.706,
+      "caught": 16,
+      "recall": 0.291,
+      "wilson": {
+        "lo": 0.469,
+        "hi": 0.867
+      },
+      "why_out": "precision 0.706 < 0.75"
+    }
+  ],
+  "excluded_non_questions": [
+    {
+      "q": "animal_creature",
+      "layer": "kind_veto_parent",
+      "group": "creatures_figures",
+      "fires": 7,
+      "precision": 0.857,
+      "caught": 6,
+      "recall": 0.24,
+      "wilson": {
+        "lo": 0.487,
+        "hi": 0.974
+      },
+      "why_out": "kind-veto parent tag, not a question"
+    }
+  ],
+  "routing": {
+    "contested_questions": "split.json sonnet_asked (43). If in jev_set AND Jev has a stored round-5 answer -> Jev; otherwise -> Sonnet stored answer (19 assigned + 24 shadow; unlisted = P_UNLISTED 0.05, exactly as merge.js).",
+    "jev_set_but_no_jev_answer": "In round 5 Jev was NOT asked the 19 Sonnet-assigned questions (v9 trimmed classify). weapon_used and threatens_harm are in jev_set but have no Jev answer on the held-out films -> they stay with Sonnet (identical to v9). Same for dies in the >=3 variant.",
+    "never_asked_of_sonnet": "Questions Sonnet was never asked (non-contested presence/events, film-specific threatens/child_in_danger/danger) stay with Jev only if in jev_set (battle, child_in_danger, creature_threat, scary_appearance [+caught_in_hazard in the variant]); every other one is removed from policy.flag (tag-only; the tag is still computed).",
+    "not_questions": "Scores (danger, laughs, ...), modifiers (retold, imagined, comic_peril), kind Choice and film-level context stay exactly as v9 (Jev): they gate flags, they do not flag."
+  }
+}

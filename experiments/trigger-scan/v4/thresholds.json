@@ -1,0 +1,52 @@
+{
+  "_about": "Policy for select.js. Jev supplies probabilities; everything here is code-side and can change without re-running Jev. Nothing in this file has been tuned: there is no human-reviewed v4 data yet, and every gold/*.json list is Claude-drafted.",
+
+  "act": 0.70,
+  "band_low": 0.40,
+  "_act_about": "act >= 0.70 turns a Noul into a tag; 0.40-0.70 is kept as level 'possible' (shown, never flags). AUDIT.md: labels at 0.5-0.7 were right 46% of the time, at 0.7+ 69%; the guardrails cookbook uses a 0.70 action threshold with a lower review band.",
+
+  "overrides": {},
+  "_overrides_about": "Per-question exceptions keyed by question id, e.g. {\"pl.shark\": {\"act\": 0.85}}. Empty on purpose: an exception needs held-out evidence (a per-question threshold tuned on other films), and the only v4 data is a 6-scene fixture. AUDIT.md: per-attribute thresholds added about 3 F1 points in v2 and must be tuned leave-one-film-out.",
+
+  "modifier_act": 0.70,
+  "_modifier_about": "A scene-level modifier (retold, imagined, comic, child_in_trouble) is on at >= 0.70. It cancels events listed with cancel.<modifier> in questions.js, never presence.",
+
+  "kind_confidence": 0.90,
+  "_kind_about": "Documented pattern (cookbooks/classification_using_confidence): confidence >= 0.9 -> trust the specific label; below -> report the parent level. Applies only to presence items with kindGate (monster_creature, shark, large_predator), and only when that item is already at act level.",
+
+  "parent_tag": { "id": "animal_creature", "v3": null, "group": "creatures_figures", "label": "Animal or creature", "weights": { "5-7": 2, "8-10": 1 } },
+
+  "parents_care_presence": [
+    "monster_creature", "ghost_spirit", "reanimated_dead", "skeleton_bones", "dead_body", "shark", "spider_insect",
+    "snake_reptile", "large_predator", "rodent_bat", "clown", "doll_puppet", "mask", "witch_sorcerer", "dark_magic",
+    "alien", "scary_appearance", "gun", "blade_weapon", "fire", "explosion", "storm", "heights", "needle_medical",
+    "medical_care", "seriously_ill", "blood_wound", "vehicle_crash", "cage_net_trap", "restraints", "graveyard_funeral",
+    "dangerous_machine", "animal_creature"
+  ],
+  "presence_not_flags": {
+    "deep_dark_water": "Water is the setting of every scene of an ocean film. Danger in water is caught by the cannot_breathe and caught_in_hazard events; water alone is not a reason to skip.",
+    "darkness": "Night or a dark room alone is not a scene to skip. What happens in the dark is caught by unseen_threat, jump_scare and chased. Still shown as a tag for parents who filter on it.",
+    "robot_machine_being": "The robot is the friendly lead of The Iron Giant and The Wild Robot. A robot alone is not a warning; robot violence is caught by the events."
+  },
+  "_friendly_about": "Friendly presences such as a talking animal or a parent are not presence items at all; cast roles carry them. Every presence id in questions.js must appear in exactly one of parents_care_presence or presence_not_flags (checked in the tests).",
+
+  "flag_events": "all",
+  "_flag_about": "A scene is flagged when any parents_care presence item or any event is at act level after modifiers and the kind gate. Mention-only, modifiers and scores never flag.",
+
+  "severity": {
+    "_about": "Composite per age band (patterns/composite-scoring). Each Score is normalised to 0-1 (score / top level). base = weighted sum of the five Scores; content = max age-band weight (1-3, /3) among the scene's flagging tags; composite = (1 - content_weight) * base + content_weight * content, + child_in_trouble boost, then multiplied by the scale of every modifier that is on. Levels: < l1 -> 0 (none), < l2 -> 1, < l3 -> 2, else 3, matching the 1-3 scale of the current Sonnet severities. Uncalibrated starting values.",
+    "weights": {
+      "5-7": { "danger": 0.30, "harm": 0.15, "distress": 0.25, "share": 0.15, "resolution": 0.15 },
+      "8-10": { "danger": 0.25, "harm": 0.25, "distress": 0.20, "share": 0.10, "resolution": 0.20 }
+    },
+    "_weights_about": "5-7 weighs how frightened characters are and how long it lasts; 8-10 weighs real harm and whether it is resolved (ATTRIBUTES-RESEARCH.md: younger children react to peril and fear on screen, older ones to realistic harm and loss).",
+    "content_weight": 0.30,
+    "child_in_trouble_boost": { "5-7": 0.10, "8-10": 0.0 },
+    "modifier_scale": {
+      "comic": { "5-7": 0.6, "8-10": 0.6 },
+      "retold": { "5-7": 0.7, "8-10": 0.6 },
+      "imagined": { "5-7": 0.8, "8-10": 0.6 }
+    },
+    "levels": [0.20, 0.40, 0.60]
+  }
+}

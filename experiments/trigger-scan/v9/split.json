@@ -1,0 +1,2322 @@
+{
+  "version": "split-v9.1",
+  "decided_at": "2026-09-24T22:31:57.682Z",
+  "status": "DECIDED from data (split/stage-a.json, split/stage-b.json) by split/decide.mjs; the rule is in that file.",
+  "rule": "Jev keeps a question only if its recall and precision are not worse than Sonnet's on the human keys (one-count tolerance; thin evidence -> group verdict); otherwise Sonnet. Non-contested groups: stage A (v8 scorecard, Jev vs live Sonnet pipeline).",
+  "data": {
+    "stage_a": "split/stage-a.json (from v8/scorecard/scorecard.json v8/scorecard/scorecard.json (generated 2026-09-24T22:10:49.044Z))",
+    "stage_b": "split/stage-b.json (10 films, 2026-09-24T22:20:10.557Z)",
+    "dev_bias": "all ten films are dev films: the split is chosen on the same films v9 is evaluated on; the held-out run is the real test"
+  },
+  "not_split": "Scores (danger, harm, distress, share, resolution, laughs), modifiers (retold, imagined), the kind Choice, mention questions (m.*), film-specific questions (fpl/fps/fe), the split gate, the claim checks, the moment finder and the why check stay with Jev: they have no Sonnet counterpart in the scorecard, and the round-4 evidence (split gate, claim check, concrete questions) favours Jev.",
+  "sonnet_asked": [
+    "dies",
+    "loved_one_dies",
+    "pet_dies",
+    "believed_dead",
+    "parent_death_learned",
+    "grieving",
+    "child_taken",
+    "child_separated",
+    "parent_searching",
+    "abandoned",
+    "family_in_danger",
+    "parents_argue",
+    "captured",
+    "trapped",
+    "swallowed",
+    "crying",
+    "despair",
+    "child_frightened",
+    "mocked",
+    "excluded",
+    "discrimination",
+    "caregiver_cruelty",
+    "betrayal",
+    "threatens_harm",
+    "plots_harm",
+    "weapon_used",
+    "gun",
+    "blade_weapon",
+    "fire",
+    "explosion",
+    "storm",
+    "deep_dark_water",
+    "heights",
+    "darkness",
+    "needle_medical",
+    "medical_care",
+    "seriously_ill",
+    "blood_wound",
+    "vehicle_crash",
+    "cage_net_trap",
+    "restraints",
+    "graveyard_funeral",
+    "dangerous_machine"
+  ],
+  "sonnet_used": [
+    "storm",
+    "deep_dark_water",
+    "heights",
+    "darkness",
+    "needle_medical",
+    "graveyard_funeral",
+    "weapon_used",
+    "captured",
+    "trapped",
+    "swallowed",
+    "dies",
+    "child_taken",
+    "abandoned",
+    "family_in_danger",
+    "threatens_harm",
+    "caregiver_cruelty",
+    "child_frightened",
+    "crying",
+    "despair"
+  ],
+  "shadow": [
+    "loved_one_dies",
+    "pet_dies",
+    "believed_dead",
+    "parent_death_learned",
+    "grieving",
+    "child_separated",
+    "parent_searching",
+    "parents_argue",
+    "mocked",
+    "excluded",
+    "discrimination",
+    "betrayal",
+    "plots_harm",
+    "gun",
+    "blade_weapon",
+    "fire",
+    "explosion",
+    "medical_care",
+    "seriously_ill",
+    "blood_wound",
+    "vehicle_crash",
+    "cage_net_trap",
+    "restraints",
+    "dangerous_machine"
+  ],
+  "assign": {
+    "monster_creature": "jev",
+    "ghost_spirit": "jev",
+    "reanimated_dead": "jev",
+    "skeleton_bones": "jev",
+    "dead_body": "jev",
+    "shark": "jev",
+    "spider_insect": "jev",
+    "snake_reptile": "jev",
+    "large_predator": "jev",
+    "rodent_bat": "jev",
+    "clown": "jev",
+    "doll_puppet": "jev",
+    "mask": "jev",
+    "robot_machine_being": "jev",
+    "witch_sorcerer": "jev",
+    "dark_magic": "jev",
+    "alien": "jev",
+    "scary_appearance": "jev",
+    "gun": "jev",
+    "blade_weapon": "jev",
+    "fire": "jev",
+    "explosion": "jev",
+    "storm": "sonnet",
+    "deep_dark_water": "sonnet",
+    "heights": "sonnet",
+    "darkness": "sonnet",
+    "needle_medical": "sonnet",
+    "medical_care": "jev",
+    "seriously_ill": "jev",
+    "blood_wound": "jev",
+    "vehicle_crash": "jev",
+    "cage_net_trap": "jev",
+    "restraints": "jev",
+    "graveyard_funeral": "sonnet",
+    "dangerous_machine": "jev",
+    "chased": "jev",
+    "attacked": "jev",
+    "falls": "jev",
+    "nearly_falls": "jev",
+    "cannot_breathe": "jev",
+    "caught_in_hazard": "jev",
+    "vehicle_accident": "jev",
+    "child_in_danger": "jev",
+    "creature_threat": "jev",
+    "weapon_used": "sonnet",
+    "battle": "jev",
+    "captured": "sonnet",
+    "trapped": "sonnet",
+    "swallowed": "sonnet",
+    "injured": "jev",
+    "badly_hurt": "jev",
+    "dies": "sonnet",
+    "loved_one_dies": "jev",
+    "pet_dies": "jev",
+    "believed_dead": "jev",
+    "parent_death_learned": "jev",
+    "grieving": "jev",
+    "child_taken": "sonnet",
+    "child_separated": "jev",
+    "parent_searching": "jev",
+    "abandoned": "sonnet",
+    "family_in_danger": "sonnet",
+    "parents_argue": "jev",
+    "rages_at_child": "jev",
+    "threatens_harm": "sonnet",
+    "plots_harm": "jev",
+    "mocked": "jev",
+    "excluded": "jev",
+    "discrimination": "jev",
+    "caregiver_cruelty": "sonnet",
+    "betrayal": "jev",
+    "transforms": "jev",
+    "possessed": "jev",
+    "nightmare": "jev",
+    "unseen_threat": "jev",
+    "appears_suddenly": "jev",
+    "startled": "jev",
+    "child_frightened": "sonnet",
+    "afraid_for_safety": "jev",
+    "screams": "jev",
+    "crying": "sonnet",
+    "despair": "sonnet",
+    "animal_cruelty": "jev",
+    "animal_in_danger": "jev",
+    "dangerous_act": "jev",
+    "runs_away": "jev",
+    "goes_with_stranger": "jev",
+    "slapstick": "jev",
+    "comic_peril": "jev"
+  },
+  "evidence": {
+    "monster_creature": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "ghost_spirit": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "reanimated_dead": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "skeleton_bones": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "dead_body": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "shark": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "spider_insect": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "snake_reptile": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "large_predator": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "rodent_bat": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "clown": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "doll_puppet": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "mask": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "robot_machine_being": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "witch_sorcerer": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "dark_magic": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "alien": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "scary_appearance": {
+      "stage": "A",
+      "group": "creatures_figures",
+      "why": "not contested: stage A creatures_figures Jev recall 0.886 (62/70) vs live 0.671 (47/70); precision 0.187 vs 0.282, lift 1.409 vs 1.225"
+    },
+    "gun": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 2,
+        "items": 114,
+        "recall": 0.018,
+        "recall_should_flag": 0.025,
+        "hits": 2,
+        "fires": 5,
+        "precision": 0.4
+      },
+      "sonnet": {
+        "caught": 2,
+        "items": 114,
+        "recall": 0.018,
+        "recall_should_flag": 0.025,
+        "hits": 2,
+        "fires": 7,
+        "precision": 0.286
+      },
+      "why": "Jev caught 2 vs Sonnet 2 of 114; precision 2/5 vs 2/7 -> Jev not worse"
+    },
+    "blade_weapon": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 8,
+        "items": 114,
+        "recall": 0.07,
+        "recall_should_flag": 0.063,
+        "hits": 6,
+        "fires": 9,
+        "precision": 0.667
+      },
+      "sonnet": {
+        "caught": 7,
+        "items": 114,
+        "recall": 0.061,
+        "recall_should_flag": 0.05,
+        "hits": 6,
+        "fires": 11,
+        "precision": 0.545
+      },
+      "why": "Jev caught 8 vs Sonnet 7 of 114; precision 6/9 vs 6/11 -> Jev not worse"
+    },
+    "fire": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 9,
+        "items": 114,
+        "recall": 0.079,
+        "recall_should_flag": 0.088,
+        "hits": 6,
+        "fires": 8,
+        "precision": 0.75
+      },
+      "sonnet": {
+        "caught": 8,
+        "items": 114,
+        "recall": 0.07,
+        "recall_should_flag": 0.088,
+        "hits": 5,
+        "fires": 9,
+        "precision": 0.556
+      },
+      "why": "Jev caught 9 vs Sonnet 8 of 114; precision 6/8 vs 5/9 -> Jev not worse"
+    },
+    "explosion": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 9,
+        "items": 114,
+        "recall": 0.079,
+        "recall_should_flag": 0.075,
+        "hits": 5,
+        "fires": 8,
+        "precision": 0.625
+      },
+      "sonnet": {
+        "caught": 5,
+        "items": 114,
+        "recall": 0.044,
+        "recall_should_flag": 0.038,
+        "hits": 4,
+        "fires": 7,
+        "precision": 0.571
+      },
+      "why": "Jev caught 9 vs Sonnet 5 of 114; precision 5/8 vs 4/7 -> Jev not worse"
+    },
+    "storm": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 10,
+        "items": 114,
+        "recall": 0.088,
+        "recall_should_flag": 0.113,
+        "hits": 7,
+        "fires": 18,
+        "precision": 0.389
+      },
+      "sonnet": {
+        "caught": 15,
+        "items": 114,
+        "recall": 0.132,
+        "recall_should_flag": 0.175,
+        "hits": 11,
+        "fires": 24,
+        "precision": 0.458
+      },
+      "why": "Jev caught 10 vs Sonnet 15 of 114; precision 7/18 vs 11/24 -> Jev recall worse, Jev precision worse"
+    },
+    "deep_dark_water": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 6,
+        "items": 114,
+        "recall": 0.053,
+        "recall_should_flag": 0.063,
+        "hits": 2,
+        "fires": 8,
+        "precision": 0.25
+      },
+      "sonnet": {
+        "caught": 8,
+        "items": 114,
+        "recall": 0.07,
+        "recall_should_flag": 0.075,
+        "hits": 5,
+        "fires": 11,
+        "precision": 0.455
+      },
+      "why": "Jev caught 6 vs Sonnet 8 of 114; precision 2/8 vs 5/11 -> Jev recall worse, Jev precision worse"
+    },
+    "heights": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 7,
+        "items": 114,
+        "recall": 0.061,
+        "recall_should_flag": 0.088,
+        "hits": 4,
+        "fires": 18,
+        "precision": 0.222
+      },
+      "sonnet": {
+        "caught": 9,
+        "items": 114,
+        "recall": 0.079,
+        "recall_should_flag": 0.088,
+        "hits": 7,
+        "fires": 22,
+        "precision": 0.318
+      },
+      "why": "Jev caught 7 vs Sonnet 9 of 114; precision 4/18 vs 7/22 -> Jev recall worse, Jev precision worse"
+    },
+    "darkness": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 5,
+        "items": 114,
+        "recall": 0.044,
+        "recall_should_flag": 0.038,
+        "hits": 2,
+        "fires": 10,
+        "precision": 0.2
+      },
+      "sonnet": {
+        "caught": 5,
+        "items": 114,
+        "recall": 0.044,
+        "recall_should_flag": 0.038,
+        "hits": 2,
+        "fires": 4,
+        "precision": 0.5
+      },
+      "why": "Jev caught 5 vs Sonnet 5 of 114; precision 2/10 vs 2/4 -> Jev precision worse"
+    },
+    "needle_medical": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": true,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 0,
+        "items": 114,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 1,
+        "precision": 0
+      },
+      "sonnet": {
+        "caught": 0,
+        "items": 114,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 2,
+        "precision": 0
+      },
+      "why": "thin evidence (max caught 0, max fires 2): group objects_hazards -> sonnet"
+    },
+    "medical_care": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 2,
+        "items": 114,
+        "recall": 0.018,
+        "recall_should_flag": 0.013,
+        "hits": 2,
+        "fires": 5,
+        "precision": 0.4
+      },
+      "sonnet": {
+        "caught": 0,
+        "items": 114,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 3,
+        "precision": 0
+      },
+      "why": "Jev caught 2 vs Sonnet 0 of 114; precision 2/5 vs 0/3 -> Jev not worse"
+    },
+    "seriously_ill": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 5,
+        "items": 114,
+        "recall": 0.044,
+        "recall_should_flag": 0.038,
+        "hits": 3,
+        "fires": 14,
+        "precision": 0.214
+      },
+      "sonnet": {
+        "caught": 1,
+        "items": 114,
+        "recall": 0.009,
+        "recall_should_flag": 0,
+        "hits": 1,
+        "fires": 4,
+        "precision": 0.25
+      },
+      "why": "Jev caught 5 vs Sonnet 1 of 114; precision 3/14 vs 1/4 -> Jev not worse"
+    },
+    "blood_wound": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 3,
+        "items": 114,
+        "recall": 0.026,
+        "recall_should_flag": 0.025,
+        "hits": 2,
+        "fires": 3,
+        "precision": 0.667
+      },
+      "sonnet": {
+        "caught": 3,
+        "items": 114,
+        "recall": 0.026,
+        "recall_should_flag": 0.025,
+        "hits": 2,
+        "fires": 3,
+        "precision": 0.667
+      },
+      "why": "Jev caught 3 vs Sonnet 3 of 114; precision 2/3 vs 2/3 -> Jev not worse"
+    },
+    "vehicle_crash": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 2,
+        "items": 114,
+        "recall": 0.018,
+        "recall_should_flag": 0.025,
+        "hits": 1,
+        "fires": 3,
+        "precision": 0.333
+      },
+      "sonnet": {
+        "caught": 3,
+        "items": 114,
+        "recall": 0.026,
+        "recall_should_flag": 0.038,
+        "hits": 2,
+        "fires": 5,
+        "precision": 0.4
+      },
+      "why": "Jev caught 2 vs Sonnet 3 of 114; precision 1/3 vs 2/5 -> Jev not worse"
+    },
+    "cage_net_trap": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 3,
+        "items": 114,
+        "recall": 0.026,
+        "recall_should_flag": 0.025,
+        "hits": 3,
+        "fires": 6,
+        "precision": 0.5
+      },
+      "sonnet": {
+        "caught": 1,
+        "items": 114,
+        "recall": 0.009,
+        "recall_should_flag": 0.013,
+        "hits": 1,
+        "fires": 4,
+        "precision": 0.25
+      },
+      "why": "Jev caught 3 vs Sonnet 1 of 114; precision 3/6 vs 1/4 -> Jev not worse"
+    },
+    "restraints": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 0,
+        "items": 114,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 2,
+        "precision": 0
+      },
+      "sonnet": {
+        "caught": 0,
+        "items": 114,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 3,
+        "precision": 0
+      },
+      "why": "Jev caught 0 vs Sonnet 0 of 114; precision 0/2 vs 0/3 -> Jev not worse"
+    },
+    "graveyard_funeral": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 2,
+        "items": 114,
+        "recall": 0.018,
+        "recall_should_flag": 0.025,
+        "hits": 1,
+        "fires": 2,
+        "precision": 0.5
+      },
+      "sonnet": {
+        "caught": 4,
+        "items": 114,
+        "recall": 0.035,
+        "recall_should_flag": 0.038,
+        "hits": 2,
+        "fires": 4,
+        "precision": 0.5
+      },
+      "why": "Jev caught 2 vs Sonnet 4 of 114; precision 1/2 vs 2/4 -> Jev recall worse"
+    },
+    "dangerous_machine": {
+      "stage": "B",
+      "group": "objects_hazards",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 22,
+        "items": 114,
+        "recall": 0.193,
+        "recall_should_flag": 0.225,
+        "hits": 13,
+        "fires": 22,
+        "precision": 0.591
+      },
+      "sonnet": {
+        "caught": 8,
+        "items": 114,
+        "recall": 0.07,
+        "recall_should_flag": 0.088,
+        "hits": 5,
+        "fires": 8,
+        "precision": 0.625
+      },
+      "why": "Jev caught 22 vs Sonnet 8 of 114; precision 13/22 vs 5/8 -> Jev not worse"
+    },
+    "chased": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "attacked": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "falls": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "nearly_falls": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "cannot_breathe": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "caught_in_hazard": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "vehicle_accident": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "child_in_danger": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "creature_threat": {
+      "stage": "A",
+      "group": "peril",
+      "why": "not contested: stage A peril Jev recall 0.729 (124/170) vs live 0.724 (123/170); precision 0.607 vs 0.679, lift 2.409 vs 1.455"
+    },
+    "weapon_used": {
+      "stage": "B",
+      "group": "violence",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 11,
+        "items": 147,
+        "recall": 0.075,
+        "recall_should_flag": 0.065,
+        "hits": 5,
+        "fires": 8,
+        "precision": 0.625
+      },
+      "sonnet": {
+        "caught": 29,
+        "items": 147,
+        "recall": 0.197,
+        "recall_should_flag": 0.215,
+        "hits": 13,
+        "fires": 18,
+        "precision": 0.722
+      },
+      "why": "Jev caught 11 vs Sonnet 29 of 147; precision 5/8 vs 13/18 -> Jev recall worse"
+    },
+    "battle": {
+      "stage": "A",
+      "group": "violence",
+      "why": "not contested: stage A violence Jev recall 0.241 (33/137) vs live 0.204 (28/137); precision 0.731 vs 0.867, lift 3.726 vs 2.331"
+    },
+    "captured": {
+      "stage": "B",
+      "group": "captivity",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 15,
+        "items": 48,
+        "recall": 0.313,
+        "recall_should_flag": 0.297,
+        "hits": 11,
+        "fires": 27,
+        "precision": 0.407
+      },
+      "sonnet": {
+        "caught": 23,
+        "items": 48,
+        "recall": 0.479,
+        "recall_should_flag": 0.486,
+        "hits": 18,
+        "fires": 35,
+        "precision": 0.514
+      },
+      "why": "Jev caught 15 vs Sonnet 23 of 48; precision 11/27 vs 18/35 -> Jev recall worse, Jev precision worse"
+    },
+    "trapped": {
+      "stage": "B",
+      "group": "captivity",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 11,
+        "items": 48,
+        "recall": 0.229,
+        "recall_should_flag": 0.297,
+        "hits": 7,
+        "fires": 21,
+        "precision": 0.333
+      },
+      "sonnet": {
+        "caught": 14,
+        "items": 48,
+        "recall": 0.292,
+        "recall_should_flag": 0.351,
+        "hits": 11,
+        "fires": 30,
+        "precision": 0.367
+      },
+      "why": "Jev caught 11 vs Sonnet 14 of 48; precision 7/21 vs 11/30 -> Jev recall worse"
+    },
+    "swallowed": {
+      "stage": "B",
+      "group": "captivity",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 3,
+        "items": 48,
+        "recall": 0.063,
+        "recall_should_flag": 0.081,
+        "hits": 2,
+        "fires": 4,
+        "precision": 0.5
+      },
+      "sonnet": {
+        "caught": 3,
+        "items": 48,
+        "recall": 0.063,
+        "recall_should_flag": 0.081,
+        "hits": 2,
+        "fires": 2,
+        "precision": 1
+      },
+      "why": "Jev caught 3 vs Sonnet 3 of 48; precision 2/4 vs 2/2 -> Jev precision worse"
+    },
+    "injured": {
+      "stage": "A",
+      "group": "injury",
+      "why": "not contested: stage A injury Jev recall 0.347 (17/49) vs live 0.224 (11/49); precision 0.308 vs 0.444, lift 3.751 vs 2.632"
+    },
+    "badly_hurt": {
+      "stage": "A",
+      "group": "injury",
+      "why": "not contested: stage A injury Jev recall 0.347 (17/49) vs live 0.224 (11/49); precision 0.308 vs 0.444, lift 3.751 vs 2.632"
+    },
+    "dies": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 13,
+        "items": 94,
+        "recall": 0.138,
+        "recall_should_flag": 0.161,
+        "hits": 6,
+        "fires": 8,
+        "precision": 0.75
+      },
+      "sonnet": {
+        "caught": 21,
+        "items": 94,
+        "recall": 0.223,
+        "recall_should_flag": 0.29,
+        "hits": 7,
+        "fires": 7,
+        "precision": 1
+      },
+      "why": "Jev caught 13 vs Sonnet 21 of 94; precision 6/8 vs 7/7 -> Jev recall worse, Jev precision worse"
+    },
+    "loved_one_dies": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 13,
+        "items": 94,
+        "recall": 0.138,
+        "recall_should_flag": 0.177,
+        "hits": 5,
+        "fires": 8,
+        "precision": 0.625
+      },
+      "sonnet": {
+        "caught": 10,
+        "items": 94,
+        "recall": 0.106,
+        "recall_should_flag": 0.129,
+        "hits": 4,
+        "fires": 6,
+        "precision": 0.667
+      },
+      "why": "Jev caught 13 vs Sonnet 10 of 94; precision 5/8 vs 4/6 -> Jev not worse"
+    },
+    "pet_dies": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 1,
+        "items": 94,
+        "recall": 0.011,
+        "recall_should_flag": 0.016,
+        "hits": 1,
+        "fires": 1,
+        "precision": 1
+      },
+      "sonnet": {
+        "caught": 2,
+        "items": 94,
+        "recall": 0.021,
+        "recall_should_flag": 0.032,
+        "hits": 2,
+        "fires": 3,
+        "precision": 0.667
+      },
+      "why": "Jev caught 1 vs Sonnet 2 of 94; precision 1/1 vs 2/3 -> Jev not worse"
+    },
+    "believed_dead": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 16,
+        "items": 94,
+        "recall": 0.17,
+        "recall_should_flag": 0.21,
+        "hits": 8,
+        "fires": 21,
+        "precision": 0.381
+      },
+      "sonnet": {
+        "caught": 12,
+        "items": 94,
+        "recall": 0.128,
+        "recall_should_flag": 0.177,
+        "hits": 6,
+        "fires": 17,
+        "precision": 0.353
+      },
+      "why": "Jev caught 16 vs Sonnet 12 of 94; precision 8/21 vs 6/17 -> Jev not worse"
+    },
+    "parent_death_learned": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 7,
+        "items": 94,
+        "recall": 0.074,
+        "recall_should_flag": 0.113,
+        "hits": 2,
+        "fires": 4,
+        "precision": 0.5
+      },
+      "sonnet": {
+        "caught": 4,
+        "items": 94,
+        "recall": 0.043,
+        "recall_should_flag": 0.065,
+        "hits": 2,
+        "fires": 3,
+        "precision": 0.667
+      },
+      "why": "Jev caught 7 vs Sonnet 4 of 94; precision 2/4 vs 2/3 -> Jev not worse"
+    },
+    "grieving": {
+      "stage": "B",
+      "group": "death",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 14,
+        "items": 94,
+        "recall": 0.149,
+        "recall_should_flag": 0.177,
+        "hits": 8,
+        "fires": 31,
+        "precision": 0.258
+      },
+      "sonnet": {
+        "caught": 12,
+        "items": 94,
+        "recall": 0.128,
+        "recall_should_flag": 0.161,
+        "hits": 6,
+        "fires": 22,
+        "precision": 0.273
+      },
+      "why": "Jev caught 14 vs Sonnet 12 of 94; precision 8/31 vs 6/22 -> Jev not worse"
+    },
+    "child_taken": {
+      "stage": "B",
+      "group": "separation",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 2,
+        "items": 24,
+        "recall": 0.083,
+        "recall_should_flag": 0.133,
+        "hits": 2,
+        "fires": 6,
+        "precision": 0.333
+      },
+      "sonnet": {
+        "caught": 3,
+        "items": 24,
+        "recall": 0.125,
+        "recall_should_flag": 0.2,
+        "hits": 2,
+        "fires": 3,
+        "precision": 0.667
+      },
+      "why": "Jev caught 2 vs Sonnet 3 of 24; precision 2/6 vs 2/3 -> Jev precision worse"
+    },
+    "child_separated": {
+      "stage": "B",
+      "group": "separation",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 3,
+        "items": 24,
+        "recall": 0.125,
+        "recall_should_flag": 0.2,
+        "hits": 1,
+        "fires": 4,
+        "precision": 0.25
+      },
+      "sonnet": {
+        "caught": 2,
+        "items": 24,
+        "recall": 0.083,
+        "recall_should_flag": 0.133,
+        "hits": 2,
+        "fires": 15,
+        "precision": 0.133
+      },
+      "why": "Jev caught 3 vs Sonnet 2 of 24; precision 1/4 vs 2/15 -> Jev not worse"
+    },
+    "parent_searching": {
+      "stage": "B",
+      "group": "separation",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 4,
+        "items": 24,
+        "recall": 0.167,
+        "recall_should_flag": 0.267,
+        "hits": 3,
+        "fires": 10,
+        "precision": 0.3
+      },
+      "sonnet": {
+        "caught": 2,
+        "items": 24,
+        "recall": 0.083,
+        "recall_should_flag": 0.133,
+        "hits": 2,
+        "fires": 13,
+        "precision": 0.154
+      },
+      "why": "Jev caught 4 vs Sonnet 2 of 24; precision 3/10 vs 2/13 -> Jev not worse"
+    },
+    "abandoned": {
+      "stage": "B",
+      "group": "separation",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 3,
+        "items": 24,
+        "recall": 0.125,
+        "recall_should_flag": 0.2,
+        "hits": 2,
+        "fires": 24,
+        "precision": 0.083
+      },
+      "sonnet": {
+        "caught": 1,
+        "items": 24,
+        "recall": 0.042,
+        "recall_should_flag": 0.067,
+        "hits": 1,
+        "fires": 5,
+        "precision": 0.2
+      },
+      "why": "Jev caught 3 vs Sonnet 1 of 24; precision 2/24 vs 1/5 -> Jev precision worse"
+    },
+    "family_in_danger": {
+      "stage": "B",
+      "group": "separation",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 3,
+        "items": 24,
+        "recall": 0.125,
+        "recall_should_flag": 0.2,
+        "hits": 2,
+        "fires": 9,
+        "precision": 0.222
+      },
+      "sonnet": {
+        "caught": 5,
+        "items": 24,
+        "recall": 0.208,
+        "recall_should_flag": 0.333,
+        "hits": 2,
+        "fires": 23,
+        "precision": 0.087
+      },
+      "why": "Jev caught 3 vs Sonnet 5 of 24; precision 2/9 vs 2/23 -> Jev recall worse"
+    },
+    "parents_argue": {
+      "stage": "B",
+      "group": "separation",
+      "thin": true,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 0,
+        "items": 24,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 0,
+        "precision": null
+      },
+      "sonnet": {
+        "caught": 1,
+        "items": 24,
+        "recall": 0.042,
+        "recall_should_flag": 0,
+        "hits": 1,
+        "fires": 1,
+        "precision": 1
+      },
+      "why": "thin evidence (max caught 1, max fires 1): group separation -> jev"
+    },
+    "rages_at_child": {
+      "stage": "A",
+      "group": "hostility",
+      "why": "not contested: stage A hostility Jev recall 0.647 (33/51) vs live 0.373 (19/51); precision 0.213 vs 0.333, lift 2.531 vs 2.244"
+    },
+    "threatens_harm": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 14,
+        "items": 60,
+        "recall": 0.233,
+        "recall_should_flag": 0.462,
+        "hits": 9,
+        "fires": 36,
+        "precision": 0.25
+      },
+      "sonnet": {
+        "caught": 17,
+        "items": 60,
+        "recall": 0.283,
+        "recall_should_flag": 0.538,
+        "hits": 12,
+        "fires": 66,
+        "precision": 0.182
+      },
+      "why": "Jev caught 14 vs Sonnet 17 of 60; precision 9/36 vs 12/66 -> Jev recall worse"
+    },
+    "plots_harm": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 10,
+        "items": 60,
+        "recall": 0.167,
+        "recall_should_flag": 0.346,
+        "hits": 8,
+        "fires": 39,
+        "precision": 0.205
+      },
+      "sonnet": {
+        "caught": 5,
+        "items": 60,
+        "recall": 0.083,
+        "recall_should_flag": 0.154,
+        "hits": 5,
+        "fires": 25,
+        "precision": 0.2
+      },
+      "why": "Jev caught 10 vs Sonnet 5 of 60; precision 8/39 vs 5/25 -> Jev not worse"
+    },
+    "mocked": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 20,
+        "items": 60,
+        "recall": 0.333,
+        "recall_should_flag": 0.462,
+        "hits": 15,
+        "fires": 53,
+        "precision": 0.283
+      },
+      "sonnet": {
+        "caught": 9,
+        "items": 60,
+        "recall": 0.15,
+        "recall_should_flag": 0.269,
+        "hits": 6,
+        "fires": 25,
+        "precision": 0.24
+      },
+      "why": "Jev caught 20 vs Sonnet 9 of 60; precision 15/53 vs 6/25 -> Jev not worse"
+    },
+    "excluded": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 10,
+        "items": 60,
+        "recall": 0.167,
+        "recall_should_flag": 0.231,
+        "hits": 7,
+        "fires": 28,
+        "precision": 0.25
+      },
+      "sonnet": {
+        "caught": 4,
+        "items": 60,
+        "recall": 0.067,
+        "recall_should_flag": 0.154,
+        "hits": 1,
+        "fires": 4,
+        "precision": 0.25
+      },
+      "why": "Jev caught 10 vs Sonnet 4 of 60; precision 7/28 vs 1/4 -> Jev not worse"
+    },
+    "discrimination": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "jev",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 5,
+        "items": 60,
+        "recall": 0.083,
+        "recall_should_flag": 0.154,
+        "hits": 3,
+        "fires": 9,
+        "precision": 0.333
+      },
+      "sonnet": {
+        "caught": 0,
+        "items": 60,
+        "recall": 0,
+        "recall_should_flag": 0,
+        "hits": 0,
+        "fires": 0,
+        "precision": null
+      },
+      "why": "Jev caught 5 vs Sonnet 0 of 60; precision 3/9 vs 0/0 -> Jev not worse"
+    },
+    "caregiver_cruelty": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 6,
+        "items": 60,
+        "recall": 0.1,
+        "recall_should_flag": 0.077,
+        "hits": 4,
+        "fires": 11,
+        "precision": 0.364
+      },
+      "sonnet": {
+        "caught": 8,
+        "items": 60,
+        "recall": 0.133,
+        "recall_should_flag": 0.077,
+        "hits": 6,
+        "fires": 11,
+        "precision": 0.545
+      },
+      "why": "Jev caught 6 vs Sonnet 8 of 60; precision 4/11 vs 6/11 -> Jev recall worse, Jev precision worse"
+    },
+    "betrayal": {
+      "stage": "B",
+      "group": "hostility",
+      "thin": false,
+      "question_verdict": "jev",
+      "strict_verdict": "sonnet",
+      "group_verdict": "jev",
+      "jev_worse_recall": false,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 7,
+        "items": 60,
+        "recall": 0.117,
+        "recall_should_flag": 0.115,
+        "hits": 5,
+        "fires": 16,
+        "precision": 0.313
+      },
+      "sonnet": {
+        "caught": 6,
+        "items": 60,
+        "recall": 0.1,
+        "recall_should_flag": 0.077,
+        "hits": 6,
+        "fires": 18,
+        "precision": 0.333
+      },
+      "why": "Jev caught 7 vs Sonnet 6 of 60; precision 5/16 vs 6/18 -> Jev not worse"
+    },
+    "transforms": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "possessed": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "nightmare": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "unseen_threat": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "appears_suddenly": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "startled": {
+      "stage": "A",
+      "group": "eerie",
+      "why": "not contested: stage A eerie Jev recall 0.66 (35/53) vs live 0.434 (23/53); precision 0.161 vs 0.293, lift 1.794 vs 1.731"
+    },
+    "child_frightened": {
+      "stage": "B",
+      "group": "distress",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": false,
+      "jev": {
+        "caught": 18,
+        "items": 58,
+        "recall": 0.31,
+        "recall_should_flag": 0.4,
+        "hits": 14,
+        "fires": 65,
+        "precision": 0.215
+      },
+      "sonnet": {
+        "caught": 21,
+        "items": 58,
+        "recall": 0.362,
+        "recall_should_flag": 0.5,
+        "hits": 16,
+        "fires": 78,
+        "precision": 0.205
+      },
+      "why": "Jev caught 18 vs Sonnet 21 of 58; precision 14/65 vs 16/78 -> Jev recall worse"
+    },
+    "afraid_for_safety": {
+      "stage": "A",
+      "group": "distress",
+      "why": "not contested: stage A distress Jev recall 0.759 (41/54) vs live 0.556 (30/54); precision 0.157 vs 0.247, lift 1.45 vs 1.407"
+    },
+    "screams": {
+      "stage": "A",
+      "group": "distress",
+      "why": "not contested: stage A distress Jev recall 0.759 (41/54) vs live 0.556 (30/54); precision 0.157 vs 0.247, lift 1.45 vs 1.407"
+    },
+    "crying": {
+      "stage": "B",
+      "group": "distress",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 4,
+        "items": 58,
+        "recall": 0.069,
+        "recall_should_flag": 0.1,
+        "hits": 4,
+        "fires": 19,
+        "precision": 0.211
+      },
+      "sonnet": {
+        "caught": 9,
+        "items": 58,
+        "recall": 0.155,
+        "recall_should_flag": 0.3,
+        "hits": 6,
+        "fires": 19,
+        "precision": 0.316
+      },
+      "why": "Jev caught 4 vs Sonnet 9 of 58; precision 4/19 vs 6/19 -> Jev recall worse, Jev precision worse"
+    },
+    "despair": {
+      "stage": "B",
+      "group": "distress",
+      "thin": false,
+      "question_verdict": "sonnet",
+      "strict_verdict": "sonnet",
+      "group_verdict": "sonnet",
+      "jev_worse_recall": true,
+      "jev_worse_precision": true,
+      "jev": {
+        "caught": 1,
+        "items": 58,
+        "recall": 0.017,
+        "recall_should_flag": 0.033,
+        "hits": 1,
+        "fires": 14,
+        "precision": 0.071
+      },
+      "sonnet": {
+        "caught": 12,
+        "items": 58,
+        "recall": 0.207,
+        "recall_should_flag": 0.367,
+        "hits": 10,
+        "fires": 25,
+        "precision": 0.4
+      },
+      "why": "Jev caught 1 vs Sonnet 12 of 58; precision 1/14 vs 10/25 -> Jev recall worse, Jev precision worse"
+    },
+    "animal_cruelty": {
+      "stage": "A",
+      "group": "animals",
+      "why": "not contested: stage A animals Jev recall 0.216 (42/194) vs live 0.057 (11/194); precision 0.731 vs 0.714, lift 3.039 vs 1.887"
+    },
+    "animal_in_danger": {
+      "stage": "A",
+      "group": "animals",
+      "why": "not contested: stage A animals Jev recall 0.216 (42/194) vs live 0.057 (11/194); precision 0.731 vs 0.714, lift 3.039 vs 1.887"
+    },
+    "dangerous_act": {
+      "stage": "A",
+      "group": "copyable",
+      "why": "not contested: stage A copyable Jev recall 0.486 (18/37) vs live 0.108 (4/37); precision 0.209 vs 0.273, lift 3.387 vs 2.879"
+    },
+    "runs_away": {
+      "stage": "A",
+      "group": "copyable",
+      "why": "not contested: stage A copyable Jev recall 0.486 (18/37) vs live 0.108 (4/37); precision 0.209 vs 0.273, lift 3.387 vs 2.879"
+    },
+    "goes_with_stranger": {
+      "stage": "A",
+      "group": "copyable",
+      "why": "not contested: stage A copyable Jev recall 0.486 (18/37) vs live 0.108 (4/37); precision 0.209 vs 0.273, lift 3.387 vs 2.879"
+    },
+    "slapstick": {
+      "stage": "A",
+      "group": "copyable",
+      "why": "not contested: stage A copyable Jev recall 0.486 (18/37) vs live 0.108 (4/37); precision 0.209 vs 0.273, lift 3.387 vs 2.879"
+    },
+    "comic_peril": {
+      "stage": "A",
+      "group": "copyable",
+      "why": "not contested: stage A copyable Jev recall 0.486 (18/37) vs live 0.108 (4/37); precision 0.209 vs 0.273, lift 3.387 vs 2.879"
+    }
+  },
+  "groups_stage_b": {
+    "death": {
+      "recall": true,
+      "precision": true,
+      "model": "sonnet",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 29,
+        "items": 94,
+        "recall": 0.309,
+        "recall_should_flag": 0.387,
+        "hits": 14,
+        "fires": 49,
+        "precision": 0.286
+      },
+      "sonnet": {
+        "caught": 38,
+        "items": 94,
+        "recall": 0.404,
+        "recall_should_flag": 0.548,
+        "hits": 17,
+        "fires": 44,
+        "precision": 0.386
+      }
+    },
+    "separation": {
+      "recall": false,
+      "precision": false,
+      "model": "jev",
+      "strict": "jev",
+      "jev": {
+        "caught": 11,
+        "items": 24,
+        "recall": 0.458,
+        "recall_should_flag": 0.733,
+        "hits": 8,
+        "fires": 48,
+        "precision": 0.167
+      },
+      "sonnet": {
+        "caught": 8,
+        "items": 24,
+        "recall": 0.333,
+        "recall_should_flag": 0.467,
+        "hits": 6,
+        "fires": 50,
+        "precision": 0.12
+      }
+    },
+    "captivity": {
+      "recall": true,
+      "precision": true,
+      "model": "sonnet",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 19,
+        "items": 48,
+        "recall": 0.396,
+        "recall_should_flag": 0.405,
+        "hits": 14,
+        "fires": 40,
+        "precision": 0.35
+      },
+      "sonnet": {
+        "caught": 32,
+        "items": 48,
+        "recall": 0.667,
+        "recall_should_flag": 0.73,
+        "hits": 25,
+        "fires": 57,
+        "precision": 0.439
+      }
+    },
+    "distress": {
+      "recall": true,
+      "precision": true,
+      "model": "sonnet",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 20,
+        "items": 58,
+        "recall": 0.345,
+        "recall_should_flag": 0.467,
+        "hits": 17,
+        "fires": 87,
+        "precision": 0.195
+      },
+      "sonnet": {
+        "caught": 25,
+        "items": 58,
+        "recall": 0.431,
+        "recall_should_flag": 0.633,
+        "hits": 23,
+        "fires": 105,
+        "precision": 0.219
+      }
+    },
+    "hostility": {
+      "recall": false,
+      "precision": false,
+      "model": "jev",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 34,
+        "items": 60,
+        "recall": 0.567,
+        "recall_should_flag": 0.769,
+        "hits": 28,
+        "fires": 119,
+        "precision": 0.235
+      },
+      "sonnet": {
+        "caught": 31,
+        "items": 60,
+        "recall": 0.517,
+        "recall_should_flag": 0.692,
+        "hits": 25,
+        "fires": 105,
+        "precision": 0.238
+      }
+    },
+    "violence": {
+      "recall": true,
+      "precision": false,
+      "model": "sonnet",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 11,
+        "items": 147,
+        "recall": 0.075,
+        "recall_should_flag": 0.065,
+        "hits": 5,
+        "fires": 8,
+        "precision": 0.625
+      },
+      "sonnet": {
+        "caught": 29,
+        "items": 147,
+        "recall": 0.197,
+        "recall_should_flag": 0.215,
+        "hits": 13,
+        "fires": 18,
+        "precision": 0.722
+      }
+    },
+    "objects_hazards": {
+      "recall": false,
+      "precision": true,
+      "model": "sonnet",
+      "strict": "sonnet",
+      "jev": {
+        "caught": 66,
+        "items": 114,
+        "recall": 0.579,
+        "recall_should_flag": 0.625,
+        "hits": 46,
+        "fires": 114,
+        "precision": 0.404
+      },
+      "sonnet": {
+        "caught": 61,
+        "items": 114,
+        "recall": 0.535,
+        "recall_should_flag": 0.588,
+        "hits": 46,
+        "fires": 111,
+        "precision": 0.414
+      }
+    }
+  },
+  "groups_stage_a": [
+    {
+      "group": "creatures_figures",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.886,
+        "answered": 62,
+        "items": 70,
+        "precision": 0.187,
+        "lift": 1.409
+      },
+      "live": {
+        "recall": 0.671,
+        "answered": 47,
+        "items": 70,
+        "precision": 0.282,
+        "lift": 1.225
+      }
+    },
+    {
+      "group": "objects_hazards",
+      "verdict": "contested",
+      "jev": {
+        "recall": 0.598,
+        "answered": 61,
+        "items": 102,
+        "precision": 0.42,
+        "lift": 2.395
+      },
+      "live": {
+        "recall": 0.696,
+        "answered": 71,
+        "items": 102,
+        "precision": 0.434,
+        "lift": 1.366
+      }
+    },
+    {
+      "group": "peril",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.729,
+        "answered": 124,
+        "items": 170,
+        "precision": 0.607,
+        "lift": 2.409
+      },
+      "live": {
+        "recall": 0.724,
+        "answered": 123,
+        "items": 170,
+        "precision": 0.679,
+        "lift": 1.455
+      }
+    },
+    {
+      "group": "violence",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.241,
+        "answered": 33,
+        "items": 137,
+        "precision": 0.731,
+        "lift": 3.726
+      },
+      "live": {
+        "recall": 0.204,
+        "answered": 28,
+        "items": 137,
+        "precision": 0.867,
+        "lift": 2.331
+      }
+    },
+    {
+      "group": "death",
+      "verdict": "contested",
+      "jev": {
+        "recall": 0.356,
+        "answered": 32,
+        "items": 90,
+        "precision": 0.28,
+        "lift": 2.237
+      },
+      "live": {
+        "recall": 0.411,
+        "answered": 37,
+        "items": 90,
+        "precision": 0.533,
+        "lift": 2.392
+      }
+    },
+    {
+      "group": "separation",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.458,
+        "answered": 11,
+        "items": 24,
+        "precision": 0.17,
+        "lift": 4.341
+      },
+      "live": {
+        "recall": 0.333,
+        "answered": 8,
+        "items": 24,
+        "precision": 0.25,
+        "lift": 3.083
+      }
+    },
+    {
+      "group": "injury",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.347,
+        "answered": 17,
+        "items": 49,
+        "precision": 0.308,
+        "lift": 3.751
+      },
+      "live": {
+        "recall": 0.224,
+        "answered": 11,
+        "items": 49,
+        "precision": 0.444,
+        "lift": 2.632
+      }
+    },
+    {
+      "group": "captivity",
+      "verdict": "contested",
+      "jev": {
+        "recall": 0.4,
+        "answered": 18,
+        "items": 45,
+        "precision": 0.333,
+        "lift": 3.882
+      },
+      "live": {
+        "recall": 0.444,
+        "answered": 20,
+        "items": 45,
+        "precision": 0.591,
+        "lift": 3.497
+      }
+    },
+    {
+      "group": "eerie",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.66,
+        "answered": 35,
+        "items": 53,
+        "precision": 0.161,
+        "lift": 1.794
+      },
+      "live": {
+        "recall": 0.434,
+        "answered": 23,
+        "items": 53,
+        "precision": 0.293,
+        "lift": 1.731
+      }
+    },
+    {
+      "group": "hostility",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.647,
+        "answered": 33,
+        "items": 51,
+        "precision": 0.213,
+        "lift": 2.531
+      },
+      "live": {
+        "recall": 0.373,
+        "answered": 19,
+        "items": 51,
+        "precision": 0.333,
+        "lift": 2.244
+      }
+    },
+    {
+      "group": "distress",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.759,
+        "answered": 41,
+        "items": 54,
+        "precision": 0.157,
+        "lift": 1.45
+      },
+      "live": {
+        "recall": 0.556,
+        "answered": 30,
+        "items": 54,
+        "precision": 0.247,
+        "lift": 1.407
+      }
+    },
+    {
+      "group": "animals",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.216,
+        "answered": 42,
+        "items": 194,
+        "precision": 0.731,
+        "lift": 3.039
+      },
+      "live": {
+        "recall": 0.057,
+        "answered": 11,
+        "items": 194,
+        "precision": 0.714,
+        "lift": 1.887
+      }
+    },
+    {
+      "group": "copyable",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.486,
+        "answered": 18,
+        "items": 37,
+        "precision": 0.209,
+        "lift": 3.387
+      },
+      "live": {
+        "recall": 0.108,
+        "answered": 4,
+        "items": 37,
+        "precision": 0.273,
+        "lift": 2.879
+      }
+    },
+    {
+      "group": "ALL",
+      "verdict": "jev",
+      "jev": {
+        "recall": 0.49,
+        "answered": 527,
+        "items": 1076,
+        "precision": 0.269,
+        "lift": null
+      },
+      "live": {
+        "recall": 0.401,
+        "answered": 432,
+        "items": 1076,
+        "precision": 0.411,
+        "lift": null
+      }
+    }
+  ],
+  "codex_rule_items_stage_b": {
+    "threatens_harm": {
+      "jev": {
+        "items": 22,
+        "caught": 13,
+        "recall": 0.591,
+        "items_sf": 22,
+        "caught_sf": 13,
+        "recall_sf": 0.591,
+        "fires": 36,
+        "hits": 9,
+        "precision": 0.25
+      },
+      "sonnet": {
+        "items": 22,
+        "caught": 18,
+        "recall": 0.818,
+        "items_sf": 22,
+        "caught_sf": 18,
+        "recall_sf": 0.818,
+        "fires": 66,
+        "hits": 15,
+        "precision": 0.227
+      }
+    },
+    "plots_harm": {
+      "jev": {
+        "items": 22,
+        "caught": 18,
+        "recall": 0.818,
+        "items_sf": 22,
+        "caught_sf": 18,
+        "recall_sf": 0.818,
+        "fires": 39,
+        "hits": 14,
+        "precision": 0.359
+      },
+      "sonnet": {
+        "items": 22,
+        "caught": 8,
+        "recall": 0.364,
+        "items_sf": 22,
+        "caught_sf": 8,
+        "recall_sf": 0.364,
+        "fires": 25,
+        "hits": 7,
+        "precision": 0.28
+      }
+    },
+    "child_frightened": {
+      "jev": {
+        "items": 27,
+        "caught": 16,
+        "recall": 0.593,
+        "items_sf": 27,
+        "caught_sf": 16,
+        "recall_sf": 0.593,
+        "fires": 65,
+        "hits": 13,
+        "precision": 0.2
+      },
+      "sonnet": {
+        "items": 27,
+        "caught": 14,
+        "recall": 0.519,
+        "items_sf": 27,
+        "caught_sf": 14,
+        "recall_sf": 0.519,
+        "fires": 78,
+        "hits": 10,
+        "precision": 0.128
+      }
+    }
+  },
+  "scorecard_verify_crosscheck": {
+    "file": "v8/scorecard/verify/verify.json",
+    "clusters": {
+      "creatures_figures": {
+        "clusters": 21,
+        "jev": "76%",
+        "live": "52%"
+      },
+      "objects_hazards": {
+        "clusters": 25,
+        "jev": "56%",
+        "live": "64%"
+      },
+      "peril": {
+        "clusters": 37,
+        "jev": "76%",
+        "live": "76%"
+      },
+      "violence": {
+        "clusters": 50,
+        "jev": "36%",
+        "live": "18%"
+      },
+      "death": {
+        "clusters": 23,
+        "jev": "26%",
+        "live": "30%"
+      },
+      "separation": {
+        "clusters": 8,
+        "jev": "38%",
+        "live": "25%"
+      },
+      "injury": {
+        "clusters": 13,
+        "jev": "15%",
+        "live": "15%"
+      },
+      "captivity": {
+        "clusters": 17,
+        "jev": "35%",
+        "live": "59%"
+      },
+      "eerie": {
+        "clusters": 15,
+        "jev": "60%",
+        "live": "40%"
+      },
+      "hostility": {
+        "clusters": 29,
+        "jev": "55%",
+        "live": "31%"
+      },
+      "distress": {
+        "clusters": 16,
+        "jev": "50%",
+        "live": "56%"
+      },
+      "animals": {
+        "clusters": 16,
+        "jev": "0%",
+        "live": "0%"
+      },
+      "copyable": {
+        "clusters": 8,
+        "jev": "63%",
+        "live": "13%"
+      },
+      "ALL": {
+        "clusters": 278,
+        "jev": "47%",
+        "live": "40%"
+      }
+    },
+    "inside_live_footprint": {
+      "creatures_figures": {
+        "n": 18,
+        "jev": "89%",
+        "live": "78%"
+      },
+      "objects_hazards": {
+        "n": 21,
+        "jev": "67%",
+        "live": "95%"
+      },
+      "peril": {
+        "n": 46,
+        "jev": "78%",
+        "live": "87%"
+      },
+      "violence": {
+        "n": 47,
+        "jev": "45%",
+        "live": "34%"
+      },
+      "death": {
+        "n": 23,
+        "jev": "61%",
+        "live": "70%"
+      },
+      "separation": {
+        "n": 6,
+        "jev": "67%",
+        "live": "33%"
+      },
+      "injury": {
+        "n": 16,
+        "jev": "50%",
+        "live": "38%"
+      },
+      "captivity": {
+        "n": 19,
+        "jev": "47%",
+        "live": "63%"
+      },
+      "eerie": {
+        "n": 17,
+        "jev": "59%",
+        "live": "53%"
+      },
+      "hostility": {
+        "n": 14,
+        "jev": "79%",
+        "live": "64%"
+      },
+      "distress": {
+        "n": 11,
+        "jev": "73%",
+        "live": "91%"
+      },
+      "animals": {
+        "n": 9,
+        "jev": "0%",
+        "live": "0%"
+      },
+      "copyable": {
+        "n": 5,
+        "jev": "80%",
+        "live": "20%"
+      },
+      "ALL": {
+        "n": 252,
+        "jev": "62%",
+        "live": "62%",
+        "jev_sf": "64%",
+        "live_sf": "68%"
+      }
+    },
+    "reading": "Groups where live is ahead on clusters or inside its footprint: objects_hazards, death, captivity, distress (all contested and measured in stage B) and PERIL inside the footprint (Jev 78% vs live 87%, n=46; clusters tie 76% vs 76%). Peril questions were NOT in the stage-B Sonnet pass (stage A pooled over 9 films had Jev not worse; the earlier identical-scene measurement favoured Jev on terrified / monster threatens / physical violence), so they stay with Jev in v9 without a same-scene test: the main open question of this split."
+  }
+}

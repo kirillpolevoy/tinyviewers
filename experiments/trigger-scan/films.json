@@ -32,5 +32,101 @@
     "year": 2024,
     "imdb_id": "tt29623480",
     "track": "data/wild-robot.srt"
+  },
+  "up": {
+    "title": "Up",
+    "year": 2009,
+    "imdb_id": "tt1049413",
+    "track": "data/up.srt"
+  },
+  "tangled": {
+    "title": "Tangled",
+    "year": 2010,
+    "imdb_id": "tt0398286",
+    "track": "data/tangled.srt"
+  },
+  "coco": {
+    "title": "Coco",
+    "year": 2017,
+    "imdb_id": "tt2380307",
+    "track": "data/coco.srt"
+  },
+  "how-to-train-your-dragon": {
+    "title": "How to Train Your Dragon",
+    "year": 2010,
+    "imdb_id": "tt0892769",
+    "track": "data/how-to-train-your-dragon.srt"
+  },
+  "book-of-life": {
+    "title": "The Book of Life",
+    "year": 2014,
+    "imdb_id": "tt2262227",
+    "track": "data/book-of-life.srt"
+  },
+  "princess-and-the-frog": {
+    "title": "The Princess and the Frog",
+    "year": 2009,
+    "imdb_id": "tt0780521",
+    "track": "data/princess-and-the-frog.srt"
+  },
+  "moana": {
+    "title": "Moana",
+    "year": 2016,
+    "imdb_id": "tt3521164",
+    "track": "data/moana.srt"
+  },
+  "frozen": {
+    "title": "Frozen",
+    "year": 2013,
+    "imdb_id": "tt2294629",
+    "track": "data/frozen.srt"
+  },
+  "zootopia": {
+    "title": "Zootopia",
+    "year": 2016,
+    "imdb_id": "tt2948356",
+    "track": "data/zootopia.srt"
+  },
+  "good-dinosaur": {
+    "title": "The Good Dinosaur",
+    "year": 2015,
+    "imdb_id": "tt1979388",
+    "track": "data/good-dinosaur.srt"
+  },
+  "incredibles": {
+    "title": "The Incredibles",
+    "year": 2004,
+    "imdb_id": "tt0317705",
+    "track": "data/incredibles.srt"
+  },
+  "big-hero-6": {
+    "title": "Big Hero 6",
+    "year": 2014,
+    "imdb_id": "tt2245084",
+    "track": "data/big-hero-6.srt"
+  },
+  "brave": {
+    "title": "Brave",
+    "year": 2012,
+    "imdb_id": "tt1217209",
+    "track": "data/brave.srt"
+  },
+  "kung-fu-panda": {
+    "title": "Kung Fu Panda",
+    "year": 2008,
+    "imdb_id": "tt0441773",
+    "track": "data/kung-fu-panda.srt"
+  },
+  "onward": {
+    "title": "Onward",
+    "year": 2020,
+    "imdb_id": "tt7146812",
+    "track": "data/onward.srt"
+  },
+  "croods": {
+    "title": "The Croods",
+    "year": 2013,
+    "imdb_id": "tt0481499",
+    "track": "data/croods.srt"
   }
 }

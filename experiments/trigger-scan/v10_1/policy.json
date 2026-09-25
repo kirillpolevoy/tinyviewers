@@ -1,0 +1,357 @@
+{
+  "_about": "Policy v7 = v6 (the user flag policy, unchanged: nothing in flag selection changed) + the split gate (split_gate) + skip-span discipline (moments.not_shown / unshown / unshown_whole_max_ms, wordless.pad_back_ms). All v7 changes were set on the five dev films (nemo, monsters-inc, lion-king, frankenweenie, wild-robot); nothing here may change after a held-out film runs (freeze.js). v6 text follows. Policy v6 for select.js / moments.js / check-claims.js (pure code over Jev's raw answers). v6 = the USER'S FLAG POLICY (decided, final): (1) an explicit villain threat to kill or hurt flags even with no physical action (a villain's song about killing, henchmen ordered to kill); (2) a child terrified or crying flags even without physical danger; (3) comic peril, slapstick and hurt played for laughs are tags only; friendly presences never flag; items true in most of a film's scenes are film-level notes. Everything else is carried over from v5.1 (retold at 0.95/0.80, scene bounds, severity composite, 3.0x moment reserve). The select-only stopgaps of v5.1 are gone: 'changes' arcs no longer generate threat questions (questions.js filmItems) and the sound-caption rule is one rule for every presence item (questions.js PL_YES/PL_NO), so neither film_specific.drop_generated nor flag.requires.dangerous_machine exists. Changes are justified on the dev films (nemo, monsters-inc, lion-king) only; frankenweenie and wild-robot are held out and nothing here may change after they run (freeze.js).",
+  "act": 0.7,
+  "band_low": 0.4,
+  "_bands_about": "p >= act -> level 'act'; band_low <= p < act -> 'possible' (shown, NEVER flags); below band_low -> no tag. AUDIT.md: labels at 0.5-0.7 were right 46% of the time, at 0.7+ 69%.",
+  "overrides": {},
+  "_overrides_about": "Per-question {act, band_low} keyed by question id (e.g. \"e.chased\"). Empty on purpose: an override needs held-out evidence.",
+  "modifier_act": 0.7,
+  "retold_cancel": {
+    "act": 0.95,
+    "danger_absent_mass": 0.8
+  },
+  "_retold_change_v5_1": "Was mod.retold >= modifier_act (0.70) with danger_absent_mass 0.50; now mod.retold >= retold_cancel.act (0.95) with 0.80. modifier_act (0.70) still applies to imagined. The scene-level retold Noul is answered literally: it fires when ANY part of a story-length scene is a recollection (>= 0.70 in 22/54 Nemo and 14/48 MI scenes) and then cancelled the live events in the rest of the scene. Dev evidence: Nemo S013 (Marlin's search, baseline S06) and S020 (Nemo wakes in the tank, baseline S09) lost every act-level reason to retold; MI S043 lost 'captured'. At 0.95 / 0.80 those three flag again (r1 and r2) and no dev flag is added outside the baseline. Side effect: without the cancellations Nemo's afraid_for_safety is at act in >= 60% of scenes and becomes film-level context (no Nemo flag is lost: every such scene has another reason).",
+  "_retold_about": "v4 finding 7 (retold did not cancel). A physical event is cancelled as retold only when BOTH: mod.retold >= modifier_act (a character tells about events at another time or place) AND the danger Score puts >= danger_absent_mass of its probability on levels 0-1 ('nobody in danger' / 'danger only talked about'). Two literal questions, combined in code (jaggedness: split interpretation into literal questions).",
+  "imagined_cancel": true,
+  "comic": {
+    "score": "laughs",
+    "on_at": 2
+  },
+  "_comic_about": "s.laughs is a Score 0-3 (none / a joke or two / about half / nearly all). 'comic' is on when its expected score >= on_at. It cancels only events with cancel.comic (rages_at_child) and scales severity. v6: it no longer cancels threatens_harm (user policy (1): a comic villain's threat is still a threat).",
+  "kind_confidence": 0.9,
+  "_kind_about": "Kind Choice ('which kind of animal or creature threatens or attacks'). For kindGate items (shark, large_predator) at act: a confident different specific kind moves the tag to the parent 'animal_creature' (the creature is real, the species label is not); 'none' never vetoes presence, because a creature can be there without threatening.",
+  "parent_tag": {
+    "id": "animal_creature",
+    "v3": null,
+    "group": "creatures_figures",
+    "label": "Animal or creature",
+    "weights": {
+      "5-7": 2,
+      "8-10": 1
+    }
+  },
+  "flag": {
+    "_about": "A scene is flagged when at least one of these is at level 'act' after modifiers and is not film-level context. Everything else is a tag parents can filter on but that never flags alone.",
+    "strong_events": [
+      "chased",
+      "attacked",
+      "falls",
+      "nearly_falls",
+      "cannot_breathe",
+      "caught_in_hazard",
+      "vehicle_accident",
+      "child_in_danger",
+      "creature_threat",
+      "weapon_used",
+      "battle",
+      "captured",
+      "swallowed",
+      "badly_hurt",
+      "dies",
+      "loved_one_dies",
+      "pet_dies",
+      "believed_dead",
+      "parent_death_learned",
+      "child_taken",
+      "child_separated",
+      "caregiver_cruelty",
+      "animal_cruelty",
+      "afraid_for_safety",
+      "threatens_harm",
+      "plots_harm",
+      "child_frightened",
+      "crying"
+    ],
+    "requires": {
+      "afraid_for_safety": {
+        "score": "danger",
+        "min_expected": 2
+      },
+      "_about": "afraid_for_safety flags only when the danger Score's expected level is >= 2 ('a danger is close by' or worse): an adult's fear with no danger present stays a tag (a child's fear flags through child_frightened). film_child_in_danger needs danger >= 2 (v5.1, Nemo S025 Tank Gang initiation). v6 film_danger: a generated '<danger> endangers someone' item needs danger >= 2 too (round-1 skeptic: Lion King D04 drought flagged S048 alone and MI D05 'contamination', an in-world belief, flagged S016). Requirement forms: {score, min_expected}; {event}; {source: [...]}; {any: [...]}. Keys: an event or presence id, or film_<type> for film-specific items. v5.1's dangerous_machine gate is removed (its cause, the contradictory caption wording, is fixed in questions.js) and reanimated_dead's is replaced by moving it to the with_danger tier.",
+      "film_child_in_danger": {
+        "score": "danger",
+        "min_expected": 2
+      },
+      "film_danger": {
+        "score": "danger",
+        "min_expected": 2
+      },
+      "crying": {
+        "child": {
+          "cast_presence": true,
+          "jev_min": 0.5
+        }
+      },
+      "_v10_1_about": "v10.1 rule 2 (user policy: 'a child character terrified or crying' flags): Sonnet's crying answer at act flags ONLY when a child is involved -- a verified cast child's film presence tag at act (cast_presence) or Jev's childcry.js answer 'is the one who cries a child?' >= jev_min (0.5, the Noul's even point; set a priori). An adult crying stays a tag. Good Dinosaur S021 (Arlo crying for his dead father: crying 0.8) was the round-6 miss."
+    },
+    "film_specific_types": [
+      "threatens",
+      "child_in_danger",
+      "danger"
+    ],
+    "_film_specific_about": "Generated items of these types flag at act. Film-specific presence ('<name> is in this scene') is a tag only: a villain standing in a room is not a reason to skip.",
+    "presence": {
+      "always": [
+        "skeleton_bones",
+        "dead_body",
+        "blood_wound",
+        "dark_magic",
+        "graveyard_funeral"
+      ],
+      "with_danger": [
+        "reanimated_dead",
+        "ghost_spirit",
+        "scary_appearance",
+        "fire",
+        "explosion",
+        "storm",
+        "heights",
+        "dangerous_machine",
+        "vehicle_crash",
+        "gun",
+        "blade_weapon",
+        "restraints",
+        "cage_net_trap",
+        "needle_medical"
+      ],
+      "with_creature_threat": [
+        "monster_creature",
+        "shark",
+        "large_predator",
+        "spider_insect",
+        "snake_reptile",
+        "rodent_bat",
+        "animal_creature"
+      ],
+      "danger_min_expected": 2,
+      "_about": "always: macabre sights flag on sight (bones, a dead body, blood, dark magic, a graveyard or funeral). with_danger: hazards, weapons and v6 also ghosts and the undead flag only when the danger Score's expected level >= danger_min_expected (user policy: friendly presences never flag; Lion King S042, Mufasa's ghost, was flagged by presence alone in round 1). with_creature_threat: creature presences flag only when e.creature_threat is at act in the same scene. Neither tier flags while comic peril is on."
+    },
+    "never": {
+      "robot_machine_being": "A robot alone is not a warning; robot violence is caught by events.",
+      "deep_dark_water": "Water is the setting of every scene of an ocean film; danger in water is caught by events.",
+      "darkness": "Night alone is not a reason to skip.",
+      "clown": "Shown as a tag for parents who filter on it; no clown threat question exists.",
+      "doll_puppet": "Tag only.",
+      "mask": "Tag only.",
+      "witch_sorcerer": "Presence alone is not a threat; dark magic and threats flag.",
+      "alien": "Presence alone is not a threat.",
+      "medical_care": "Tag only.",
+      "seriously_ill": "Tag only."
+    },
+    "_strong_events_v6": "v6 adds threatens_harm (a threat to kill or hurt), plots_harm (a plan or order to kill or hurt) and child_frightened (a child frightened or crying): the user's policy (1) and (2). None of them has a danger requirement; comic and retold do not cancel them (questions.js cancel sets)."
+  },
+  "film_level": {
+    "share": 0.6,
+    "min_scenes": 10,
+    "_about": "v4 finding 4/3: an item at act level in >= share of a film's classified scenes (only when the film has >= min_scenes) is film-level context: reported once as a film note and it cannot flag a scene on its own (it is kept on the scene as a context tag). Computed after modifiers."
+  },
+  "moments": {
+    "pad_ms": 5000,
+    "exists_min": 0.5,
+    "wordless_dialogue_per_min": 4,
+    "max_reasons": 6,
+    "max_lines": 250,
+    "peak_share": 0.5,
+    "_about": "moments.js: per flagged scene, one Jev request with the scene's numbered lines. For each flag reason: a Choice for the begin line, a Choice for the end line, an 'exists' Noul. Begin = the earliest line whose begin-probability is >= peak_share x the top line's; end = the latest such line for the end Choice (wider when unsure: under-skipping is the worse error). Skip span = [begin cue start - pad_ms, end cue end + pad_ms], clamped to the scene. Whole scene when exists < exists_min, when the scene has fewer than wordless_dialogue_per_min dialogue cues per minute (sound captions do not count), or has more than max_lines lines (Choice takes 255 options). Union across reasons.",
+    "unshown": "best_guess",
+    "comic_carve": {
+      "enabled": false,
+      "comic_peril_min": 0.3,
+      "laughs_min": 1,
+      "exists_min": 0.5,
+      "min_cut_ms": 3000,
+      "_about": "OFF. Tried on the dev films (out/dev/span-tune.json chosen_comic vs chosen_no_comic): cutting Jev-located comic moments out of skips removed 1 comic key item on nemo and 1 on wild-robot but cut should_flag items the key marks as real threats (wild-robot R65/R98 raccoons taking Roz apart, monsters-inc R14) -- 1 and 2 items of conservative recall lost. The comic key items left inside skips sit on the core lines of the flag reason itself (monsters-inc S020/S029/S066, lion-king S012, nemo S016/S049): where Jev places the flagged danger is where the key sees comedy, a policy/label disagreement a span rule cannot fix."
+    },
+    "not_shown": "best_guess",
+    "unshown_whole_max_ms": 90000,
+    "_v7_about": "v7 span rule (moments.js sceneSpans), chosen on the dev films with dev/span-tune.mjs (out/dev/span-tune.json, 20 variants; flags held fixed): every flag reason gets a span from Jev own begin/end lines. SHOWN reasons (exists >= exists_min) as before; NOT-SHOWN reasons while another is shown (not_shown best_guess): a span from their begin/end Choices anyway (v6 skipped the WHOLE scene for any not-shown reason: 10 of 25 nemo scenes, 9 of 19 lion-king); NONE shown (unshown best_guess): the best-guess span of the reason with the highest exists, but the whole scene when the scene is <= unshown_whole_max_ms (a short scene whose event is only on screen). Wordless scenes (< wordless_dialogue_per_min) stay whole. Versus round 2 as run: nemo 40.1 -> 38.1 min, monsters-inc 30.5 -> 30.1, lion-king 26.2 -> 23.4, frankenweenie 42.4 -> 39.7 with conservative recall 33/10/16/38 -> 33/11/16/38. Dropping not-shown reasons (not_shown drop) or peak_share 0.7-1.0 or 30 s lead-in/trail caps saved 1-5 more minutes but lost 1-4 key items per film."
+  },
+  "severity": {
+    "_about": "Composite per age band (patterns/composite-scoring). Each Score normalised to 0-1 (expected level / top). base = weighted sum; content = max age-band weight (1-3, /3) among the scene's flag reasons; composite = base + min(content_weight x content, content_cap), then x the scale of every modifier that is on. v4 added 0.3 x content with levels 0.2/0.4/0.6, which pinned every flagged scene to 3; content now adds at most content_cap (0.10), less than one level step, so level 3 needs base >= 0.50. A flagged scene is at least level 1. Uncalibrated.",
+    "weights": {
+      "5-7": {
+        "danger": 0.3,
+        "harm": 0.15,
+        "distress": 0.25,
+        "share": 0.15,
+        "resolution": 0.15
+      },
+      "8-10": {
+        "danger": 0.25,
+        "harm": 0.25,
+        "distress": 0.2,
+        "share": 0.1,
+        "resolution": 0.2
+      }
+    },
+    "content_weight": 0.15,
+    "content_cap": 0.1,
+    "modifier_scale": {
+      "comic": {
+        "5-7": 0.7,
+        "8-10": 0.6
+      },
+      "retold": {
+        "5-7": 0.7,
+        "8-10": 0.6
+      },
+      "imagined": {
+        "5-7": 0.8,
+        "8-10": 0.6
+      }
+    },
+    "levels": [
+      0.2,
+      0.4,
+      0.6
+    ],
+    "flagged_min_level": 1
+  },
+  "film_specific": {
+    "cancel_exempt": {},
+    "_about": "v6: 'threatens' items are generated only for villain / threat dispositions (questions.js filmItems), so v5.1's drop_generated stopgap is gone. Cancel sets live in questions.js FILM_CANCEL: threats are cancelled only by 'imagined' (never by retold or comic); child-in-danger and danger items by retold, imagined and comic peril. cancel_exempt (per item type, modifiers that never cancel it) stays empty."
+  },
+  "scene_bounds": {
+    "extend_to_next_start": true,
+    "first_from_zero": true,
+    "_about": "A segment ends at its last line, so the wordless time between scenes (Lion King 14.8 min, Nemo 6.3, MI 2.5) belonged to no scene and could never be skipped. Each scene now runs to the next scene's start and the first scene starts at 0; the last scene still ends at the last cue. Whole-scene skips and moment spans clamp to these bounds; line_start_ms / line_end_ms keep the dialogue bounds."
+  },
+  "claim_accept": {
+    "min_supports": 0.7,
+    "max_contradicts": 0.15,
+    "contradict_min": 0.5,
+    "_about": "Chosen by calibrate-claims.js (lowest T in the grid with p(contradicts) < 0.15 at which no labelled wrong claim that v5 rejected becomes verified) on v5's saved answers and the round-1 verifiers' named judgements; see calibration/claim-rule.json. verified: p(supports) >= min_supports and p(contradicts) < max_contradicts. contradicted: verdict 'contradicts' with p(contradicts) >= contradict_min (v5 dropped any 'contradicts' answer). A Wikipedia-only sentence also needs placement 'fits' under the same rule; a lines+Wikipedia sentence is unplaced when p(conflicts) >= contradict_min."
+  },
+  "comic_peril": {
+    "event": "comic_peril",
+    "act": 0.7,
+    "laughs_min": 2,
+    "danger_max": 2.5
+  },
+  "_comic_peril_about": "v6, user policy (3): COMIC PERIL is on when e.comic_peril ('is a character put in danger in a way that is played for laughs?') >= act AND the laughs Score's expected level >= laughs_min (about half the scene or more is jokes) AND the danger Score's expected level < danger_max (below 'a character is chased, cornered, trapped'). Three literal signals combined in code. danger_max was added on the dev films: the comic_peril Noul alone reads 0.60-0.76 in real peril that shares a scene with banter (Lion King S011 hyena chase: comic_peril 0.74, laughs 2.44, danger 2.86; S034 lioness attack: 0.70, 2.18, 3.01), while the comic scenes it should catch sit lower (MI S018 Mike's comic panic 2.35, Nemo S025 Ring of Fire 1.76). When on, events with cancel.comic_peril (the physical peril events; film-specific child-in-danger and danger items) become tags, and presence items of the with_danger / with_creature_threat tiers do not flag. Never cancelled by it: threats and plans to kill or hurt, a child frightened or crying, deaths, loss and separation.",
+  "wordless": {
+    "pad_back_ms": 20000,
+    "lead_in": {
+      "min_gap_ms": 3000,
+      "max_ms": 60000
+    },
+    "trail_max_ms": 60000,
+    "_about": "spans.js. A skip span whose first line REACTS to action (spans.js reactsToAction: a sound caption of a physical reaction or impact, a cry of alarm, or a short exclamation) and has at least lead_in.min_gap_ms of silence before it begins at the end of the previous subtitle line, at most lead_in.max_ms earlier; it may cross the scene start into the previous scene's trailing gap, never earlier dialogue. Otherwise the begin pads back pad_back_ms (clamped to the scene start). A span ending at the scene's last line runs over the silence after it to the scene end, at most trail_max_ms. Whole-scene skips get the same lead-in. v5.1 padded back to the previous line's end with no bound (a 2-minute silence became a 2-minute pad) and let a scene-final span run to the next scene's start with no bound. SONG (spans.js widenOverSongs): a span that begins or ends inside a song (lyric lines marked # or ♪, joined across <= max_gap_lines spoken lines, >= min_lyric_lines lyric lines) covers the whole song, because a song is one moment; added on the dev films after the moment finder picked two spoken lines of Lion King's 'Be Prepared' (live-DB S04 was 11% inside the skip).",
+    "song": {
+      "min_lyric_lines": 6,
+      "max_gap_lines": 8
+    },
+    "_v7_about": "v7: pad_back_ms 15000 -> 20000 (with the v7 span rule: +0.3 to +1.0 min per film, recovers lion-king R02 and monsters-inc R11, whose mapped spans start just before the first line Jev picks). lead_in / trail bounds unchanged (60 s); 30 s caps lost key items on nemo.",
+    "extend": {
+      "max_ms": 60000,
+      "min_silence_share": 0.7,
+      "big_gap_ms": 10000,
+      "_about": "v8 fix (a), spans.js wordlessEdge: each edge of a moment span walks outward over the scene's adjacent cues, at most max_ms from the edge line, and stops at the farthest point where the stretch is >= min_silence_share silence, holds one silence >= big_gap_ms, and has an action-reactive cue (reactsToAction or caption-only, the edge line included). Chosen with dev/wordless-tune.mjs over 37 variants (max 45/60/75/90 s x silence 0.5/0.6/0.7 x gap 8/10/15 s) on the seven dev films, flags fixed: conservative recall 150 -> 155 of 182, parent check (i) 101 -> 109 of 115, skip +5.0 min over 7 films, mean should_flag precision 0.304 -> 0.311 (strict) / 0.373 -> 0.380 (gap), tag-only unchanged (18). 60 s covers Iron Giant's deer (33 s silence before the begin line's neighbour) and Up's storm; 75-90 s add skip minutes and no recall."
+    }
+  },
+  "split_gate": {
+    "_about": "v7 segmentation validity gate (gate.js, check-split.js; segment.js retries once on a FAIL, then fails loudly). Every limit was set on the ROUND-2 segmentations of the five dev films (v6/out/<slug>.segments.raw.json): nemo, monsters-inc, lion-king and frankenweenie must pass, wild-robot (the broken one) must fail. Code metrics, dev range -> round-2 wild-robot: cited_outside_share 0-0.035 -> 0.704; scenes_per_10_min 5.81-9.17 -> 1.77; max_scene_minutes 2.78-5.79 -> 16.54; overshoot_cues 0 -> 202; repaired_share 0-0.002 -> 0.063; dropped_share 0-0.013 -> 0.553. Jev metrics (jev-1.13.0), dev range -> wild-robot: aligned_share 0.897-0.967 -> 0.436; unaligned_scene_share 0.013-0.117 -> 0.389; boundary_auc 0.674-0.894 -> 0.314 (out/dev/boundary-variant-base.json; an explicit silence note in the lines did not help: out/dev/boundary-variant-gap.json). Limits sit roughly midway, nearer the dev side. Merge candidates (boundary p < merge_below) and split candidates (probe p >= split_at) are stored per boundary / scene but not gated: merge-candidate share was 0.07-0.44 on dev films vs 0.47 on wild-robot, because the v6 prompt cuts at a danger onset inside one place on purpose.",
+    "window_lines": 6,
+    "probe": {
+      "every_min": 2,
+      "min_gap_ms": 0,
+      "min_lines": 8,
+      "min_per_scene": 1
+    },
+    "supported_at": 0.5,
+    "confirmed_at": 0.5,
+    "merge_below": 0.2,
+    "split_at": 0.8,
+    "code": {
+      "cited_outside_share": {
+        "max": 0.15
+      },
+      "scenes_per_10_min": {
+        "min": 3
+      },
+      "max_scene_minutes": {
+        "max": 10
+      },
+      "overshoot_cues": {
+        "max": 5
+      },
+      "repaired_share": {
+        "max": 0.03
+      },
+      "dropped_share": {
+        "max": 0.15
+      }
+    },
+    "jev": {
+      "aligned_share": {
+        "min": 0.75
+      },
+      "unaligned_scene_share": {
+        "max": 0.25
+      },
+      "boundary_auc": {
+        "min": 0.55
+      }
+    },
+    "retry": {
+      "mode": "halves",
+      "overlap_cues": 40,
+      "effort": "low",
+      "_about": "On a FAIL segment.js retries ONCE: the film cut in two overlapping halves (A = 1..mid+overlap, B = mid-overlap..N), one Sonnet call each, merged at a scene start both halves agree on inside the overlap (gate.js mergeHalves), then the gate runs again. Round-2 wild-robot lost count of cue numbers in one 1798-line call (boundaries at round numbers, scene numbers past the last cue); each half is shorter than any dev film that segmented correctly."
+    },
+    "exclude_credits": true,
+    "_v10_1_about": "v10.1: max_scene_minutes is measured on each scene's part OUTSIDE the end-credits span (policy credits, credits.js); every other limit unchanged. Round 6: Frozen (10.85 min) and Zootopia (10.58 min) were rejected only because the model's last scene ran into the credits roll."
+  },
+  "_about_v8": "Policy v8 = v7 + three parent-facing fixes set on the SEVEN dev films (nemo, monsters-inc, lion-king, frankenweenie, wild-robot, iron-giant, up): wordless.extend (fix a, spans over wordless peaks), fill (fix b, wordless scenes get Wikipedia-cited sentences checked by Jev), reasons (fix c, every flagged scene states why), and sentence_accept (one acceptance rule over the claim check and the split check). The flag policy itself is unchanged. Nothing here may change after a held-out film runs (freeze.js).",
+  "fill": {
+    "max_dialogue_per_min": 3,
+    "min_ms": 30000,
+    "neighbour_min": 0.8,
+    "_about": "v8 fix (b), fill.js: a scene with < max_dialogue_per_min dialogue cues per minute over its extended bounds and >= min_ms gets 0-4 Sonnet sentences citing the W-sentences of its EXCLUSIVE order window (strictly between the neighbouring anchors, none anchored elsewhere; dev simulation: inclusive windows passed 68/96 adjacent and 45/96 two-away misplacements, exclusive 0/192). Sonnet first decides yes/no/unsure for every candidate W-sentence. Jev checks each sentence: support (citation_check, claim_accept) and NEIGHBOURS (do the 8 lines before / after the scene show this event? placed when p(neither) >= neighbour_min). neighbour_min 0.8 = the lowest threshold with FPR <= 0.10 in dev/calibrate-neighbour.mjs (calibration/neighbour.json: 48 known placements x 3, AUC 0.869, TPR 0.48 / FPR 0.07 at 0.8). A first design asked WHEN the event happens (before / during / after): Jev could not order plot events (AUC 0.77 adjacent, 0.66 two away; calibration/neighbour-where-v1.json). own_lines_gate false: the own-lines placement answer is recorded, not gating (a wordless scene's few lines cover seconds of minutes; on Up it rejected W5, the miscarriage, against the wedding captions at p(conflicts) 0.64-0.69). effort medium: at low effort Sonnet returned nothing for Up's montage although W4-W7 were its candidates. max_words 35: the prompt asks for <= 25 words, but code only clamps at 35 because a hard cut mid-clause is unreadable (Up's W7 sentence lost 'dies' to the ellipsis at 25).",
+    "own_lines_gate": false,
+    "effort": "medium",
+    "max_words": 35
+  },
+  "sentence_accept": {
+    "precedence": "claim",
+    "split_promotes": false,
+    "split_vetoes": false,
+    "split_min": 0.5,
+    "claim_floor": 0.5,
+    "split_contradicts_max": 0.5,
+    "_about": "v8 unified acceptance rule for summary sentences (accept.js), calibrated by dev/calibrate-accept.mjs (calibration/accept-rule.json): 199 of the 607 dev sentences, stratified by what the claim check and the split check said, labelled by Codex from the sources only (backed / minor / name_only / unbacked / wrong), inverse-probability weighted. The claim check alone: est. 295 verified at 94.6% parent-acceptable (event right). Split-supported, claim-unverified sentences are est. 43% acceptable; letting the split check promote them (split 0.5-0.95 x claim 0-0.65) always lowered precision (0.69-0.93), and as a veto it only removed acceptable sentences. So CLAIM PRECEDENCE: the claim check (claim_accept) decides a sentence's text status; the split check's per-sentence alignment is stored on the sentence (check.split) and gates only the segmentation. split_min / claim_floor / split_contradicts_max are the tested switches' thresholds, unused while split_promotes / split_vetoes are false."
+  },
+  "reasons": {
+    "min_p": 0.6,
+    "_about": "v8 fix (c), reasons.js: a flagged scene's WHY is its verified summary sentence with the highest Jev p('this sentence says that <flag reason's moment clause>') over its flag reasons (one Noul per reason x sentence), when that p >= min_p; otherwise a generated 'Heads-up: <plain phrases of the top one or two flag reasons>.' (reasons.js PARENT_PHRASE, rankReasons), never an unrelated sentence. min_p: 0.7 (the act threshold) a priori; the independent audit (dev/audit-why.mjs, Codex, sources only; 42 v8 matches + 35 v7 non-matches) found Jev under-matching (12/35 non-matches did state a reason). Rule: the lowest threshold whose audited matches are >= 95% 'yes' or 'partly': 0.6 (44/45; 0.5: 46/49 = 94%). Jev's answer to the same request varied by +-0.02 across runs (0.69 vs 0.71)."
+  },
+  "credits": {
+    "_about": "v10.1 end-credits span (credits.js creditsSpan, pure code over the SRT). Rule and limits set on the 14 dev films' SRTs (test/v101-credits.test.js). Used by the split gate (split_gate.exclude_credits: max_scene_minutes ignores credits) and by classify / sonnetq / select: a scene with >= scene_share of its cues inside the span is a CREDITS SCENE -- not asked, no tags, no flags.",
+    "tail_share": 0.75,
+    "tail_max_ms": 1500000,
+    "window": 8,
+    "min_share": 0.75,
+    "caption_weight": 0.5,
+    "min_block_ms": 90000,
+    "min_block_cues": 8,
+    "min_run_song_cues": 3,
+    "extend_max_gap_ms": 60000,
+    "post_max_cues": 40,
+    "post_max_ms": 240000,
+    "scene_share": 0.5
+  },
+  "_about_v10_1": "Policy v10.1 = v10 + four fixes set on the 14 dev films (good-dinosaur is dev from v10.1): (1) end credits (credits, split_gate.exclude_credits): the split gate ignores the credits roll in max_scene_minutes and credits scenes are never asked or flagged; (2) parent text safety (text_safety): a code-built reason may only state a reason that passes its own Jev claim check, titles and sentences need a margin, and 'X threatens / attacks Y' sentences a direction check; (3) rule 2: a child crying flags (flag.requires.crying); (4) rule 3: comedy cancels believed_dead (questions.js). Nothing else changed.",
+  "text_safety": {
+    "_about": "v10.1 parent text safety (textsafe.js, check-describe.js). accept: titles, sentences and stated reasons are verified only at p(supports) >= min_supports and p(contradicts) < max_contradicts. Calibrated by dev/calibrate-margin.mjs on the 260 Codex-labelled v9/v10 titles and sentences of the 14 dev films (in-sample): 0.70/0.15 (the claim rule) passes 15 labelled-wrong texts; 0.75/0.15 passes 13 (drops Good Dinosaur S017's reversed title at 0.70 and Princess S036 at 0.74) and loses 14 accurate + 6 partly; stricter supports keep dropping ~10 good texts per wrong one (13 of the 15 wrong texts sit at 0.77-0.99), and contradicts < 0.10 instead of 0.15 only loses 3 accurate. So the margin is a weak lever and is set at 0.75/0.15. max_reasons_checked: flag reasons claim-checked per scene (top by reasons.js rankReasons, as moments.max_reasons).",
+    "accept": {
+      "min_supports": 0.75,
+      "max_contradicts": 0.15
+    },
+    "max_reasons_checked": 6,
+    "direction": {
+      "question": "choice forward / reverse / neither (textsafe.js directionChoice)",
+      "reversed_when": "p_reverse > p_forward"
+    },
+    "_direction_about": "dev/direction-variants.mjs on the 125 dev titles / sentences that parse as 'X <aggression verb> Y': the Noul 'Is it X who <verbs> Y, not the other way round?' put labelled-accurate texts at 0.15-0.50 and the reversed Lion King S046 title at 0.64 (at 0.5 it removed no wrong text the margin had not already removed and lost 3 accurate). The Choice rule p(reverse) > p(forward) (a priori: the lines favour the other direction) rejects the 3 labelled-wrong texts that name the wrong actor or target (Good Dinosaur S017 title rev 0.64 / fwd 0.11, Lion King S046 title 0.51 / 0.47, Lion King S002 title 0.58 / 0.36) and no labelled-accurate one (closest: Moana S022 title 0.45 / 0.48). In-sample."
+  }
+}

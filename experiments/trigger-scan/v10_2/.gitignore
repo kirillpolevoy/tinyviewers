@@ -1,0 +1,20 @@
+# Anything here can quote subtitle lines, Wikipedia text, reference text or be derived from them; keep it out of git.
+out/
+out-dev/
+review/
+sources/
+verify/out/
+verify/docs/
+# v8: calibration labels and Codex prompts carry subtitle / Wikipedia text
+labels/
+baseline/out/
+# round 5 held-out head-to-head: live pipeline outputs and eval outputs carry model text about the films
+round5/live/
+round5/out/
+# v10.1: pipeline outputs (model text about the films), dev measurement outputs and Codex label caches
+out101/
+dev/out/
+eval/out/
+verify/out/
+# v10.2: pipeline outputs (incl. out102/seen describe/why text), dev and eval outputs, Codex label caches
+out102/
