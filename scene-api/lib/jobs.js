@@ -203,9 +203,13 @@ export const capUsd = () => {
 const UTC_DAY_START = "(date_trunc('day', now() at time zone 'utc') at time zone 'utc')";
 export const JOBS_DAY_WHERE = `(created_at >= ${UTC_DAY_START} or updated_at >= ${UTC_DAY_START} or status in ('queued', 'running'))`;
 
-/** Everything the jobs live today have spent (JOBS_DAY_WHERE). */
-export async function spentTodayUsd(db) {
-  const { rows } = await db.query(`select coalesce(sum(cost_usd), 0) as spent from jobs where ${JOBS_DAY_WHERE}`);
+/**
+ * What the jobs of one kind live today have spent (JOBS_DAY_WHERE). Adds and rebuilds have their own
+ * daily caps (ADD_FILM_DAILY_CAP_USD, REBUILD_DAILY_CAP_USD), so each counts only its own jobs: a
+ * library rebuild must not use up the day's budget for adding a film.
+ */
+export async function spentTodayUsd(db, kind = 'add') {
+  const { rows } = await db.query(`select coalesce(sum(cost_usd), 0) as spent from jobs where ${JOBS_DAY_WHERE} and coalesce(kind, 'add') = $1`, [kind]);
   return Number(rows[0]?.spent ?? 0);
 }
 
@@ -256,7 +260,7 @@ export async function createJob(db, { id, film, reserveUsd = RESERVE_USD, cap = 
     res = await db.query(
       `insert into jobs (id, status, step, film, steps, cost_usd, pipeline, reserve_usd, kind)
        select $1, 'queued', null, $2::jsonb, $3::jsonb, $4::numeric, $6, $4::numeric, $7
-        where (select coalesce(sum(cost_usd), 0) from jobs where ${JOBS_DAY_WHERE}) + $4::numeric <= $5::numeric`,
+        where (select coalesce(sum(cost_usd), 0) from jobs where ${JOBS_DAY_WHERE} and coalesce(kind, 'add') = $7) + $4::numeric <= $5::numeric`,
       [id, JSON.stringify(film), JSON.stringify(steps), reserveUsd, cap, pipeline, kind],
     );
   } catch (err) {

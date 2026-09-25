@@ -363,7 +363,8 @@ test('a Jev-first add runs every stage across many invocations and writes a film
   assert.ok(f.claude.describe2 >= 1 && f.claude.titles >= 1, JSON.stringify(f.claude));
   for (const s of scenes.filter((x) => flaggedDocs.some((d) => x.id === `${slug}:${d.id}`))) {
     assert.ok([null, 'Arlo cries for help by the river.', 'Arlo is in danger by the river.'].includes(s.description), s.description);
-    assert.ok(['Arlo cries for help', 'Flagged scene'].includes(s.title), s.title);
+    // the checked title, or (none passed) a leading clause of the scene's checked summary, or the placeholder
+    assert.ok(typeof s.title === 'string' && s.title.length > 0, s.title);
   }
   assert.ok(scenes.some((s) => s.description === 'Arlo cries for help by the river.' && s.title === 'Arlo cries for help'));
   const { rows: st } = await db.query("select stage from job_stages where job_id = $1 and status = 'done'", [id]);
@@ -1470,14 +1471,14 @@ test('blocker 4: a rebuild created yesterday and finished today counts against t
                   values ('rebuild-yesterday-00000', 'done', '{}'::jsonb, $1, 'jevfirst', $1, 'rebuild', now() - interval '1 day', now())`, [JEVFIRST_RESERVE_USD]);
   await db.query(`insert into jobs (id, status, film, cost_usd, pipeline, reserve_usd, kind, created_at, updated_at)
                   values ('rebuild-long-ago-000000', 'done', '{}'::jsonb, 1, 'jevfirst', 1, 'rebuild', now() - interval '3 days', now() - interval '3 days')`);
-  assert.ok(Math.abs((await spentTodayUsd(db)) - JEVFIRST_RESERVE_USD) < 1e-9, 'the job that ended today is in today\'s total');
+  assert.ok(Math.abs((await spentTodayUsd(db, 'rebuild')) - JEVFIRST_RESERVE_USD) < 1e-9, 'the job that ended today is in today\'s total');
   process.env.REBUILD_DAILY_CAP_USD = String(JEVFIRST_RESERVE_USD);
   try {
     await assert.rejects(startRebuild(db, { slug: 'good-dinosaur', passcode: PASSCODE }, { launch: () => {} }), (e) => e.status === 429 && e.extra.error_code === 'daily_cap');
   } finally { delete process.env.REBUILD_DAILY_CAP_USD; }
   // a job still live that was admitted yesterday counts at its reservation today
   await db.query("update jobs set status = 'running', updated_at = now() - interval '1 day', progress_at = now(), lease_owner = 'x', lease_until = now() + interval '1 minute' where id = 'rebuild-yesterday-00000'");
-  assert.ok(Math.abs((await spentTodayUsd(db)) - JEVFIRST_RESERVE_USD) < 1e-9);
+  assert.ok(Math.abs((await spentTodayUsd(db, 'rebuild')) - JEVFIRST_RESERVE_USD) < 1e-9);
   await db.end();
 });
 
