@@ -165,14 +165,10 @@
   margin-top: 6px;
 }
 
-/* On a phone the findings come straight after the title and the synopsis's first sentence; the
-   poster and the facts follow the scene list rather than pushing the verdict below the fold. */
+/* On a phone the poster and the facts sit at the top, a small poster beside them under the title,
+   then the findings. */
 @media (max-width: 719px) {
   .main {
-    grid-template-areas:
-      'head'
-      'content'
-      'rail';
     gap: 16px;
   }
 
