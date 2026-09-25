@@ -28,15 +28,18 @@
 
 /* The global a:hover colour is coral, which is 1.8:1 on the dark analysis pages. The wordmark
    keeps the header's own colour on every background and shows the hover with an underline. */
-.wordmark:hover,
-.wordmark:hover .name {
-  color: inherit;
-}
+/* Hover only where there is hover: a phone keeps :hover after a tap, which left the name underlined. */
+@media (hover: hover) {
+  .wordmark:hover,
+  .wordmark:hover .name {
+    color: inherit;
+  }
 
-.wordmark:hover .name {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  .wordmark:hover .name {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
 }
 
 .fish {
@@ -86,13 +89,15 @@
   border-bottom: 3px solid transparent;
 }
 
-.link:hover {
-  color: inherit;
-  border-bottom-color: var(--hairline);
-}
+@media (hover: hover) {
+  .link:hover {
+    color: inherit;
+    border-bottom-color: var(--hairline);
+  }
 
-.dark .link:hover {
-  border-bottom-color: var(--dark-line);
+  .dark .link:hover {
+    border-bottom-color: var(--dark-line);
+  }
 }
 
 .currentLink,
@@ -104,5 +109,39 @@
 @media (min-width: 720px) {
   .link {
     font-size: 17px;
+  }
+}
+
+/* A phone: one row, the wordmark left and the two links right, a little smaller so they fit at 360px. */
+@media (max-width: 719px) {
+  .inner {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .wordmark {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .fish {
+    width: 32px;
+    height: 21px;
+  }
+
+  .name {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .nav {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .link {
+    font-size: 15px;
+    padding-inline: 2px;
+    white-space: nowrap;
   }
 }
