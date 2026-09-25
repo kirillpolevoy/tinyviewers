@@ -117,3 +117,52 @@ export async function restore(db, body = {}, { ip = null } = {}) {
     throw err;
   }
 }
+
+/**
+ * POST /api/admin/reapply { passcode, slug }: rebuild a film's guide from its STORED Jev-first answers
+ * (the tags and checked segments of its last add or rebuild) with the current code -- strength rule,
+ * mild scenes -- and no model call. The old guide is backed up first; same one-job lock as restore.
+ */
+export async function reapply(db, body = {}, { ip = null } = {}) {
+  await requirePasscodeShared(db, body.passcode, ip);
+  const film = await filmBySlug(db, slugOf(body));
+  const { getJevfirstFilm, readArtifacts, readTrack } = await import('../pipeline-jevfirst/store.js');
+  const ing = await import('../pipeline-jevfirst/stages/ingest.js');
+  const { backupGuide, replaceGuide } = await import('../pipeline-jevfirst/guide.js');
+  const taxonomy = await import('../pipeline-jevfirst/taxonomy-v3.js');
+  const { ensureVocabulary } = await import('../load.js');
+  const { invalidateVocabularyCache } = await import('./data.js');
+  const jf = await getJevfirstFilm(db, film.slug);
+  const docs = jf ? await readArtifacts(db, film.slug, ['tags', 'segments']) : {};
+  const track = jf ? await readTrack(db, jf.imdb_id) : null;
+  if (!jf || !docs.tags || !docs.segments || !track) throw new HttpError(409, 'This film has no stored Jev-first answers to re-apply; rebuild it instead.', { error_code: 'not_available' });
+  const busy = () => new HttpError(409, 'A film is being analysed right now; re-apply when it has finished.', { error_code: 'busy' });
+  if (await liveJob(db)) throw busy();
+  const lockId = newJobId();
+  try {
+    const out = await db.withTransaction(async (tx) => {
+      await tx.query(
+        `insert into jobs (id, status, step, film, steps, cost_usd, pipeline, reserve_usd, kind)
+         values ($1, 'running', 'reapply', $2::jsonb, '[]'::jsonb, 0, 'live', 0, 'restore')`,
+        [lockId, JSON.stringify({ slug: film.slug, title: 'reapply' })],
+      );
+      const { rows: runs } = await tx.query('select role, cost_usd from analysis_runs where film_id = $1', [film.id]);
+      const cost = (role) => Number(runs.find((r) => r.role === role)?.cost_usd ?? 0);
+      const built = ing.buildGuide({
+        slug: film.id, film: jf, srt: { release: track.release, sha256: track.sha256 }, cues: track.cues, tags: docs.tags,
+        costs: { sonnet: cost('finder'), jev: cost('labeller') }, segments: docs.segments.scenes ?? null,
+      });
+      await ensureVocabulary(tx, taxonomy);
+      await ing.ensureReasonVocabulary(tx, built.reasonLabels);
+      const backupId = await backupGuide(tx, film.id, { reason: 'reapply', jobId: lockId, pipelineVersion: ing.PIPELINE_VERSION });
+      await replaceGuide(tx, film.id, built);
+      await tx.query("update jobs set status = 'done', updated_at = now() where id = $1", [lockId]);
+      return { slug: film.slug, scenes: built.scenes.length, backup_id: backupId };
+    });
+    invalidateVocabularyCache(db);
+    return out;
+  } catch (err) {
+    if (err?.code === '23505') throw busy();
+    throw err;
+  }
+}
