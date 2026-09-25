@@ -3,9 +3,11 @@
    in its own grid track, so nothing can land on top of the headline at any width. */
 
 /* One screen, no scroll, on a laptop: the page is at least the viewport tall (but never under
-   760px, so a short window scrolls instead of crushing), and main takes whatever the header leaves
-   and centres the hero and the links in it. The bottom padding keeps them clear of the sea floor.
-   On a phone the content is taller than the screen, so it simply stacks and scrolls. */
+   760px, so a short window scrolls instead of crushing), with the sea floor on the bottom edge.
+   The hero sits near the top rather than centred: the top padding grows with the window only up to
+   96px, so on a tall monitor the spare height collects above the sea floor instead of splitting into
+   two empty bands around the hero. The bottom padding keeps the links clear of the sea floor. On a
+   phone the content is taller than the screen, so it simply stacks and scrolls. */
 .page {
   min-height: max(760px, 100vh);
   min-height: max(760px, 100dvh);
@@ -17,8 +19,9 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 40px;
+  padding-top: clamp(24px, calc((100dvh - 760px) / 2), 96px);
   padding-bottom: 140px;
 }
 
