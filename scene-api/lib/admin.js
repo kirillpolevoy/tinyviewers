@@ -133,7 +133,7 @@ export async function reapply(db, body = {}, { ip = null } = {}) {
   const { ensureVocabulary } = await import('../load.js');
   const { invalidateVocabularyCache } = await import('./data.js');
   const jf = await getJevfirstFilm(db, film.slug);
-  const docs = jf ? await readArtifacts(db, film.slug, ['tags', 'segments']) : {};
+  const docs = jf ? await readArtifacts(db, film.slug, ['tags', 'segments', 'why', 'why2', 'why3']) : {};
   const track = jf ? await readTrack(db, jf.imdb_id) : null;
   if (!jf || !docs.tags || !docs.segments || !track) throw new HttpError(409, 'This film has no stored Jev-first answers to re-apply; rebuild it instead.', { error_code: 'not_available' });
   const busy = () => new HttpError(409, 'A film is being analysed right now; re-apply when it has finished.', { error_code: 'busy' });
@@ -150,7 +150,7 @@ export async function reapply(db, body = {}, { ip = null } = {}) {
       const cost = (role) => Number(runs.find((r) => r.role === role)?.cost_usd ?? 0);
       const built = ing.buildGuide({
         slug: film.id, film: jf, srt: { release: track.release, sha256: track.sha256 }, cues: track.cues, tags: docs.tags,
-        costs: { sonnet: cost('finder'), jev: cost('labeller') }, segments: docs.segments.scenes ?? null,
+        costs: { sonnet: cost('finder'), jev: cost('labeller') }, segments: docs.segments.scenes ?? null, attempts: ing.titleAttempts(docs.why, docs.why2, docs.why3),
       });
       await ensureVocabulary(tx, taxonomy);
       await ing.ensureReasonVocabulary(tx, built.reasonLabels);

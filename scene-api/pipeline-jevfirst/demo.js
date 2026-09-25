@@ -58,7 +58,7 @@ import { budget } from './pack/budget.js';
 import { withRun, runCtx } from './context.js';
 import { DEMO_STAGES } from './stages/index.js';
 import { Interrupted, quoteGrams } from './stages/common.js';
-import { guideRows, whyTagsOf, reasonCategory, withTitles } from './stages/ingest.js';
+import { guideRows, whyTagsOf, reasonCategory, withTitles, titleAttempts } from './stages/ingest.js';
 import { readArtifacts, readTrack, getJevfirstFilm, DEMO_KINDS, DEMO_OPTIONAL_KINDS } from './store.js';
 import { verdictOf, DEFAULT_RULE } from './pack/claims.js';
 import { boundaryVerdict } from './pack/gate.js';
@@ -618,7 +618,7 @@ export async function runDemo(db, runId, opts = {}) {
 
     const tags = outputs.get('select3');
     const grams = quoteGrams(cues);
-    const rowsOut = withTitles(guideRows(tags, { grams }), outputs.get('refold')?.segments?.scenes ?? docs.segments?.scenes ?? null, grams);
+    const rowsOut = withTitles(guideRows(tags, { grams }), outputs.get('refold')?.segments?.scenes ?? docs.segments?.scenes ?? null, grams, titleAttempts(outputs.get('check_describe'), outputs.get('check_describe2'), outputs.get('check_describe3')));
     const guide = await libraryGuide(db, film);
     const gate = outputs.get('segment_build').gate;
     const stored = docs.tags ? guideRows(docs.tags) : null;
