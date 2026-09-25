@@ -30,7 +30,7 @@ test('a mild row is level 1 for both bands, lists its signals and shows only che
     { text: 'A child cries at the gate.', check: { status: 'verified' } },
     { text: 'Unsupported sentence.', check: { status: 'unverified', probabilities: { supports: 0.2, contradicts: 0.1 } } },
   ] }];
-  const [row] = mildRows(tags, segments);
+  const [row] = mildRows(tags, segments, { flaggedCount: 0 });
   assert.equal(row.severity_5_7, 1);
   assert.equal(row.severity_8_10, 1);
   assert.equal(row.mild, true);
@@ -41,4 +41,11 @@ test('a mild row is level 1 for both bands, lists its signals and shows only che
 test('a scene in the end credits is never mild', () => {
   const tags = { scenes: [scene('S9', { tags: [tag('screams'), tag('appears_suddenly')] })] };
   assert.deepEqual(mildRows(tags, [{ id: 'S9', credits: true, sentences: [] }]), []);
+});
+
+test('mild scenes only fill out a gentle film: none once the flagged list reaches the fill line', () => {
+  const tags = { scenes: [scene('S1', { tags: [tag('crying')] })] };
+  const segments = [{ id: 'S1', sentences: [{ text: 'A child cries.', check: { status: 'verified' } }] }];
+  assert.equal(mildRows(tags, segments, { flaggedCount: 12 }).length, 0);
+  assert.equal(mildRows(tags, segments, { flaggedCount: 3 }).length, 1);
 });

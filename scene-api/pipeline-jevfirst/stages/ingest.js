@@ -228,11 +228,26 @@ export function titleFromSummary(text) {
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]+$/, '')}…`;
 }
 
+/** A mild scene needs a signal this strong, a checked summary to show, and only the strongest few are listed. */
+export const MILD_LIST_MIN_P = 0.8;
+export const MILD_MAX_PER_FILM = 6;
+/** Mild scenes only fill out a gentle film's list: never past this many scenes in all. */
+export const GUIDE_FILL_TO = 12;
+
 /** The mild rows of a selection, in the guide rows' shape: level 1 for both bands, reasons = the signals. */
-export function mildRows(tags, segments, { grams = null, creditIds = null } = {}) {
+export function mildRows(tags, segments, { grams = null, creditIds = null, flaggedCount = 0 } = {}) {
+  const room = Math.max(0, Math.min(MILD_MAX_PER_FILM, GUIDE_FILL_TO - flaggedCount));
+  if (!room) return [];
   const segById = new Map((segments ?? []).map((g) => [g.id, g]));
   // End credits (outtakes, songs) are never a scene to know about; the segment says which scenes they are.
-  return tags.scenes.filter((s) => !segById.get(s.id)?.credits && !creditIds?.has(s.id)).map((s) => [s, mildSignals(s)]).filter(([, sig]) => sig.length).map(([s, sig]) => {
+  const top = (sig) => Math.max(...sig.map((t) => t.p ?? 0));
+  const picked = tags.scenes
+    .filter((s) => !segById.get(s.id)?.credits && !creditIds?.has(s.id))
+    .map((s) => [s, mildSignals(s)])
+    .filter(([s, sig]) => sig.length && top(sig) >= MILD_LIST_MIN_P && checkedSummary(segById.get(s.id)))
+    .sort((a, b) => top(b[1]) - top(a[1]) || a[0].start_ms - b[0].start_ms)
+    .slice(0, room);
+  return picked.map(([s, sig]) => {
     const summary = checkedSummary(segById.get(s.id));
     const text = quoteGate(titleFromSummary(summary), summary, grams);
     const why = sig.map((t) => ({ label: t.label, category: null, ids: [t.id], by: [t.by], p: t.p, rule: 'mild' }));
@@ -279,7 +294,7 @@ export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null
     const t = quoteGate(titleFromSummary(checkedSummary(segById.get(g.scene_id))), null, grams).title;
     return t ? { ...g, title: t, title_rule: 'summary' } : g;
   });
-  const rows = [...flaggedRows, ...(segments ? mildRows(tags, segments, { grams, creditIds: creditSceneIds(cues, tags, precheck) }) : [])].sort((a, b) => a.start_ms - b.start_ms);
+  const rows = [...flaggedRows, ...(segments ? mildRows(tags, segments, { grams, creditIds: creditSceneIds(cues, tags, precheck), flaggedCount: flaggedRows.length }) : [])].sort((a, b) => a.start_ms - b.start_ms);
   for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
     scenes.push({
