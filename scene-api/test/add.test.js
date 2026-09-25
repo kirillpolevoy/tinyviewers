@@ -35,6 +35,8 @@ import { freshDb } from './helper.js';
 const PASSCODE = 'open sesame';
 
 test.before(() => {
+  // These tests are the one-invocation pipeline's (pipeline/run.js); the default is now Jev-first.
+  process.env.ADD_PIPELINE = 'live';
   process.env.ADD_FILM_PASSCODE = PASSCODE;
   process.env.ADD_FILM_DAILY_CAP_USD = '5';
   // `startJob` looks its film up from TMDB by IMDb id, so it needs a key to be configured. Every

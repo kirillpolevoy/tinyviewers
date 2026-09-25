@@ -1,11 +1,11 @@
-// Reading one job for a server render, shared by /library?job= and /watch/run/[id].
+// Reading one job for a server render, for /library?job=.
 //
 // `forwardToSceneApi` rather than fetching this app's own /api/add/jobs route: the handler is a
 // thin forwarder, and a server component calling its own HTTP endpoint would be a round trip
 // through the network stack to run the same function.
 
 import { forwardToSceneApi } from './scene-api';
-import { isJobId, type Job, type JobRecording } from './job';
+import { isJobId, type Job } from './job';
 
 /**
  * What the scene API had to say about this id: the job, "no such job", or "could not ask".
@@ -26,19 +26,5 @@ export async function readJob(id: string): Promise<JobLookup> {
     return response.status === 404 ? { kind: 'missing' } : { kind: 'unreachable' };
   } catch {
     return { kind: 'unreachable' };
-  }
-}
-
-/**
- * The recording, and only once the job says there is one: this is the megabyte, and a page that
- * asked for it on every render would pay for it during a run that has not produced it yet.
- */
-export async function readRecording(id: string): Promise<JobRecording | null> {
-  try {
-    const response = await forwardToSceneApi(`/api/add/jobs/${id}/recording`);
-    if (!response.ok) return null;
-    return (await response.json()) as JobRecording;
-  } catch {
-    return null;
   }
 }

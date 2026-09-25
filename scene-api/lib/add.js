@@ -10,10 +10,28 @@
 import { HttpError, badRequest, notFound } from './http.js';
 import { resolveCandidates } from './tmdb.js';
 import {
-  requirePasscode, passcodeConfigured, capUsd, spentTodayUsd, RESERVE_USD,
+  requirePasscodeShared, passcodeConfigured, capUsd, spentTodayUsd, RESERVE_USD,
   newJobId, createJob, getJob, liveJob, publicJob, sweepBlobs,
 } from './jobs.js';
 import { runPipeline } from '../pipeline/run.js';
+import { pipelineMode, continuation, requestContinuation, requireContinueSecret, claimKick } from './jevfirst.js';
+import { JEVFIRST_RESERVE_USD } from '../pipeline-jevfirst/caps.js';
+import { freshJevfirstSteps } from '../pipeline-jevfirst/steps.js';
+
+// The Jev-first runner is loaded only when a Jev-first job actually runs: it pulls in the whole
+// pipeline (the Jev question set alone is 5,600 lines), which no other route needs.
+const jevfirstRunner = () => import('../pipeline-jevfirst/runner.js');
+
+
+/**
+ * One invocation's worth of a Jev-first job, and the continuation after it. `opts` carries the test
+ * seams (keys, fetch, time budget); in production it is empty and everything comes from the env.
+ */
+export async function advanceJevfirst(db, jobId, opts = {}) {
+  const { advanceJob } = await jevfirstRunner();
+  const continueJob = opts.continueJob ?? ((id) => requestContinuation(id, { runInProcess: (next) => advanceJevfirst(db, next, opts) }));
+  return advanceJob(db, jobId, { ...opts, continueJob });
+}
 
 // ------------------------------------------------------------------------------------------------
 // POST /api/add/resolve
@@ -25,7 +43,7 @@ import { runPipeline } from '../pipeline/run.js';
  *   is already in the database, and the web offers its page instead of a run.
  */
 export async function resolve(db, body = {}, { apiKey = process.env.TMDB_API_KEY, fetchImpl, ip } = {}) {
-  requirePasscode(body.passcode, ip);
+  await requirePasscodeShared(db, body.passcode, ip);
   const query = typeof body.query === 'string' ? body.query.trim() : '';
   if (!query) throw new HttpError(400, 'Type a film title, or paste an IMDb link.', { error_code: 'empty_query' });
   if (query.length > 200) throw badRequest('That is too long to be a film title.');
@@ -57,10 +75,9 @@ export async function resolve(db, body = {}, { apiKey = process.env.TMDB_API_KEY
  * @returns {Promise<{ id: string, done: Promise<any>|null }>} `done` is the run itself, for a test
  *   that wants to await it. The endpoint returns only the id.
  */
-export async function startJob(db, body = {}, {
-  launch, keys, fetchImpl, ip, apiKey = process.env.TMDB_API_KEY,
-} = {}) {
-  requirePasscode(body.passcode, ip);
+export async function startJob(db, body = {}, opts = {}) {
+  const { launch, keys, fetchImpl, ip, apiKey = process.env.TMDB_API_KEY } = opts;
+  await requirePasscodeShared(db, body.passcode, ip);
 
   const imdbId = typeof body.imdb_id === 'string' ? body.imdb_id.trim().toLowerCase() : '';
   if (!imdbId || !/^tt\d{6,10}$/i.test(imdbId)) {
@@ -96,9 +113,16 @@ export async function startJob(db, body = {}, {
   const live = await liveJob(db);
   if (live) throw await busy();
 
+  // Which pipeline this job runs is decided now and stored on the row; it never changes mid-run.
+  const pipeline = opts.pipeline ?? pipelineMode();
+  if (pipeline === 'jevfirst' && continuation().mode === 'none') {
+    throw new HttpError(503, 'This deployment cannot run the longer analysis yet: its continuation secret is not configured.', { error_code: 'no_continue_secret' });
+  }
+  const reserveUsd = pipeline === 'jevfirst' ? JEVFIRST_RESERVE_USD : RESERVE_USD;
+
   // The INSERT is the real gate for both refusals; see createJob.
   const cap = capUsd();
-  const admission = await createJob(db, { id, film, cap });
+  const admission = await createJob(db, { id, film, cap, pipeline, reserveUsd, ...(pipeline === 'jevfirst' ? { steps: freshJevfirstSteps() } : {}) });
   if (!admission.admitted && admission.reason === 'busy') throw await busy();
   if (!admission.admitted) {
     const spent = await spentTodayUsd(db);
@@ -106,11 +130,13 @@ export async function startJob(db, body = {}, {
       error_code: 'daily_cap',
       spent_usd: Number(spent.toFixed(6)),
       cap_usd: cap,
-      reserve_usd: RESERVE_USD,
+      reserve_usd: reserveUsd,
     });
   }
 
-  const start = () => runPipeline(db, { jobId: id, film, keys, fetchImpl });
+  const start = pipeline === 'jevfirst'
+    ? () => advanceJevfirst(db, id, { keys, fetchImpl, ...(opts.jevfirst ?? {}) })
+    : () => runPipeline(db, { jobId: id, film, keys, fetchImpl });
   let done = null;
   if (launch) launch(() => { done = start(); return done; });
   else { done = start(); done.catch(() => {}); }
@@ -122,9 +148,31 @@ export async function startJob(db, body = {}, {
 // ------------------------------------------------------------------------------------------------
 
 /** Public: the 22-character id is the secret, and nothing on the row is anything else. */
-export async function jobStatus(db, id) {
+export async function jobStatus(db, id, { kick = null } = {}) {
   const row = await jobRow(db, id);
+  // A Jev-first job no invocation is working on -- its continuation never landed, or its invocation
+  // died -- is asked for again by whoever is polling it. claimKick lets exactly one poll do that.
+  if (row.pipeline === 'jevfirst' && (row.status === 'queued' || row.status === 'running') && await claimKick(db, row.id)) {
+    const fire = () => requestContinuation(row.id, { runInProcess: (next) => advanceJevfirst(db, next) });
+    if (kick) kick(fire); else fire().catch(() => {});
+  }
   return publicJob(row);
+}
+
+// ------------------------------------------------------------------------------------------------
+// POST /api/add/jobs/{id}/continue (internal)
+// ------------------------------------------------------------------------------------------------
+
+/**
+ * The next invocation of a Jev-first job. Authenticated by ADD_FILM_PROXY_SECRET (lib/jevfirst.js continueSecret); idempotent (a second call
+ * while one invocation holds the lease does nothing, and a finished stage is never re-run).
+ * @returns {{ accepted: true, done: Promise }} `done` is the invocation, for the caller's waitUntil.
+ */
+export function continueJob(db, id, secret, opts = {}) {
+  requireContinueSecret(secret);
+  if (!id || !/^[A-Za-z0-9_-]{16,64}$/.test(id)) throw badRequest('That is not a job id.');
+  const done = advanceJevfirst(db, id, opts);
+  return { accepted: true, done };
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -199,6 +247,7 @@ export async function addStatus(db) {
     cap_usd: capUsd(),
     passcode_configured: passcodeConfigured(),
     // While a run is live, spent_today_usd carries its reserve; the web says so next to the figure.
-    ...(live ? { reserve_usd: RESERVE_USD } : {}),
+    // The live job's own reserve: a Jev-first add reserves more than a live one (pipeline-jevfirst/caps.js).
+    ...(live ? { reserve_usd: Number(live.reserve_usd ?? RESERVE_USD) } : {}),
   };
 }

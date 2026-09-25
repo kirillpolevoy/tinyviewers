@@ -1,4 +1,4 @@
-import { DEFAULT_BAND, formatTime, severityFor, strengthLabel } from '@/lib/scenes';
+import { DEFAULT_BAND, formatTime, sceneHeading, severityFor, strengthLabel } from '@/lib/scenes';
 import type { Scene } from '@/lib/scenes';
 import { EMPTY, HOME, sceneCountLabel } from '@/lib/copy';
 import styles from './PeekCard.module.css';
@@ -33,7 +33,7 @@ export function PeekCard({ title, sceneCount, scenes }: Props) {
               {strengthLabel(severityFor(scene, DEFAULT_BAND)) ?? EMPTY.notCheckedHeadline}
             </span>
           </div>
-          <span className={styles.scene}>{scene.title}</span>
+          <span className={styles.scene}>{sceneHeading(scene)}</span>
           {scene.tags.length > 0 && (
             <span className={styles.tags}>{scene.tags.map((tag) => tag.label).join(' · ')}</span>
           )}

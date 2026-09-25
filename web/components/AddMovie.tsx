@@ -8,10 +8,12 @@ import { ArrowRight } from './Art';
 import { usePolledJob } from './useJob';
 import { ADD, SEARCH } from '@/lib/copy';
 import {
+  addPhase,
   addRefusal,
   failureSentence,
   namesOneFilm,
   parentSteps,
+  stepDurationMs,
   type AddStatus,
   type Candidate,
   type Job,
@@ -251,7 +253,7 @@ export function AddAsk({ query, status, onStarted, onRetryStatus }: AskProps) {
         <div className={styles.submitRow}>
           {/* Never a bare spinner: the button says which of the two waits this is. */}
           <button type="submit" className={`button ${styles.submit}`} disabled={busy}>
-            {phase === 'finding' ? ADD.finding : phase === 'starting' ? ADD.starting : ADD.submit}
+            {phase === 'finding' ? ADD.finding : phase === 'starting' ? ADD.starting : namesOneFilm(title) ? ADD.submitExact : ADD.submit}
             {!busy && <ArrowRight />}
           </button>
         </div>
@@ -353,7 +355,7 @@ function firstSentence(text: string): string {
 type LiveProps = {
   initialJob: Job;
   /** The run finished and the film is in the library. */
-  onDone: (film: { slug: string; title: string }) => void;
+  onDone: (film: { slug: string; title: string; rebuilt?: boolean }) => void;
   /** "Try another movie", after a run that did not finish. */
   onReset: () => void;
   /** "Browse the library meanwhile": clear the search and go to the list, keeping this card. */
@@ -383,8 +385,8 @@ export function AddLive({ initialJob, onDone, onReset, onBrowse, focusOnMount = 
   const slug = job.film.slug;
   const title = job.film.title;
   useEffect(() => {
-    if (job.status === 'done' && slug) onDone({ slug, title });
-  }, [job.status, slug, title, onDone]);
+    if (job.status === 'done' && slug) onDone({ slug, title, ...(job.kind === 'rebuild' ? { rebuilt: true } : {}) });
+  }, [job.status, slug, title, onDone, job.kind]);
 
   if (job.status === 'failed' || (job.status === 'done' && !slug)) {
     const failed = job.status === 'failed';
@@ -411,43 +413,126 @@ export function AddLive({ initialJob, onDone, onReset, onBrowse, focusOnMount = 
   // Only the steps whose work reaches the film page, in the page's words (`parentSteps`).
   const steps = parentSteps(job.steps);
   const running = steps.find((step) => step.status === 'running');
+  const done = steps.filter((step) => step.status === 'done');
+  const details = done.filter((step) => step.detail);
   // A finish carries on a public run whose subtitles were fetched on the Watch page.
   const finishing = Boolean(job.continues);
+  // A rebuild replaces a guide the film already has, which stays readable until then.
+  const rebuild = job.kind === 'rebuild';
   // Queued is not reading: until the API reports a step, the card says it is waiting, nothing more.
-  const waiting = job.status === 'queued' || job.steps.every((step) => step.status === 'pending');
+  // The Jev-first pipeline has one slow stretch (Sonnet reading the film) and quick ones after it,
+  // and the lead says which of the two the run is in.
+  const phase = addPhase(job);
+  const waiting = phase === 'waiting';
   const interrupted = health.state === 'interrupted';
   const missing = health.state === 'missing';
+  const headline = rebuild
+    ? waiting
+      ? ADD.rebuildQueuedHeadline(title)
+      : ADD.rebuildHeadline(title)
+    : waiting
+      ? ADD.queuedHeadline(title)
+      : finishing
+        ? ADD.finishingHeadline(title)
+        : ADD.readingHeadline(title);
+  const body = rebuild
+    ? ADD.rebuildBody
+    : waiting
+      ? ADD.queuedBody(title)
+      : finishing
+        ? ADD.finishingBody
+        : phase === 'sonnet-reading'
+          ? ADD.sonnetReadingBody(title)
+          : phase === 'checking'
+            ? ADD.checkingBody(title)
+            : ADD.readingBody(title);
+
+  const elapsed = (
+    <p className={`tabular ${styles.progress}`}>
+      {job.status === 'queued' || job.elapsed_ms === null
+        ? ADD.queued
+        : interrupted || missing
+          ? ADD.elapsedAtLastUpdate(job.elapsed_ms)
+          : ADD.elapsedLine(job.elapsed_ms)}
+    </p>
+  );
+  const who = (id: string) =>
+    (ADD.stepWho[id] ?? []).length > 0 && (
+      <span className={styles.stepWhoLine}>
+        {(ADD.stepWho[id] ?? []).map((name) => (
+          <span key={name} className={`${styles.stepWho} ${name === 'Jev' ? styles.whoJev : styles.whoSonnet}`}>
+            {name}
+          </span>
+        ))}
+      </span>
+    );
+  const stepRow = (step: (typeof steps)[number]) => {
+    // A finished row says how long it took, as the API measured it; the running row says it is the
+    // slow part when it is. No clock of this page's own ticks anywhere on the card.
+    const took = step.status === 'done' ? stepDurationMs(step) : null;
+    return (
+      <li key={step.id} className={`${styles.step} ${styles[`step_${step.status}`] ?? ''}`}>
+        <span className={styles.stepMark} aria-hidden="true" />
+        <span className={styles.stepText}>
+          <span className={styles.stepLabel}>{step.label}</span>
+          {who(step.id)}
+        </span>
+        <span className={`tabular ${styles.stepState}`}>
+          {ADD.stepState[step.status] ?? step.status}
+          {took !== null && <span className={styles.stepTook}>{ADD.stepTook(took)}</span>}
+        </span>
+      </li>
+    );
+  };
 
   return (
     <section className={`sticker ${styles.card} ${styles.live}`} aria-labelledby="add-live-heading">
       <h2 id="add-live-heading" className={styles.headline} ref={headingRef} tabIndex={-1}>
-        {waiting ? ADD.queuedHeadline(title) : finishing ? ADD.finishingHeadline(title) : ADD.readingHeadline(title)}
+        {headline}
       </h2>
-      <p className={styles.body}>
-        {waiting ? ADD.queuedBody(title) : finishing ? ADD.finishingBody : ADD.readingBody(title)}
-      </p>
-      <div className={styles.inset}>
+      <p className={styles.body}>{body}</p>
+      <div className={`${styles.inset} ${styles.liveGrid}`}>
+        {/* What is happening now: first on a phone, beside the step list on a wider screen. */}
+        <div className={styles.nowPanel}>
+          <p className={styles.nowEyebrow}>{ADD.nowHeading}</p>
+          <p className={styles.nowLabel}>{running ? running.label : ADD.queued}</p>
+          {running && who(running.id)}
+          {running && ADD.stepPace[running.id] && <p className={styles.stepPace}>{ADD.stepPace[running.id]}</p>}
+          {elapsed}
+          {steps.some((step) => ADD.stepWho[step.id]) && <p className={styles.whoNote}>{ADD.whoNote}</p>}
+        </div>
         {steps.length > 0 && (
-          <ol className={styles.stepList} aria-label={ADD.stepsHeading}>
-            {steps.map((step) => (
-              <li key={step.id} className={`${styles.step} ${styles[`step_${step.status}`] ?? ''}`}>
-                <span className={styles.stepMark} aria-hidden="true" />
-                <span className={styles.stepText}>
-                  <span className={styles.stepLabel}>{step.label}</span>
-                  {step.detail && <span className={styles.stepDetail}>{step.detail}</span>}
-                </span>
-                <span className={styles.stepState}>{ADD.stepState[step.status] ?? step.status}</span>
-              </li>
-            ))}
-          </ol>
+          <div className={styles.stepsPanel}>
+            {/* Wider screens: every step, compact. */}
+            <ol className={`${styles.stepList} ${styles.stepsWide}`} aria-label={ADD.stepsHeading}>
+              {steps.map(stepRow)}
+            </ol>
+            {/* Phones: the steps still to come, with the finished ones folded away. */}
+            <div className={styles.stepsPhone}>
+              {done.length > 0 && (
+                <details className={styles.fold}>
+                  <summary className={styles.foldSummary}>{ADD.completedSteps(done.length)}</summary>
+                  <ol className={styles.stepList}>{done.map(stepRow)}</ol>
+                </details>
+              )}
+              <ol className={styles.stepList} aria-label={ADD.stepsHeading}>
+                {steps.filter((step) => step.status !== 'done').map(stepRow)}
+              </ol>
+            </div>
+            {details.length > 0 && (
+              <details className={styles.fold}>
+                <summary className={styles.foldSummary}>{ADD.stepMore}</summary>
+                <ul className={styles.detailList}>
+                  {details.map((step) => (
+                    <li key={step.id}>
+                      <b>{step.label}.</b> {step.detail}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </div>
         )}
-        <p className={`tabular ${styles.progress}`}>
-          {job.status === 'queued' || job.elapsed_ms === null
-            ? ADD.queued
-            : interrupted || missing
-              ? ADD.elapsedAtLastUpdate(job.elapsed_ms)
-              : ADD.elapsedLine(job.elapsed_ms)}
-        </p>
       </div>
       {/* The last answer is not current any more: say so, say when it was, and offer to ask again.
           Asking again only polls — it never starts the run a second time. */}

@@ -6,6 +6,7 @@ import {
   endsAroundMs,
   formatTime,
   readyAtMs,
+  sceneHeading,
   severityFor,
   severityTone,
   strengthWord,
@@ -46,6 +47,10 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
       {scenes.map((scene) => {
         const value = severityFor(scene, band);
         const open = current === scene.id;
+        // A reason already shown as a why is not repeated among the scene's other tags.
+        const why = scene.why ?? [];
+        const whyKeys = new Set(why.map((label) => label.toLowerCase()));
+        const tags = scene.tags.filter((tag) => !whyKeys.has(tag.label.toLowerCase()));
         return (
           <li key={scene.id} className={`${styles.row} ${open ? styles.open : ''}`}>
             <details className={styles.details} open={open}>
@@ -54,10 +59,12 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
                   <span className={`${styles.swatch} ${styles[severityTone(value)]}`} aria-hidden="true" />
                   {strengthWord(value)}
                 </span>
-                <span className={styles.title}>{scene.title}</span>
+                <span className={styles.title}>{sceneHeading(scene)}</span>
                 <span className={`tabular ${styles.range}`}>
                   {formatTime(scene.startMs)}–{formatTime(scene.endMs)}
                 </span>
+                {/* The row opens: said by a mark, not only by the pointer. */}
+                <span className={styles.chevron} aria-hidden="true" />
               </summary>
 
               <div className={styles.panel}>
@@ -67,10 +74,29 @@ export function SceneList({ scenes, band, openId, onToggle }: Props) {
                     formatTime(endsAroundMs(scene.endMs)),
                   )}
                 </p>
+                <p className={styles.readyNote}>{FILM.readyNote}</p>
                 {scene.description && <p className={styles.description}>{scene.description}</p>}
-                {scene.tags.length > 0 && (
+                {why.length > 0 && (
+                  <div className={styles.group}>
+                    <p className={styles.groupLabel}>{FILM.whyLabel}</p>
+                    <ul className={styles.tags}>
+                      {why.map((label) => (
+                        <li key={label} className={`${styles.tag} ${styles.why}`}>
+                          {label}
+                        </li>
+                      ))}
+                    </ul>
+                    {(scene.whyDetail ?? []).length > 0 && (
+                      <p className={styles.whyDetail}>
+                        {FILM.whyDetailLabel}: {(scene.whyDetail ?? []).join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                )}
+                {tags.length > 0 && why.length > 0 && <p className={styles.groupLabel}>{FILM.tagsLabel}</p>}
+                {tags.length > 0 && (
                   <ul className={styles.tags}>
-                    {scene.tags.map((tag) => (
+                    {tags.map((tag) => (
                       <li key={tag.id} className={styles.tag}>
                         {tag.label}
                       </li>

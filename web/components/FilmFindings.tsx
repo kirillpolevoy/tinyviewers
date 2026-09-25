@@ -17,6 +17,7 @@ import {
   strengthBreakdown,
   strengthWord,
   visibleScenes,
+  sceneHeading,
 } from '@/lib/scenes';
 import type { AgeBand, Scene } from '@/lib/scenes';
 import styles from './FilmFindings.module.css';
@@ -64,6 +65,11 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
     [scenes, selectedSceneId, tags],
   );
   const selected = selectedSceneId ? (scenes.find((s) => s.id === selectedSceneId) ?? null) : null;
+  // Every scene rated the same for both bands: said, so the age switch changing nothing does not look broken.
+  const bandsSame = useMemo(
+    () => scenes.length > 0 && scenes.every((s) => severityFor(s, '5-7') === severityFor(s, '8-10')),
+    [scenes],
+  );
 
   const keepUrl = (next: { band: AgeBand; tags: string[] }) => {
     window.history.replaceState(null, '', filmHref(slug, { band: next.band, selected: next.tags }));
@@ -157,7 +163,11 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
               </ul>
             )}
           </div>
-          <AgeToggle slug={slug} band={band} selected={tags} onChange={changeBand} />
+          <div className={styles.bandBox}>
+            <AgeToggle slug={slug} band={band} selected={tags} onChange={changeBand} />
+            {bandsSame && <p className={styles.bandsSame}>{FILM.bandsSame}</p>}
+            <LevelsDisclosure />
+          </div>
         </div>
 
         {scenes.length > 0 && (
@@ -188,7 +198,7 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
                       height: `${markerHeightPx(value)}px`,
                     }}
                     aria-pressed={isSelected}
-                    aria-label={`${scene.title}, ${formatTime(scene.startMs)}, ${strengthWord(value)}`}
+                    aria-label={`${sceneHeading(scene)}, ${formatTime(scene.startMs)}, ${strengthWord(value)}`}
                     onClick={() => tapMarker(scene.id)}
                   />
                 );
@@ -219,12 +229,15 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
                   </button>
                 </>
               ) : (
-                FILM.timelineHint
+                <>
+                  {/* On a phone the markers are a picture: the rows below are the way in. */}
+                  <span className={styles.hintWide}>{FILM.timelineHint}</span>
+                  <span className={styles.hintPhone}>{FILM.timelineHintPhone}</span>
+                </>
               )}
               <span> · {FILM.allClear(formatTime(lastEnd))}</span>
             </p>
           )}
-          <LevelsDisclosure />
         </div>
       </section>
 
@@ -260,12 +273,15 @@ export function FilmFindings({ slug, title, scenes, durationMs, initialBand, ini
             </button>
           </StateCard>
         ) : (
+          <>
+          <p className={styles.rowsHint}>{FILM.rowsHint}</p>
           <SceneList
             scenes={shown}
             band={band}
             openId={openId}
             onToggle={(id) => setOpenId((was) => (was === id ? null : id))}
           />
+          </>
         )}
       </div>
     </>

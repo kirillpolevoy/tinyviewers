@@ -27,12 +27,13 @@ export function withJustAdded(list: string[], slug: string): string[] {
   return [slug, ...list.filter((s) => s !== slug)];
 }
 
-export type AddedFilm = { slug: string; title: string };
+/** `rebuilt`: the film was already in the library and its guide was replaced (an admin rebuild). */
+export type AddedFilm = { slug: string; title: string; rebuilt?: boolean };
 
 /** The film a run added, when the run is finished and names one. */
 export function addedFilm(job: Job | null): AddedFilm | null {
   if (!job || job.status !== 'done' || !job.film.slug) return null;
-  return { slug: job.film.slug, title: job.film.title };
+  return { slug: job.film.slug, title: job.film.title, ...(job.kind === 'rebuild' ? { rebuilt: true } : {}) };
 }
 
 /**

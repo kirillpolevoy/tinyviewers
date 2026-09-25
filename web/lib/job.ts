@@ -5,8 +5,7 @@
 // What is here instead is the part that is this app's decision — which sentence a failure gets, and
 // how long a step took — kept pure so both the server render and the client poll use the same one.
 
-import { ADD, DEMO, capLine } from './copy';
-import type { RawRecording, RawExcerpts } from './replay';
+import { ADD, capLine } from './copy';
 
 export type JobStatus = 'queued' | 'running' | 'done' | 'failed';
 export type StepStatus = 'pending' | 'running' | 'done' | 'failed';
@@ -26,7 +25,7 @@ export type JobStep = {
  * a public run of the analysis's first stages (the scene API decides which), that writes nothing
  * but its own job row.
  */
-export type JobKind = 'add' | 'demo';
+export type JobKind = 'add' | 'demo' | 'rebuild';
 
 export type Job = {
   id: string;
@@ -49,13 +48,8 @@ export type Job = {
   cost_usd: number | null;
   error_code: string | null;
   error: string | null;
-  /**
-   * Whether the Jev recording can be asked for yet — true as soon as the jev stage ends, long
-   * before the scenes exist. The recording itself is a separate endpoint because it is about a
-   * megabyte and this object is fetched every 1.5 s: a flag costs nothing to poll, and the thing
-   * it announces is fetched once.
-   */
-  recording_ready: boolean;
+  /** The live pipeline's Jev recording is stored; nothing in this app reads it any more. */
+  recording_ready?: boolean;
   scene_count: number | null;
   /**
    * A public run only: the steps a finish would still run, labelled by the API. The page lists
@@ -65,12 +59,6 @@ export type Job = {
   elapsed_ms: number | null;
   created_at: string;
   updated_at: string;
-};
-
-/** `GET /api/add/jobs/{id}/recording`, once the job says there is one. */
-export type JobRecording = {
-  recording: RawRecording;
-  excerpts: RawExcerpts | null;
 };
 
 /** A candidate from `POST /api/add/resolve`. */
@@ -99,21 +87,6 @@ export type AddStatus = {
   reserve_usd?: number;
 };
 
-/** `GET /api/demo/status`: whether a live demo run can start right now. */
-export type DemoStatus = {
-  /** The admission arithmetic: today's demo spending plus one run's reserve is within the cap. */
-  available: boolean;
-  spent_today_usd: number;
-  cap_usd: number;
-  reserve_usd: number;
-  running: number;
-  concurrency: number;
-  new_films_today: number;
-  new_films_per_day: number;
-  /** False when the deployment lacks a key one of the public stages needs. */
-  configured: boolean;
-};
-
 /** A refusal: one plain sentence, and the way onward where there is one. */
 export type Refusal = { text: string; link?: { href: string; label: string } };
 
@@ -139,41 +112,6 @@ export function addRefusal(status: number, body: Body): Refusal {
   }
   if (status === 503) return { text: ADD.offBody };
   return { text: ADD.unreachable };
-}
-
-/**
- * The demo picker's two POSTs, resolve and runs. The daily cap is the one refusal with a way
- * onward that is not "wait": a film on the shelf has a recorded run, and the API names the film.
- */
-export function demoRefusal(status: number, body: Body): Refusal {
-  if (status === 400) return { text: DEMO.badRequest };
-  if (status === 413) return { text: ADD.tooLong };
-  if (status === 409 && body.error_code === 'busy') return { text: DEMO.busy };
-  if (status === 429) {
-    switch (body.error_code) {
-      case 'too_many_runs':
-        return { text: DEMO.tooManyRuns };
-      case 'too_many_new_films':
-        return { text: DEMO.tooManyNewFilms };
-      case 'new_film_limit':
-        return { text: DEMO.newFilmLimit };
-      case 'too_many_lookups':
-        return { text: DEMO.tooManyLookups };
-      default:
-        return typeof body.slug === 'string' && body.slug
-          ? { text: DEMO.capHeadline, link: { href: `/watch/${body.slug}`, label: DEMO.watchRecording } }
-          : { text: `${DEMO.capHeadline} ${capLine(Number(body.spent_usd ?? 0), Number(body.cap_usd ?? 0))}` };
-    }
-  }
-  return { text: DEMO.unreachable };
-}
-
-/** Finishing a demo run: the add refusals, plus the three that are about the run being finished. */
-export function finishRefusal(status: number, body: Body): Refusal {
-  if (status === 409 && body.error_code === 'not_done') return { text: DEMO.finishNotDone };
-  if (status === 409 && body.error_code === 'no_subtitles') return { text: DEMO.finishNoSubtitles };
-  if (status === 400 || status === 404) return { text: DEMO.finishNotDone };
-  return addRefusal(status, body);
 }
 
 /**
@@ -234,16 +172,64 @@ export function failureSentence(errorCode: string | null, error: string | null):
  * The steps a parent is shown on the add card: only those whose output reaches the film page, in the
  * API's order, labelled in the page's words.
  *
- * The API runs more than these — Jev's beat screening and the evidence lines feed the Watch page's
- * replay, not the scene guide — and a progress list that showcased them would be describing work the
- * parent's guide is not made of. They still run; while one does, the list simply shows the next
- * listed step as not started yet, which is true. An id this app does not know is left out too: a
- * new stage is shown once someone has decided it belongs in front of a parent.
+ * Two pipelines report here. The live one (subtitles, jev, scenes, presence, excerpts, ingest) runs
+ * Jev's beat screening and the evidence lines for the old Watch page only, so those two are not
+ * listed. The Jev-first one (`ADD_PIPELINE=jevfirst`) is all guide: every stage it reports builds
+ * the scene guide, and each is listed — with Sonnet's describing and Jev's check of it shown as the
+ * one row a parent reads them as ("Sonnet describes, Jev checks"; see `mergeSteps`).
+ *
+ * An id this app does not know is left out: a new stage is shown once someone has decided it
+ * belongs in front of a parent. While an unlisted stage runs, the list simply shows the next listed
+ * step as not started yet, which is true.
  */
 export function parentSteps(steps: JobStep[]): JobStep[] {
-  return steps
-    .filter((step) => Object.prototype.hasOwnProperty.call(ADD.stepLabels, step.id))
-    .map((step) => ({ ...step, label: ADD.stepLabels[step.id] }));
+  const out: JobStep[] = [];
+  for (const step of steps) {
+    const row = ADD.stepRows[step.id];
+    if (!Object.prototype.hasOwnProperty.call(ADD.stepRows, step.id) || !row) continue;
+    const labelled = { ...step, id: row, label: ADD.stepLabels[row] };
+    const existing = out.find((s) => s.id === row);
+    if (existing) out[out.indexOf(existing)] = mergeSteps(existing, labelled);
+    else out.push(labelled);
+  }
+  return out;
+}
+
+/**
+ * Two API stages shown as one row. The row is done when both are, failed when either failed, and
+ * running from the moment the first starts until the second ends — between the two it is still
+ * the parent's one step, half finished, not "done" and not "not yet".
+ */
+export function mergeSteps(first: JobStep, second: JobStep): JobStep {
+  const statuses = [first.status, second.status];
+  const status: StepStatus = statuses.includes('failed')
+    ? 'failed'
+    : statuses.every((s) => s === 'done')
+      ? 'done'
+      : statuses.every((s) => s === 'pending')
+        ? 'pending'
+        : 'running';
+  return {
+    ...first,
+    status,
+    started_ms: first.started_ms ?? second.started_ms,
+    ended_ms: status === 'done' ? second.ended_ms ?? first.ended_ms : null,
+    detail: second.detail ?? first.detail,
+  };
+}
+
+/**
+ * Where a run is, in the words the card's lead is written for. `sonnet-reading` is the one slow
+ * stretch of the Jev-first pipeline (Sonnet reading the whole film takes minutes); `checking` is
+ * everything after it, which takes seconds a stage. The live pipeline is always `reading`.
+ */
+export type AddPhase = 'waiting' | 'sonnet-reading' | 'checking' | 'reading';
+
+export function addPhase(job: Pick<Job, 'status' | 'steps'>): AddPhase {
+  if (job.status === 'queued' || job.steps.every((step) => step.status === 'pending')) return 'waiting';
+  const segment = job.steps.find((step) => step.id === 'segment');
+  if (!segment) return 'reading';
+  return segment.status === 'done' ? 'checking' : 'sonnet-reading';
 }
 
 /** An IMDb link or a bare IMDb id: the one kind of input that names a single film for certain. */

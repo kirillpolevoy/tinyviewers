@@ -108,6 +108,9 @@ export async function getRuns(db, filmId) {
   return rows;
 }
 
+/** scene_labels.detail on a Jev-first taxonomy event at act that is not one of the scene's flag reasons. */
+export const ACT_EVENT_DETAIL = 'at act, not a flag reason';
+
 // --- vocabulary ---------------------------------------------------------------------------------
 //
 // The vocabulary and the groups are ~90 rows that change only when the loader runs, and every
@@ -141,6 +144,9 @@ export async function getVocabulary(db) {
       `select v.id, v.layer, v.group_id, v.label, v.text_blind, v.taxonomy_version, v.aliases,
               g.label as group_label
          from vocabulary v left join groups g on g.id = v.group_id
+        -- the Jev-first flag-reason chips (taxonomy_version 'reasons-*') label scenes but are not
+        -- filterable vocabulary: they are the film's own words for why a scene is on its guide
+        where v.taxonomy_version not like 'reasons-%'
         order by v.layer, v.group_id, v.id`,
     );
     return rows;
@@ -178,13 +184,15 @@ function sceneWhere(f) {
                            and ${counts()} and l.vocabulary_id = any(${p(f.presenceIds)}))`);
   }
   if (f.eventIds?.length) {
+    // A Jev-first scene's taxonomy events at act are stored unasserted (the page's event chips are its flag
+    // reasons), but they are in the scene: they still match an event filter.
     where.push(`exists (select 1 from scene_labels l where l.scene_id = s.id
-                          and l.channel = 'event' and l.asserted and l.vocabulary_id = any(${p(f.eventIds)}))`);
+                          and l.channel = 'event' and (l.asserted or l.detail = ${p(ACT_EVENT_DETAIL)}) and l.vocabulary_id = any(${p(f.eventIds)}))`);
   }
   if (f.groupIds?.length) {
     where.push(`exists (select 1 from scene_labels l join vocabulary v on v.id = l.vocabulary_id
                          where l.scene_id = s.id and l.channel in ('presence','event')
-                           and ${counts()} and v.group_id = any(${p(f.groupIds)}))`);
+                           and (${counts()} or (l.channel = 'event' and l.detail = ${p(ACT_EVENT_DETAIL)})) and v.group_id = any(${p(f.groupIds)}))`);
   }
   if (f.minSeverity !== null && f.minSeverity !== undefined) {
     const column = f.band === '8-10' ? 's.severity_8_10' : 's.severity_5_7';

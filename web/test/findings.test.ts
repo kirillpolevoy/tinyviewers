@@ -92,7 +92,7 @@ test('the copy counts things properly', () => {
   assert.equal(sceneCountLabel(18), '18 scenes');
   assert.equal(FILM.filterShowing(6, 18), 'Showing 6 of 18 scenes.');
   assert.equal(FILM.filterShowing(18, 18), 'Showing all 18 scenes.');
-  assert.equal(FILM.readyLine('0:19:00', '0:22:35'), 'Be ready at 0:19:00 · ends around 0:22:35');
+  assert.equal(FILM.readyLine('0:19:00', '0:22:35'), 'Skip from 0:19:00 to about 0:22:35.');
   assert.equal(ADD.stepLine('Reading the film for scenes'), 'Reading the film for scenes…');
 });
 
@@ -137,18 +137,43 @@ test('the add card lists only the steps that build the guide, in the page’s wo
   assert.equal(shown[3].label, 'Saving the scene guide');
 });
 
-test('no parent-facing add copy describes beats or Jev’s screening', () => {
-  const lines = [ADD.readingBody('Coco'), ADD.queuedBody('Coco'), ADD.finishingBody, ...Object.values(ADD.stepLabels)];
-  for (const line of lines) assert.doesNotMatch(line, /beat|jev|screen/i, line);
+test('no parent-facing add copy describes beats or screening', () => {
+  // The Jev-first rows name Jev and Sonnet on purpose (owner-approved); the retired beat screening
+  // is still never described to a parent.
+  const lines = [
+    ADD.readingBody('Coco'),
+    ADD.queuedBody('Coco'),
+    ADD.finishingBody,
+    ADD.sonnetReadingBody('Coco'),
+    ADD.checkingBody('Coco'),
+    ...Object.values(ADD.stepLabels),
+    ...Object.values(ADD.stepPace),
+  ];
+  for (const line of lines) assert.doesNotMatch(line, /beat|screen/i, line);
   // Queued says it is waiting; it does not claim to be reading.
   assert.doesNotMatch(ADD.queuedHeadline('Coco'), /reading/i);
 });
 
-test('the navigation no longer offers the Watch page, and the Watch copy makes no guide-building claim', async () => {
-  const { NAV, WATCH } = await import('../lib/copy');
-  assert.deepEqual(NAV.map((n) => n.href), ['/library']);
-  assert.doesNotMatch(WATCH.intro, /same steps that build/);
-  assert.doesNotMatch(WATCH.recordedLead('1 May 2026'), /used up/);
+test('Watch it work is linked from the navigation by the one switch', async () => {
+  const { NAV, WATCH_LINKED } = await import('../lib/copy');
+  assert.equal(WATCH_LINKED, true);
+  assert.deepEqual(NAV.map((n) => n.href), ['/library', '/watch']);
+});
+
+test('a flagged scene says why even with no description, and never shows the placeholder title', async () => {
+  const { parseWhy, sceneHeading, PLACEHOLDER_TITLE } = await import('../lib/scenes');
+  const stored = { line: 'Creature threatens · Child in danger', tags: [{ label: 'Creature threatens', by: ['jev'] }, { label: 'Child in danger', by: ['jev'] }] };
+  assert.deepEqual(parseWhy(stored), ['Creature threatens', 'Child in danger']);
+  assert.deepEqual(parseWhy(JSON.stringify(stored)), ['Creature threatens', 'Child in danger']);
+  assert.deepEqual(parseWhy('Chased · Fire'), ['Chased', 'Fire']);
+  assert.deepEqual(parseWhy(['Fire', 'fire', ' ']), ['Fire']);
+  // A guide built before v10.4 has no reasons stored: no chips, no error.
+  assert.deepEqual(parseWhy(null), []);
+  assert.deepEqual(parseWhy({ nonsense: 1 }), []);
+  const base = { startMs: 60_000, endMs: 120_000 };
+  assert.equal(sceneHeading({ ...base, title: 'Sharks chase Marlin', why: ['Chased'] }), 'Sharks chase Marlin');
+  assert.equal(sceneHeading({ ...base, title: PLACEHOLDER_TITLE, why: ['Creature threatens', 'Child in danger', 'Fire'] }), 'Creature threatens · Child in danger');
+  assert.equal(sceneHeading({ ...base, title: PLACEHOLDER_TITLE, why: [] }), '0:01:00–0:02:00');
 });
 
 test('a scene pass that found nothing is its own sentence, not "something went wrong"', async () => {

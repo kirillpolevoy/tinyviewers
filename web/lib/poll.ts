@@ -34,14 +34,21 @@ export type PollHealth = {
 
 export type PollAnswer = { kind: 'job'; job: Job } | { kind: 'missing' } | { kind: 'error' };
 
+/** One poll of anything with an id: the thing, "there is no such thing", or a miss. */
+export type Answer<T> = { kind: 'value'; value: T } | { kind: 'missing' } | { kind: 'error' };
+
 /** How long to wait before the next poll, given the misses in a row: 1.5 s, then doubling to 15 s. */
 export function nextDelayMs(failures: number): number {
   if (failures <= 0) return POLL_MS;
   return Math.min(MAX_BACKOFF_MS, POLL_MS * 2 ** failures);
 }
 
-export function healthAfter(previous: PollHealth, answer: PollAnswer, now: number): PollHealth {
-  if (answer.kind === 'job') return { state: 'ok', failures: 0, lastOkAt: now };
+export function healthAfter(
+  previous: PollHealth,
+  answer: PollAnswer | Answer<unknown>,
+  now: number,
+): PollHealth {
+  if (answer.kind === 'job' || answer.kind === 'value') return { state: 'ok', failures: 0, lastOkAt: now };
   if (answer.kind === 'missing') return { ...previous, state: 'missing' };
   const failures = previous.failures + 1;
   return { ...previous, failures, state: failures >= INTERRUPTED_AFTER ? 'interrupted' : 'retrying' };
@@ -53,29 +60,45 @@ type Timers = {
   now: () => number;
 };
 
-type Options = {
-  job: Job;
-  /** One poll. It must honour the signal; anything it throws counts as a miss. */
-  fetchJob: (id: string, signal: AbortSignal) => Promise<PollAnswer>;
-  onJob: (job: Job) => void;
-  onHealth: (health: PollHealth) => void;
-  timers?: Timers;
-  /** When the job on screen was last known to be current. Defaults to now. */
-  lastOkAt?: number | null;
-};
-
 const realTimers: Timers = {
   setTimeout: (fn, ms) => setTimeout(fn, ms),
   clearTimeout: (handle) => clearTimeout(handle as ReturnType<typeof setTimeout>),
   now: () => Date.now(),
 };
 
+type PollOptions<T> = {
+  id: string;
+  /** Whether the starting value is still moving. A value that is not is never polled. */
+  live: boolean;
+  /** One poll. It must honour the signal; anything it throws counts as a miss. */
+  fetchOne: (id: string, signal: AbortSignal) => Promise<Answer<T>>;
+  /** Whether this answer is still moving; the loop stops after the first one that is not. */
+  isLive: (value: T) => boolean;
+  onValue: (value: T) => void;
+  onHealth: (health: PollHealth) => void;
+  timers?: Timers;
+  /** When the value on screen was last known to be current. Defaults to now. */
+  lastOkAt?: number | null;
+};
+
 /**
- * Poll a job until it stops moving, the API says it is gone, or `stop()` is called. Returns the
+ * Poll one thing until it stops moving, the API says it is gone, or `stop()` is called. Returns the
  * controls: `stop` aborts whatever is in flight and cancels whatever is scheduled, so after it no
- * callback fires; `retryNow` skips the wait (the parent pressed "Try again").
+ * callback fires; `retryNow` skips the wait (the reader pressed "Ask again now").
+ *
+ * The add card's job and the Watch page's live run are both this loop: the rules above are about
+ * polling, not about jobs.
  */
-export function startJobPoll({ job, fetchJob, onJob, onHealth, timers = realTimers, lastOkAt }: Options) {
+export function startPoll<T>({
+  id,
+  live,
+  fetchOne,
+  isLive: stillLive,
+  onValue,
+  onHealth,
+  timers = realTimers,
+  lastOkAt,
+}: PollOptions<T>) {
   let stopped = false;
   let timer: unknown = null;
   let inFlight: AbortController | null = null;
@@ -91,9 +114,9 @@ export function startJobPoll({ job, fetchJob, onJob, onHealth, timers = realTime
     if (stopped || inFlight) return;
     const controller = new AbortController();
     inFlight = controller;
-    let answer: PollAnswer;
+    let answer: Answer<T>;
     try {
-      answer = await fetchJob(job.id, controller.signal);
+      answer = await fetchOne(id, controller.signal);
     } catch {
       answer = { kind: 'error' };
     }
@@ -102,15 +125,15 @@ export function startJobPoll({ job, fetchJob, onJob, onHealth, timers = realTime
 
     health = healthAfter(health, answer, timers.now());
     onHealth(health);
-    if (answer.kind === 'job') {
-      onJob(answer.job);
-      if (!isLive(answer.job.status)) return;
+    if (answer.kind === 'value') {
+      onValue(answer.value);
+      if (!stillLive(answer.value)) return;
     }
     if (answer.kind === 'missing') return;
     schedule(nextDelayMs(health.failures));
   }
 
-  if (isLive(job.status)) schedule(POLL_MS);
+  if (live) schedule(POLL_MS);
 
   return {
     stop() {
@@ -125,6 +148,34 @@ export function startJobPoll({ job, fetchJob, onJob, onHealth, timers = realTime
       void tick();
     },
   };
+}
+
+type Options = {
+  job: Job;
+  /** One poll. It must honour the signal; anything it throws counts as a miss. */
+  fetchJob: (id: string, signal: AbortSignal) => Promise<PollAnswer>;
+  onJob: (job: Job) => void;
+  onHealth: (health: PollHealth) => void;
+  timers?: Timers;
+  /** When the job on screen was last known to be current. Defaults to now. */
+  lastOkAt?: number | null;
+};
+
+/** The add card's poll: `startPoll` over one job. */
+export function startJobPoll({ job, fetchJob, onJob, onHealth, timers, lastOkAt }: Options) {
+  return startPoll<Job>({
+    id: job.id,
+    live: isLive(job.status),
+    fetchOne: async (id, signal) => {
+      const answer = await fetchJob(id, signal);
+      return answer.kind === 'job' ? { kind: 'value', value: answer.job } : answer;
+    },
+    isLive: (value) => isLive(value.status),
+    onValue: onJob,
+    onHealth,
+    timers,
+    lastOkAt,
+  });
 }
 
 /** The real fetch: the job, a 404 as "missing", anything else as a miss. */

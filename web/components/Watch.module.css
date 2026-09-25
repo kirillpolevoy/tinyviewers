@@ -1,0 +1,2056 @@
+/* "Watch it work": the light page from the design boards, with one dark instrument panel — the
+   board where Jev's live work lands. Tokens are the site's own (app/globals.css). */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-block: 20px 72px;
+}
+
+@media (min-width: 900px) {
+  .main {
+    gap: 32px;
+  }
+}
+
+/* --- shared type --------------------------------------------------------------------------------- */
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 900px;
+}
+
+.headline {
+  font-size: clamp(34px, 5.4vw, 52px);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.lead {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 44em;
+}
+
+@media (min-width: 900px) {
+  .lead {
+    font-size: 18px;
+  }
+}
+
+.sub {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+.sectionHeading {
+  font-size: clamp(24px, 3.4vw, 30px);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 18px 20px 20px;
+}
+
+@media (min-width: 720px) {
+  .card {
+    padding: 20px 22px;
+  }
+}
+
+.cardHeading {
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.cardBody {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+.cardNote {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.quietLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.quietLink:hover {
+  color: var(--coral-text);
+}
+
+/* --- pick a film: what you will see, and where it fits ------------------------------------------- */
+
+.realStep {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 46em;
+  padding: 12px 16px;
+  background: var(--mint);
+  border-radius: 16px;
+  border: 1.5px solid var(--ink);
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+@media (min-width: 1000px) {
+  .flow {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.4fr) minmax(0, 0.9fr);
+    gap: 18px;
+  }
+}
+
+.flowSide {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+}
+
+.flowTag {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+.flowBody {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+.flowLive {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px 20px;
+}
+
+.flowHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.flowLiveTag {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--butter);
+  border: 1.5px solid var(--ink);
+}
+
+.jobList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .jobList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.jobItem {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.jobNumber {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.jobItemText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jobItemTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.jobItemBody {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--body-strong);
+}
+
+.pick {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pickHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+}
+
+.pickNote {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--body);
+}
+
+.filmList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filmRow {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px 16px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+}
+
+@media (min-width: 820px) {
+  .filmRow {
+    grid-template-columns: 56px minmax(180px, 260px) minmax(0, 1fr) auto;
+    gap: 20px;
+    padding: 14px 24px;
+  }
+}
+
+.filmPoster {
+  width: 56px;
+  height: 78px;
+  border-radius: 12px;
+  object-fit: cover;
+  padding: 0;
+}
+
+.filmName {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.filmTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.25;
+}
+
+.filmYear {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.chip {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: var(--mint);
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+}
+
+.filmReady {
+  grid-column: 1 / -1;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--body-strong);
+}
+
+.runButton {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-height: 48px;
+  font-size: 17px;
+  padding: 10px 22px;
+}
+
+.runButton:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+@media (min-width: 820px) {
+  .filmReady,
+  .runButton {
+    grid-column: auto;
+  }
+}
+
+.refusal {
+  grid-column: 1 / -1;
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--coral-text);
+}
+
+.budget {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+/* The picker's kinds of nothing: one plain sentence and, where there is one, the way onward. */
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--sheet);
+  border: 3px solid var(--ink);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+.notice b {
+  font-family: var(--display);
+  color: var(--ink);
+}
+
+/* --- the run's head -------------------------------------------------------------------------------- */
+
+.runHead {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .runHead {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+}
+
+.runHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 980px;
+}
+
+.runHeadline {
+  font-size: clamp(30px, 4.6vw, 48px);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+/* Focused by script when the view changes; it is not a control, so it draws no ring. */
+.runHeadline:focus {
+  outline: none;
+}
+
+.headerButton {
+  align-self: flex-start;
+  flex: none;
+  min-height: 48px;
+  font-size: 17px;
+  padding: 10px 24px;
+}
+
+.headerButton:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+.stale {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: var(--butter);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* --- the board ------------------------------------------------------------------------------------- */
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--dark);
+  color: var(--dark-text);
+  border-radius: var(--radius-sheet);
+  padding: 18px 16px 22px;
+}
+
+@media (min-width: 720px) {
+  .board {
+    padding: 24px 28px;
+  }
+}
+
+.board :focus-visible {
+  outline-color: var(--butter);
+}
+
+.counters {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .counters {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 20px;
+  padding: 10px 14px;
+}
+
+/* Five counters in two columns leave the last one alone on its row: let it span. */
+.counter:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 720px) {
+  .counter {
+    padding: 12px 16px;
+  }
+
+  .counter:last-child {
+    grid-column: auto;
+  }
+}
+
+.counterLabel {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+}
+
+.counterValue {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.3;
+}
+
+.job {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .job {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+  }
+}
+
+.jobText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.jobTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark-text);
+}
+
+.jobBody {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark-body);
+}
+
+.jobVisual {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.jobFoot {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-body);
+  overflow-wrap: anywhere;
+}
+
+.feedLine {
+  font-family: var(--serif);
+  font-weight: 400;
+}
+
+.boardEmpty {
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark-muted);
+}
+
+/* 1 · the cut: one mark per cut Sonnet made, lit when Jev's ruling on it arrives. */
+.cutStrip {
+  position: relative;
+  height: 34px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 14px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.inner {
+  position: absolute;
+  inset: 0 12px;
+}
+
+.cut {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 3px;
+  background: var(--dark-line);
+  transition: background-color 200ms ease;
+}
+
+.cutOk {
+  background: var(--mint);
+}
+
+.cutDoubt,
+.cutUncertain {
+  top: 3px;
+  bottom: 3px;
+  width: 8px;
+  margin-left: -4px;
+  background: repeating-linear-gradient(0deg, var(--dark-text) 0 3px, transparent 3px 6px);
+  border: 1.5px solid var(--dark-text);
+}
+
+.cutLegend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--dark-body);
+}
+
+.cutUncertainMark {
+  width: 8px !important;
+  height: 16px !important;
+  background: repeating-linear-gradient(0deg, var(--dark-text) 0 3px, transparent 3px 6px);
+  border: 1.5px solid var(--dark-text);
+}
+
+.meterRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meter {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  overflow: hidden;
+}
+
+.meterFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--butter);
+  border-radius: 999px;
+  transition: width 300ms ease;
+}
+
+.meterLabel {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--dark-body);
+  white-space: nowrap;
+}
+
+/* 2 · the tiles: one per scene, placed at its time; the bar at the bottom rises when the scene's
+   answers land. Each answered tile is a button the full height of the strip. */
+.tiles {
+  position: relative;
+  height: 112px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.tilesBase {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 12px;
+  height: 2px;
+  background: var(--dark-line);
+}
+
+.tiles > .boardEmpty {
+  position: absolute;
+  inset: 12px 16px auto;
+}
+
+.tilesInner {
+  position: absolute;
+  inset: 8px 8px 14px;
+}
+
+.tile {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+}
+
+button.tile {
+  cursor: pointer;
+}
+
+.tileBar {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  /* Not asked yet: a quiet outline, still visible against the panel (about 3:1). */
+  border: 2px solid #8f8b82;
+  transition: height 240ms ease, background-color 240ms ease, border-color 240ms ease;
+}
+
+.tile_asking {
+  border-color: var(--butter);
+  border-style: dashed;
+}
+
+.tile_answered {
+  background: var(--dark-muted);
+  border-color: var(--dark-text);
+}
+
+.tile_clear {
+  background: #6b6761;
+  border-color: var(--dark-text);
+}
+
+.tile_unrated {
+  border-color: var(--dark-text);
+  background: repeating-linear-gradient(135deg, var(--dust) 0 4px, var(--dark-panel) 4px 7px);
+}
+
+.tile_flagged {
+  border-color: var(--dark-text);
+}
+
+button.tile:hover .tileBar {
+  border-color: var(--butter);
+}
+
+/* 3 · the sentences, newest first. */
+.claims {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--dark-panel);
+  border: 1px solid var(--dark-line);
+  border-radius: 16px;
+  padding: 12px 14px;
+  min-height: 124px;
+}
+
+.claim {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  gap: 4px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--dark-body);
+}
+
+@media (min-width: 720px) {
+  .claim {
+    justify-items: stretch;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+.pill {
+  align-self: start;
+  text-align: center;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 2px solid var(--dark-text);
+  color: var(--ink);
+}
+
+.pillKept {
+  background: var(--mint);
+}
+
+.pillDropped {
+  background: var(--dark-raise);
+  color: var(--dark-text);
+  border-style: dashed;
+}
+
+.pillFinal {
+  background: var(--dark-panel);
+  color: var(--dark-text);
+  border-width: 1.5px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-content: start;
+}
+
+/* Severity fills, shared by tiles, markers and swatches. Not checked is dust — never a zero. */
+.mint {
+  background: var(--mint);
+}
+
+.butter {
+  background: var(--butter);
+}
+
+.blush {
+  background: var(--blush);
+}
+
+.coral {
+  background: var(--coral);
+}
+
+.dust {
+  background: var(--dust);
+}
+
+/* --- explainers under the board -------------------------------------------------------------------- */
+
+.explainers {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 900px) {
+  .explainers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* --- finished -------------------------------------------------------------------------------------- */
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sheet);
+  padding: 20px 18px;
+}
+
+@media (min-width: 720px) {
+  .sheet {
+    padding: 22px 24px;
+  }
+}
+
+.doneTop {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 720px) {
+  .doneTop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.doneCount {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.countLine {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.countNumber {
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.countWords {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--body-strong);
+}
+
+.breakdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.breakdownItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  flex: none;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 5px;
+  border: 2px solid var(--ink);
+}
+
+.bandGroup {
+  flex: none;
+  display: inline-flex;
+  align-self: flex-start;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bandOption {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  background: var(--sheet);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.bandOn {
+  background: var(--ink);
+  color: var(--page);
+}
+
+.timeline {
+  position: relative;
+  height: 96px;
+  background: var(--page);
+  border-radius: 20px;
+}
+
+.timelineBase {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 18px;
+  height: 2px;
+  background: var(--hairline);
+}
+
+/* A marker is a button wider than its 16px bar and as tall as the strip, so a finger can hit it. */
+.timelineInner {
+  position: absolute;
+  inset: 8px 16px 18px;
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.markerBar {
+  display: block;
+  width: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+}
+
+
+.timelineTimes {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-family: var(--display);
+  font-size: 12px;
+  color: var(--body);
+}
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+}
+
+@media (min-width: 900px) {
+  .compare {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 26px;
+  }
+}
+
+.compareText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compareHeadline {
+  font-size: clamp(20px, 2.6vw, 24px);
+  line-height: 1.3;
+  font-weight: 800;
+}
+
+.compareActions {
+  display: flex;
+  gap: 10px 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.compareActions :global(.button) {
+  min-height: 48px;
+  font-size: 17px;
+  padding: 10px 22px;
+}
+
+.flagList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.flagRows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flagRow {
+  width: 100%;
+  min-height: 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 4px 12px;
+  padding: 10px 16px;
+  background: var(--sheet);
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.flagRow:hover {
+  border-color: var(--ink);
+}
+
+@media (min-width: 720px) {
+  .flagRow {
+    padding: 12px 18px;
+  }
+}
+
+.flagTime {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.flagStrength {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--body);
+}
+
+.flagStrength .swatch {
+  width: 12px;
+  height: 12px;
+}
+
+.flagTitleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+
+.flagTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.who {
+  display: flex;
+  gap: 6px;
+}
+
+.chevron {
+  font-family: var(--display);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--body);
+}
+
+.whyMore {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 2px 4px;
+  color: var(--body);
+}
+
+.whoChip {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+}
+
+.whoJev {
+  background: var(--butter);
+}
+
+.whoSonnet {
+  background: var(--lilac);
+}
+
+/* --- one scene up close ---------------------------------------------------------------------------- */
+
+/* The way back stays in view while a parent reads down a long scene. */
+.backBar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 0 -16px;
+  padding: 2px 16px;
+  background: var(--page);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.backLink {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.sceneStrength {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .sceneStrength {
+    align-items: flex-end;
+  }
+}
+
+.strengthBadge {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.sceneGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .sceneGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.sceneColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sceneTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.whyList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--body-strong);
+}
+
+.whyLabel {
+  font-family: var(--display);
+  color: var(--ink);
+}
+
+.readyLine {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--coral-text);
+}
+
+.answers {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.answer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(80px, 200px) 44px;
+  gap: 12px;
+  align-items: center;
+  min-height: 30px;
+  font-family: var(--serif);
+  font-size: 15px;
+}
+
+.answerBar {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--page);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+.answerFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  background: var(--coral);
+}
+
+.answerP {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  text-align: right;
+}
+
+.answerSonnet {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 30px;
+  font-family: var(--serif);
+  font-size: 15px;
+}
+
+.yes {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--coral);
+  border: 2px solid var(--ink);
+}
+
+.pillUnchecked {
+  background: var(--dark-raise);
+  color: var(--dark-text);
+  border: 1.5px dashed var(--dark-muted);
+}
+
+.how {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* The finished run's quiet "Run it again". */
+.quietButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.quietButton:hover {
+  color: var(--coral-text);
+}
+
+.quietButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.howItWent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.howItWentSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.howItWentSummary::-webkit-details-marker {
+  display: none;
+}
+
+.howItWentSummary::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2.5px solid var(--ink);
+  border-bottom: 2.5px solid var(--ink);
+  transform: translateY(-3px) rotate(45deg);
+}
+
+.howItWent[open] > .howItWentSummary {
+  margin-bottom: 14px;
+}
+
+.howItWent[open] > .howItWentSummary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+/* --- the run's extras ------------------------------------------------------------------------------ */
+
+.subMeter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.subMeterLabel {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--dark-body);
+}
+
+/* The run in numbers: four plain answers, big. */
+.numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--sheet);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-card);
+  box-shadow: 6px 8px 0 var(--sand);
+}
+
+@media (min-width: 720px) {
+  .numbers {
+    padding: 24px 26px;
+  }
+}
+
+.numberGrid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .numberGrid {
+    grid-template-columns: 1fr 1fr 1.2fr 1.6fr;
+  }
+}
+
+.number {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--page);
+}
+
+.number dt {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+.number dd {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.2;
+}
+
+.numberSame {
+  background: var(--mint);
+}
+
+.listHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flagMain {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+@media (max-width: 519px) {
+  /* On a phone the who-chips sit under the reasons, and the chevron keeps the row's right edge. */
+  .flagRow .who {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+  .flagRow .chevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}
+
+.whyChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.whyChip {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.3;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--blush);
+  color: var(--ink);
+}
+
+/* One scene up close: each reason as question, answer, rule. */
+.whyCard {
+  gap: 12px;
+}
+
+.reasons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--page);
+  border: 1px solid var(--hairline);
+}
+
+.reasonLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.reasonLabel .who {
+  grid-column: auto;
+}
+
+.reasonKey {
+  display: block;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--body);
+  margin-bottom: 2px;
+}
+
+.reasonQuestion,
+.reasonRule,
+.reasonAnswerText {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--body-strong);
+}
+
+.reasonQuestion q {
+  color: var(--ink);
+}
+
+.reasonAnswer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 12px;
+  align-items: center;
+}
+
+.reasonAnswer .reasonKey {
+  grid-column: 1 / -1;
+}
+
+.answerLine {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink);
+}
+
+.reasonAnswer .answerBar {
+  overflow: visible;
+  height: 14px;
+}
+
+.yesWord {
+  color: var(--coral-text);
+}
+
+.reasonLineNote {
+  grid-column: 1 / -1;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--body);
+}
+
+/* --- motion ----------------------------------------------------------------------------------------- */
+
+/* Things change when answers land, and only then. Without motion they simply change. */
+@media (prefers-reduced-motion: reduce) {
+  .cut,
+  .meterFill,
+  .tileBar {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* --- the live check, reorganised (final review) ----------------------------------------------------- */
+
+/* Time and cost: measured, small, one line. */
+.boardStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--dark-muted);
+}
+
+.boardStats b {
+  color: var(--dark-text);
+  font-weight: 800;
+}
+
+.jobCount {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dark-body);
+}
+
+.jobCount b {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--dark-text);
+}
+
+.boardNote {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--dark-body);
+}
+
+.tile_pending {
+  /* the default tile: a quiet outline */
+}
+
+.tileLegend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--dark-body);
+}
+
+.tileLegend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendMark {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 2px solid #8f8b82;
+}
+
+/* The scenes Jev has answered, as rows a finger can hit: the way into a scene while the check runs. */
+.sceneDrawer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sceneDrawerSummary,
+.moreDetailsSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark-text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.sceneDrawerSummary::-webkit-details-marker,
+.moreDetailsSummary::-webkit-details-marker {
+  display: none;
+}
+
+.sceneDrawerSummary::after,
+.moreDetailsSummary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.sceneDrawer[open] > .sceneDrawerSummary::after,
+.moreDetails[open] > .moreDetailsSummary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.sceneRows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.sceneRow {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--dark-line);
+  border-radius: 14px;
+  background: var(--dark-panel);
+  color: var(--dark-text);
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sceneRow:hover {
+  border-color: var(--butter);
+}
+
+.sceneRowState {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--dark-body);
+}
+
+.moreDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--dark-line);
+  padding-top: 6px;
+}
+
+.detailList {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .detailList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.detailList div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detailList dt {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dark-muted);
+}
+
+.detailList dd {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--dark-text);
+}
+
+/* Finished: the measured time and cost, one quiet line under the heading. */
+.doneStats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 18px;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--body);
+}
+
+.doneStats b {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.doneStatsNote {
+  flex-basis: 100%;
+  font-family: var(--serif);
+  font-size: 13px;
+}
+
+.countOf {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--body);
+}
+
+.bandBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+@media (min-width: 720px) {
+  .bandBox {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.bandControl {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bandLabel {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+.levels {
+  font-family: var(--serif);
+  font-size: 14px;
+}
+
+.levelsSummary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.levelsList {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  max-width: 420px;
+}
+
+/* The comparison with the saved guide, right under the count. */
+.compareBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--page);
+  border: 1px solid var(--hairline);
+}
+
+.compareSame {
+  background: var(--mint);
+  border-color: var(--ink);
+}
+
+.compareLine {
+  font-family: var(--display);
+  font-size: 17px;
+}
+
+.compareLabel {
+  font-weight: 600;
+  color: var(--body-strong);
+}
+
+/* One scene up close: the reason first, how it was checked behind a disclosure. */
+.reasonDetail {
+  font-weight: 600;
+  color: var(--body-strong);
+}
+
+/* Not a flex box: a closed <details> laid out as flex keeps room for its hidden content in some
+   browsers. The open content is spaced by margins instead. */
+.reasonHow > * + * {
+  margin-top: 10px;
+}
+
+.reasonHowSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  list-style: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reasonHowSummary::-webkit-details-marker {
+  display: none;
+}
+
+.answerList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.answerItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 10px;
+  border-left: 3px solid var(--hairline);
+}
+
+.answerDecides {
+  border-left-color: var(--coral);
+}
+
+.answerQuestion {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* "Included in the guide": filled, coloured by strength -- the legend shows the four fills. */
+.legendIncluded {
+  width: 26px;
+  border-color: var(--dark-text);
+  background: linear-gradient(90deg, var(--mint) 0 25%, var(--butter) 25% 50%, var(--blush) 50% 75%, var(--coral) 75%);
+}
+
+.decidedTag {
+  grid-column: 1 / -1;
+  justify-self: start;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral-text);
+}
+
+.legendMark.tile_asking {
+  border-color: var(--butter);
+  border-style: dashed;
+}

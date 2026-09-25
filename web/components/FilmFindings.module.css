@@ -253,3 +253,54 @@
 .dust {
   background: var(--dust);
 }
+
+/* On a phone the timeline is a picture of where the scenes sit, not a row of 16px targets: the scene
+   rows below (full width, 44px and more) are how a scene is opened. The markers stay buttons for a
+   keyboard or a screen reader. */
+.hintPhone {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  .timeline {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .hintWide {
+    display: none;
+  }
+
+  .hintPhone {
+    display: inline;
+  }
+}
+
+.bandBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.bandsSame {
+  font-family: var(--serif);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--body);
+  max-width: 280px;
+}
+
+.rowsHint {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--body);
+}
+
+@media (max-width: 719px) {
+  /* The timeline's own line already says it on a phone. */
+  .rowsHint {
+    display: none;
+  }
+}

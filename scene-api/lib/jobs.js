@@ -8,6 +8,7 @@
 
 import crypto from 'node:crypto';
 import { HttpError } from './http.js';
+import { JEVFIRST_STALE_MS } from './jevfirst.js';
 
 // ------------------------------------------------------------------------------------------------
 // The passcode
@@ -79,6 +80,43 @@ export function requirePasscode(given, ip = null) {
 }
 
 export const passcodeConfigured = () => Boolean(process.env.ADD_FILM_PASSCODE?.trim());
+
+/**
+ * The same check, with the failed-attempt count kept in the DATABASE (passcode_failures), so every
+ * function instance -- and every cold start -- shares one count: PASSCODE_MAX_FAILURES wrong passcodes
+ * per caller per window, and PASSCODE_GLOBAL_MAX_FAILURES across all callers (a guesser who rotates
+ * addresses still runs into the second). Used by every route that takes the passcode (/api/add/* and
+ * /api/admin/*), inside the handler, so it holds however the route is reached. The in-memory counter
+ * above still runs too. If the table cannot be read the database count is skipped, never the check.
+ */
+export const PASSCODE_GLOBAL_MAX_FAILURES = 60;
+const FAILS_SQL = `insert into passcode_failures (key, failures, window_start) values ($1, 1, now())
+  on conflict (key) do update set
+    failures = case when passcode_failures.window_start < now() - ($2::bigint * interval '1 millisecond') then 1 else passcode_failures.failures + 1 end,
+    window_start = case when passcode_failures.window_start < now() - ($2::bigint * interval '1 millisecond') then now() else passcode_failures.window_start end`;
+
+export async function requirePasscodeShared(db, given, ip = null) {
+  const clientKey = ip ? `client:${crypto.createHash('sha256').update(String(ip)).digest('hex').slice(0, 32)}` : null;
+  const keys = [...(clientKey ? [clientKey] : []), 'all'];
+  let counted = null;
+  try {
+    const { rows } = await db.query(
+      `select key, failures from passcode_failures where key = any($1::text[]) and window_start >= now() - ($2::bigint * interval '1 millisecond')`,
+      [keys, PASSCODE_WINDOW_MS],
+    );
+    counted = new Map(rows.map((r) => [r.key, Number(r.failures)]));
+  } catch { /* the database count is an addition; the in-memory one below still applies */ }
+  if (counted && expectedPasscodeSet() && ((clientKey && (counted.get(clientKey) ?? 0) >= PASSCODE_MAX_FAILURES) || (counted.get('all') ?? 0) >= PASSCODE_GLOBAL_MAX_FAILURES)) {
+    throw new HttpError(429, 'Too many wrong passcodes. Wait ten minutes.', { error_code: 'too_many_attempts' });
+  }
+  try {
+    requirePasscode(given, ip);
+  } catch (err) {
+    if (err?.status === 401 && counted) for (const k of keys) await db.query(FAILS_SQL, [k, PASSCODE_WINDOW_MS]).catch(() => {});
+    throw err;
+  }
+}
+const expectedPasscodeSet = () => Boolean(process.env.ADD_FILM_PASSCODE?.trim());
 
 // ------------------------------------------------------------------------------------------------
 // Money and time
@@ -166,15 +204,17 @@ export const freshSteps = () => STEPS.map((s) => ({ ...s, status: 'pending', sta
  *
  * @returns {Promise<{admitted: true, row: object} | {admitted: false, reason: 'busy'|'daily_cap'}>}
  */
-export async function createJob(db, { id, film, reserveUsd = RESERVE_USD, cap = capUsd() }) {
+export async function createJob(db, { id, film, reserveUsd = RESERVE_USD, cap = capUsd(), pipeline = 'live', steps = freshSteps(), kind = 'add' }) {
   let res;
   try {
+    // `reserve_usd` is recorded on the row because the two pipelines reserve different amounts
+    // (pipeline-jevfirst/caps.js), and /api/add/status must say which one is in the day's figure.
     res = await db.query(
-      `insert into jobs (id, status, step, film, steps, cost_usd)
-       select $1, 'queued', null, $2::jsonb, $3::jsonb, $4::numeric
+      `insert into jobs (id, status, step, film, steps, cost_usd, pipeline, reserve_usd, kind)
+       select $1, 'queued', null, $2::jsonb, $3::jsonb, $4::numeric, $6, $4::numeric, $7
         where (select coalesce(sum(cost_usd), 0) from jobs
                 where created_at >= date_trunc('day', now() at time zone 'utc')) + $4::numeric <= $5::numeric`,
-      [id, JSON.stringify(film), JSON.stringify(freshSteps()), reserveUsd, cap],
+      [id, JSON.stringify(film), JSON.stringify(steps), reserveUsd, cap, pipeline, kind],
     );
   } catch (err) {
     // The only other unique key on this table is the primary key, and a collision on 128 bits of
@@ -221,21 +261,32 @@ export async function patchJob(db, id, fields) {
  */
 export async function liveJob(db) {
   const { rows } = await db.query(
-    "select id, status, updated_at from jobs where status in ('queued', 'running') order by created_at",
+    `select id, status, updated_at, pipeline, reserve_usd, lease_until, progress_at, created_at
+       from jobs where status in ('queued', 'running') order by created_at`,
   );
   let live = null;
   for (const row of rows) {
-    const idleMs = Date.now() - new Date(row.updated_at).getTime();
-    if (idleMs > STALE_MS) {
-      await db.query(
+    // A Jev-first job runs as a chain of invocations with gaps between them, and a stalled one is
+    // RESUMED by the next poll rather than failed (lib/jevfirst.js). It is dead only when no invocation
+    // has been alive for JEVFIRST_STALE_MS and none holds the lease now.
+    const jevfirst = row.pipeline === 'jevfirst';
+    const leaseLive = jevfirst && row.lease_until && new Date(row.lease_until).getTime() > Date.now();
+    const idleMs = Date.now() - new Date(jevfirst ? (row.progress_at ?? row.created_at) : row.updated_at).getTime();
+    if (!leaseLive && idleMs > (jevfirst ? JEVFIRST_STALE_MS : STALE_MS)) {
+      // The UPDATE re-checks what the SELECT saw: an invocation may have taken the lease (or a live run
+      // written) in between, and a job that is alive again must not be failed from under it.
+      const res = await db.query(
         `update jobs set status = 'failed', error_code = 'timed_out',
            error = 'This run stopped part-way through and did not finish.',
            excerpts = null, updated_at = now()
-         where id = $1`,
-        [row.id],
+         where id = $1 and status in ('queued', 'running')
+           and (case when pipeline = 'jevfirst'
+                     then (lease_until is null or lease_until < now())
+                          and coalesce(progress_at, created_at) < now() - ($2::bigint * interval '1 millisecond')
+                     else updated_at < now() - ($3::bigint * interval '1 millisecond') end)`,
+        [row.id, JEVFIRST_STALE_MS, STALE_MS],
       );
-      await dropBlob(db, row.id);
-      continue;
+      if ((res?.rowCount ?? res?.affectedRows ?? 0) > 0) { await dropBlob(db, row.id); continue; }
     }
     live ??= row;
   }
@@ -328,6 +379,7 @@ export function publicJob(row, now = Date.now()) {
   const running = row.status === 'queued' || row.status === 'running';
   return {
     id: row.id,
+    kind: row.kind ?? 'add',
     status: row.status,
     step: row.step,
     film: row.film,

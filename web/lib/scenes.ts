@@ -38,7 +38,89 @@ export type Scene = {
   severity57: number | null;
   severity810: number | null;
   tags: SceneTag[];
+  /**
+   * Why the scene is on the list: the reasons the pipeline flagged it for, as plain labels, in its
+   * order ("Creature threatens", "Child in danger"). Present on every scene the v10.4 pipeline built;
+   * absent (or empty) on a guide built before it.
+   */
+  why?: string[];
+  /**
+   * The film's own words for a reason whose chip is a general category: "The Iron Giant in danger" under
+   * "Character in danger". Shown inside the open row, never as a chip or a filter.
+   */
+  whyDetail?: string[];
 };
+
+/** The title the pipeline writes when no title passed its checks. Never shown as a title. */
+export const PLACEHOLDER_TITLE = 'Flagged scene';
+
+/**
+ * The stored why (`scenes.why_tags`): `{ line, tags: [{ label }] }` as the scene API writes it, or a
+ * bare list of tags or labels, or a "A · B" line. Anything else is no reasons, never an error: a page
+ * must not fail over a column it can live without. Labels are trimmed, and repeats dropped.
+ */
+export function parseWhy(raw: unknown): string[] {
+  let value = raw;
+  if (typeof value === 'string') {
+    const text = value.trim();
+    if (!text) return [];
+    try {
+      value = JSON.parse(text);
+    } catch {
+      value = text.split('·');
+    }
+  }
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    const v = value as { tags?: unknown; line?: unknown };
+    value = Array.isArray(v.tags) ? v.tags : typeof v.line === 'string' ? v.line.split('·') : [];
+  }
+  if (!Array.isArray(value)) return [];
+  const out: string[] = [];
+  for (const item of value) {
+    // A film-specific reason is shown by its stable category; its own label is the detail (parseWhyDetail).
+    const obj = item && typeof item === 'object' ? (item as { label?: unknown; category?: unknown }) : null;
+    const label = typeof item === 'string' ? item : obj ? (typeof obj.category === 'string' && obj.category.trim() ? obj.category : obj.label) : null;
+    if (typeof label !== 'string') continue;
+    const clean = label.trim();
+    if (clean && !out.some((x) => x.toLowerCase() === clean.toLowerCase())) out.push(clean);
+  }
+  return out;
+}
+
+/** The film-specific reasons' own words (the tags that carry a `category`), in order, repeats dropped. */
+export function parseWhyDetail(raw: unknown): string[] {
+  let value = raw;
+  if (typeof value === 'string') {
+    try {
+      value = JSON.parse(value);
+    } catch {
+      return [];
+    }
+  }
+  const tags = value && typeof value === 'object' && !Array.isArray(value) ? (value as { tags?: unknown }).tags : value;
+  if (!Array.isArray(tags)) return [];
+  const out: string[] = [];
+  for (const t of tags) {
+    if (!t || typeof t !== 'object') continue;
+    const { label, category } = t as { label?: unknown; category?: unknown };
+    if (typeof label !== 'string' || typeof category !== 'string' || !category.trim()) continue;
+    const clean = label.trim();
+    if (clean && !out.some((x) => x.toLowerCase() === clean.toLowerCase())) out.push(clean);
+  }
+  return out;
+}
+
+/**
+ * What a scene row is called: its own title, or — when the pipeline had no title that passed its
+ * checks — its first two reasons ("Creature threatens · Child in danger"), which are true of the
+ * scene by construction. Never the placeholder.
+ */
+export function sceneHeading(scene: Pick<Scene, 'title' | 'why' | 'startMs' | 'endMs'>): string {
+  const title = scene.title?.trim();
+  if (title && title !== PLACEHOLDER_TITLE) return title;
+  if (scene.why?.length) return scene.why.slice(0, 2).join(' · ');
+  return `${formatTime(scene.startMs)}–${formatTime(scene.endMs)}`;
+}
 
 export type Facet = {
   id: string;

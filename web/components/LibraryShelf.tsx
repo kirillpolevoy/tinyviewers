@@ -269,15 +269,13 @@ export function LibraryShelf({
 
       {/* Outside the card, so it survives the card: the news that the run finished, read out
           politely, and shown with a link only if the film is slow to reach the list. */}
-      <p className={gaveUp && added ? styles.added : 'srOnly'} role="status">
+      <p className={added ? styles.added : 'srOnly'} role="status">
         {added && (
           <>
-            {LIBRARY.added(added.title)}{' '}
-            {gaveUp && (
-              <Link href={`/film/${added.slug}`} className={styles.addedLink}>
-                {LIBRARY.addedLink}
-              </Link>
-            )}
+            {added.rebuilt ? ADD.rebuildDone(added.title) : LIBRARY.added(added.title)}{' '}
+            <Link href={`/film/${added.slug}`} className={styles.addedLink}>
+              {ADD.openGuide}
+            </Link>
           </>
         )}
       </p>
@@ -319,7 +317,7 @@ export function LibraryShelf({
             <ul className={styles.rows}>
               {shown.map((film) => (
                 <li key={film.slug}>
-                  <FilmRow film={film} justAdded={justAdded.includes(film.slug)} />
+                  <FilmRow film={film} justAdded={justAdded.includes(film.slug)} rebuilt={added?.rebuilt === true && added.slug === film.slug} />
                 </li>
               ))}
             </ul>
@@ -336,7 +334,7 @@ function asScene(m: FilmSummary['markers'][number]): Scene {
 }
 
 /** One film as a comparison row: poster, title and year, where its scenes sit, how many. */
-function FilmRow({ film, justAdded }: { film: FilmSummary; justAdded: boolean }) {
+function FilmRow({ film, justAdded, rebuilt }: { film: FilmSummary; justAdded: boolean; rebuilt: boolean }) {
   // The strip is a picture; the strengths it draws are also said in words, after the count, so a
   // screen reader hears "18 scenes: 3 very strong, 8 strong…" rather than a bare number.
   const breakdown = strengthBreakdown(film.markers.map(asScene), DEFAULT_BAND).map(
@@ -356,7 +354,7 @@ function FilmRow({ film, justAdded }: { film: FilmSummary; justAdded: boolean })
       <span className={styles.name}>
         <span className={styles.filmTitle}>{film.title}</span>
         {film.year && <span className={styles.year}>{film.year}</span>}
-        {justAdded && <span className={styles.chip}>{LIBRARY.justAdded}</span>}
+        {justAdded && <span className={styles.chip}>{rebuilt ? ADD.guideUpdated : LIBRARY.justAdded}</span>}
       </span>
       <span className={styles.strip}>
         {/* Decorative: the count beside it says this in words, and the row is one link whose

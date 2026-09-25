@@ -66,8 +66,9 @@ body {
   font-size: 17px;
   line-height: 1.55;
   /* The illustrations are drawn wider than the text column on purpose; they must never add a
-     horizontal scrollbar on a phone. */
-  overflow-x: hidden;
+     horizontal scrollbar on a phone. `clip`, not `hidden`: hidden would make the body a scroll
+     container of its own, and a sticky element inside it (the scene view's way back) would never stick. */
+  overflow-x: clip;
 }
 
 h1,
