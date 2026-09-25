@@ -6,7 +6,7 @@ import { Poster } from './Poster';
 import { StateCard } from './StateCard';
 import { ArrowRight } from './Art';
 import { usePolledJob } from './useJob';
-import { ADD, SEARCH } from '@/lib/copy';
+import { ADD, LIBRARY, SEARCH } from '@/lib/copy';
 import {
   addPhase,
   addRefusal,
@@ -54,6 +54,11 @@ export function pendingJob(id: string, candidate: Candidate): Job {
 type AskProps = {
   /** What the parent typed into the library's search. The title field follows it until edited. */
   query: string;
+  /**
+   * Why the ask is open: a search that matched nothing ("Not in the library. Yet."), or the parent
+   * pressing "Add a film" under the list, where the heading stays the question they answered.
+   */
+  from?: 'miss' | 'asked';
   /** `undefined` while the status is being read; `null` when it could not be read. */
   status: AddStatus | null | undefined;
   onStarted: (job: Job) => void;
@@ -73,7 +78,8 @@ type Phase = 'idle' | 'finding' | 'choosing' | 'starting';
  * Every refusal the API can return has one plain sentence (`addRefusal`) and, where one exists, a
  * way onward: "already in the library" points at the film, "already running" at the live run.
  */
-export function AddAsk({ query, status, onStarted, onRetryStatus }: AskProps) {
+export function AddAsk({ query, from = 'miss', status, onStarted, onRetryStatus }: AskProps) {
+  const headline = from === 'asked' ? LIBRARY.addHeadline : ADD.askHeadline;
   const [title, setTitle] = useState(query.trim());
   const [edited, setEdited] = useState(false);
   const [passcode, setPasscode] = useState('');
@@ -181,7 +187,13 @@ export function AddAsk({ query, status, onStarted, onRetryStatus }: AskProps) {
   if (status === null || (status && !status.passcode_configured)) {
     const unknown = status === null;
     return (
-      <StateCard as="h2" headline={SEARCH.noMatchHeadline} body={SEARCH.noMatchBody} className={styles.state}>
+      <StateCard
+        as="h2"
+        headline={from === 'asked' ? LIBRARY.addHeadline : SEARCH.noMatchHeadline}
+        // "Check the spelling" answers a search that missed, not a parent who asked to add a film.
+        body={from === 'asked' ? undefined : SEARCH.noMatchBody}
+        className={styles.state}
+      >
         <p className={styles.stateNote}>
           <b>{unknown ? ADD.unknownHeadline : ADD.offHeadline}.</b> {unknown ? ADD.unknownBody : ADD.offBody}
         </p>
@@ -201,7 +213,7 @@ export function AddAsk({ query, status, onStarted, onRetryStatus }: AskProps) {
     return (
       <section className={`sticker ${styles.card}`} aria-labelledby="add-heading" aria-busy="true">
         <h2 id="add-heading" className={styles.headline}>
-          {ADD.askHeadline}
+          {headline}
         </h2>
         <p className={styles.body}>{ADD.askBody}</p>
         <p className={styles.checking} role="status">
@@ -216,7 +228,7 @@ export function AddAsk({ query, status, onStarted, onRetryStatus }: AskProps) {
   return (
     <section className={`sticker ${styles.card}`} aria-labelledby="add-heading">
       <h2 id="add-heading" className={styles.headline}>
-        {ADD.askHeadline}
+        {headline}
       </h2>
       <p className={styles.body}>{ADD.askBody}</p>
 

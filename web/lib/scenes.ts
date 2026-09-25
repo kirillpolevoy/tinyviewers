@@ -363,6 +363,63 @@ export function markerHeightPx(value: number | null): number {
   return [12, 20, 32, 46][Math.min(3, Math.max(0, value))];
 }
 
+/**
+ * A timeline mark's width in px — narrower on a narrow track (a phone), where a film's scenes sit a few
+ * pixels apart — and the least clear space between two marks.
+ */
+export const MARK_PX = 10;
+export const MARK_PX_NARROW = 6;
+export const NARROW_TRACK_PX = 480;
+export const MARK_GAP_PX = 2;
+
+/** The mark width for a track this wide (0, not measured yet: the wide default). */
+export function markWidthPx(trackPx: number): number {
+  return trackPx > 0 && trackPx < NARROW_TRACK_PX ? MARK_PX_NARROW : MARK_PX;
+}
+
+/**
+ * Scenes close enough together on the timeline to be drawn as one mark: the scenes in it, where the
+ * first and last sit (percent along the track), and the strongest level among them (a known level
+ * beats "not checked", which is never read as a zero).
+ */
+export type MarkerCluster<T> = { items: T[]; firstPct: number; lastPct: number; value: number | null };
+
+/**
+ * The timeline's marks, grouped so no two overlap on a track `widthPx` wide: a scene joins the group
+ * before it when its centre is less than a mark and a gap (`markWidthPx` + MARK_GAP_PX) from that
+ * group's last scene. A group of several is drawn once, as wide as its span and as strong as its
+ * strongest, with its count on it; the scene rows stay the way to each scene.
+ *
+ * `widthPx` 0 (not measured yet, as on the server) puts every scene in a group of its own.
+ */
+export function clusterMarkers<T>(
+  items: T[],
+  place: (item: T) => number,
+  level: (item: T) => number | null,
+  widthPx: number,
+): MarkerCluster<T>[] {
+  const sorted = items.map((item) => ({ item, pct: place(item) })).sort((a, b) => a.pct - b.pct);
+  const minPct = widthPx > 0 ? ((markWidthPx(widthPx) + MARK_GAP_PX) / widthPx) * 100 : 0;
+  const out: MarkerCluster<T>[] = [];
+  for (const { item, pct } of sorted) {
+    const last = out[out.length - 1];
+    if (last && widthPx > 0 && pct - last.lastPct < minPct) {
+      last.items.push(item);
+      last.lastPct = pct;
+      last.value = strongest(last.value, level(item));
+    } else {
+      out.push({ items: [item], firstPct: pct, lastPct: pct, value: level(item) });
+    }
+  }
+  return out;
+}
+
+function strongest(a: number | null, b: number | null): number | null {
+  if (a === null || a === undefined) return b ?? null;
+  if (b === null || b === undefined) return a;
+  return Math.max(a, b);
+}
+
 /** The word a scene row leads with: "Very strong", or "Not checked" — never a zero. */
 export function strengthWord(value: number | null): string {
   if (value === null || value === undefined) return EMPTY.notCheckedHeadline;
@@ -412,16 +469,23 @@ export function lastSceneEndMs(scenes: Scene[]): number {
 }
 
 /**
- * The rows the list shows. A tapped marker wins — the list is that one scene — and otherwise the
- * chips filter it. The age band is not an input: it changes the marks, never the list.
+ * The rows the list shows. A tapped marker wins — the list is that one scene, or the scenes a grouped
+ * mark stands for — and otherwise the chips filter it. The age band is not an input: it changes the
+ * marks, never the list.
  */
 export function visibleScenes(
   scenes: Scene[],
-  { selectedSceneId, tags }: { selectedSceneId: string | null; tags: string[] },
+  {
+    selectedSceneId = null,
+    selectedIds = null,
+    tags,
+  }: { selectedSceneId?: string | null; selectedIds?: string[] | null; tags: string[] },
 ): Scene[] {
-  if (selectedSceneId) {
-    const one = scenes.find((s) => s.id === selectedSceneId);
-    if (one) return [one];
+  // A tapped mark: one scene, or the several a mark stands for where they sit close together.
+  const ids = selectedIds?.length ? selectedIds : selectedSceneId ? [selectedSceneId] : [];
+  if (ids.length) {
+    const picked = scenes.filter((s) => ids.includes(s.id));
+    if (picked.length) return picked;
   }
   return applyFilters(scenes, tags);
 }

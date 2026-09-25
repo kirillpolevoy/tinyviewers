@@ -62,6 +62,7 @@ import { guideRows, whyTagsOf, reasonCategory } from './stages/ingest.js';
 import { readArtifacts, readTrack, getJevfirstFilm, DEMO_KINDS, DEMO_OPTIONAL_KINDS } from './store.js';
 import { verdictOf, DEFAULT_RULE } from './pack/claims.js';
 import { boundaryVerdict } from './pack/gate.js';
+import { probOf } from './pack/jev-client.js';
 import { POLICY } from './stages/common.js';
 import { DEMO_STAGE_CAPS } from './caps.js';
 import { PipelineError, errorSummary } from '../pipeline/errors.js';
@@ -225,8 +226,8 @@ export function applyResult(p, meta, result, { atMs, cues = null }) {
   const feed = (entry) => { p.feed.push({ scene: sceneOf, at_ms: sceneOf ? sceneStart(sceneOf) : null, ...entry, t_ms: atMs }); p.feed_total++; trimFeed(p); };
   const answers = result.json?.answers ?? {};
   if (meta.kind === 'boundary') {
-    const pb = Number(answers.boundary?.noul);
-    const verdict = Number.isFinite(pb) ? boundaryVerdict(pb, GATE) : 'no_answer';
+    const pb = probOf(answers.boundary);
+    const verdict = pb !== null ? boundaryVerdict(pb, GATE) : 'no_answer';
     // A doubted cut is one Jev thinks is not a real change of scene (merge_candidate).
     // 'uncertain' is neither, and the gate does not hold it against the cut.
     if (verdict === 'merge_candidate') st.doubtful++;
@@ -236,9 +237,9 @@ export function applyResult(p, meta, result, { atMs, cues = null }) {
     const cue = cues?.[meta.at - 1];
     feed({ kind: 'cut', text: `Cut before ${meta.scene}${cue ? ` at ${formatTime(cue.startMs).slice(0, 8)}` : ''}`, verdict, ...(cue ? { at_ms: cue.startMs } : {}) });
   } else if (meta.kind === 'probe') {
-    const pp = Number(answers.boundary?.noul);
+    const pp = probOf(answers.boundary);
     // Another cut inside a scene is not a doubt about the cut before it: its own feed kind, its own count.
-    if (Number.isFinite(pp) && pp >= GATE.split_at) { st.inside = (st.inside ?? 0) + 1; feed({ kind: 'probe', text: `Jev sees another cut inside ${meta.scene}`, verdict: 'split_candidate' }); }
+    if (pp !== null && pp >= GATE.split_at) { st.inside = (st.inside ?? 0) + 1; feed({ kind: 'probe', text: `Jev sees another cut inside ${meta.scene}`, verdict: 'split_candidate' }); }
   } else if (meta.kind === 'claim' || meta.kind === 'describe_support') {
     const v = verdictOf(answers.r0, meta.rule ?? DEFAULT_RULE);
     const word = supportWord(v.status);

@@ -145,9 +145,9 @@ export async function fillStage(S) {
     const worst = (inWorst * pIn + maxTokens * pOut) / 1e6;
     const w = S.wallet('sonnet', CHECK_CAPS.fill_sonnet);
     try {
-      const { r, cost } = await sonnetCall(w, { system: FILL_SYSTEM, user, schema: FILL_SCHEMA, maxTokens, effort, worst, model: FILL_MODEL, label: 'fill' });
+      const { r, cost, cost_is_upper_bound } = await sonnetCall(w, { system: FILL_SYSTEM, user, schema: FILL_SCHEMA, maxTokens, effort, worst, model: FILL_MODEL, label: 'fill' });
       modelOut = quoteRuler(cues)(r.data);
-      sonnet = { model: FILL_MODEL, effort, usage: r.usage, cost_usd: +cost.toFixed(6), reserved_usd: +worst.toFixed(6), latency_ms: r.latencyMs };
+      sonnet = { model: FILL_MODEL, effort, usage: r.usage, cost_usd: +cost.toFixed(6), ...(cost_is_upper_bound ? { cost_is_upper_bound: true } : {}), reserved_usd: +worst.toFixed(6), latency_ms: r.latencyMs };
     } catch (err) {
       if (runCtx().signal?.aborted) throw new Interrupted();
       throw fail('fill_failed', 'Sonnet could not describe the scenes with almost no dialogue, so the film was not written in.');

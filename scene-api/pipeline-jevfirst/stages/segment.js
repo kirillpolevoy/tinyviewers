@@ -65,8 +65,8 @@ async function callPart(S, w, first, last, part, { minOutput, maxOut, limit = In
   const label = part ? `part ${part.k}/${part.of} L${first}-L${last}` : 'whole film';
   if (maxTokens < minOutput) throw Object.assign(new Error(`cap leaves only ${maxTokens} output tokens (< ${minOutput}) for ${label}`), { refused: true, cost: 0 });
   const t0 = Date.now();
-  const { r, cost } = await sonnetCall(w, { system, user, schema: SCHEMA, maxTokens, effort: EFFORT, worst, label });
-  return { data: r.data, usage: r.usage, cost, wall_ms: Date.now() - t0, max_tokens: maxTokens, reserved_usd: +worst.toFixed(5), counted_input: counted, range: [first, last], part };
+  const { r, cost, cost_is_upper_bound } = await sonnetCall(w, { system, user, schema: SCHEMA, maxTokens, effort: EFFORT, worst, label });
+  return { data: r.data, usage: r.usage, cost, ...(cost_is_upper_bound ? { cost_is_upper_bound: true } : {}), wall_ms: Date.now() - t0, max_tokens: maxTokens, reserved_usd: +worst.toFixed(5), counted_input: counted, range: [first, last], part };
 }
 
 /** A failed call is a result (the script moves on to attempt 2), unless the invocation is stopping. */

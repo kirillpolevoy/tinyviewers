@@ -30,7 +30,7 @@ import { guardScenes, r1Scenes, guardBody, r1Body, GUARD_QS, R1_Q, GUARDED_IDS, 
 import { mortalScenes, mortalBody, plannedAsks, MORTAL_QS, MORTAL_VERSION, RESERVE_FIXED_TOK as MV_FIXED_TOK } from '../pack/mortal.js';
 import { planMoments, spansFromAnswers } from '../pack/moments.js';
 import { wholeSceneSpan } from '../pack/spans.js';
-import { runJobs, sizeRequest, usd, estTokens, PRICE_PER_MTOK, MAX_CONCURRENCY } from '../pack/jev-client.js';
+import { runJobs, sizeRequest, usd, estTokens, PRICE_PER_MTOK, MAX_CONCURRENCY, probOf } from '../pack/jev-client.js';
 import { key } from '../pack/env.js';
 import { countTokens, PRICES } from '../pack/sonnet.js';
 import { POLICY, fail, sonnetCall, Interrupted, checkInterrupted } from './common.js';
@@ -180,10 +180,10 @@ export async function sonnetqStage(S) {
     if (stopped) { row.skipped = 'cap'; return row; }
     inflight++;
     try {
-      const { r, cost } = await sonnetCall(w, { system: SQ_SYSTEM, user, schema, maxTokens, effort, worst, model: SQ_MODEL, label, reserved: true });
+      const { r, cost, cost_is_upper_bound } = await sonnetCall(w, { system: SQ_SYSTEM, user, schema, maxTokens, effort, worst, model: SQ_MODEL, label, reserved: true });
       const parsed = parseAnswers(r.data, sceneIds, ids);
       Object.assign(answers, parsed.answers);
-      Object.assign(row, { usage: r.usage, cost_usd: +cost.toFixed(6), latency_ms: r.latencyMs, missing: parsed.missing, problems: parsed.problems, listed: Object.values(parsed.answers).reduce((a, x) => a + Object.keys(x).length, 0) });
+      Object.assign(row, { usage: r.usage, cost_usd: +cost.toFixed(6), ...(cost_is_upper_bound ? { cost_is_upper_bound: true } : {}), latency_ms: r.latencyMs, missing: parsed.missing, problems: parsed.problems, listed: Object.values(parsed.answers).reduce((a, x) => a + Object.keys(x).length, 0) });
     } catch (err) {
       Object.assign(row, { error: String(err.message).slice(0, 200), cost_usd: +(err.cost ?? 0).toFixed(6) });
       if (err.refused) { row.skipped = 'ledger'; stopped ??= err.message; }
@@ -243,8 +243,9 @@ export async function childcryStage(S) {
   if (r.results.some((x) => !x.ok)) throw refusedOrFailed('checking who cries');
   const scenes = {};
   for (const x of r.results) {
-    const p = Number(x.json.answers?.child?.noul);
-    if (!Number.isFinite(p)) throw refusedOrFailed('checking who cries (an answer was missing)');
+    // never Number(): Number(null) is 0, which would read as "not a child"
+    const p = probOf(x.json.answers?.child);
+    if (p === null) throw refusedOrFailed('checking who cries (an answer was missing)');
     scenes[x.meta.id] = { crying_p: ask.find((a) => a.id === x.meta.id).p, p_child: Math.round(p * 1000) / 1000 };
   }
   if (jobs.length) S.detail(`Jev checked whether the one crying is a child in ${jobs.length} scene${jobs.length === 1 ? '' : 's'}`);
@@ -282,9 +283,9 @@ export async function resolveStage(S) {
     const s = (scenes[x.meta.id] ??= {});
     if (x.meta.kind === 'resolve') {
       s.guard_ids = gs.find((g) => g.id === x.meta.id).ids;
-      s.guard = Object.fromEntries(gQs.map((k) => { const p = Number(a[k]?.noul); if (!Number.isFinite(p)) throw refusedOrFailed('the resolution questions (an answer was missing)'); return [k, r3(p)]; }));
+      s.guard = Object.fromEntries(gQs.map((k) => { const p = probOf(a[k]); if (p === null) throw refusedOrFailed('the resolution questions (an answer was missing)'); return [k, r3(p)]; }));
     } else {
-      const p = Number(a.r1?.noul); if (!Number.isFinite(p)) throw refusedOrFailed('the rule-1 question (an answer was missing)');
+      const p = probOf(a.r1); if (p === null) throw refusedOrFailed('the rule-1 question (an answer was missing)');
       s.r1 = r3(p);
     }
   }
@@ -317,7 +318,8 @@ export async function mortalStage(S) {
   for (const x of r.results) {
     const a = x.json.answers ?? {};
     const s = (scenes[x.meta.id] ??= {});
-    for (const q of x.meta.qs) { const p = Number(a[q]?.noul); if (!Number.isFinite(p)) throw refusedOrFailed('the mortal-danger questions (an answer was missing)'); s[`${q}@${x.meta.state}`] = r3(p); }
+    // never Number(): a null score coerced to 0 would silently drop every mortal-danger reason (Astra r3)
+    for (const q of x.meta.qs) { const p = probOf(a[q]); if (p === null) throw refusedOrFailed('the mortal-danger questions (an answer was missing)'); s[`${q}@${x.meta.state}`] = r3(p); }
   }
   if (jobs.length) S.detail(`Jev asked ${[...new Set(Object.values(asks).flat())].length} life-or-death questions of ${ids.length} scenes`);
   return { film: seg.film, version: MORTAL_VERSION, run: 'r1', model: JEV_MODEL, dev: false, asked: asks, questions: Object.fromEntries([...new Set(Object.values(asks).flat())].map((k) => [k, MORTAL_QS[k]])), run_at: new Date().toISOString(), requests: jobs.length, cost_usd: +w.budget.spent.toFixed(8), scenes };

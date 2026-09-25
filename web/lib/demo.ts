@@ -297,6 +297,77 @@ export function sameness(compare: Compare | null | undefined, inLibrary: boolean
   return { kind: 'unknown' };
 }
 
+/** A scene of the saved guide, as the comparison names it: where it sits and what it is called. */
+export type GuideScene = { id: string; start_ms: number; end_ms: number; title: string | null };
+
+/**
+ * How far apart two scenes' edges may be and still be "the same scene" — the scene API's own
+ * COMPARE_TOLERANCE (pipeline-jevfirst/demo.js), which this must match for the lists below to name
+ * the scenes its counts are about.
+ */
+const COMPARE_TOLERANCE = { min_ms: 20_000, share: 0.25 };
+
+type Span = { start_ms: number; end_ms: number };
+
+/**
+ * The scene API's one-to-one match of a check's scenes with the saved guide's (`compareWithGuide`),
+ * redone here to say WHICH scenes differ: two are the same scene when they overlap by at least half
+ * of the shorter one and both their edges agree within the tolerance; best overlaps are matched first
+ * and each scene at most once. Returns the indexes left unmatched on each side.
+ */
+export function matchScenes(run: Span[], guide: Span[]): { both: number; onlyRun: number[]; onlyGuide: number[] } {
+  const overlapShare = (a: Span, b: Span) => {
+    const o = Math.max(0, Math.min(a.end_ms, b.end_ms) - Math.max(a.start_ms, b.start_ms));
+    return o / Math.max(1, Math.min(a.end_ms - a.start_ms, b.end_ms - b.start_ms));
+  };
+  const edgesAgree = (a: Span, b: Span) => {
+    const tol = Math.max(COMPARE_TOLERANCE.min_ms, COMPARE_TOLERANCE.share * Math.max(a.end_ms - a.start_ms, b.end_ms - b.start_ms));
+    return Math.abs(a.start_ms - b.start_ms) <= tol && Math.abs(a.end_ms - b.end_ms) <= tol;
+  };
+  const pairs: { i: number; j: number; share: number }[] = [];
+  run.forEach((r, i) =>
+    guide.forEach((g, j) => {
+      const share = overlapShare(r, g);
+      if (share >= 0.5 && edgesAgree(r, g)) pairs.push({ i, j, share });
+    }),
+  );
+  pairs.sort((a, b) => b.share - a.share || a.i - b.i || a.j - b.j);
+  const usedRun = new Set<number>();
+  const usedGuide = new Set<number>();
+  for (const p of pairs) {
+    if (usedRun.has(p.i) || usedGuide.has(p.j)) continue;
+    usedRun.add(p.i);
+    usedGuide.add(p.j);
+  }
+  return {
+    both: usedRun.size,
+    onlyRun: run.map((_, i) => i).filter((i) => !usedRun.has(i)),
+    onlyGuide: guide.map((_, j) => j).filter((j) => !usedGuide.has(j)),
+  };
+}
+
+/** The scenes behind "1 extra, 1 missing": this check's scenes the saved guide lacks, and the reverse. */
+export type GuideDiff = { onlyRun: FlaggedScene[]; onlyGuide: GuideScene[] };
+
+/**
+ * Which scenes the comparison is about, by name, in film order. Only when matching them here gives
+ * exactly the API's own counts: a guide rebuilt since the check ended would name the wrong scenes, and
+ * then the page says the counts alone (null). Null too when nothing differs.
+ */
+export function guideDiff(compare: Compare | null | undefined, flagged: FlaggedScene[], guide: GuideScene[] | null | undefined): GuideDiff | null {
+  if (!compare || !guide) return null;
+  if (compare.guide_scenes !== undefined && compare.guide_scenes !== guide.length) return null;
+  if (compare.run_scenes !== undefined && compare.run_scenes !== flagged.length) return null;
+  const m = matchScenes(flagged, guide);
+  if (m.both !== compare.both || m.onlyRun.length !== compare.only_run || m.onlyGuide.length !== compare.only_guide) return null;
+  if (!m.onlyRun.length && !m.onlyGuide.length) return null;
+  const byStart = <T extends Span>(a: T, b: T) => a.start_ms - b.start_ms;
+  return {
+    onlyRun: m.onlyRun.map((i) => flagged[i]).sort(byStart),
+    onlyGuide: m.onlyGuide.map((j) => guide[j]).sort(byStart),
+  };
+}
+
 /** Is the run's film in the library? The run's own answer, then the films list, else unknown (null). */
 export function runInLibrary(run: Pick<DemoRun, 'result' | 'film'>, listed: DemoFilm | null | undefined): boolean | null {
   if (typeof run.result?.in_library === 'boolean') return run.result.in_library;

@@ -1,7 +1,7 @@
 // OURS, not a copy (scripts/sync-jevfirst-pack.mjs never overwrites it). Stands in for
 // experiments/trigger-scan/v10_1/jev-client.js with the same exports, the same constants and the same
 // reservation arithmetic -- sizeRequest and the reserve/settle rules of runJobs are the experiment's,
-// line for line -- and four differences, all because this runs in a request for somebody else:
+// line for line -- and five differences, all because this runs in a request for somebody else:
 //
 //   1. errors never carry a response body. The experiment put `jev 400: <first 300 chars of the body>`
 //      in the message; a Jev error body echoes the state it was sent, and the state is subtitle lines.
@@ -18,6 +18,10 @@
 //      have been billed go unrecorded.
 //   4. progress: every request is reported to the context's onDispatch(meta) as it is sent and to
 //      onResult(meta, result) when it completes, which is how the demo page counts real requests.
+//   5. answers: a 200 whose answer to any asked question is missing or not usable for its type (a null
+//      or out-of-range noul, a choice or score without its distribution: malformedAnswers) is paid for
+//      like any answer and returned ok: false. The experiment's readers coerced such an answer to 0,
+//      which reads as "no" -- a rebuild on it would replace a good guide with an emptier one.
 // TODO(v10.2-sync): if v10_2/jev-client.js changes a constant (reserve factors, concurrency, the fixed
 // overhead), change it here too; test/jevfirst-pack.test.js compares these constants with the source.
 import { runCtx } from '../context.js';
@@ -116,6 +120,38 @@ export async function postJev(body, key, { retries = 5, timeoutMs = 60_000, befo
 /** A 200's body is an answer only when it is a JSON object (not null, not an array, not a scalar). */
 export const isAnswerObject = (json) => json !== null && typeof json === 'object' && !Array.isArray(json);
 
+/** A probability as Jev returns one: a finite number in [0, 1] (never null, a string, or out of range). */
+export const isProbability = (x) => typeof x === 'number' && Number.isFinite(x) && x >= 0 && x <= 1;
+const isDistribution = (p) => p !== null && typeof p === 'object' && !Array.isArray(p) && Object.keys(p).length > 0 && Object.values(p).every(isProbability);
+
+/** A noul answer's probability, or null when it has none. Never coerces (Number(null) is 0, a "no"). */
+export const probOf = (a) => (isProbability(a?.noul) ? a.noul : null);
+
+/**
+ * The asked questions whose answers are missing or unusable, by the question's type: a noul needs a
+ * probability; a choice a non-empty choice, its confidence and a distribution; a score a number, its
+ * confidence and a distribution. [] = every asked question has a usable answer. Pure.
+ *
+ * The experiment's readers coerce what they get -- Number(null) is 0, a missing distribution reads as
+ * "says nothing" -- so a 200 carrying null scores would pass for a film with nothing in it, and a rebuild
+ * would replace a good guide with that. runJobs refuses such a response before any reader sees it.
+ * (Checked against the recorded real runs: 445,626 noul, 3,227 choice and 19,362 score answers, none
+ * of them malformed.)
+ */
+export function malformedAnswers(questions, answers) {
+  const keys = Object.keys(questions ?? {});
+  if (!isAnswerObject(answers)) return keys;
+  return keys.filter((k) => {
+    const a = answers[k];
+    if (!isAnswerObject(a)) return true;
+    const type = questions[k]?.type;
+    if (type === 'noul') return !isProbability(a.noul);
+    if (type === 'choice') return !(typeof a.choice === 'string' && a.choice.length > 0 && isProbability(a.confidence) && isDistribution(a.probabilities));
+    if (type === 'score') return !(typeof a.score === 'number' && Number.isFinite(a.score) && a.score >= 0 && isProbability(a.confidence) && isDistribution(a.probabilities));
+    return false; // a type this client does not know: an answer object is all it can check
+  });
+}
+
 /**
  * The input tokens a response says it was billed for, or null when it does not say so readably: a
  * billed request always has input, so only a finite number above zero is a measured bill.
@@ -160,6 +196,8 @@ export function abortableSleep(ctx, ms) {
  * network error or our own timeout may have been billed, so the reservation is kept as spent (an
  * upper bound). So is a 200 that is not an answer object (ok: false), an answer whose usage is not a
  * readable token count (ok: true, record.usage_unreadable), and a failure with no attempt history.
+ * A 200 answer object with a missing or unusable answer to an asked question is charged by its usage
+ * like any answer, and returned ok: false with record.malformed (the question keys) and no json.
  * A cancelled run skips what it has not sent ('cancelled').
  */
 export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY, post = postJev, onSpend = () => {}, log = () => {} }) {
@@ -230,18 +268,25 @@ export async function runJobs(jobs, { key, budget, concurrency = MAX_CONCURRENCY
         budget.settle(reserved, cost);
         spend(cost, inTok === null ? cost : extra);
         const overReserve = inTok !== null && usd(inTok) > job.reserveUsd;
+        // Paid for either way (above); usable only when every asked question has a usable answer. One that
+        // does not is a failed request: no caller ever reads its answers.
+        const malformed = malformedAnswers(job.body?.questions, res.json.answers);
         try {
           if (overReserve) log(`  ${job.meta.label} OVER RESERVE: billed ${inTok} tok > reserved $${job.reserveUsd.toFixed(8)}`);
           if (inTok === null) log(`  ${job.meta.label} USAGE UNREADABLE: charged at its reservation $${job.reserveUsd.toFixed(8)}`);
+          if (malformed.length) log(`  ${job.meta.label} MALFORMED ANSWER: ${malformed.length} question(s) without a usable answer`);
         } catch { /* a log line never fails a request that was paid for */ }
-        results[i] = {
-          meta: job.meta, ok: true, json: res.json,
-          record: {
-            model: res.json.model, est_tokens: job.est, input_tokens: inTok ?? 0, output_tokens: res.json.usage?.output_tokens ?? 0, cost_usd: cost, latency_ms: res.latencyMs, wall_ms: Date.now() - t0,
-            retries: Math.max(0, history.length - 1), attempts: history, question_count: Object.keys(job.body.questions ?? {}).length, reserve_usd: job.reserveUsd,
-            ...(overReserve ? { over_reserve: true } : {}), ...(inTok === null ? { usage_unreadable: true, cost_is_upper_bound: true } : {}),
-          },
+        const record = {
+          model: res.json.model, est_tokens: job.est, input_tokens: inTok ?? 0, output_tokens: res.json.usage?.output_tokens ?? 0, cost_usd: cost, latency_ms: res.latencyMs, wall_ms: Date.now() - t0,
+          retries: Math.max(0, history.length - 1), attempts: history, question_count: Object.keys(job.body.questions ?? {}).length, reserve_usd: job.reserveUsd,
+          ...(overReserve ? { over_reserve: true } : {}), ...(inTok === null ? { usage_unreadable: true, cost_is_upper_bound: true } : {}),
         };
+        if (malformed.length) {
+          const message = new UpstreamError({ service: 'jev', status: 200, code: 'malformed_answer' }).message;
+          results[i] = { meta: job.meta, ok: false, error: message, record: { ...record, error: message, malformed } };
+        } else {
+          results[i] = { meta: job.meta, ok: true, json: res.json, record };
+        }
       } else {
         const history = Array.isArray(err?.attempts) ? err.attempts : null;
         // Billable: every attempt that went out and got no answer, and a 200 whose body could not be read

@@ -4,15 +4,16 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   background: var(--sheet);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-sheet);
-  padding: 20px 18px;
+  padding: 16px 16px 14px;
 }
 
 @media (min-width: 720px) {
   .card {
+    gap: 12px;
     padding: 22px 24px;
   }
 }
@@ -28,7 +29,7 @@
 .verdict {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -110,10 +111,16 @@
 
 .timeline {
   position: relative;
-  height: 96px;
+  height: 84px;
   cursor: pointer;
   background: var(--page);
   border-radius: 20px;
+}
+
+@media (min-width: 720px) {
+  .timeline {
+    height: 96px;
+  }
 }
 
 .baseline {
@@ -133,16 +140,52 @@
 }
 
 /* Each scene is a button, sat on the baseline at its start time, taller where stronger. The ink
-   border is what makes the pale fills perceivable against the cream inset. */
+   border is what makes the pale fills perceivable against the cream inset. 10px wide (MARK_PX in
+   lib/scenes.ts, which decides when two scenes are too close to draw apart). */
 .marker {
   position: absolute;
   bottom: 20px;
-  width: 16px;
+  width: 10px;
   padding: 0;
   transform: translateX(-50%);
   border: 2px solid var(--ink);
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
+}
+
+/* On a phone the marks are narrower (MARK_PX_NARROW, for a track under NARROW_TRACK_PX): the
+   stylesheet's width until the timeline is measured, then the script's, which match there. */
+@media (max-width: 719px) {
+  .marker {
+    width: 6px;
+    border-width: 1.5px;
+    border-radius: 3px;
+  }
+}
+
+/* Scenes too close together to draw apart: one mark as wide as their span (positioned by its left
+   edge, not its centre), as strong as the strongest, with how many it stands for above it. */
+.cluster {
+  transform: none;
+}
+
+.clusterCount {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 3px);
+  transform: translateX(-50%);
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+/* Clear of the selected and focus rings, which sit 3px outside the mark. */
+.markerSelected > .clusterCount,
+.marker:focus-visible > .clusterCount {
+  bottom: calc(100% + 9px);
 }
 
 /* A bigger finger target than the mark itself, without moving anything. Not the full 44px: scenes
@@ -313,7 +356,13 @@
   font-size: 13px;
   line-height: 1.45;
   color: var(--body);
-  max-width: 280px;
+}
+
+/* Beside the switch on a wide screen it keeps to the switch's width; on a phone it has the whole row. */
+@media (min-width: 720px) {
+  .bandsSame {
+    max-width: 280px;
+  }
 }
 
 .rowsHint {

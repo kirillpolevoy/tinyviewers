@@ -37,8 +37,12 @@ import {
   failedLead,
   checkedTitle,
   runActivity,
+  matchScenes,
+  guideDiff,
   type DemoRun,
   type DemoScene,
+  type FlaggedScene,
+  type GuideScene,
 } from '../lib/demo';
 import { addPhase, mergeSteps, parentSteps, type JobStep } from '../lib/job';
 import { startPoll, type Answer } from '../lib/poll';
@@ -497,4 +501,63 @@ test('a list row\'s chips fold overlapping reasons, as the scene view groups the
     ] },
   };
   assert.deepEqual(reasonChips(f), { chips: ['Weapon used', 'Character in danger', 'Dangerous situation'], more: 0 });
+});
+
+// ---- which scenes differ from the saved guide ----------------------------------------------------
+
+const MIN = 60_000;
+const flaggedAt = (id: string, from: number, to: number, title: string | null = `Scene ${id}`): FlaggedScene => ({
+  scene_id: id,
+  start_ms: from * MIN,
+  end_ms: to * MIN,
+  title,
+  description: null,
+  reasons: [],
+  strength: 3,
+});
+const guideAt = (id: string, from: number, to: number, title: string | null = `Guide ${id}`): GuideScene => ({
+  id,
+  start_ms: from * MIN,
+  end_ms: to * MIN,
+  title,
+});
+
+test('scenes are matched one to one, as the scene API matches them', () => {
+  // A long check scene covering two guide scenes is at most one of them, and only if its edges agree.
+  const m = matchScenes([flaggedAt('S1', 0, 20)], [guideAt('g1', 0, 10), guideAt('g2', 10, 20)]);
+  assert.deepEqual(m, { both: 0, onlyRun: [0], onlyGuide: [0, 1] });
+  // Edges within 20 s (or a quarter of the longer scene) are the same scene.
+  assert.deepEqual(matchScenes([flaggedAt('S1', 10, 14)], [guideAt('g1', 10.2, 14.1)]), { both: 1, onlyRun: [], onlyGuide: [] });
+  // The same moment cut 35 s later on both edges is not (the Iron Giant's missile order, 1:14:24 vs 1:14:59).
+  assert.deepEqual(matchScenes([flaggedAt('S1', 74.4, 75.6)], [guideAt('g1', 74.98, 75.62)]).both, 0);
+});
+
+test('the comparison names the scenes that differ, only when that gives the API its own counts', () => {
+  const flagged = [flaggedAt('S1', 1, 3), flaggedAt('S2', 10, 12, 'Flagged scene'), flaggedAt('S3', 30, 33)];
+  const guide = [guideAt('g1', 1, 3), guideAt('g3', 30, 33), guideAt('g4', 50, 52, 'The missile')];
+  const compare = { both: 2, only_run: 1, only_guide: 1, guide_scenes: 3, run_scenes: 3 };
+  const diff = guideDiff(compare, flagged, guide);
+  assert.deepEqual(diff?.onlyRun.map((f) => f.scene_id), ['S2']);
+  assert.deepEqual(diff?.onlyGuide.map((g) => g.id), ['g4']);
+  // A scene with no checked title is named by where it starts, on either side.
+  assert.equal(flaggedHeading(diff!.onlyRun[0]), 'Scene starting at 0:10:00');
+  assert.equal(flaggedHeading({ ...diff!.onlyGuide[0], title: null }), 'Scene starting at 0:50:00');
+
+  // The guide changed since the check ended (another scene count, or matching gives other numbers):
+  // the page says the counts alone rather than name the wrong scenes.
+  assert.equal(guideDiff({ ...compare, guide_scenes: 4 }, flagged, guide), null);
+  assert.equal(guideDiff({ both: 3, only_run: 0, only_guide: 0 }, flagged, guide), null);
+  assert.equal(guideDiff({ ...compare, run_scenes: 2 }, flagged, guide), null);
+  // Nothing to name: the same scenes, no comparison, or no guide read.
+  assert.equal(guideDiff({ both: 2, only_run: 0, only_guide: 0, guide_scenes: 2, run_scenes: 2 }, flagged.slice(0, 1).concat(flagged[2]), [guide[0], guide[1]]), null);
+  assert.equal(guideDiff(null, flagged, guide), null);
+  assert.equal(guideDiff(compare, flagged, null), null);
+  // An older API without the two totals is still checked against its three counts.
+  assert.deepEqual(guideDiff({ both: 2, only_run: 1, only_guide: 1 }, flagged, guide)?.onlyRun.map((f) => f.scene_id), ['S2']);
+});
+
+test('the comparison lists are headed as the review asked', () => {
+  assert.equal(DEMO_LIVE.onlyRun, 'Only in this check');
+  assert.equal(DEMO_LIVE.onlyGuide, 'Only in the saved guide');
+  assert.equal(DEMO_LIVE.flaggedWords(12), 'scenes to know about');
 });

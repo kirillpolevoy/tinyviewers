@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from './Art';
 import { useDemoRun, useStartRun } from './useDemoRun';
+import { useWidth } from './useWidth';
 import { ADD, DEMO_LIVE, STRENGTH_TABLE, FILM, ruleSentence } from '@/lib/copy';
 import {
   answeredBy,
@@ -26,6 +27,7 @@ import {
   formatRunCost,
   formatRunTime,
   growingCount,
+  guideDiff,
   inFilmOrder,
   isRunLive,
   latest,
@@ -42,11 +44,14 @@ import {
   whyTags,
   type DemoRun,
   type DemoScene,
+  type GuideScene,
   type WhyAnswer,
   type WhyTag,
 } from '@/lib/demo';
 import { groupReasons, nameContext, type ReasonGroup } from '@/lib/reasons';
 import {
+  clusterMarkers,
+  markWidthPx,
   endsAroundMs,
   formatTime,
   markerHeightPx,
@@ -72,7 +77,13 @@ export type RunFilm = {
   sceneCount: number | null;
 };
 
-type Props = { id: string; initialRun: DemoRun; film: RunFilm };
+type Props = {
+  id: string;
+  initialRun: DemoRun;
+  film: RunFilm;
+  /** The saved guide's scenes (read by the page), so the comparison can name the scenes that differ. */
+  guide?: GuideScene[] | null;
+};
 
 /** "14:03:12" in the reader's own clock: when the last answer arrived. */
 function clockTime(ms: number): string {
@@ -108,7 +119,7 @@ function sceneWords(scene: DemoScene, live: boolean): string {
  * The scene up close is `?scene=<id>` on this same page, pushed with the History API so the poll keeps
  * running underneath it; Back returns to the same place in the list.
  */
-export function LiveRun({ id, initialRun, film }: Props) {
+export function LiveRun({ id, initialRun, film, guide = null }: Props) {
   const { run, health, retry } = useDemoRun(id, initialRun);
   const { start, starting, refusal } = useStartRun();
   const searchParams = useSearchParams();
@@ -145,8 +156,10 @@ export function LiveRun({ id, initialRun, film }: Props) {
     });
   }, [run.feed]);
 
-  const openScene = useCallback((scene: string) => {
-    cameFrom.current = scene;
+  // `from` is the row the parent pressed (a scene can be a row in more than one list), so Back returns
+  // focus to that row; by default it is the scene's own row.
+  const openScene = useCallback((scene: string, from?: string) => {
+    cameFrom.current = from ?? scene;
     const url = new URL(window.location.href);
     url.searchParams.set('scene', scene);
     window.history.pushState(null, '', url.toString());
@@ -283,7 +296,9 @@ export function LiveRun({ id, initialRun, film }: Props) {
         {finished ? DEMO_LIVE.srDone(title) : ''}
       </p>
 
-      {finished && <RunDone run={run} film={film} band={band} onBand={setBand} onScene={openScene} runAgain={runAgain} ruled={ruled} />}
+      {finished && (
+        <RunDone run={run} film={film} guide={guide} band={band} onBand={setBand} onScene={openScene} runAgain={runAgain} ruled={ruled} />
+      )}
 
       {failed && (
         // The work that did finish is kept, but closed: the stop and the way onward come first.
@@ -569,6 +584,7 @@ function LevelsNote({ band }: { band: AgeBand }) {
 function RunDone({
   run,
   film,
+  guide,
   band,
   onBand,
   onScene,
@@ -577,23 +593,83 @@ function RunDone({
 }: {
   run: DemoRun;
   film: RunFilm;
+  guide: GuideScene[] | null;
   band: AgeBand;
   onBand: (band: AgeBand) => void;
-  onScene: (id: string) => void;
+  onScene: (id: string, from?: string) => void;
   runAgain: React.ReactNode;
   ruled: Map<string, boolean>;
 }) {
   const flagged = useMemo(() => [...(run.result?.flagged ?? [])].sort((a, b) => a.start_ms - b.start_ms), [run.result]);
   const end = Math.max(filmEndMs(run.scenes), ...flagged.map((f) => f.end_ms), 0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const trackWidth = useWidth(trackRef);
+  const markPx = markWidthPx(trackWidth);
+  const clusters = useMemo(
+    () => clusterMarkers(flagged, (f) => pct(f.start_ms, end), (f) => flaggedStrength(run, f, band), trackWidth),
+    [flagged, end, run, band, trackWidth],
+  );
   const breakdown = flaggedBreakdown(run, band);
   // The run's own answer (as it ended) beats what the page was rendered with.
   const inLibrary = typeof run.result?.in_library === 'boolean' ? run.result.in_library : film.inLibrary;
   const librarySlug = run.film?.library_slug ?? film.librarySlug;
   const same = sameness(run.result?.compare, inLibrary);
-  const total = run.scenes.length;
   const final = run.stages.claims.final;
-  // One compact line beside the count; what it means, and the ways onward, come after the scenes.
-  const comparison = run.result ? <p className={styles.compareLine}>{compareLine(same, flagged.length)}</p> : null;
+  // Which scenes differ, by name — in the API's own order, which its match was made in.
+  const diff = useMemo(() => guideDiff(run.result?.compare, run.result?.flagged ?? [], guide), [run.result, guide]);
+  // One compact line beside the count, which opens to name the scenes that differ; what it means, and
+  // the ways onward, come after the scenes.
+  const line = compareLine(same, flagged.length);
+  const comparison = !run.result ? null : diff ? (
+    <details className={styles.compareDetails}>
+      <summary className={styles.compareSummary}>{line}</summary>
+      <div className={styles.compareLists}>
+        <div className={styles.compareGroup}>
+          <h3 className={styles.compareListHeading}>{DEMO_LIVE.onlyRun}</h3>
+          {diff.onlyRun.length === 0 ? (
+            <p className={styles.cardNote}>{DEMO_LIVE.onlyNone}</p>
+          ) : (
+            <ul className={styles.compareList}>
+              {diff.onlyRun.map((f) => (
+                <li key={f.scene_id}>
+                  {/* In this check, so it opens up close like any row of the list. */}
+                  <button
+                    type="button"
+                    className={styles.compareScene}
+                    data-scene-row={`compare-${f.scene_id}`}
+                    onClick={() => onScene(f.scene_id, `compare-${f.scene_id}`)}
+                  >
+                    <span className={styles.compareSceneTitle}>{flaggedHeading(f)}</span>
+                    {checkedTitle(f) && <span className={`tabular ${styles.compareSceneTime}`}>{formatTime(f.start_ms)}</span>}
+                    <span className={styles.chevron} aria-hidden="true">
+                      ›
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className={styles.compareGroup}>
+          <h3 className={styles.compareListHeading}>{DEMO_LIVE.onlyGuide}</h3>
+          {diff.onlyGuide.length === 0 ? (
+            <p className={styles.cardNote}>{DEMO_LIVE.onlyNone}</p>
+          ) : (
+            <ul className={styles.compareList}>
+              {diff.onlyGuide.map((g) => (
+                <li key={g.id} className={styles.compareGuideScene}>
+                  <span className={styles.compareSceneTitle}>{flaggedHeading(g)}</span>
+                  {checkedTitle(g) && <span className={`tabular ${styles.compareSceneTime}`}>{formatTime(g.start_ms)}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </details>
+  ) : (
+    <p className={styles.compareLine}>{line}</p>
+  );
   const compareNote =
     same.kind === 'same'
       ? DEMO_LIVE.sameMatchNote
@@ -635,16 +711,16 @@ function RunDone({
               <div className={styles.doneCount}>
                 <h2 id="done-count" className={styles.countLine}>
                   <span className={`tabular ${styles.countNumber}`}>{flagged.length}</span>{' '}
-                  <span className={styles.countWords}>
-                    {DEMO_LIVE.flaggedWords(flagged.length)}
-                    <span className={styles.countOf}> ({DEMO_LIVE.numScenesValue(flagged.length, total)})</span>
-                  </span>
+                  <span className={styles.countWords}>{DEMO_LIVE.flaggedWords(flagged.length)}</span>
                 </h2>
                 <ul className={styles.breakdown}>
                   {breakdown.map((entry) => (
                     <li key={String(entry.value)} className={styles.breakdownItem}>
                       <span className={`${styles.swatch} ${styles[severityTone(entry.value)]}`} aria-hidden="true" />
-                      {entry.count} {strengthWord(entry.value).toLowerCase()}
+                      {/* Every scene at one level: the level alone, not the count again. */}
+                      {breakdown.length === 1 && entry.value !== null
+                        ? FILM.breakdownAll(strengthWord(entry.value).toLowerCase(), entry.count)
+                        : `${entry.count} ${strengthWord(entry.value).toLowerCase()}`}
                     </li>
                   ))}
                 </ul>
@@ -657,15 +733,26 @@ function RunDone({
               </div>
             </div>
 
-            {/* A picture of where the scenes sit: the list below is how a scene is opened. */}
+            {/* A picture of where the scenes sit: the list below is how a scene is opened. Scenes too
+                close together to draw apart share one mark, with their count on it. */}
             <div className={styles.timeline} aria-hidden="true">
               <span className={styles.timelineBase} />
-              <div className={styles.timelineInner}>
-                {flagged.map((f) => {
-                  const strength = flaggedStrength(run, f, band);
+              <div className={styles.timelineInner} ref={trackRef}>
+                {clusters.map((cluster) => {
+                  const many = cluster.items.length > 1;
                   return (
-                    <span key={f.scene_id} className={styles.marker} style={{ left: `${pct(f.start_ms, end)}%` }}>
-                      <span className={`${styles.markerBar} ${styles[severityTone(strength)]}`} style={{ height: `${markerHeightPx(strength)}px` }} />
+                    <span
+                      key={cluster.items[0].scene_id}
+                      className={`${styles.marker} ${many ? styles.cluster : ''}`}
+                      style={
+                        many
+                          ? { left: `calc(${cluster.firstPct}% - ${markPx / 2}px)`, width: `calc(${cluster.lastPct - cluster.firstPct}% + ${markPx}px)` }
+                          : { left: `${cluster.firstPct}%`, ...(trackWidth ? { width: `${markPx}px` } : {}) }
+                      }
+                    >
+                      <span className={`${styles.markerBar} ${styles[severityTone(cluster.value)]}`} style={{ height: `${markerHeightPx(cluster.value)}px` }}>
+                        {many && <span className={`tabular ${styles.clusterCount}`}>{cluster.items.length}</span>}
+                      </span>
                     </span>
                   );
                 })}
@@ -676,7 +763,8 @@ function RunDone({
               <span>{formatTime(end / 2)}</span>
               <span>{formatTime(end)}</span>
             </div>
-            <p className={styles.cardNote}>{DEMO_LIVE.sourcesNote}</p>
+            {/* On a phone this follows the list instead (below), so the scenes reach the first screen. */}
+            <p className={`${styles.cardNote} ${styles.sourcesWide}`}>{DEMO_LIVE.sourcesNote}</p>
           </>
         )}
       </section>
@@ -733,6 +821,7 @@ function RunDone({
 
       {/* After the scenes: what the comparison means, then the ways onward. */}
       <section className={styles.onward} aria-label={DEMO_LIVE.onwardLabel}>
+        {flagged.length > 0 && <p className={`${styles.cardNote} ${styles.sourcesPhone}`}>{DEMO_LIVE.sourcesNote}</p>}
         {compareNote && <p className={styles.cardNote}>{compareNote}</p>}
         <div className={styles.compareActions}>
           {librarySlug && inLibrary !== false && (

@@ -546,7 +546,13 @@ request that never answered, a 200 whose body could not be read or is not a JSON
 an answer whose `usage.input_tokens` is not a number above zero, and a failure that brought no attempt history
 are each charged at their reservation (the attempts before them kept), and those unmeasured parts are reported
 apart (`cost_uncertain_usd`), never as a bill. A reservation still open when an invocation ends or hands off
-is charged the same way. A finished row the v10.4.2 code ended during a rolling upgrade (`cost_usd` set,
+is charged the same way. The same rule holds for Sonnet in adds and rebuilds (`stages/common.js`
+`sonnetCall`): a stream whose usage cannot be read (empty, no final output count, not token counts; the
+start event's `output_tokens: 1` is a placeholder and never read as the bill) is charged at its whole
+reservation, as uncertain, never at $0. A Jev 200 whose answer to any asked question is missing or unusable
+for its type (a null or out-of-range noul, a choice or score without its confidence and distribution;
+`pack/jev-client.js` `malformedAnswers`) is paid for by its usage and returned as a failed request, so no
+stage reads it as a "no": the stage fails, and a rebuild keeps the guide it had. A finished row the v10.4.2 code ended during a rolling upgrade (`cost_usd` set,
 `spent_usd` left stale) is brought into line by the demo sweep (`lib/demo.js` `healOldEndings`). A sentence's live verdict is
 Jev's support answer (provisional); the run ends by reconciling the feed and `claims.final` with what the
 guide actually kept (a summary sentence counts as kept only if it survived every acceptance step, the

@@ -139,7 +139,17 @@
   background: var(--sheet);
   border: 1px dashed var(--dust);
   border-radius: var(--radius-card);
-  padding: 14px 20px 18px;
+  padding: 6px 16px;
+}
+
+.filters[open] {
+  padding-bottom: 16px;
+}
+
+@media (min-width: 720px) {
+  .filters {
+    padding: 14px 20px 18px;
+  }
 }
 
 .filtersSummary {

@@ -131,7 +131,10 @@ follow from one place:
   when the query names one.
 
 **Adding a film happens here too.** A search that matches nothing turns into the passcoded ask
-(`components/AddMovie.tsx`), prefilled with what was typed. Submitting starts the real add run and
+(`components/AddMovie.tsx`), prefilled with what was typed. Otherwise the ask waits under the list,
+closed, as "Can't find your film?" with an "Add a film" button that opens it in place — the films
+always come first, and an access-code form is never the first thing on the page (`?add=1`, where
+`/add` redirects, no longer opens it above the films). Submitting starts the real add run and
 the card becomes live: it polls the job (`usePolledJob`, with the loop in `lib/poll.ts`) and lists the
 run's steps with the elapsed time the API measured on the last poll. Before a step is reported the card
 says the film is next and waiting — it does not claim to be reading it.
@@ -222,14 +225,24 @@ fear · 9 of 39 scenes complete" — from the run's `stage` and the API's own co
 `lib/demo.ts`). The first ten-odd seconds of a real run are the scene breaks and the descriptions,
 which sit below the scene strip; on a phone this line is the only part of them in the first screen.
 
-**The finish, in plain numbers:** time, cost, scenes to know about ("13 of 45"), and "Same as the
-film page?" — yes only when every scene of each list is in the other (`sameness` in `lib/demo.ts`);
-"Not in the library" or "Didn't come back" otherwise, never a "no".
+**The finish, in plain numbers:** time, cost, "{n} scenes to know about" (one level for every scene
+reads "All very strong", not the count twice), and one line comparing the list with the saved guide —
+the same only when every scene of each list is in the other (`sameness` in `lib/demo.ts`). When they
+differ the line opens to name the scenes: "Only in this check" (each opens up close) and "Only in the
+saved guide". The API sends counts only, so the run page reads the library film's scenes and matches
+them the API's way (`matchScenes`/`guideDiff`); the names are shown only when that gives exactly the
+API's counts — a guide rebuilt since the check ended falls back to the counts.
+
+**Timelines draw 10px marks** (`MARK_PX`), and scenes too close together to draw apart at the width
+the timeline is drawn (measured, `clusterMarkers` in `lib/scenes.ts`) share one mark: as wide as their
+span, as strong as the strongest, with their count above it. On the film page a grouped mark is one
+button that lists its scenes; the scene rows stay the way to each scene.
 
 **One scene up close** shows the reasons the scene is on the list as a parent would say them,
 overlapping checks grouped (`groupReasons` in `lib/reasons.ts`: "The Giant and Hogarth in danger"
 holds "The Iron Giant in danger", "Hogarth Hughes in danger", "Child in danger" and "Afraid for
-safety"). Each reason's "How this was checked" keeps every check inside it: the question as it was
+safety"; a few physical hazards are said plainly, "Danger from electricity" rather than "Danger from
+power substation electrocution" — `plainHazard`). Each reason's "How this was checked" keeps every check inside it: the question as it was
 asked, Jev's answer against its line (or Sonnet's yes, answered earlier), and the rule that let it
 count (`ruleSentence` in `lib/copy.ts`, one plain sentence per `select.js` rule code). A character's
 name is shortened only to a word the run's own checked titles and descriptions use. The film page's

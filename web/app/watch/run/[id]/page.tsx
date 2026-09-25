@@ -4,7 +4,8 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { StateCard } from '@/components/StateCard';
 import { LiveRun, type RunFilm } from '@/components/LiveRun';
 import { readDemoFilms, readDemoRun } from '@/lib/demo-lookup';
-import { runInLibrary } from '@/lib/demo';
+import { runInLibrary, type GuideScene } from '@/lib/demo';
+import { getFilmScenes } from '@/lib/queries';
 import { ADD, DEMO_LIVE } from '@/lib/copy';
 import styles from '@/components/Watch.module.css';
 
@@ -55,9 +56,10 @@ export default async function WatchRunPage({ params, searchParams }: Props) {
   const querySlug = Array.isArray(query.film) ? query.film[0] : query.film;
   const slug = run.slug ?? run.film?.slug ?? querySlug ?? null;
   const listed = slug ? films?.find((f) => f.slug === slug) ?? null : null;
+  const librarySlug = run.film?.library_slug ?? listed?.library_slug ?? (listed?.in_library ? listed.slug : null);
   const film: RunFilm = {
     slug,
-    librarySlug: run.film?.library_slug ?? listed?.library_slug ?? (listed?.in_library ? listed.slug : null),
+    librarySlug,
     title: run.film?.title ?? listed?.title ?? null,
     year: run.film?.year ?? listed?.year ?? null,
     // Known only when someone said: the run itself (at its end, or now), else the films list. Unknown is
@@ -65,13 +67,27 @@ export default async function WatchRunPage({ params, searchParams }: Props) {
     inLibrary: runInLibrary(run, listed),
     sceneCount: listed?.scene_count ?? (run.scenes.length || null),
   };
+  // The saved guide's scenes, so a finished check can say WHICH scenes differ from it, not only how
+  // many (the API sends counts). Read as the page opens; the page names scenes only while matching them
+  // gives the API's own counts, so a guide rebuilt since then falls back to the counts.
+  const guide = librarySlug ? await readGuide(librarySlug) : null;
 
   return (
     <div className="page">
       <SiteHeader current="/watch" />
       <main className={`frame ${styles.main}`}>
-        <LiveRun id={id} initialRun={run} film={film} />
+        <LiveRun id={id} initialRun={run} film={film} guide={guide} />
       </main>
     </div>
   );
+}
+
+/** The library film's scenes, as the comparison names them; null when they could not be read. */
+async function readGuide(slug: string): Promise<GuideScene[] | null> {
+  try {
+    const scenes = await getFilmScenes(slug);
+    return scenes.map((s) => ({ id: s.id, start_ms: s.startMs, end_ms: s.endMs, title: s.title || null }));
+  } catch {
+    return null;
+  }
 }

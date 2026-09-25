@@ -6,6 +6,10 @@
 //   * fetch, abort signal and backoff sleep come from the run context;
 //   * NO response body in any error message: the experiment put `anthropic 400: <600 chars of body>`
 //     in the message, and an Anthropic error body quotes the request, which is subtitle lines.
+//   * the usage it reports is only what the stream said: message_start's input counts, and the output
+//     count of the final message_delta. message_start's `output_tokens: 1` is a placeholder, not a bill,
+//     so it is never reported; a stream whose final event carries no output count reports none, and
+//     usageReadable() says so. (The experiment read an empty usage as 0 tokens -- a free call.)
 import { runCtx } from '../context.js';
 import { PRICES } from '../../pipeline/claude.js';
 
@@ -17,6 +21,22 @@ export function costUsd(model, u) {
     + (u.cache_creation_input_tokens ?? 0) * pIn * 1.25
     + (u.cache_read_input_tokens ?? 0) * pIn * 0.1
     + (u.output_tokens ?? 0) * pOut) / 1e6;
+}
+
+const isCount = (x) => typeof x === 'number' && Number.isFinite(x) && x >= 0;
+
+/**
+ * Whether `u` is a bill we can price: input and output as token counts above zero (a billed generation
+ * always has both), and each cache count either absent/null (none) or a count. Anything else -- an empty
+ * usage, a missing final output count, a string -- is unreadable, and the caller charges the call at its
+ * reservation, as an upper bound, never at the 0 that costUsd would read. (Checked against the recorded
+ * real runs: all 406 Sonnet usages are readable.)
+ */
+export function usageReadable(u) {
+  if (u === null || typeof u !== 'object') return false;
+  if (!(isCount(u.input_tokens) && u.input_tokens > 0 && isCount(u.output_tokens) && u.output_tokens > 0)) return false;
+  for (const k of ['cache_creation_input_tokens', 'cache_read_input_tokens']) if (u[k] !== undefined && u[k] !== null && !isCount(u[k])) return false;
+  return true;
 }
 
 export class ClaudeCallError extends Error {
@@ -77,14 +97,19 @@ export async function callClaude({ model, system, user, schema, maxTokens, effor
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
           const ev = JSON.parse(line.slice(6));
-          if (ev.type === 'message_start') Object.assign(usage, ev.message.usage);
+          if (ev.type === 'message_start') {
+            // the input counts; its output_tokens (1) is a placeholder the final message_delta replaces
+            const { output_tokens: _placeholder, ...start } = ev.message?.usage ?? {};
+            Object.assign(usage, start);
+          }
           if (ev.type === 'content_block_delta' && ev.delta.type === 'text_delta') {
             text += ev.delta.text;
             onProgress?.(text.length);
           }
           if (ev.type === 'message_delta') {
-            stopReason = ev.delta.stop_reason;
-            usage.output_tokens = ev.usage.output_tokens;
+            stopReason = ev.delta?.stop_reason ?? null;
+            // a final event without an output count leaves it unknown (usageReadable says so), never 0 or 1
+            if (ev.usage && 'output_tokens' in ev.usage) usage.output_tokens = ev.usage.output_tokens;
           }
           if (ev.type === 'error') throw new Error('anthropic stream error');
         }

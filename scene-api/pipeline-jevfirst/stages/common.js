@@ -2,7 +2,7 @@
 // strings, and the two ways a stage can stop (a named failure, or an interruption the runner resumes).
 import { createRequire } from 'node:module';
 import { runCtx } from '../context.js';
-import { callClaude, costUsd } from '../pack/sonnet.js';
+import { callClaude, costUsd, usageReadable } from '../pack/sonnet.js';
 import { transcriptGrams, quoteRuns, quoteWords } from '../pack/validate.js';
 import { PipelineError } from '../../pipeline/errors.js';
 
@@ -38,10 +38,12 @@ export function checkInterrupted() {
  * One Sonnet call under a wallet ({ budget, run }), with the experiment's accounting: reserve the
  * worst case first (refuse when it would pass the cap), persist the spending mark before the call is
  * sent, settle the reservation against the real bill -- a rejected call costs 0, a call that never
- * answered costs its whole reservation (an upper bound), anything else what its usage says -- and bank
- * that amount the moment it is known.
+ * answered or whose usage cannot be read (sonnet.js usageReadable) costs its whole reservation (an
+ * upper bound, reported as uncertain), anything else what its usage says -- and bank that amount the
+ * moment it is known.
  * `reserved: true` when the caller already took the reservation (sonnetq's wait-for-headroom loop).
- * Returns { r, cost }; throws the ClaudeCallError with `cost` and `cost_is_upper_bound` attached.
+ * Returns { r, cost, cost_is_upper_bound }; throws the ClaudeCallError with `cost` and
+ * `cost_is_upper_bound` attached.
  */
 export async function sonnetCall(w, { system, user, schema, maxTokens, effort, worst, model = SONNET_MODEL, label = 'call', reserved = false }) {
   if (!reserved && !w.budget.reserve(worst)) throw Object.assign(new Error(`refused: worst case $${worst.toFixed(4)} for ${label} breaks the cap`), { refused: true, cost: 0 });
@@ -55,15 +57,20 @@ export async function sonnetCall(w, { system, user, schema, maxTokens, effort, w
       w.budget.settle(worst, 0);
       throw Object.assign(new Error('the spending mark could not be written'), { refused: true, cost: 0 });
     }
+    // A usage we cannot read (empty, no final output count, not numbers) is never priced: costUsd would
+    // read it as 0 tokens, a free call. The call is charged at its reservation instead, as uncertain --
+    // the rule runJobs applies to a Jev answer whose usage is unreadable.
+    const priced = (u) => {
+      if (usageReadable(u)) return costUsd(model, u);
+      upper = true;
+      return worst;
+    };
     try {
       const r = await callClaude({ model, system, user, schema, maxTokens, effort });
-      cost = costUsd(model, r.usage);
-      return { r, cost };
+      cost = priced(r.usage);
+      return { r, cost, cost_is_upper_bound: upper };
     } catch (err) {
-      const u = err.usage;
-      if (err.rejected) cost = 0;
-      else if (u && Object.keys(u).length) cost = costUsd(model, u);
-      else { cost = worst; upper = true; }
+      cost = err.rejected ? 0 : priced(err.usage);
       throw Object.assign(err, { cost, cost_is_upper_bound: upper });
     } finally {
       w.budget.settle(worst, cost);

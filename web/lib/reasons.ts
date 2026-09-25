@@ -4,12 +4,13 @@
 // "Hogarth Hughes in danger", "Child in danger", "Caught in danger", "Power substation electrocution
 // endangers someone", "Dangerous machinery", "Afraid for safety"… Every one is true, and together they
 // read like a machine's log: several say the same thing twice. This file folds the overlapping ones
-// into a few reasons — "The Giant and Hogarth in danger", "Danger from power substation electrocution"
-// — and keeps every individual check inside each reason, so nothing is hidden, only grouped.
+// into a few reasons — "The Giant and Hogarth in danger", "Danger from electricity" — and keeps every
+// individual check inside each reason, so nothing is hidden, only grouped.
 //
 // Pure and shared: the live check's scene view and the film page's open row group the same way.
-// Nothing here invents a word: a group's name is built from the tags' own words (a character's name
-// shortened only to a form the film's own checked text already uses).
+// A group's name is built from the tags' own words (a character's name shortened only to a form the
+// film's own checked text already uses), with one exception: a short, fixed list of physical hazards
+// is named by the plain word a parent would use ("electricity", not "power substation electrocution").
 
 /** The least a tag must carry to be grouped: its label, and (from a v10.4 guide) its rule and category. */
 export type TagLike = {
@@ -21,7 +22,7 @@ export type TagLike = {
 };
 
 export type ReasonGroup<T extends TagLike> = {
-  /** What a parent reads: "The Giant and Hogarth in danger", "Danger from power substation electrocution". */
+  /** What a parent reads: "The Giant and Hogarth in danger", "Danger from electricity". */
   label: string;
   /** The stable category, for a chip or a filter: "Character in danger", or the label itself. */
   category: string;
@@ -148,12 +149,29 @@ function joinNames(names: string[]): string {
 }
 
 /**
- * A film's danger after "Danger from": "Power substation electrocution" → "power substation
- * electrocution". A proper noun keeps its capital (the film's text writes it capitalised mid-sentence,
- * or it is a possessive such as "Scar's hyenas", an acronym, or a name of several capitalised words
- * such as "Tai Lung's escape").
+ * Physical hazards a parent names by what does the harm, not by the event the pipeline's danger names:
+ * "Power substation electrocution" is danger from electricity. The only words `groupReasons` uses that
+ * the tags do not: a fixed list, each a plain noun, matched only on unambiguous words.
+ */
+const PLAIN_HAZARDS: [RegExp, string][] = [
+  [/\belectrocut\w*|\belectri(?:city|cal)\b|\belectric (?:shocks?|fences?|currents?|wires?|cables?)\b|\bsubstation|\bpower[- ]?lines?\b|\bhigh[- ]voltage\b/i, 'electricity'],
+];
+
+/** The plain word for a danger from PLAIN_HAZARDS ("electricity"), or null when it is not one of them. */
+export function plainHazard(name: string): string | null {
+  return PLAIN_HAZARDS.find(([re]) => re.test(name))?.[1] ?? null;
+}
+
+/**
+ * A film's danger after "Danger from": a plain hazard by its plain word ("Power substation
+ * electrocution" → "electricity"); anything else in its own words, lower-cased ("Tar flow" → "tar
+ * flow"). A proper noun keeps its capital (the film's text writes it capitalised mid-sentence, or it
+ * is a possessive such as "Scar's hyenas", an acronym, or a name of several capitalised words such as
+ * "Tai Lung's escape").
  */
 export function dangerPhrase(name: string, context: string): string {
+  const plain = plainHazard(name);
+  if (plain) return plain;
   const words = name.trim().replace(/\s+/g, ' ').split(' ');
   const first = words[0] ?? '';
   if (/^(the|a|an)$/i.test(first)) return [first.toLowerCase(), ...words.slice(1)].join(' ');
@@ -204,7 +222,9 @@ export function groupReasons<T extends TagLike>(tags: T[], context = ''): Reason
   tags.forEach((tag, at) => {
     const film = filmReason(tag);
     if (!film) return general.push(at);
-    put(open(film.kind === 'person' ? 'person' : `${film.kind}:${film.name.toLowerCase()}`, film.kind, film, null), at);
+    // Two named dangers with one plain word ("Power lines", "Substation electrocution") are one reason.
+    const name = (film.kind === 'danger' && plainHazard(film.name)) || film.name.toLowerCase();
+    put(open(film.kind === 'person' ? 'person' : `${film.kind}:${name}`, film.kind, film, null), at);
   });
   const ofKind = (kind: FilmKind) => [...slots.values()].filter((s) => s.kind === kind);
 

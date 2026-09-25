@@ -69,7 +69,6 @@ export default async function LibraryPage({ searchParams }: Props) {
           <LibraryShelf
             films={films}
             query={query}
-            forceAdd={forceAdd}
             initialJob={job}
             unreachableJobId={unreachable ? jobId : null}
           />

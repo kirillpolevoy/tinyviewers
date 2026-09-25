@@ -4,8 +4,14 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 20px;
   padding-block: 20px 72px;
+}
+
+@media (min-width: 720px) {
+  .main {
+    gap: 28px;
+  }
 }
 
 @media (min-width: 900px) {
@@ -885,11 +891,11 @@ button.tile:hover .tileBar {
 .sheet {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   background: var(--sheet);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-sheet);
-  padding: 20px 18px;
+  padding: 16px 16px 14px;
 }
 
 @media (min-width: 720px) {
@@ -901,7 +907,7 @@ button.tile:hover .tileBar {
 .doneTop {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 @media (min-width: 720px) {
@@ -915,7 +921,21 @@ button.tile:hover .tileBar {
 .doneCount {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
+}
+
+@media (min-width: 720px) {
+  .sheet {
+    gap: 12px;
+  }
+
+  .doneTop {
+    gap: 12px;
+  }
+
+  .doneCount {
+    gap: 8px;
+  }
 }
 
 .countLine {
@@ -1010,9 +1030,15 @@ button.tile:hover .tileBar {
 
 .timeline {
   position: relative;
-  height: 96px;
+  height: 84px;
   background: var(--page);
   border-radius: 20px;
+}
+
+@media (min-width: 720px) {
+  .timeline {
+    height: 96px;
+  }
 }
 
 .timelineBase {
@@ -1024,17 +1050,18 @@ button.tile:hover .tileBar {
   background: var(--hairline);
 }
 
-/* A marker is a button wider than its 16px bar and as tall as the strip, so a finger can hit it. */
+/* A picture, not controls: the scene rows under it are how a scene is opened. */
 .timelineInner {
   position: absolute;
   inset: 8px 16px 18px;
 }
 
+/* 10px marks (MARK_PX in lib/scenes.ts, which decides when scenes are too close to draw apart). */
 .marker {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 16px;
+  width: 10px;
   transform: translateX(-50%);
   display: flex;
   align-items: flex-end;
@@ -1042,10 +1069,41 @@ button.tile:hover .tileBar {
 }
 
 .markerBar {
+  position: relative;
   display: block;
-  width: 16px;
+  width: 100%;
   border: 2px solid var(--ink);
-  border-radius: 6px;
+  border-radius: 5px;
+}
+
+/* Narrower on a phone (MARK_PX_NARROW): the stylesheet's width until the timeline is measured. */
+@media (max-width: 719px) {
+  .marker {
+    width: 6px;
+  }
+
+  .markerBar {
+    border-width: 1.5px;
+    border-radius: 3px;
+  }
+}
+
+/* Several scenes sat close together: one mark as wide as their span (placed by its left edge), as
+   strong as the strongest, with how many it stands for above it. */
+.cluster {
+  transform: none;
+}
+
+.clusterCount {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 3px);
+  transform: translateX(-50%);
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ink);
 }
 
 
@@ -1540,6 +1598,19 @@ button.tile:hover .tileBar {
   gap: 4px;
 }
 
+/* On a phone the summary card straight above already says "N scenes to know about": the list's own
+   heading stays for a screen reader, and the rows start sooner. */
+@media (max-width: 719px) {
+  .listHead h2 {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 .flagMain {
   display: flex;
   flex-direction: column;
@@ -1941,12 +2012,6 @@ button.tile:hover .tileBar {
   font-size: 13px;
 }
 
-.countOf {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--body);
-}
-
 .bandBox {
   display: flex;
   flex-direction: column;
@@ -1965,6 +2030,25 @@ button.tile:hover .tileBar {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+/* On a phone the label sits beside the switch: one row, not two. */
+@media (max-width: 719px) {
+  .bandControl {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bandLabel {
+    max-width: 8em;
+    line-height: 1.3;
+  }
+
+  .bandOption {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
 }
 
 .bandLabel {
@@ -2010,6 +2094,136 @@ button.tile:hover .tileBar {
   font-size: 16px;
   line-height: 1.4;
   color: var(--body-strong);
+}
+
+/* …and, when the page can name the scenes that differ, that line opens to list them. */
+.compareSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--body-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.compareSummary::-webkit-details-marker {
+  display: none;
+}
+
+.compareSummary::after {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.compareDetails[open] > .compareSummary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.compareLists {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 6px;
+  max-width: 560px;
+}
+
+.compareGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compareListHeading {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--body);
+}
+
+.compareList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compareScene,
+.compareGuideScene {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  text-align: left;
+}
+
+.compareScene {
+  background: var(--page);
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+}
+
+.compareScene:hover {
+  border-color: var(--ink);
+}
+
+.compareScene .chevron {
+  margin-left: auto;
+}
+
+.compareGuideScene {
+  background: transparent;
+  border: 1px dashed var(--hairline);
+}
+
+.compareSceneTitle {
+  min-width: 0;
+}
+
+.compareSceneTime {
+  flex: none;
+  font-weight: 700;
+  color: var(--body);
+}
+
+/* The note on what the AI reads: in the summary card on a wide screen; after the scene list on a
+   phone, so the first scenes reach the first screen. */
+.sourcesPhone {
+  display: none;
+}
+
+@media (max-width: 719px) {
+  .sourcesWide {
+    display: none;
+  }
+
+  .sourcesPhone {
+    display: block;
+  }
 }
 
 /* After the scene list: what the comparison means, then the ways onward. */

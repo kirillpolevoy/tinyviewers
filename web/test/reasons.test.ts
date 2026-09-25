@@ -2,7 +2,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { dangerPhrase, filmReason, groupReasons, nameContext, shortName, type TagLike } from '../lib/reasons';
+import { dangerPhrase, filmReason, groupReasons, nameContext, plainHazard, shortName, type TagLike } from '../lib/reasons';
 
 // The Iron Giant's S007, as the v10.4 pipeline tags it (real run output, trimmed to what grouping reads).
 const S007: (TagLike & { by: string[] })[] = [
@@ -30,7 +30,7 @@ test('overlapping reasons fold into a few, each named the way a parent would say
   const groups = groupReasons(S007, IRON_GIANT);
   assert.deepEqual(
     groups.map((g) => g.label),
-    ['Weapon used', 'The Giant and Hogarth in danger', 'Danger from power substation electrocution'],
+    ['Weapon used', 'The Giant and Hogarth in danger', 'Danger from electricity'],
   );
   assert.deepEqual(groups[1].items.map((t) => t.label), ['The Iron Giant in danger', 'Hogarth Hughes in danger', 'Child in danger', 'Afraid for safety']);
   // Caught in a dangerous force or place: with one named danger, it is that danger's check.
@@ -44,7 +44,7 @@ test('a guide stored without rules or categories groups the same way, by the lab
   const groups = groupReasons(stored, IRON_GIANT);
   assert.deepEqual(
     groups.map((g) => g.label).sort(),
-    ['Danger from power substation electrocution', 'The Giant and Hogarth in danger', 'Weapon used'],
+    ['Danger from electricity', 'The Giant and Hogarth in danger', 'Weapon used'],
   );
   // "Afraid for safety" never counts alone: without its partners named, it goes with the scene's leading reason.
   assert.deepEqual(groupReasons([{ label: 'Caught in danger' }, { label: 'Crashing vehicle' }, { label: 'Afraid for safety' }]).map((g) => [g.label, g.items.length]), [
@@ -113,7 +113,7 @@ test('a name is shortened only to a word the film’s own text uses', () => {
 });
 
 test('a danger reads after "Danger from", a proper noun keeping its capital', () => {
-  assert.equal(dangerPhrase('Power substation electrocution', ''), 'power substation electrocution');
+  assert.equal(dangerPhrase('Oncoming train', ''), 'oncoming train');
   assert.equal(dangerPhrase('The Curse/Dragon', ''), 'the Curse/Dragon');
   assert.equal(dangerPhrase("Tai Lung's escape/rampage", ''), "Tai Lung's escape/rampage");
   assert.equal(dangerPhrase('Kraken attack', 'the ship meets the Kraken, and Kraken attack'), 'Kraken attack');
@@ -125,4 +125,20 @@ test('more than three characters are named two and a count', () => {
     ['Eep', 'Thunk', 'Sandy', 'Ugga'].map((n) => ({ label: `${n} in danger`, rule: 'film_child_in_danger' })),
   );
   assert.deepEqual(groups.map((g) => g.label), ['Eep, Thunk and 2 others in danger']);
+});
+
+test('an electrical hazard is named by the plain word, on both surfaces\' grouping', () => {
+  assert.equal(dangerPhrase('Power substation electrocution', ''), 'electricity');
+  assert.equal(plainHazard('Downed power lines'), 'electricity');
+  assert.equal(plainHazard('High-voltage fence'), 'electricity');
+  // Not every word that starts "electr" is a hazard of electricity.
+  assert.equal(plainHazard('Electric eel'), null);
+  assert.equal(plainHazard('Electro'), null);
+  assert.equal(plainHazard('The nuclear missile'), null);
+  // Two named dangers with the one plain word are one reason, holding both checks.
+  const groups = groupReasons([
+    { label: 'Power substation electrocution endangers someone', rule: 'film_danger' },
+    { label: 'Downed power lines endangers someone', rule: 'film_danger' },
+  ]);
+  assert.deepEqual(groups.map((g) => [g.label, g.items.length]), [['Danger from electricity', 2]]);
 });

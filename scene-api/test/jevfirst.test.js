@@ -1693,3 +1693,229 @@ test('r2 blocker: a demo invocation that ends with a reservation never settled c
   } finally { first.run = saved; }
   await db.end();
 });
+
+// ------------------------------------------------------------------------------------------------
+// Astra's round-3 code review (2026-09-25): each blocker reproduced, then held
+// ------------------------------------------------------------------------------------------------
+
+/** A library film made by a real (stubbed) Jev-first add, and its guide exactly as the page reads it. */
+async function addedFilm(db) {
+  const { id } = await startJob(db, { imdb_id: FILM.imdb_id, passcode: PASSCODE }, { fetchImpl: world(), keys, pipeline: 'jevfirst', jevfirst: { sleep: noSleep } });
+  const job = await finished(db, id);
+  assert.equal(job.status, 'done', `${job.error_code}: ${job.error}`);
+  return job.film.slug;
+}
+const guideOf = async (db, slug) => (await db.query(
+  `select s.id, s.start_ms, s.end_ms, s.title, s.description, s.severity_5_7, s.severity_8_10, s.why_tags::text as why
+     from scenes s join films f on f.id = s.film_id where f.slug = $1 order by s.start_ms, s.id`, [slug])).rows;
+const deadlyFalls = (guide) => guide.filter((s) => /deadly fall/i.test(s.why ?? '')).length;
+/** A world whose Jev answers pass through `mutate(body, answers)` before they are sent. */
+const mutatingWorld = (mutate) => world({ jevHook: async (body) => { const r = jevBody(body); return mutate(body, r.answers) ? jsonResponse(r) : null; } });
+
+test('r3 blocker 1: a rebuild whose mortal-danger answers come back null fails, and the good guide stays', async () => {
+  const { startRebuild } = await import('../lib/admin.js');
+  const db = await emptyDb();
+  const slug = await addedFilm(db);
+  const before = await guideOf(db, slug);
+  assert.ok(deadlyFalls(before) > 0, 'the reproduction needs a guide with "Deadly fall" reasons');
+  // Astra's reproduction: every noul answer of every mortal-danger request is null (a 200, usage readable)
+  let nulled = 0;
+  const f = mutatingWorld((body, answers) => {
+    if (!Object.keys(body.questions).some((k) => k.includes('deadly') || k.includes('bomb'))) return false;
+    for (const [k, q] of Object.entries(body.questions)) if (q.type === 'noul') { answers[k] = { noul: null }; nulled++; }
+    return true;
+  });
+  const { id, done } = await startRebuild(db, { slug, passcode: PASSCODE }, { fetchImpl: f, keys, jevfirst: { sleep: noSleep } });
+  await done;
+  const job = await finished(db, id);
+  assert.ok(nulled > 0);
+  assert.equal(job.status, 'failed', `a rebuild on null scores must not replace the guide (${deadlyFalls(await guideOf(db, slug))} "Deadly fall" left of ${deadlyFalls(before)})`);
+  assert.equal(job.error_code, 'jev_answers_failed');
+  assert.deepEqual(await guideOf(db, slug), before, 'the guide is exactly as it was');
+  assert.equal((await db.query('select count(*)::int n from guide_backups')).rows[0].n, 0);
+  await db.end();
+});
+
+const MIXED_BODY = {
+  model: 'jev-1.13.0', state: { lines: ['L1| hi'] },
+  questions: {
+    n: { type: 'noul', instructions: 'Is it?' },
+    c: { type: 'choice', instructions: 'Which?', criteria: { a: 'A', b: 'B' } },
+    s: { type: 'score', instructions: 'How much?', criteria: ['none', 'some', 'lots'] },
+  },
+};
+const goodMixed = () => ({
+  n: { noul: 0.4 },
+  c: { choice: 'a', confidence: 0.7, probabilities: { a: 0.7, b: 0.3 } },
+  s: { score: 1, confidence: 0.6, probabilities: { 0: 0.2, 1: 0.6, 2: 0.2 } },
+});
+
+test('r3 blocker 1: a Jev answer that is missing or not a usable score is refused before anyone reads it, and still paid for', async () => {
+  const run = async (answers) => {
+    const seen = [];
+    const b = budget(1);
+    const post = async () => ({ json: { model: 'jev-1.13.0', answers, usage: { input_tokens: 1000, output_tokens: 3 } }, attempts: [{ status: 200, ms: 1 }], latencyMs: 1 });
+    const { results } = await withRun({ keys: { typesafe: 'x' }, sleep: noSleep, onSpend: (usd, info) => seen.push([usd, info?.uncertain_usd ?? 0]) },
+      () => runJobs([{ body: MIXED_BODY, est: 10, reserveUsd: 0.001, meta: { label: 'x' } }], { key: 'x', budget: b, concurrency: 1, post }));
+    return { result: results[0], b, spent: seen.reduce((a, [u]) => a + u, 0), uncertain: seen.reduce((a, [, u]) => a + u, 0) };
+  };
+  const ok = await run(goodMixed());
+  assert.equal(ok.result.ok, true, ok.result.error);
+  const measured = (1000 * 0.042) / 1e6;
+  const bad = {
+    'noul null': (a) => { a.n = { noul: null }; },
+    'noul missing': (a) => { a.n = {}; },
+    'noul a string': (a) => { a.n = { noul: '0.4' }; },
+    'noul above 1': (a) => { a.n = { noul: 1.5 }; },
+    'noul below 0': (a) => { a.n = { noul: -0.1 }; },
+    'answer null': (a) => { a.n = null; },
+    'answer absent': (a) => { delete a.n; },
+    'choice null': (a) => { a.c.choice = null; },
+    'choice empty': (a) => { a.c.choice = ''; },
+    'choice without probabilities': (a) => { delete a.c.probabilities; },
+    'choice with empty probabilities': (a) => { a.c.probabilities = {}; },
+    'choice with a null probability': (a) => { a.c.probabilities.a = null; },
+    'choice with a null confidence': (a) => { a.c.confidence = null; },
+    'score null': (a) => { a.s.score = null; },
+    'score a string': (a) => { a.s.score = '1'; },
+    'score without probabilities': (a) => { delete a.s.probabilities; },
+  };
+  for (const [label, mutate] of Object.entries(bad)) {
+    const answers = goodMixed();
+    mutate(answers);
+    const r = await run(answers);
+    assert.equal(r.result.ok, false, `${label}: refused`);
+    assert.match(r.result.error, /answer/, label);
+    assert.equal(r.result.json, undefined, `${label}: no caller can read it`);
+    // the request was answered and its usage is readable: a measured bill, charged in full
+    assert.ok(near(r.spent, measured) && near(r.uncertain, 0), `${label}: spent ${r.spent}, uncertain ${r.uncertain}`);
+    assert.ok(near(r.b.spent, measured) && r.b.reserved < 1e-12, label);
+    assert.deepEqual(r.result.record.malformed, [label.startsWith('noul') || label.startsWith('answer') ? 'n' : label.startsWith('choice') ? 'c' : 's'], label);
+  }
+  for (const answers of [null, [], 'x']) {
+    const r = await run(answers);
+    assert.equal(r.result.ok, false, JSON.stringify(answers));
+    assert.ok(near(r.spent, measured), JSON.stringify(answers));
+  }
+});
+
+test('r3 blocker 1: a malformed Jev answer in any stage fails the add instead of being read as zero', async () => {
+  const cases = {
+    // classify: a v9 mention question (the frozen unpackAnswers copies its noul through unchecked)
+    classify: (body, a) => { const k = Object.keys(body.questions).find((x) => /^Do the characters talk about/.test(body.questions[x].instructions ?? '')); if (!k) return false; a[k] = { noul: null }; return true; },
+    // the claim check: a support answer with no probabilities (verdictOf would read it as "says nothing")
+    claims: (body, a) => { if (!Array.isArray(body.state?.claims)) return false; const k = Object.keys(body.questions).find((x) => body.questions[x].type === 'choice'); if (!k) return false; delete a[k].probabilities; return true; },
+    // the split check's alignment question, the first Jev question of all: a choice with no confidence
+    split_check: (body, a) => { if (!Array.isArray(body.state?.summary)) return false; const k = Object.keys(body.questions)[0]; a[k] = { ...a[k], confidence: null }; return true; },
+    // the reason check (text.js reads a missing noul as 0)
+    describe_states: (body, a) => { const k = Object.keys(body.questions).find((x) => /^r\d+\.s\d+$/.test(x)); if (!k) return false; a[k] = { noul: null }; return true; },
+  };
+  for (const [stage, mutate] of Object.entries(cases)) {
+    const db = await emptyDb();
+    let hit = 0;
+    const f = mutatingWorld((body, a) => { const m = mutate(body, a); if (m) hit++; return m; });
+    const { id } = await startJob(db, { imdb_id: FILM.imdb_id, passcode: PASSCODE }, { fetchImpl: f, keys, pipeline: 'jevfirst', jevfirst: { sleep: noSleep } });
+    const job = await finished(db, id);
+    assert.ok(hit > 0, `${stage}: the case was exercised`);
+    assert.equal(job.status, 'failed', `${stage}: ${job.status}`);
+    const at = (await db.query("select stage from job_stages where job_id = $1 and status = 'running'", [id])).rows.map((r) => r.stage);
+    assert.deepEqual([job.error_code, at], {
+      classify: ['jev_answers_failed', ['classify']], claims: ['jev_check_failed', ['claims']],
+      split_check: ['split_check_failed', ['gate_a1']], describe_states: ['jev_check_failed', ['check_describe2']],
+    }[stage], `${stage}: the stage that received it is the one that failed`);
+    assert.equal((await db.query('select count(*)::int n from scenes')).rows[0].n, 0, `${stage}: nothing was written`);
+    await db.end();
+  }
+});
+
+/** One Anthropic streaming response built from raw events, so its usage can be anything (null = the event has no usage). */
+function sonnetStream({ start = { input_tokens: 1000, output_tokens: 1 }, delta = { output_tokens: 200 }, stop = 'end_turn', text = '{"ok":true}' } = {}) {
+  const events = [
+    { type: 'message_start', message: { ...(start === null ? {} : { usage: start }) } },
+    { type: 'content_block_start', index: 0, content_block: { type: 'text', text: '' } },
+    { type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text } },
+    { type: 'message_delta', delta: { stop_reason: stop }, ...(delta === null ? {} : { usage: delta }) },
+    { type: 'message_stop' },
+  ];
+  return new Response(events.map((e) => `event: ${e.type}\ndata: ${JSON.stringify(e)}\n\n`).join(''), { status: 200, headers: { 'content-type': 'text/event-stream' } });
+}
+async function oneSonnet(stream, { worst = 0.1 } = {}) {
+  const { sonnetCall } = await import('../pipeline-jevfirst/stages/common.js');
+  const seen = [];
+  const b = budget(1);
+  let out = null;
+  let err = null;
+  await withRun({ fetchImpl: async () => stream, keys: { claude: 'x' }, sleep: noSleep, onSpend: (usd, info) => seen.push([usd, info?.uncertain_usd ?? 0, info?.service]) }, async () => {
+    try { out = await sonnetCall({ budget: b, run: (fn) => fn() }, { system: 's', user: 'u', schema: {}, maxTokens: 100, worst, model: 'claude-sonnet-5', label: 't' }); } catch (e) { err = e; }
+  });
+  return { out, err, b, spent: seen.reduce((a, [u]) => a + u, 0), uncertain: seen.reduce((a, [, u]) => a + u, 0), services: seen.map((x) => x[2]) };
+}
+
+test('r3 blocker 2: a Sonnet answer whose usage cannot be read is charged at its reservation, as uncertain', async () => {
+  const unreadable = {
+    'empty usage (Astra)': { start: {}, delta: {} },
+    'no usage at all': { start: null, delta: null },
+    'no final output count (the start event\'s 1 is a placeholder)': { delta: null },
+    'final usage without output_tokens': { delta: {} },
+    'output count null': { delta: { output_tokens: null } },
+    'output count a string': { delta: { output_tokens: '200' } },
+    'output count negative': { delta: { output_tokens: -1 } },
+    'input count missing': { start: { output_tokens: 1 } },
+    'input count a string': { start: { input_tokens: '1000', output_tokens: 1 } },
+    'input count zero': { start: { input_tokens: 0, output_tokens: 1 } },
+    'input count null': { start: { input_tokens: null, output_tokens: 1 } },
+    'cache count garbage': { start: { input_tokens: 1000, output_tokens: 1, cache_read_input_tokens: 'lots' } },
+  };
+  for (const [label, shape] of Object.entries(unreadable)) {
+    const { out, err, b, spent, uncertain, services } = await oneSonnet(sonnetStream(shape));
+    assert.equal(err, null, `${label}: the answer itself is usable (${err?.message})`);
+    assert.deepEqual(out.r.data, { ok: true }, label);
+    assert.ok(near(out.cost, 0.1), `${label}: charged ${out.cost}, not its reservation`);
+    assert.ok(near(spent, 0.1) && near(uncertain, 0.1), `${label}: spent ${spent}, uncertain ${uncertain}`);
+    assert.ok(near(b.spent, 0.1) && b.reserved < 1e-12, label);
+    assert.deepEqual(services, ['anthropic'], label);
+  }
+  // a readable bill is still measured, at its tokens (cache counts absent or null read as none)
+  for (const start of [{ input_tokens: 1000, output_tokens: 1 }, { input_tokens: 1000, output_tokens: 1, cache_creation_input_tokens: null, cache_read_input_tokens: 0 }]) {
+    const m = await oneSonnet(sonnetStream({ start }));
+    const cost = (1000 * 2 + 200 * 10) / 1e6;
+    assert.ok(near(m.out.cost, cost) && near(m.spent, cost) && near(m.uncertain, 0), JSON.stringify(start));
+  }
+  // an answer that did not parse, with no readable final usage: charged at its reservation, not at the start event's placeholder
+  const e = await oneSonnet(sonnetStream({ delta: null, text: 'not json' }));
+  assert.ok(e.err, 'it fails');
+  assert.ok(near(e.err.cost, 0.1) && e.err.cost_is_upper_bound === true, `charged ${e.err.cost}`);
+  assert.ok(near(e.spent, 0.1) && near(e.uncertain, 0.1));
+  // ...and one with a readable final usage is a measured bill (unchanged)
+  const e2 = await oneSonnet(sonnetStream({ text: 'not json' }));
+  assert.ok(near(e2.err.cost, (1000 * 2 + 200 * 10) / 1e6) && !e2.err.cost_is_upper_bound);
+});
+
+test('r3 blocker 2: a whole add whose Sonnet streams carry no usage records every call\'s reservation', async () => {
+  const db = await emptyDb();
+  const f = world();
+  const base = f;
+  // every generation call answers correctly but with empty usage (Astra's offline add: 12 calls, $0 recorded)
+  let generations = 0;
+  const noUsage = async (u, init = {}) => {
+    if (u === 'https://api.anthropic.com/v1/messages') {
+      const body = JSON.parse(init.body);
+      const { kind, data } = claudeAnswer(body);
+      base.claude[kind] = (base.claude[kind] ?? 0) + 1;
+      generations++;
+      return sonnetStream({ start: {}, delta: {}, text: JSON.stringify(data) });
+    }
+    return base(u, init);
+  };
+  noUsage.calls = base.calls; noUsage.claude = base.claude;
+  const { id } = await startJob(db, { imdb_id: FILM.imdb_id, passcode: PASSCODE }, { fetchImpl: noUsage, keys, pipeline: 'jevfirst', jevfirst: { sleep: noSleep } });
+  const job = await finished(db, id);
+  assert.ok(generations > 0);
+  const { rows } = await db.query('select stage, spent from job_stages where job_id = $1', [id]);
+  const sonnet = rows.reduce((a, r) => a + (Number((typeof r.spent === 'string' ? JSON.parse(r.spent) : r.spent)?.sonnet) || 0), 0);
+  assert.ok(sonnet > 0, `${generations} Sonnet generations went out; the job recorded $${sonnet} for them (status ${job.status} ${job.error_code ?? ''})`);
+  // at least what the same calls cost with a readable usage (20k in / 2k out each) -- an upper bound is never below the bill
+  assert.ok(sonnet >= generations * (20000 * 2 + 2000 * 10) / 1e6 - 1e-9 || job.status === 'failed', `$${sonnet} for ${generations} calls`);
+  assert.ok(Number(job.cost_usd) >= sonnet - 1e-6, 'the job\'s cost carries it');
+  await db.end();
+});

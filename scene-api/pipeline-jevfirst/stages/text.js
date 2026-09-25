@@ -31,7 +31,7 @@ import { verified } from '../pack/questions.js';
 import { parseDirection, directionChoiceBody, directionReversed, reasonClaim, reasonAtAct, reasonSayable, reasonPlaced, textAccepted, plotPathOk, TEXTSAFE_VERSION } from '../pack/textsafe.js';
 import { neighbourBody } from '../pack/fill.js';
 import { transcriptGrams } from '../pack/validate.js';
-import { runJobs, sizeRequest, MAX_CONCURRENCY } from '../pack/jev-client.js';
+import { runJobs, sizeRequest, MAX_CONCURRENCY, probOf } from '../pack/jev-client.js';
 import { key } from '../pack/env.js';
 import { countTokens, PRICES } from '../pack/sonnet.js';
 import { formatTime } from '../srt.js';
@@ -48,8 +48,8 @@ const hms = (ms) => formatTime(ms).slice(0, 8);
 /** A Sonnet call inside a text stage: a failure is recorded on the row (the script's behaviour), an interruption is not. */
 async function askSonnet(w, row, args) {
   try {
-    const { r, cost } = await sonnetCall(w, args);
-    Object.assign(row, { usage: r.usage, cost_usd: +cost.toFixed(6), latency_ms: r.latencyMs });
+    const { r, cost, cost_is_upper_bound } = await sonnetCall(w, args);
+    Object.assign(row, { usage: r.usage, cost_usd: +cost.toFixed(6), ...(cost_is_upper_bound ? { cost_is_upper_bound: true } : {}), latency_ms: r.latencyMs });
     return r;
   } catch (err) {
     if (runCtx().signal?.aborted) throw new Interrupted();
@@ -232,7 +232,8 @@ export async function checkDescribeStage(S, attempt = 1) {
   const statesBy = {};
   for (const r of r2.results) {
     const p = plans.find((x) => x.s.id === r.meta.id);
-    statesBy[r.meta.id] = p.plan.reasons.flatMap((rid, k) => p.ok.map((c, j) => ({ reason: rid, sentence: c.key, p: r3(Number(r.json.answers[`r${k}.s${j}`]?.noul) || 0) })));
+    // check-describe.js read a missing answer as 0 (`|| 0`); here it fails the check instead
+    statesBy[r.meta.id] = p.plan.reasons.flatMap((rid, k) => p.ok.map((c, j) => { const pr = probOf(r.json.answers?.[`r${k}.s${j}`]); if (pr === null) throw failed(); return { reason: rid, sentence: c.key, p: r3(pr) }; }));
   }
 
   const scenes = {};

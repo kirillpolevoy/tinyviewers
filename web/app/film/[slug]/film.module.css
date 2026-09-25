@@ -139,6 +139,28 @@
   display: none;
 }
 
+/* A first sentence longer than three lines is cut there until the synopsis is opened. The whole
+   summary is the tap target, so "Read the rest" under it needs no height of its own. */
+.overviewClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.overviewClamp ~ .overviewMore {
+  min-height: 0;
+  margin-top: 2px;
+}
+
+.overviewPhone[open] .overviewClamp {
+  display: inline;
+  -webkit-line-clamp: unset;
+  line-clamp: none;
+  overflow: visible;
+}
+
 .overviewPhone > p {
   margin-top: 6px;
 }
@@ -151,6 +173,11 @@
       'head'
       'content'
       'rail';
+    gap: 16px;
+  }
+
+  .content {
+    gap: 14px;
   }
 
   .overviewWide {

@@ -58,6 +58,9 @@ export const LIBRARY = {
   /** Announced (and, if the row is slow to arrive, shown) when an add run finishes. */
   added: (title: string) => `${title} is in the library now.`,
   addedLink: 'See its scene guide →',
+  /** Under the list, closed until asked for: the way to add a film that is not in it. */
+  addHeadline: 'Can’t find your film?',
+  addAction: 'Add a film',
 } as const;
 
 /** "18 scenes" on a library row. One scene is a scene. */
@@ -99,8 +102,11 @@ export const FILM = {
   // number we do not have.
   imdbLink: 'Open →',
   // The findings card. The count is the big number; this is the words beside it.
-  verdictWords: 'scenes parents should know about',
-  verdictWordsOne: 'scene parents should know about',
+  verdictWords: 'scenes to know about',
+  verdictWordsOne: 'scene to know about',
+  /** The breakdown when every scene is at one level: the level, not the count a second time. */
+  breakdownAll: (word: string, n: number) =>
+    n === 1 ? `${word}`.charAt(0).toUpperCase() + `${word}`.slice(1) : n === 2 ? `Both ${word}` : `All ${word}`,
   timelineHint: 'Tap a marker to jump to that scene.',
   /** On a phone the markers are a picture, not controls: the rows below are the way in. */
   timelineHintPhone: 'Tap a scene below for details and skip times.',
@@ -112,6 +118,10 @@ export const FILM = {
   untitledScene: (time: string) => `Scene starting at ${time}`,
   bandsSame: 'These scenes have the same ratings for both age groups.',
   showingScene: (time: string) => `Showing the scene at ${time}.`,
+  /** A mark that stands for several scenes sat close together: tapped, the list is those scenes. */
+  showingScenes: (n: number, from: string, to: string) => `Showing the ${n} scenes from ${from} to ${to}.`,
+  markerGroupLabel: (n: number, from: string, to: string, strongest: string) =>
+    `${n} scenes close together, ${from} to ${to}; the strongest is ${String(strongest).toLowerCase()}`,
   showAll: 'Show all →',
   /** With a filter on, the way back from one scene is to the filtered list, and it says so. */
   showMatching: 'Back to matching scenes →',
@@ -381,7 +391,6 @@ export const DEMO_LIVE = {
   numTime: 'Jev check time',
   numCost: 'Jev check cost',
   numScenes: 'Scenes to know about',
-  numScenesValue: (flagged: number, total: number) => `${flagged} of ${total}`,
   // The comparison with the saved guide: one compact line by the count; what it means, under the list.
   sameYes: (n: number) => (n === 1 ? 'The saved guide lists the same scene.' : `The saved guide lists the same ${n} scenes.`),
   sameDiffers: (onlyRun: number, onlyGuide: number) => {
@@ -396,6 +405,10 @@ export const DEMO_LIVE = {
   sameUnknownBody: 'The check finished, but we couldn’t load this film’s library details.',
   sameUnknownRetry: 'Try loading the film details again',
   sameMatchNote: 'This compares which scenes appear, not their descriptions or strength ratings.',
+  /** The comparison line opens to name the scenes it counts. */
+  onlyRun: 'Only in this check',
+  onlyGuide: 'Only in the saved guide',
+  onlyNone: 'None.',
   differsBody: 'AI answers can vary between runs, so two checks can list different scenes. The saved guide has not changed.',
   notInLibraryBody: 'Nothing from this check was saved.',
   /** The section after the scene list: what the comparison means, and the ways onward. */
