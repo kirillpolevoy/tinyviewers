@@ -196,6 +196,26 @@ export function titleFromSummary(text) {
   return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]+$/, '')}…`;
 }
 
+/**
+ * Every scene has a title (guides and the live demo alike). When no title passed Jev's check, in order:
+ * the lead of the scene's checked description, of its checked summary, of any summary sentence Jev did
+ * not contradict, and last its main reason ("Crying").
+ */
+export function withTitles(rows, segments, grams = null) {
+  const segById = new Map((segments ?? []).map((g) => [g.id, g]));
+  const uncontradicted = (seg) => (seg?.sentences ?? []).filter((x) => x?.text && (x.check?.probabilities?.contradicts ?? 0) < 0.3).map((x) => x.text.trim()).join(' ') || null;
+  return rows.map((g) => {
+    if (g.title && g.title !== 'Flagged scene') return g;
+    const seg = segById.get(g.scene_id);
+    for (const [text, rule] of [[g.description, 'description'], [checkedSummary(seg), 'summary'], [uncontradicted(seg), 'summary_unchecked']]) {
+      const t = text ? quoteGate(titleFromSummary(text), null, grams).title : null;
+      if (t) return { ...g, title: t, title_rule: rule };
+    }
+    const reason = g.why?.[0]?.label ?? g.reasons?.[0]?.label;
+    return reason ? { ...g, title: reason, title_rule: 'reason' } : g;
+  });
+}
+
 export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null }) {
   const trackId = `${slug}:opensubtitles`;
   const track = {
@@ -213,21 +233,7 @@ export function buildGuide({ slug, film, srt, cues, tags, costs, segments = null
   const labels = [];
   const reasonLabels = [];
   const grams = quoteGrams(cues);
-  const segById = new Map((segments ?? []).map((g) => [g.id, g]));
-  // Every scene has a title. When no title passed Jev's check, in order: the lead of the scene's checked
-  // description, of its checked summary, of any summary sentence Jev did not contradict, and last its
-  // main reason ("Crying").
-  const uncontradicted = (seg) => (seg?.sentences ?? []).filter((x) => x?.text && (x.check?.probabilities?.contradicts ?? 0) < 0.3).map((x) => x.text.trim()).join(' ') || null;
-  const flaggedRows = guideRows(tags, { grams }).map((g) => {
-    if (g.title && g.title !== 'Flagged scene') return g;
-    const seg = segById.get(g.scene_id);
-    for (const [text, rule] of [[g.description, 'description'], [checkedSummary(seg), 'summary'], [uncontradicted(seg), 'summary_unchecked']]) {
-      const t = text ? quoteGate(titleFromSummary(text), null, grams).title : null;
-      if (t) return { ...g, title: t, title_rule: rule };
-    }
-    const reason = g.why?.[0]?.label ?? g.reasons?.[0]?.label;
-    return reason ? { ...g, title: reason, title_rule: 'reason' } : g;
-  });
+  const flaggedRows = withTitles(guideRows(tags, { grams }), segments, grams);
   const rows = flaggedRows;
   for (const g of rows) {
     const id = `${slug}:${g.scene_id}`;
