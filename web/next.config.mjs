@@ -21,8 +21,9 @@ const csp = [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "object-src 'none'",
-  // React's dev tooling needs eval() to rebuild call stacks; production never gets it.
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  // React's dev tooling needs eval() to rebuild call stacks, and Vercel Analytics loads its debug
+  // script from va.vercel-scripts.com in development; production never gets either.
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval' https://va.vercel-scripts.com" : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data: blob: https://image.tmdb.org",
