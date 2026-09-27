@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Baloo_2 } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 // Self-hosted by next/font, so the display face is in the first paint and the headline does not
@@ -35,7 +36,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={baloo.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel Web Analytics: same-origin /_vercel/insights in production, so the CSP needs no new host. */}
+        <Analytics />
+      </body>
     </html>
   );
 }
